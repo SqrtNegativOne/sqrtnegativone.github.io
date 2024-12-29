@@ -1,0 +1,28 @@
+/* https://cartr.gitlab.io/undertale-fonts/ */
+
+@font-face {
+    font-family: '8BitOperator';
+    src: url('assets/fonts/8bitOperatorPlus-Bold.woff') format('woff');
+}
+
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: "Inter", -apple-system, sytem-ui, BlinkMacSystemFont, Segoe UI,
+    Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.gaster {
+    align-content: center;
+    font-family: '8BitOperator', monospace;
+    text-align: center;
+    font-size: 24px;
+    line-height: 1.5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
