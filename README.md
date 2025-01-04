@@ -1,11 +1,2 @@
 # README
-<!-- 
-https://github.com/DivyamSamarwal/divyamsamarwal.github.io/blob/main/style.css
-
-https://dimden.dev/
-
-https://www.sunnypatel.net/
-
-https://palmes.dev/
-
--->
+This is my website. Feel free to look around; I do my best to maintain readability in the codebase.

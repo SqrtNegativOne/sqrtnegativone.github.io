@@ -5,44 +5,49 @@
         <title>Sqrt-1's Blog.</title>
         <link href="/assets/images/favicon.png" rel="icon" type="image/png">
         
-        <meta property="og:title" content="Sqrt-1's Blog.">
+        <meta property="og:title" content="Sqrt-1's Frontpage.">
         <meta property="og:type" content="website">
-        <meta property="og:description" content="Sqrt-1's Blog. Keep the weapons at the door.">
+        <meta property="og:description" content="Sqrt-1's Frontpage. Keep the weapons at the door.">
         <meta property="og:url" content="sqrtnegativone.github.io">
         <meta property="og:image" content="">
         <!--<meta name="twitter:card" content="summary_large_image">-->
-        <meta name="twitter:creator" content="Ark Malhotra">
+        <meta name="twitter:creator" content="Sqrt-1">
         <!--<meta charset="UTF-8">-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <meta name="description" content="Sqrt-1's Blog. Keep the weapons at the door.">
+        <meta name="description" content="Sqrt-1's Frontpage. Keep the weapons at the door.">
 
         <meta name="robots" content="index, follow">
-        <meta name="keywords" content="Ark Malhotra, AI, ML, C++, Python">
-        <meta name="author" content="Ark Malhotra">
+        <meta name="keywords" content="Ark Malhotra, Sqrt-1, AI, ML, C++, Python">
+        <meta name="author" content="Sqrt-1">
         <meta name="language" content="English">
         <meta name="theme-color" content="#000000">
 
         <link rel="stylesheet" href="assets/css/index.css">
     </head>
     <body>
-        <nav>
-            <img src="assets/images/logo.png" class="logo" alt="Website Logo">
-            <ul id="sidemenu">
-                <li><a href="#about">About</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <i class="fas fa-times" onclick="closemenu()"></i>
-            </ul>
-        <i class="fas fa-bars" onclick="openmenu()"></i>
-        </nav>
+        <div id="banner">
+            <nav>
+                <img src="assets/images/logo.png" class="logo" alt="Website Logo">
+                <ul id="sidemenu">
+                    <li><a href="#banner">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+            <i class="fas fa-bars" onclick="openmenu()"></i>
+            </nav>
 
-        <div id="about">
-            <hgroup>
+            <hgroup id="name">
                 <p><b>Hello World</b>, my name is</p>
                 <h1>Ark Malhotra</h1>
             </hgroup>
-            <p>If you would like to know me more personally, you may visit my dedicated <a href="about.html">about</a> page. Which doesn't exist.</p>
+        </div>
+        
+        <div id="about">
+            <p>I am a programmer from New Delhi, India.</p>
+            <p>I am interested in software development and artificial intelligence.</p>
             <p>You have reached out to my website, but there is nothing here. Not yet.</p>
             <p>I hope you will be around when this is complete. It might be some time before that happens. I occupy myself often.</p>
         </div>
@@ -58,8 +63,8 @@
         </div>
 
         <footer>
-            Copyright ©️ Ark Malhotra, I guess? I hope you liked this website.<br>
-            <i><small>Then the world was covered in darkness.</small></i>
+            <div class="footer-left">&copy; Sqrt-1</div>
+            <div class="footer-right"><i>Then the world was covered in darkness...</i></div>
         </footer>
     </body>
 </html>
