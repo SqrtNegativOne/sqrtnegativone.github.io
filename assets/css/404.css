@@ -20,8 +20,9 @@ body {
 }
 
 .container {
-    width: 50%;
+    max-width: 15%;
     padding: 20px;
     text-align: left;
     margin: 10px 0;
+    white-space: pre-line;
 }
