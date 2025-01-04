@@ -1,0 +1,27 @@
+/* https://cartr.gitlab.io/undertale-fonts/ */
+
+@font-face {
+    font-family: '8BitOperator';
+    src: url('/assets/fonts/8bitOperatorPlus-Bold.woff') format('woff');
+}
+
+body {
+    background: #000;
+    color: #ffffff;
+    font-family: '8BitOperator', monospace;
+    font-size: 24px;
+    line-height: 1.5;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.container {
+    width: 50%;
+    padding: 20px;
+    text-align: left;
+    margin: 10px 0;
+}
