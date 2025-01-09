@@ -26,45 +26,58 @@
         <link rel="stylesheet" href="assets/css/index.css">
     </head>
     <body>
-        <div id="banner">
+        <section id="banner">
             <nav>
-                <img src="assets/images/logo.png" class="logo" alt="Website Logo">
+                <!--<img src="assets/images/logo.png" class="logo" alt="Website Logo">-->
                 <ul id="sidemenu">
-                    <li><a href="#banner">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <i class="fas fa-times" onclick="closemenu()"></i>
+                    <li><a href="#banner">#home</a></li>
+                    <li><a href="#about">#about</a></li>
+                    <li><a href="#portfolio">#portfolio</a></li>
+                    <li><a href="#testimonials">#testimonials</a></li>
+                    <li><a href="#contact">#contact</a></li>
                 </ul>
             <i class="fas fa-bars" onclick="openmenu()"></i>
             </nav>
 
-            <hgroup id="name">
-                <p><b>Hello World</b>, my name is</p>
-                <h1>Ark Malhotra</h1>
+            <hgroup id="profile">
+                <div id="name">
+                    <p><b>Hello World</b>, my name is</p>
+                    <h1>Ark Malhotra.</h1>
+                </div>
+                <aside id="portrait">
+                    <img alt="Yes, this is literally me." src="assets/images/siffrin.jpg">
+                </aside>
             </hgroup>
-        </div>
+        </section>
         
-        <div id="about">
+        <section id="about">
             <p>I am a programmer from New Delhi, India.</p>
             <p>I am interested in software development and artificial intelligence.</p>
+            <p>I can't prove it without solving the unsolvable problem of the Hard Problem of Consciousness, but I promise that I am a real, living, conscious human being, with their own wants, needs, ideas, hopes, and dreams for the world.</p>
             <p>You have reached out to my website, but there is nothing here. Not yet.</p>
-            <p>I hope you will be around when this is complete. It might be some time before that happens. I occupy myself often.</p>
-        </div>
+            <p>I hope you will be around when this is complete. It might be some time before that happens...</p>
+        </section>
 
-        <div id="portfolio">
+        <section id="portfolio">
             <h1>Portfolio</h1>
             <p>I do things, sometimes. Some of them can be found on my Github profile.</p>
-        </div>
+        </section>
 
-        <div id="contact">
+        <section id="testimonials">
+            <h1>Testimonials</h1>
+            <div id="quote">
+                <blockquote><p>Wow, this is really high quality code; great work!</p><p>— Me, on someone else's work.</p></blockquote>
+            </div>
+        </section>
+
+        <section id="contact">
             <h1>Contact</h1>
 
-        </div>
+        </section>
 
         <footer>
-            <div class="footer-left">&copy; Sqrt-1</div>
-            <div class="footer-right"><i>Then the world was covered in darkness...</i></div>
+            &copy; Sqrt-1; also SORRY FOR NOT CREDITING THE SIFFRIN IMAGE I LOST THE SOURCE SORRRRRYYYY
+            <footer><i>Then the world was covered in darkness...</i></footer>
         </footer>
     </body>
 </html>

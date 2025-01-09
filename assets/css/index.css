@@ -6,8 +6,7 @@ body {
     background: #121212;
     color: #ffffff;
     font-family: "Inter", -apple-system, sytem-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    margin: 0 5em;
-    padding: 0 5em;
+    padding: 0 2em;
 }
 
 #banner {
@@ -21,7 +20,6 @@ body {
 nav {
     display: flex;
     width: 100%;
-    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     word-spacing: 20px;
@@ -59,38 +57,80 @@ nav ul li a:hover::after{
     width: 100%;
 }
 
-/* TODO: refactor the 5 classes below */
-#name {
+#profile {
+    display: flex;
+    align-items: center;
     margin-top: 20%;
-    font-size: 30px;   
+}
+#name {
+    order: 1;
+}
+#name p {
+    margin-bottom: 0;
+    font-size: 20px;
 }
 #name h1{
     font-size: 60px;
     margin-top: 20px;
-}
-#name h1 span{
-    color: #FA7161;
-}
-
-hgroup h1 {
     margin-top: 0;
     margin-bottom: 0;
 }
-
-hgroup p {
+#portrait {
+    order: 2;
+}
+#portrait img {
+    clip-path: circle();
+    float: right;
+    margin-left: 125px;
+    margin-top: 20px;
+    /* siffrin size: 1370x1609 */
+    width: 206px;
+    height: 241px;
+    border-radius: 100%; /* could also just set this to 50% to make everything rounder */
+    overflow: hidden;
+}
+@media (max-width: 1200px) {
+    #profile {
+    display: flex;
+    align-items: center;
+    margin-top: 20%;
+}
+#name {
+    order: 1;
+}
+#name p {
+    margin-bottom: 0;
+    font-size: 20px;
+}
+#name h1{
+    font-size: 60px;
+    margin-top: 20px;
+    margin-top: 0;
     margin-bottom: 0;
 }
+#portrait {
+    order: 2;
+}
+#portrait img {
+    clip-path: circle();
+    float: right;
+    margin-left: 125px;
+    margin-top: 20px;
+    /* siffrin size: 1370x1609 */
+    width: 206px;
+    height: 241px;
+    border-radius: 100%; /* could also just set this to 50% to make everything rounder */
+    overflow: hidden;
+}
+}
+
 
 .footer {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20px;
     background-color: #222;
-    color: #fff;
+    color: #9e9e9e;
     font-size: 10px;
-}
-.footer-left, .footer-right {
-    display: inline-block;
 }
 .footer-left {
     position: absolute;
