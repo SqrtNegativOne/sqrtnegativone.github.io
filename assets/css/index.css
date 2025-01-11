@@ -29,41 +29,41 @@ nav {
     width: 140px;
 }
 
-nav ul li {
-    list-style: none;
+nav menu li {
     display: inline-block;
-    margin-left: 10px 20px;
 }
 
-nav ul li a {
+nav menu li a {
     text-decoration: none;
     color: #fff;
     font-size: 18px;
     position: relative;
 }
 
-nav ul li a::after{
+nav menu li a::after{
     content: '';
     width: 0;
     height: 3px;
     background:#FA7161;
     position: absolute;
     left: 0;
-    bottom: -6px;
+    bottom: -5px;
     transition: 0.5s;
 }
 
-nav ul li a:hover::after{
+nav menu li a:hover::after{
     width: 100%;
 }
 
 #profile {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
     margin-top: 20%;
 }
 #name {
-    order: 1;
+    justify-self: start;
+    align-self: center;
 }
 #name p {
     margin-bottom: 0;
@@ -71,16 +71,15 @@ nav ul li a:hover::after{
 }
 #name h1{
     font-size: 60px;
-    margin-top: 20px;
     margin-top: 0;
     margin-bottom: 0;
 }
 #portrait {
-    order: 2;
+    justify-self: end;
+    align-self: center;
 }
 #portrait img {
     clip-path: circle();
-    float: right;
     margin-left: 125px;
     margin-top: 20px;
     /* siffrin size: 1370x1609 */
@@ -89,39 +88,34 @@ nav ul li a:hover::after{
     border-radius: 100%; /* could also just set this to 50% to make everything rounder */
     overflow: hidden;
 }
-@media (max-width: 1200px) {
+@media (max-width: 800px) {
     #profile {
-    display: flex;
-    align-items: center;
-    margin-top: 20%;
-}
-#name {
-    order: 1;
-}
-#name p {
-    margin-bottom: 0;
-    font-size: 20px;
-}
-#name h1{
-    font-size: 60px;
-    margin-top: 20px;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-#portrait {
-    order: 2;
-}
-#portrait img {
-    clip-path: circle();
-    float: right;
-    margin-left: 125px;
-    margin-top: 20px;
-    /* siffrin size: 1370x1609 */
-    width: 206px;
-    height: 241px;
-    border-radius: 100%; /* could also just set this to 50% to make everything rounder */
-    overflow: hidden;
-}
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 50% 50%;
+        margin-top: 20%;
+    }
+    #name {
+        justify-self: center;
+    }
+    #name p {
+        margin-bottom: 0;
+        font-size: 20px;
+    }
+    #name h1{
+        font-size: 60px;
+        margin-bottom: 0;
+    }
+    #portrait {
+        justify-self: center;
+    }
+    #portrait img {
+        clip-path: circle();
+        /* siffrin size: 1370x1609 */
+        width: 206px;
+        height: 241px;
+        /* border-radius: 100%; could also just set this to 50% to make everything rounder */
+    }
 }
 
 

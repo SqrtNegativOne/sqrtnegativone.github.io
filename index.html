@@ -29,13 +29,14 @@
         <section id="banner">
             <nav>
                 <!--<img src="assets/images/logo.png" class="logo" alt="Website Logo">-->
-                <ul id="sidemenu">
+                <menu id="sidemenu">
                     <li><a href="#banner">#home</a></li>
                     <li><a href="#about">#about</a></li>
-                    <li><a href="#portfolio">#portfolio</a></li>
+                    <li><a href="#skills">#skills</a></li>
+                    <li><a href="#projects">#projects</a></li>
                     <li><a href="#testimonials">#testimonials</a></li>
                     <li><a href="#contact">#contact</a></li>
-                </ul>
+                </menu>
             <i class="fas fa-bars" onclick="openmenu()"></i>
             </nav>
 
@@ -44,9 +45,9 @@
                     <p><b>Hello World</b>, my name is</p>
                     <h1>Ark Malhotra.</h1>
                 </div>
-                <aside id="portrait">
+                <div id="portrait">
                     <img alt="Yes, this is literally me." title="Yes, this is literally me." src="assets/images/siffrin.jpg">
-                </aside>
+                </div>
             </hgroup>
         </section>
         
@@ -58,8 +59,8 @@
             <p>I hope you will be around when this is complete. It might be some time before that happens...</p>
         </section>
 
-        <section id="portfolio">
-            <h1>Portfolio</h1>
+        <section id="projects">
+            <h1>#projects</h1>
             <p>I do things, sometimes. Some of them can be found on my Github profile.</p>
         </section>
 
@@ -72,7 +73,13 @@
 
         <section id="contact">
             <h1>Contact</h1>
-
+            <form class="contact">
+                <input placeholder="Your email (so I can contact you back):">
+                <input placeholder="Your name (so I know what to call you):">
+                <input placeholder="Subject (so I can ignore you faster)">
+                <textarea placeholder="wow bro nice website did your mom make it for you"></textarea>
+                <input type="submit" class="submit" value="Send">
+            </form>
         </section>
 
         <footer>
