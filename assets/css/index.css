@@ -6,7 +6,6 @@ body {
     background: #121212;
     color: #ffffff;
     font-family: "Inter", -apple-system, sytem-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    padding: 0 2em;
 }
 
 #banner {
@@ -19,14 +18,13 @@ body {
 
 nav {
     display: flex;
-    width: 100%;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-right: 50px;
     word-spacing: 20px;
 }
 
 .logo {
-    width: 140px;
+    /*width: 140px;*/
 }
 
 nav menu li {
@@ -56,58 +54,55 @@ nav menu li a:hover::after{
 }
 
 #profile {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 100%;
-    margin-top: 20%;
+    display: flex;
+    margin-top: 10%;
+    justify-content: center;
+    gap: 1rem
 }
 #name {
-    justify-self: start;
     align-self: center;
 }
 #name p {
-    margin-bottom: 0;
+    margin-bottom: -20px;
     font-size: 20px;
 }
 #name h1{
-    font-size: 60px;
+    font-size: 8vw;
     margin-top: 0;
     margin-bottom: 0;
 }
 #portrait {
-    justify-self: end;
     align-self: center;
+    justify-self: center;
 }
 #portrait img {
     clip-path: circle();
-    margin-left: 125px;
-    margin-top: 20px;
     /* siffrin size: 1370x1609 */
     width: 206px;
     height: 241px;
-    border-radius: 100%; /* could also just set this to 50% to make everything rounder */
+    /* border-radius: 100%; could also just set this to 50% to make everything rounder */
     overflow: hidden;
 }
-@media (max-width: 800px) {
+@media (max-width: 870px) {
     #profile {
-        display: grid;
-        grid-template-columns: 100%;
-        grid-template-rows: 50% 50%;
-        margin-top: 20%;
+        display: flex;
+        flex-direction: column;
     }
     #name {
-        justify-self: center;
+
     }
     #name p {
-        margin-bottom: 0;
+        margin-top: -20px;
+        margin-bottom: -10px;
         font-size: 20px;
     }
     #name h1{
-        font-size: 60px;
+        font-size: 12vw;
+        margin-top: 0;
         margin-bottom: 0;
     }
     #portrait {
-        justify-self: center;
+        margin-top: 0;
     }
     #portrait img {
         clip-path: circle();
@@ -115,10 +110,24 @@ nav menu li a:hover::after{
         width: 206px;
         height: 241px;
         /* border-radius: 100%; could also just set this to 50% to make everything rounder */
+        overflow: hidden;
     }
 }
 
+#about {
+    margin: 0 auto;
+    padding: 0 20px 20px;
+    max-width: 800px;
+}
 
+
+footer {
+    font-size: small;
+    line-height: 10p;
+}
+
+
+/*
 .footer {
     display: flex;
     justify-content: space-between;
@@ -156,3 +165,4 @@ nav menu li a:hover::after{
         padding: 0.5em;
     }
 }
+*/
