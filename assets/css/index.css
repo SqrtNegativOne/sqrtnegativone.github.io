@@ -1,11 +1,23 @@
+:root {
+    --bg-colour: #121212;
+    --h-font: "Inter", -apple-system, sytem-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
 html {
     scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: black var(--bg-colour);
+}
+
+::selection {
+    color: black;
+    background-color: #fff;
 }
 
 body {
-    background: #121212;
+    background: var(--bg-colour);
     color: #ffffff;
-    font-family: "Inter", -apple-system, sytem-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    font-family: var(--h-font)
 }
 
 #banner {
@@ -21,10 +33,6 @@ nav {
     justify-content: flex-end;
     margin-right: 50px;
     word-spacing: 20px;
-}
-
-.logo {
-    /*width: 140px;*/
 }
 
 nav menu li {
@@ -57,19 +65,20 @@ nav menu li a:hover::after{
     display: flex;
     margin-top: 10%;
     justify-content: center;
-    gap: 1rem
+    gap: 0rem;
 }
 #name {
     align-self: center;
 }
 #name p {
-    margin-bottom: -20px;
+    margin-bottom: -30px;
     font-size: 20px;
 }
 #name h1{
+    font-family: sans-serif;
     font-size: 8vw;
-    margin-top: 0;
     margin-bottom: 0;
+    font-family: var(--h-font);
 }
 #portrait {
     align-self: center;
@@ -92,13 +101,13 @@ nav menu li a:hover::after{
 
     }
     #name p {
-        margin-top: -20px;
+        margin-top: -15px;
         margin-bottom: -10px;
         font-size: 20px;
     }
     #name h1{
         font-size: 12vw;
-        margin-top: 0;
+        margin-top: -25px;
         margin-bottom: 0;
     }
     #portrait {
@@ -109,17 +118,70 @@ nav menu li a:hover::after{
         /* siffrin size: 1370x1609 */
         width: 206px;
         height: 241px;
-        /* border-radius: 100%; could also just set this to 50% to make everything rounder */
-        overflow: hidden;
+        /* border-radius: 100%; */
     }
 }
 
-#about {
+h1 {
+    max-width: 850px;
     margin: 0 auto;
-    padding: 0 20px 20px;
+    padding: 15px;
+    font-size: 35px;
+    margin-bottom: 0;
+    font-family: Consolas, monaco, monospace;
+}
+h1 span {
+    background-color: #1c1917;
+    padding: 1px 5px;
+}
+h1 span span {
+    padding: 0;
+    color: #09b9d7;
+    /*
+    --tw-gradient-from: #a5f3fc;
+    --tw-gradient-to: rgba(165, 243, 252, 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+    background-clip: text;
+    */
+}
+
+/* TODO */
+p a {
+    text-decoration: dotted;
+    color: #FA7161;
+}
+p a:hover {
+    transition: 0.5s;
+    background-color: #fff;
+    color:black;
+}
+p {
+    margin: 0 auto;
+    padding: 0 20px 15px;
     max-width: 800px;
 }
 
+#icon-collection {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: 500px;
+    justify-content: space-around;
+}
+
+#icon-collection img {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    transition: 0.5s;
+}
+
+#icon-collection img:hover {
+    filter: none;
+    -webkit-filter: grayscale(0);
+    transition: 0.5s;
+}
 
 footer {
     font-size: small;
