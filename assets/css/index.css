@@ -158,13 +158,13 @@ h1 span a {
 }
 
 /* stolen from https://github.com/ncase/ncase.github.io/blob/master/css/index.css */
-a {
+p a {
 	color: #ff4040;
 	position: relative;
-	top:0px;
+	top: 0px;
 	transition: 0.1s ease-in-out;
 }
-a:hover {
+p a:hover {
 	color: #ff8080;
 	top: -2px;
 }
@@ -173,13 +173,14 @@ p {
     margin: 0 auto;
     padding: 0 20px 15px;
     max-width: 800px;
+    font-size: 17px;
 }
 
 .icon-collection {
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 2px 20px 2px;
     max-width: 600px;
     justify-content: space-around;
 }
@@ -226,8 +227,7 @@ p {
 }
 
 #social-media {
-    margin: 0 auto;
-    padding: 1px 5px;
+    margin: 10px auto 10px auto;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
@@ -237,20 +237,35 @@ p {
     width: 50px; height: 50px;
     filter: brightness(0) invert(1);
     transition: 0.2s;
+    position: relative;
+    top: 0px;
 }
 #social-media img:hover {
     filter: none;
     transition: 0.2s;
+    top: -4px;
+}
+#social-media img.too-black {
+    width: 50px; height: 50px;
+    filter: brightness(0) invert(1);
+    transition: 0.2s;
+}
+#social-media img:hover.too-black {
+    transition: 0.2s;
+    filter: brightness(0) invert(1);
 }
 
 footer {
-    font-size: small;
-    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 0 0 0;
+    padding: 5px;
+    width: 100%;
+    background-color: #1b1b1b;
 }
 
-footer footer {
-    font-family: '8BitOperator', monospace;
-    font-weight: 0;
+footer p {
+    font-size: 14px;
 }
 
 
