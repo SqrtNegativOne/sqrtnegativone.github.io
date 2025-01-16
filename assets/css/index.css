@@ -1,3 +1,8 @@
+@font-face {
+    font-family: '8BitOperator';
+    src: url('/assets/fonts/8bitOperatorPlus-Bold.woff') format('woff');
+}
+
 :root {
     --bg-colour: #121212;
     --h-font: "Inter", -apple-system, sytem-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -34,18 +39,15 @@ nav {
     margin-right: 50px;
     word-spacing: 20px;
 }
-
 nav menu li {
     display: inline-block;
 }
-
 nav menu li a {
     text-decoration: none;
     color: #fff;
     font-size: 18px;
     position: relative;
 }
-
 nav menu li a::after{
     content: '';
     width: 0;
@@ -56,7 +58,6 @@ nav menu li a::after{
     bottom: -5px;
     transition: 0.5s;
 }
-
 nav menu li a:hover::after{
     width: 100%;
 }
@@ -71,7 +72,7 @@ nav menu li a:hover::after{
     align-self: center;
 }
 #name p {
-    margin-bottom: -30px;
+    margin-bottom: -45px;
     font-size: 20px;
 }
 #name h1{
@@ -102,12 +103,11 @@ nav menu li a:hover::after{
     }
     #name p {
         margin-top: -15px;
-        margin-bottom: -10px;
         font-size: 20px;
+        margin-bottom: -40px;
     }
     #name h1{
         font-size: 12vw;
-        margin-top: -25px;
         margin-bottom: 0;
     }
     #portrait {
@@ -136,33 +136,47 @@ h1 span {
 }
 h1 span span {
     padding: 0;
-    color: #09b9d7;
-    /*
-    --tw-gradient-from: #a5f3fc;
-    --tw-gradient-to: rgba(165, 243, 252, 0);
+    --tw-gradient-from: #09b9d7;
+    --tw-gradient-to: rgb(165, 243, 252);
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
     background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+    -webkit-background-clip: text;
     background-clip: text;
-    */
+    color: transparent;
+}
+h1 span a {
+    padding: 0;
+    --tw-gradient-from: #09b9d7;
+    --tw-gradient-to: rgb(165, 243, 252);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+h1 span a:hover {
+    
 }
 
-/* TODO */
+/* stolen from https://github.com/ncase/ncase.github.io/blob/master/css/index.css */
 p a {
-    text-decoration: dotted;
-    color: #FA7161;
+	color: #ff4040;
+	position: relative;
+	top:0px;
+	transition: 0.1s ease-in-out;
 }
 p a:hover {
-    transition: 0.5s;
-    background-color: #fff;
-    color:black;
+	color: #ff8080;
+	top: -2px;
 }
+
 p {
     margin: 0 auto;
     padding: 0 20px 15px;
     max-width: 800px;
 }
 
-#icon-collection {
+.icon-collection {
     display: flex;
     flex-wrap: wrap;
     margin: 0 auto;
@@ -171,21 +185,31 @@ p {
     justify-content: space-around;
 }
 
-#icon-collection img {
+.icon-collection img {
     filter: grayscale(100%);
     -webkit-filter: grayscale(100%);
-    transition: 0.5s;
+    transition: 0.2s;
+    top: 0px;
+    width: 50px;
+    height: 50px;
+    position: relative;
 }
 
-#icon-collection img:hover {
+.icon-collection img:hover {
     filter: none;
     -webkit-filter: grayscale(0);
-    transition: 0.5s;
+    transition: 0.2s;
+    top: -2px;
 }
 
 footer {
     font-size: small;
     line-height: 10p;
+}
+
+footer footer {
+    font-family: '8BitOperator', monospace;
+    font-weight: 0;
 }
 
 
