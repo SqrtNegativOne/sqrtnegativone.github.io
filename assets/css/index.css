@@ -43,7 +43,7 @@ body {
 
 #header-banner {
     width: 100%;
-    height: 100vh;
+    height: 85vh;
     background-image: url(assets/images/idk.png);
     background-size: cover;
     background-position: center;
@@ -52,13 +52,19 @@ body {
 nav {
     display: flex;
     justify-content: flex-end;
-    margin-right: 50px;
     word-spacing: 20px;
+    width: 100%;
+
     position: sticky;
     top: 0px;
+
     z-index: 50;
-    background-color: #0f0f1599;
+    background-color: var(--bg);
+    background: transparent;
     backdrop-filter: grayscale(1) blur(12px);
+}
+nav menu {
+    margin: 10px 50px 10px 0;
 }
 nav menu li {
     display: inline-block;
@@ -66,7 +72,7 @@ nav menu li {
 nav menu li a {
     text-decoration: none;
     color: #fff;
-    font-size: 18px;
+    font-size: 17px;
     position: relative;
 }
 nav menu li a::after{
@@ -81,6 +87,14 @@ nav menu li a::after{
 }
 nav menu li a:hover::after{
     width: 100%;
+}
+@media (max-width: 870px) {
+    nav {
+        justify-content: center;
+    }
+    nav menu {
+        margin: 10px 0 10px 0;
+    }
 }
 
 #profile {
@@ -298,14 +312,16 @@ img.too-dark-icon:hover {
 footer {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     margin: 2rem 0 0 0;
-    padding: 5px;
+    padding: 10px 0 0 0;
     width: 100%;
-    background-color: #1b1b1b;
+    background-color: #17191d;
 }
 
 footer p {
-    font-size: 14px;
+    font-size: 12px;
+    line-height: 2px;
 }
 
 
