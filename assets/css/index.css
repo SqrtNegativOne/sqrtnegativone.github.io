@@ -46,8 +46,9 @@ nav {
     word-spacing: 20px;
     position: sticky;
     top: 0px;
-    z-index: 10;
-    background-color: #121212;
+    z-index: 50;
+    background-color: #0f0f1599;
+    backdrop-filter: grayscale(1) blur(12px);
 }
 nav menu li {
     display: inline-block;
