@@ -16,6 +16,7 @@ In March 1981, Roger Fisher, a Harvard Law professor specialising in conflict ma
 > 
 > When I suggested this to friends in the Pentagon they said, “My God, that’s terrible. Having to kill someone would distort the President’s judgment. He might never push the button.”
 
+
 Sometimes, violence is inevitable. Maybe even necessary. 
 
 But what it should never be, is easy.
@@ -30,6 +31,6 @@ Guns don't have this aura as they aren't fully transparent about this process. N
 
 Guns distance the killer from their victims. They make invisible the moral profundity and appear as instruments. Mere solutions to a tactical problem, not a moral one; allowing killing with cool, clinical efficiency and disinterest. A game.
 
-Knives necessitate the visibility of this moral transaction that guns conceale. The gun is shown to be the quotidian tool for both the Good and the Bad. The knife is the weapon of desparate or psychopaths. Its usage means the wielder has consciously agreed to the transaction and bartered a piece of their soul to use it. They at least partially comprehend the reality about the infinite irreality they are about to plunge their enemy into.
+Knives necessitate the visibility of this moral transaction that guns conceale. The gun is shown to be the quotidian tool for both the Good and the Bad. The knife is the weapon of psychpaths or the desparate. Its usage means the wielder has consciously agreed to the moral transaction and bartered a piece of their soul to use it. They at least partially comprehend the reality about the infinite irreality they are about to plunge their enemy into.
 
 Knives are scary.
