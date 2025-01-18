@@ -50,7 +50,7 @@ module.exports = function (eleventyConfig) {
 
     /**
      *  AUTOMATIC SITEMAP GENERATION
-     *  Automatically generate a sitemap, using the domain in _data/client.json
+     *  Automatically generate a sitemap, using the domain in _data/global.json, previously known as client.json
      *  https://www.npmjs.com/package/@quasibit/eleventy-plugin-sitemap
      */
     eleventyConfig.addPlugin(pluginSitemap, configSitemap);

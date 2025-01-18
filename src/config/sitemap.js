@@ -1,4 +1,4 @@
-const client = require("../_data/client");
+const client = require("../_data/global.js");
 
 module.exports = {
     sitemap: {

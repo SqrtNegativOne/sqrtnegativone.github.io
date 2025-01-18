@@ -1,84 +1,101 @@
-{% extends "layouts/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Standard meta tags -->
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="{{ description }}" />
+        <meta name="keywords" content="" />
+        <link rel="canonical" href="{{ client.domain }}{{ page.url }}" />
 
-{% block head %}
-    <link rel="stylesheet" href="/assets/css/blog.css" />
+        <!--Social Media Display-->
+        <meta property="og:title" content="{{ title }}" />
+        <meta property="og:description" content="{{ description }}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{{ client.domain }}{{ page.url }}" />
+        <meta property="og:image" content="/assets/images/logo-small.png" />
+        <meta
+            property="og:image:secure_url"
+            content="/assets/images/logo-small.png"
+        />
 
-    <!-- prettier-ignore-start -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            {% if title %}"headline": "{{ title }}",{% endif %}
-            {% if image %}
-                "image": ["{{ image }}"],
-            {% endif %}
-            {% if date %}"datePublished": "{{ date | postDate }}",{% endif %}
-            {% if client.name %}
-                "publisher": {
-                    "@type": "Organization",
-                    "name": "{{ client.name }}"
-                },
-            {% endif %}
-            {% if author %}
-                "author": [
-                    {
-                        "@type": "Person",
-                        "name": "{{ author }}"
-                    }
-                ],
-            {% endif %}
-            {% if description %}"articleBody": "{{ description | safe }}",{% endif %}
-            {% if client.domain and page.url %}"url": "{{ client.domain }}{{ page.url }}",{% endif %}
-            {% if tags %}"articleSection": "{{ tags }}"{% endif %}
-        }
-    </script>
-    <!-- prettier-ignore-end -->
-{% endblock %}
+        <!--Favicons-->
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/assets/favicons/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/assets/favicons/favicon-32x32.png?v1"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/assets/favicons/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/assets/favicons/site.webmanifest" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
 
-{% block body %}
-    <!-- ============================================ -->
-    <!--                    LANDING                   -->
-    <!-- ============================================ -->
+        <link rel="preload" as="image" href="/assets/svgs/logo-white.svg" />
 
-    <!-- ============================================ -->
-    <!--              Main Blog Content               -->
-    <!-- ============================================ -->
+        <!-- Preload an image - tag not rendered if preloadImg is blank to stop console errors -->
+        {% if preloadImg != '' %}
+            <link rel="preload" as="image" href="{{ preloadImg }}" />
+        {% endif %}
 
-    <div class="blog-container main-content-wrapper">
-        <!--Main content -->
-        <div class="main-content">
-            <!-- ============================================ -->
-            <!--                  Blog Article                -->
-            <!-- ============================================ -->
-
-            <article class="blog-article">
-                <!--Main Article Image-->
+        <!-- Sitewide Stylesheets and Scripts -->
+        <link rel="stylesheet" href="/assets/css/blog.css" />
+        <script defer src="/assets/js/nav.js"></script>
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Article",
+                {% if title %}"headline": "{{ title }}",{% endif %}
                 {% if image %}
-                <picture class="blog-mainImage">
-                    <img
-                        src="{{ image }}"
-                        alt="{{ imageAlt }}"
-                        width="795"
-                        height="400"
-                        decoding="async"
-                    />
-                </picture>
+                    "image": ["{{ image }}"],
                 {% endif %}
+                {% if date %}"datePublished": "{{ date | postDate }}",{% endif %}
+                {% if description %}"articleBody": "{{ description | safe }}",{% endif %}
+                {% if client.domain and page.url %}"url": "{{ client.domain }}{{ page.url }}",{% endif %}
+                {% if tags %}"articleSection": "{{ tags }}"{% endif %}
+            }
+        </script>
 
-                <!--Article Info-->
-                <div class="article-group">
-                    <h1 class="blog-h1">{{ title }}</h1>
-                    <div class="blog-authorGroup">
-                        <span class="blog-author">by {{ author }}.</span>
-                        <span aria-hidden="true" class="blog-dot"></span>
-                        <!--Blog Date-->
-                        <span class="blog-date">{{ date | postDate }}</span>
-                    </div>
-                </div>
-                <section id="blog-content">{{ content | safe }}</section>
-            </article>
-        </div>
-        <!-- End .main-content -->
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <!--Screen reader skip main nav-->
+        <a class="skip" aria-label="skip to main content" href="#main" tabindex="1" hidden>Click To Skip To Main Content</a>
 
-    </div>
-{% endblock %}
+        <header>
+            {% if image %}
+            <picture class="blog-mainImage">
+                <img
+                    src="{{ image }}"
+                    alt="{{ imageAlt }}"
+                    decoding="async"
+                />
+            </picture>
+            {% endif %}
+            <hgroup>
+                    <h1>{{ title }}</h1>
+                    <time>{{ date | postDate }}</time>
+            </hgroup>
+        </header>
+
+        <main id="main">
+            {{ content | safe }}
+        </main>
+
+        <footer>
+            <p>©️ {% year %} Sqrt-1</p>
+        </footer>
+
+    </body>
+</html>

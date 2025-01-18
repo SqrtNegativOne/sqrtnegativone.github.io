@@ -39,7 +39,7 @@ Guns don't have this aura as they aren't fully transparent about this process. N
 > (son⋅der)<br>
 > The profound realisation that everyone, including strangers passing in the street, has a life as complex as one's own, which they are constantly living despite one's personal lack of awareness of it.
 
-Guns distance the killer from their victims. They make invisible the moral profundity and appear as instruments. Mere solutions to a tactical problem, not a moral one; allowing killing with cool, clinical efficiency and disinterest. A game.
+Guns are long range. They distance the killer from their victims. They make invisible the moral profundity and appear as instruments. Mere solutions to a tactical problem, not a moral one; allowing killing with cool, clinical efficiency and disinterest. A game.
 
 Knives necessitate the visibility of this moral transaction that guns conceale. The gun is shown to be the quotidian tool for both the Good and the Bad. The knife is the weapon of psychpaths or the desparate. Its usage means the wielder has consciously agreed to the moral transaction and bartered a piece of their soul to use it. They at least partially comprehend the reality about the infinite irreality they are about to plunge their victim into.
 

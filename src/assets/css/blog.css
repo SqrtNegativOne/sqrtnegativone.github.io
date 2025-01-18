@@ -17,7 +17,7 @@ header {
 }
 
 body {
-  margin: 40px auto;
+  margin: 0 auto;
   max-width: 650px;
   line-height: 1.6;
   font-size: 18px;
@@ -29,6 +29,10 @@ body {
 h1 {
   font: var(--h-font);
   font-size: 45px;
+}
+
+footer {
+  font-size: small;
 }
 
 /*# sourceMappingURL=blog.css.map */
