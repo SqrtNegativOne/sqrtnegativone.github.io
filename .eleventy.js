@@ -121,7 +121,7 @@ module.exports = function (eleventyConfig) {
     return {
         dir: {
             input: "src", // Root folder is untidy enough...
-            output: "_site",
+            output: "data", // For Github Pages
             includes: "_includes",
             data: "_data",
         },
