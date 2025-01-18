@@ -1,0 +1,348 @@
+:root {
+  --bg: #121212;
+  /* stolen from palmes.dev */
+  --mark: #a5f3fc;
+  /* stolen from ncase.me */
+  --link: #ff4040;
+  --link-hover: #ff8080;
+  --nav-underline: #FA7161;
+  --button-surface: #231d1a;
+  --button-shadow: #3f4650;
+  --h-font: "Inter", -apple-system, sytem-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: black var(--bg);
+}
+
+::selection {
+  color: black;
+  background-color: #fff;
+}
+
+#clock {
+  position: fixed;
+  bottom: 1px;
+  right: 1px;
+}
+
+body {
+  background: var(--bg);
+  color: #ffffff;
+  font-family: var(--h-font);
+}
+
+#header-banner {
+  width: 100%;
+  height: 85vh;
+  background-image: url(assets/images/idk.png);
+  background-size: cover;
+  background-position: center;
+}
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  word-spacing: 20px;
+  width: 100%;
+  position: sticky;
+  top: 0px;
+  z-index: 50;
+  background-color: var(--bg);
+  background: transparent;
+  backdrop-filter: grayscale(1) blur(12px);
+}
+
+nav menu {
+  margin: 10px 50px 10px 0;
+}
+
+nav menu li {
+  display: inline-block;
+}
+
+nav menu li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 17px;
+  position: relative;
+}
+
+nav menu li a::after {
+  content: "";
+  width: 0;
+  height: 3px;
+  background: var(--nav-underline);
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  transition: 0.5s;
+}
+
+nav menu li a:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 870px) {
+  nav {
+    justify-content: center;
+  }
+  nav menu {
+    margin: 10px 0 10px 0;
+  }
+}
+#profile {
+  display: flex;
+  margin-top: 10%;
+  justify-content: center;
+}
+
+#name {
+  align-self: center;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+#name p {
+  font-size: 20px;
+  margin: 0;
+  margin-bottom: -40px;
+  line-height: 1;
+}
+
+#name h1 {
+  margin: 0;
+  line-height: 1;
+  font-family: sans-serif;
+  font-size: 8vw;
+  font-family: var(--h-font);
+}
+
+#portrait {
+  align-self: center;
+  justify-self: center;
+}
+
+#portrait img {
+  clip-path: circle();
+  /* siffrin size: 1370x1609 */
+  width: 206px;
+  height: 241px;
+  /* border-radius: 100%; could also just set this to 50% to make everything rounder */
+  overflow: hidden;
+}
+
+@media (max-width: 870px) {
+  #profile {
+    display: flex;
+    flex-direction: column;
+  }
+  #name p {
+    font-size: 5vw;
+    margin-bottom: -30px;
+  }
+  #name h1 {
+    font-size: 12vw;
+  }
+  #portrait img {
+    clip-path: circle();
+    /* siffrin size: 1370x1609 */
+    width: 206px;
+    height: 241px;
+    /* border-radius: 100%; */
+  }
+}
+h1 {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 15px;
+  font-size: 35px;
+  margin-bottom: 0;
+  margin-top: 3%;
+  font-family: Consolas, monaco, monospace;
+}
+
+h1 span {
+  position: relative;
+  padding: 1px 5px;
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+h1 span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background-color: var(--button-surface);
+  z-index: -1;
+}
+
+h1 span::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 5px;
+  left: 5px;
+  background-color: var(--button-shadow);
+  z-index: -1;
+  transition: 0.2s ease-in-out;
+}
+
+h1 span:hover {
+  transform: translate(5px, 5px);
+}
+
+h1 span:hover::before {
+  transform: translate(-5px, -5px);
+  background-color: #121212;
+}
+
+h1 span a {
+  padding: 0;
+  --tw-gradient-from: #09b9d7;
+  --tw-gradient-to: rgb(165, 243, 252);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* stolen from https://github.com/ncase/ncase.github.io/blob/master/css/index.css */
+p a {
+  color: var(--link);
+  position: relative;
+  top: 0px;
+  transition: 0.1s ease-in-out;
+}
+
+p a:hover {
+  color: var(--link-hover);
+  top: -2px;
+}
+
+p {
+  margin: 0 auto;
+  padding: 0 20px 15px;
+  max-width: 800px;
+  font-size: 17px;
+}
+
+mark {
+  background-color: var(--bg);
+  color: var(--mark);
+  font-weight: bold;
+}
+
+.icon-collection {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding: 2px 20px 2px;
+  max-width: 600px;
+  justify-content: space-around;
+}
+
+.icon-collection img {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  transition: 0.2s;
+  top: 0px;
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.icon-collection img:hover {
+  filter: none;
+  -webkit-filter: grayscale(0);
+  top: -2px;
+}
+
+img.too-dark-icon {
+  filter: invert(1) brightness(0.2);
+  transition: 0.2s ease-in-out;
+  top: 0px;
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+img.too-dark-icon:hover {
+  filter: invert(1);
+  transition: 0.2s ease-in-out;
+  top: -2px;
+}
+
+.too-white-icon {
+  filter: grayscale(100%) brightness(0.5);
+  transition: 0.2s;
+  top: 0px;
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.too-white-icon:hover {
+  filter: none;
+  transition: 0.2s;
+  top: -2px;
+}
+
+#social-media {
+  margin: 10px auto 10px auto;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  max-width: 400px;
+}
+
+#social-media img {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  filter: brightness(0) invert(1);
+  transition: 0.2s;
+  position: relative;
+  top: 0px;
+}
+
+#social-media img:hover {
+  filter: none;
+  transition: 0.2s;
+  top: -4px;
+}
+
+#social-media img.too-black {
+  width: 50px;
+  height: 50px;
+  filter: brightness(0) invert(1);
+  transition: 0.2s;
+}
+
+#social-media img:hover.too-black {
+  transition: 0.2s;
+  filter: brightness(0) invert(1);
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 2rem 0 0 0;
+  padding: 10px 0 0 0;
+  width: 100%;
+  background-color: #17191d;
+}
+
+footer p {
+  font-size: 12px;
+  line-height: 2px;
+}
+
+/*# sourceMappingURL=index.css.map */

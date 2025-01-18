@@ -1,8 +1,3 @@
-@font-face {
-    font-family: '8BitOperator';
-    src: url('/assets/fonts/8bitOperatorPlus-Bold.woff') format('woff');
-}
-
 :root {
     --bg: #121212;
 
@@ -323,44 +318,3 @@ footer p {
     font-size: 12px;
     line-height: 2px;
 }
-
-
-/*
-.footer {
-    display: flex;
-    justify-content: space-between;
-    background-color: #222;
-    color: #9e9e9e;
-    font-size: 10px;
-}
-.footer-left {
-    position: absolute;
-    left: 0px;
-    margin-left: 5em;
-}
-.footer-right {
-    position: absolute;
-    margin-right: 5em;
-    right: 0px;
-}
-@media (max-width: 600px) {
-    .footer {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .footer-left, .footer-right {
-        margin: 0;
-        display: flex;
-    }
-    .footer-left {
-        position: relative;
-        padding: 0.5em;
-    }
-    .footer-right {
-        position: relative;
-        padding: 0.5em;
-    }
-}
-*/
