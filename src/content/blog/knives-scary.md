@@ -20,7 +20,7 @@ But you know what's even deadlier than knives, swords, guns, rocket launchers, t
 
 Thermonuclear fusion bombs.
 
-In March 1981, Roger Fisher, a Harvard Law professor specialising in conflict management and the director of the Harvard's Program on Negotiation, wrote an article in the *Bulletin of the Atomic Scientists* that, in all seriousness, advocated a proposal of the mechanism of how the president should be able to operate the nuclear football.
+In March 1981, Roger Fisher, a Harvard Law professor specialising in conflict management and the director of the Harvard's Program on Negotiation, wrote an article in the *Bulletin of the Atomic Scientists* that, in all seriousness, advocated a proposal of the mechanism of how the president should be able to operate the [nuclear football](https://en.wikipedia.org/wiki/Nuclear_football).
 
 > My suggestion was quite simple: Put that needed code number in a little capsule, and then implant that capsule right next to the heart of a volunteer. The volunteer would carry with him a big, heavy butcher knife as he accompanied the President. If ever the President wanted to fire nuclear weapons, the only way he could do so would be for him first, with his own hands, to kill one human being. The President says, ‘George, I’m sorry but tens of millions must die.’ He has to look at someone and realize what death is — what an innocent death is. Blood on the White House carpet. It’s reality brought home.
 > 
@@ -31,7 +31,7 @@ Sometimes, violence is inevitable. Maybe even necessary.
 
 But what it should never be, is easy.
 
-Knives don't shirk away from responsibility. They are close range. Both the weapon and its wielder must get the enemies blood on them if they are to be used properly. You see your enemy feel the pain and loss and watch them die.
+Knives don't shirk away from responsibility. They are close range. Both the weapon and its wielder must get the enemy's blood on them if they are to be used properly. You see your victim feel the pain and loss and watch them die.
 
 Guns don't have this aura as they aren't fully transparent about this process. No piece of media, no number of board meetings or conferences about the necessity of peace can really help fully describe what it feels like to see someone die, and even that image wouldn't render the full force of the true realisation of ending another consciousness, a cacophony of electric signals representing the cognizance of memories, wants, hopes, and dreams, coming to an indissoluble shutdown like a whirring generator losing its power, both body and viscera falling down like a ragdoll, a crimson pool leaking from under the ear, kissing the welt of your shoe.
 
