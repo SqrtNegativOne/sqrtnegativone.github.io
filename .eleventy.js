@@ -120,11 +120,12 @@ module.exports = function (eleventyConfig) {
 
     return {
         dir: {
-            input: "src",
-            output: "_site",
+            input: "src", // Root folder is untidy enough...
+            output: "_site", // For Github Pages
             includes: "_includes",
             data: "_data",
         },
-        htmlTemplateEngine: "njk",
+        markdownTemplateEngine: "njk", // Everyone uses it...
+        htmlTemplateEngine: "njk"
     };
 };
