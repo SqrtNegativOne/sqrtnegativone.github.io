@@ -1,7 +1,7 @@
 {
-    "name": "starter-kit-v4",
-    "version": "1.1.0",
-    "description": "",
+    "name": "sqrt-blog",
+    "version": "1.0.0",
+    "description": "This is my blog.",
     "main": "index.js",
     "scripts": {
         "format": "prettier --write '**/*.{html,css,scss,js,json,md}'",

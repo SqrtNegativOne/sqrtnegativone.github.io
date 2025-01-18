@@ -1,6 +1,7 @@
 .vscode
 .cache
-node_modules
+node_modules/
 public
 Instruction Manual.md
 design
+_site/
