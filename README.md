@@ -1,1 +1,1 @@
-My website and blog. Colophon coming soon.
+My website and blog.
