@@ -50,8 +50,6 @@
         {% endif %}
 
         <!-- Sitewide Stylesheets and Scripts -->
-        <link rel="stylesheet" href="/assets/css/blog.css" />
-        <script defer src="/assets/js/nav.js"></script>
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -66,6 +64,8 @@
                 {% if tags %}"articleSection": "{{ tags }}"{% endif %}
             }
         </script>
+
+        <link rel="stylesheet" href="/assets/css/posts.css" />
 
         <title>{{ title }}</title>
     </head>
@@ -94,7 +94,7 @@
         </main>
 
         <footer>
-            <p>©️ {% year %} Sqrt-1</p>
+            <a href="/blog">Back to blog.</a>
         </footer>
 
     </body>

@@ -26,13 +26,27 @@ body {
   padding: 0 10px;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
   font: var(--h-font);
   font-size: 45px;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+time {
+  font-size: 0.8em;
+  padding-top: 0em;
 }
 
 footer {
   font-size: small;
 }
 
-/*# sourceMappingURL=blog.css.map */
+/*# sourceMappingURL=posts.css.map */
