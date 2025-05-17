@@ -97,5 +97,21 @@
             <a href="/blog">Back to blog.</a>
         </footer>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.body.addEventListener('click', function (event) {
+                    let el = event.target;
+
+                    // Climb up the DOM tree until we hit a spoiler or the root
+                    while (el && el !== document.body) {
+                        if (el.classList && el.classList.contains('spoiler')) {
+                            el.classList.toggle('revealed');
+                            break;
+                        }
+                        el = el.parentElement;
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

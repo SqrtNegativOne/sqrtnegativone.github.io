@@ -42,6 +42,32 @@ a:hover {
     color: var(--link-hover);
 }
 
+.spoiler {
+  color: black !important;
+  background-color: black !important;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.spoiler a {
+  pointer-events: none;
+  text-decoration: none;
+  color: inherit !important;  /* hide link visually with the span */
+}
+
+.spoiler.revealed {
+  color: inherit !important; /* restore normal text color (e.g., white) */
+  background-color: transparent !important;
+}
+
+.spoiler.revealed a {
+  pointer-events: auto;
+  color: var(--link) !important;  /* restores expected link color */
+  text-decoration: underline;
+}
+
 time {
     font-size: 0.8em;
     padding-top: 0em;
