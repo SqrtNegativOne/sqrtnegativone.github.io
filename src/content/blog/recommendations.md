@@ -107,10 +107,12 @@ It's just nice to have a protagonist who's more fully aware of the absurdity of 
 
 The movie is good as well, but not as good as the book for its fewer deadly challenges and the fact that they removed the Aquaman joke.
 
-## Project: Hail Mary (book): 9/10
+## Project: Hail Mary (book): 8/10
 I have no idea how one guy can think of so many science and engineering puzzles with just a few concepts.
 
-Another interesting thing about the book is cooperation-porn against the backdrop of anti-cooperation-porn, which is a theme that should have been explored in more depth. But then again, Andy Weir's writing is banal and commonplace and no one would read his books if he wasn't cooking crazy stories like this one. It's also a good example of <span class="spoiler">[Coward Fiction](https://www.atvbt.com/coward-fiction/)</span>, even if that plot twist came out of the left-field, especially in a Hard sci-fi novel.
+Another interesting thing about the book is cooperation-porn against the backdrop of anti-cooperation-porn, which is a theme that should have been explored in more depth. But then again, Andy Weir's writing is banal and commonplace and no one would read his books if he wasn't cooking crazy stories like this one. It's also a good example of <span class="spoiler">[Coward Fiction](https://www.atvbt.com/coward-fiction/)</span> even if that plot twist came out of the left-field, especially in a Hard sci-fi novel.
+
+Speaking of which, apparently this book is even more unrealistic than I thought from the discrepancies I myself was able to notice. But I am willing to forgive most of them because none of them because they aren't deus ex machinas and only drive the story/create more problems down the line.
 
 ## There is No Antimemetics Division: 9/10
 I could have sworn I read this book, but I don't remember anything about it. Strange.
