@@ -81,7 +81,7 @@ Dreams. Identity. Consciousness. Drugs. Escapism. AI. Poetry. (Philosophical) Zo
 a free 5 hour plot-twisty mind-bendy stream-of-consciousness-thingy visual novel with Lena Raine's music.
 
 ## Other things which I can't be bothered writing about even though I may have liked them:
-Anything above 5 is good.
+Anything above 5 is good. For 5s you should consider whether your interest in the genre bumps up the rating or not.
 - INSCRYPTION: 9/10
 - TITANFALL: 9/10
 - Crying Suns: 6/10
