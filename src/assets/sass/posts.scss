@@ -1,45 +1,45 @@
 :root {
-    --bg: #121212;
+  --bg: #121212;
 
-    /* stolen from palmes.dev */
-    --mark: #a5f3fc;
+  /* stolen from palmes.dev */
+  --mark: #a5f3fc;
 
-    /* stolen from ncase.me */
-    --link: #ff4040;
-    --link-hover: #ff8080;
-    --nav-underline: #FA7161;
-    --button-surface: #231d1a;
-    --button-shadow: #3f4650;
-    --h-font: "Inter", -apple-system, sytem-ui, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  /* stolen from ncase.me */
+  --link: #ff4040;
+  --link-hover: #ff8080;
+  --nav-underline: #FA7161;
+  --button-surface: #231d1a;
+  --button-shadow: #3f4650;
+  
+  --font: "IBM Plex Sans", sans-serif;
 }
 
 header {
-    width: 100%;
-    margin: 0;
+  width: 100%;
+  margin: 0;
 }
 
 body {
-    margin: 0 auto;
-    max-width: 650px;
-    line-height: 1.6;
-    font-size: 18px;
-    color: white;
-    background-color: var(--bg);
-    padding: 0 10px;
+  margin: 0 auto;
+  max-width: 650px;
+  line-height: 1.6;
+  font-size: 18px;
+  color: white;
+  background-color: var(--bg);
+  padding: 0 10px;
 }
 
 h1,h2,h3,h4,h5,h6 {
-    font: var(--h-font);
-    font-size: 45px;
+  font-size: 45px;
 }
 
 a {
-    color: var(--link);
-    text-decoration: none;
+  color: var(--link);
+  text-decoration: none;
 }
 
 a:hover {
-    color: var(--link-hover);
+  color: var(--link-hover);
 }
 
 .spoiler {
@@ -69,10 +69,10 @@ a:hover {
 }
 
 time {
-    font-size: 0.8em;
-    padding-top: 0em;
+  font-size: 0.8em;
+  padding-top: 0em;
 }
 
 footer {
-    font-size: small;
+  font-size: small;
 }
