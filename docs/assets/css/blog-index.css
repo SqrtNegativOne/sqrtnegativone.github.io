@@ -4,6 +4,17 @@
   --font: "IBM Plex Sans", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: black var(--bg);
+}
+
+::selection {
+  color: black;
+  background-color: #fff;
+}
+
 body {
   margin: 0 auto;
   max-width: 650px;

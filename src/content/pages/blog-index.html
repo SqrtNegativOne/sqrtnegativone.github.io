@@ -54,11 +54,11 @@ eleventyNavigation:
                             <h2 class="article-title">{{ post.data.title }}</h2>
                             <span class="blog-date">{{ post.date | postDate }}</span>
                             <p class="blog-desc">{{ post.data.description }}</p>
-                            <span class="blog-tags">
+                            <!--<span class="blog-tags">
                                 {% for tag in post.data.tags %}
                                     <a href="/blog/tags/{{ tag }}" class="tag">#{{ tag }}</a>{% if not loop.last %} {% endif %}
                                 {% endfor %}
-                            </span>
+                            </span>-->
                         </a>
                     </article>
                 {%- endfor -%}
