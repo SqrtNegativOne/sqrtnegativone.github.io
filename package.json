@@ -5,8 +5,6 @@
     "main": "index.js",
     "scripts": {
         "format": "prettier --write '**/*.{html,css,scss,js,json,md}'",
-        "watch:sass": "sass --watch src/assets/sass:./src/assets/css",
-        "build:sass": "sass src/assets/sass:./src/assets/css",
         "watch:eleventy": "cross-env ELEVENTY_ENV=DEV eleventy --serve",
         "build:eleventy": "cross-env ELEVENTY_ENV=PROD eleventy",
         "watch:cms": "npx decap-server",
@@ -15,15 +13,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/CodeStitchOfficial/Intermediate-Website-Kit-SASS.git"
+        "url": "git+https://github.com/SqrtNegativOne/sqrtnegativone.github.io.git"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/CodeStitchOfficial/Intermediate-Website-Kit-SASS/issues"
+        "url": "https://github.com/SqrtNegativOne/sqrtnegativone.github.io/issues"
     },
-    "homepage": "https://github.com/CodeStitchOfficial/Intermediate-Website-Kit-SASS#readme",
+    "homepage": "https://github.com/SqrtNegativOne/sqrtnegativone.github.io#readme",
     "dependencies": {
         "@11ty/eleventy": "^3.1.2",
         "@11ty/eleventy-navigation": "^0.3.5",
