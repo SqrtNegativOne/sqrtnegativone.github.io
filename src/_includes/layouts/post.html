@@ -72,28 +72,21 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
+        <script type="module" src="/assets/js/swup.js"></script>
+
         <title>{{ title }}</title>
     </head>
-    <body>
+
+
+    <body id="swup">
         <!--Screen reader skip main nav-->
         <a class="skip" aria-label="skip to main content" href="#main" tabindex="1" hidden>Click To Skip To Main Content</a>
-        
-        <a href="/blog"> &lt; Back to blog.</a>
+
+        <a class="back-to-blog" href="/blog"> ← Back to blog.</a>
 
         <header>
-            {% if image %}
-            <picture class="blog-mainImage">
-                <img
-                    src="{{ image }}"
-                    alt="{{ imageAlt }}"
-                    decoding="async"
-                />
-            </picture>
-            {% endif %}
-            <hgroup>
-                <h1>{{ title }}</h1>
-                <time>{{ date | postDate }}</time>
-            </hgroup>
+            <h1>{{ title }}</h1>
+            <time>{{ date | postDate }}</time>
         </header>
 
         <main id="main">

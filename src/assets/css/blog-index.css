@@ -1,13 +1,19 @@
 :root {
   --bg: #121212;
-  --post-hover: #dcf8ff;
+
+  --post-hover: #dcf8ff; /* Light blue for post hover */
+
+  /* stolen from ncase.me */
+  --link: #ff4040;
+  --link-hover: #ff8080;
+  
   --font: "IBM Plex Sans", sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: black var(--bg);
+  scrollbar-color: white var(--bg);
 }
 
 ::selection {
@@ -26,22 +32,29 @@ body {
   padding: 0 10px;
 }
 
-h1 {
-  font: var(--font);
-  font-size: 45px;
+header h1 {
+  font-size: 60px;
+  font-weight: normal;
 }
 
-p {
-  margin: 0;
-  padding: 0;
+h1 {
+  font-size: 50px;
+  font-weight: normal;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
 }
 
 article.post {
   margin: 20px 0;
   padding: 0 50px;
-  border-radius: 5px;
   background-color: var(--button-surface);
-  box-shadow: 0px 2px 5px var(--button-shadow);
 }
 
 h2.article-title {
@@ -91,7 +104,6 @@ a.tag:hover {
 }
 
 footer {
+  margin-top: 20px;
   font-size: small;
 }
-
-/*# sourceMappingURL=blog-index.css.map */

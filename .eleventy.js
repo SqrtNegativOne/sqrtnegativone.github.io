@@ -1,14 +1,19 @@
+// Uses CommonJS, not ESM, so no import export syntax.
+
 // Imports
 const pluginSitemap = require("@quasibit/eleventy-plugin-sitemap");
+// const { eleventyImageTransformPlugin } = require("@11ty/eleventy-img"); Too buggy.
+const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+const { feedPlugin } = require("@11ty/eleventy-plugin-rss");
 
 // Configs
-const configCss = require("./src/config/css");
-const configJs = require("./src/config/javascript");
-const configSitemap = require("./src/config/sitemap");
-const configServer = require("./src/config/server");
+const configCss = require("./src/_config/css");
+const configJs = require("./src/_config/javascript");
+const configSitemap = require("./src/_config/sitemap");
+const configServer = require("./src/_config/server");
 
 // Other
-const filterPostDate = require("./src/config/postDate");
+const filterPostDate = require("./src/_config/postDate");
 const isProduction = configServer.isProduction;
 
 module.exports = function (eleventyConfig) {
@@ -17,67 +22,49 @@ module.exports = function (eleventyConfig) {
     =======================================================================*/
     /** https://www.11ty.dev/docs/languages/custom/ */
 
-    /**
-     *  CSS EXTENSION
-     *  Setting up CSS files to be recognised as aN eleventy template language. This allows our minifier to read CSS files and minify them
-     */
+    // This allows our minifier to read CSS files and minify them
     eleventyConfig.addTemplateFormats("css");
     eleventyConfig.addExtension("css", configCss);
 
-    /**
-     *  JS EXTENSION
-     *  Sets up JS files as an eleventy template language, which are compiled by esbuild. Allows bundling and minification of JS
-     */
+    // Sets up JS files as an eleventy template language, which are compiled by esbuild. Allows bundling and minification of JS
     eleventyConfig.addTemplateFormats("js");
     eleventyConfig.addExtension("js", configJs);
-    /**=====================================================================
-                                END EXTENSIONS
-    =======================================================================*/
 
     /**=====================================================================
                   PLUGINS - Adds additional eleventy functionality 
     =======================================================================*/
     /** https://www.11ty.dev/docs/plugins/ */
 
-    /**
-     *  ELEVENTY NAVIGATION
-     *  Sets up the eleventy navigation plugin for a scalable navigation as used in _includes/components/header.html
-     *  https://github.com/11ty/eleventy-navigation
-     */
-    //eleventyConfig.addPlugin(pluginEleventyNavigation);
-
-    /**
-     *  AUTOMATIC SITEMAP GENERATION
-     *  Automatically generate a sitemap, using the domain in _data/global.json, previously known as client.json
-     *  https://www.npmjs.com/package/@quasibit/eleventy-plugin-sitemap
-     */
-    eleventyConfig.addPlugin(pluginSitemap, configSitemap);
-
-    /**
-     *  MINIFIER
-     *  When in production ("npm run build" is ran), minify all HTML, CSS, JSON, XML, XSL and webmanifest files.
-     *  https://github.com/benjaminrancourt/eleventy-plugin-files-minifier
-     */
-    // if (isProduction) {
-    //     eleventyConfig.addPlugin(pluginMinifier);
-    // }
-    /**=====================================================================
-                                END PLUGINS
-    =======================================================================*/
+    eleventyConfig.addPlugin(pluginSitemap, configSitemap); // Generate a sitemap using the domain in _data/global.json
+    //eleventyConfig.addPlugin(eleventyImageTransformPlugin); // Currently unused anywhere in the blog as of 2025-06-26, but can be used to transform images in templates. See https://www.11ty.dev/docs/plugins/image-transform/
+    eleventyConfig.addPlugin(syntaxHighlight); // Also unused as of 2025-06-26. https://www.11ty.dev/docs/plugins/syntaxhighlight/
+    eleventyConfig.addPlugin(feedPlugin, {
+		type: "atom", // or "rss", "json"
+		outputPath: "/blog/feed.xml",
+		collection: {
+			name: "posts", // iterate over `collections.posts`. Or should it be "post" because that's what I use in blog-index.html??
+			limit: 10,     // 0 means no limit
+		},
+		metadata: {
+			language: "en",
+			title: "Sqrt-1's Blog",
+			subtitle: "This is my blog.",
+			base: "https://sqrtnegativone.github.io/",
+			author: {
+				name: "Sqrt-1",
+				email: "", // Optional
+			}
+		}
+    });
 
     /**======================================================================
        PASSTHROUGHS - Copy source files to /docs with no 11ty processing
     ========================================================================*/
     /** https://www.11ty.dev/docs/copy/ */
 
-    eleventyConfig.addPassthroughCopy("./src/assets", {
-        filter: ["**/*", "!**/*.js"],
-    });
+    eleventyConfig.addPassthroughCopy("./src/assets", { watch: true }); // Copy the assets folder to /docs/assets, and watch for changes
     eleventyConfig.addPassthroughCopy("./src/admin");
     eleventyConfig.addPassthroughCopy("./src/_redirects");
-    /**=====================================================================
-                              END PASSTHROUGHS
-    =======================================================================*/
 
     /**======================================================================
                FILTERS - Modify data in template files at build time
@@ -90,9 +77,6 @@ module.exports = function (eleventyConfig) {
      *  https://moment.github.io/luxon/api-docs/index.html#datetime
      */
     eleventyConfig.addFilter("postDate", filterPostDate);
-    /**=====================================================================
-                                    END FILTERS
-    =======================================================================*/
 
     /**======================================================================
                   SHORTCODES - Output data using JS at build time
@@ -104,24 +88,18 @@ module.exports = function (eleventyConfig) {
      *  Use - {% year %}
      */
     eleventyConfig.addShortcode("year", () => `${new Date().getFullYear()}`);
-    /**=====================================================================
-                                END SHORTCODES
-    =======================================================================*/
 
     /**=====================================================================
                                 SERVER SETTINGS
     =======================================================================*/
     eleventyConfig.setServerOptions(configServer);
-    /**=====================================================================
-                              END SERVER SETTINGS
-    =======================================================================*/
 
     return {
         dir: {
             input: "src", // Root folder is untidy enough...
-            output: "docs", // For Github Pages
-            includes: "_includes",
-            data: "_data",
+            output: "docs", // Github Pages requires the output folder to be named docs
+            includes: "_includes", // For reusable template partials or layouts; Eleventy knows to look in _includes when resolving paths in template commands like include.
+            data: "_data", // For global and local data files (JSON, JS, YAML) that Eleventy uses to provide dynamic content to templates. Use case: Injects data into templates automatically.
         },
         markdownTemplateEngine: "njk", // Everyone uses it...
         htmlTemplateEngine: "njk"
