@@ -1,5 +1,5 @@
 ---
-title: Knives are scary
+title: Knives are scary.
 url: knives-scary
 description: They are scary.
 author: Sqrt-1

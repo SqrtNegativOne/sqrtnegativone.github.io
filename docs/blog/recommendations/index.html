@@ -68,13 +68,14 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
+        <script src="https://unpkg.com/@swup/fade-theme@2"></script>
         <script type="module" src="/assets/js/swup.js"></script>
 
         <title>Recommendations</title>
     </head>
 
 
-    <body id="swup">
+    <body><div id="swup" class="transition-fade">
         <!--Screen reader skip main nav-->
         <a class="skip" aria-label="skip to main content" href="#main" tabindex="1" hidden>Click To Skip To Main Content</a>
 
@@ -214,5 +215,5 @@ movie: just uses a crane.</p>
                 });
             });
         </script>
-    </body>
+    </div></body>
 </html>
