@@ -46,7 +46,7 @@ module.exports = function (eleventyConfig) {
      *  Sets up the eleventy navigation plugin for a scalable navigation as used in _includes/components/header.html
      *  https://github.com/11ty/eleventy-navigation
      */
-    eleventyConfig.addPlugin(pluginEleventyNavigation);
+    //eleventyConfig.addPlugin(pluginEleventyNavigation);
 
     /**
      *  AUTOMATIC SITEMAP GENERATION
@@ -60,9 +60,9 @@ module.exports = function (eleventyConfig) {
      *  When in production ("npm run build" is ran), minify all HTML, CSS, JSON, XML, XSL and webmanifest files.
      *  https://github.com/benjaminrancourt/eleventy-plugin-files-minifier
      */
-    if (isProduction) {
-        eleventyConfig.addPlugin(pluginMinifier);
-    }
+    // if (isProduction) {
+    //     eleventyConfig.addPlugin(pluginMinifier);
+    // }
     /**=====================================================================
                                 END PLUGINS
     =======================================================================*/
