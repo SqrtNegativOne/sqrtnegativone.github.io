@@ -9,7 +9,7 @@
 
 
   --title-size: 60px;
-  --date-size: 0px; /* Haven't messed around with the date size yet so this variable is unused. */
+  --date-size: 14px; /* Haven't messed around with the date size yet so this variable is unused. */
   --h1-size: 50px;
   --h2-size: 30px;
 }
@@ -34,12 +34,30 @@ html {
 body {
   margin: 0 auto;
   max-width: 650px;
+  padding: 0 10px;
+
   line-height: 1.6;
   font-family: var(--font);
   font-size: 18px;
   color: white;
+
   background-color: var(--bg);
-  padding: 0 10px;
+}
+
+/* Define a transition duration during page visits */
+html.is-changing .transition-fade {
+  transition: opacity 0.2s ease;
+  opacity: 1;
+}
+
+/* Define the styles for the unloaded pages */
+html.is-animating .transition-fade {
+  opacity: 0;
+}
+
+#swup {
+  min-height: 100vh;
+  background-color: inherit;
 }
 
 a.back-to-blog {
@@ -48,13 +66,19 @@ a.back-to-blog {
   left: 10px;
   color: var(--link);
   text-decoration: none;
-  font-size: 16px;
+  font-size: var(--date-size);
 }
 
 header h1 {
   font-size: var(--title-size);
   font-weight: normal;
   margin-bottom: 0px;
+}
+
+header time {
+  font-size: var(--date-size);
+  display: block;
+  margin-bottom: 10px;
 }
 
 h1 {

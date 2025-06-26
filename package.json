@@ -4,12 +4,13 @@
     "description": "This is my blog.",
     "main": "index.js",
     "scripts": {
+        "clean": "rimraf docs",
         "format": "prettier --write '**/*.{html,css,scss,js,json,md}'",
         "watch:eleventy": "cross-env ELEVENTY_ENV=DEV eleventy --serve",
         "build:eleventy": "cross-env ELEVENTY_ENV=PROD eleventy",
         "watch:cms": "npx decap-server",
         "start": "npm-run-all --parallel watch:*",
-        "build": "run-s build:*"
+        "build": "run-s clean build:*"
     },
     "repository": {
         "type": "git",
@@ -24,6 +25,7 @@
     "homepage": "https://github.com/SqrtNegativOne/sqrtnegativone.github.io#readme",
     "dependencies": {
         "@swup/fade-theme": "^2.0.1",
+        "@swup/head-plugin": "^2.3.1",
         "markdown-it-footnote": "^3.0.3"
     },
     "devDependencies": {
@@ -32,6 +34,7 @@
         "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.1",
         "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
         "cross-env": "^7.0.3",
+        "rimraf": "^6.0.1",
         "esbuild": "^0.25.5",
         "npm-run-all": "^4.1.5",
         "prettier": "^3.3.3",

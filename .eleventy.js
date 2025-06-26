@@ -7,10 +7,10 @@ const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 const { feedPlugin } = require("@11ty/eleventy-plugin-rss");
 
 // Configs
-const configCss = require("./src/_config/css");
-const configJs = require("./src/_config/javascript");
-const configSitemap = require("./src/_config/sitemap");
-const configServer = require("./src/_config/server");
+const configCss = require("./src/_config/css.js");
+const configJs = require("./src/_config/javascript.js");
+const configSitemap = require("./src/_config/sitemap.js");
+const configServer = require("./src/_config/server.js");
 
 // Other
 const filterPostDate = require("./src/_config/postDate");
@@ -62,7 +62,10 @@ module.exports = function (eleventyConfig) {
     ========================================================================*/
     /** https://www.11ty.dev/docs/copy/ */
 
-    eleventyConfig.addPassthroughCopy("./src/assets", { watch: true }); // Copy the assets folder to /docs/assets, and watch for changes
+    eleventyConfig.addPassthroughCopy("./src/assets", {
+        filter: ["**/*", "!**/*.js"], // JS files should be processed by esbuild so ignoring them here
+        watch: true
+    }); // Copy the assets folder to /docs/assets, and watch for changes
     eleventyConfig.addPassthroughCopy("./src/admin");
     eleventyConfig.addPassthroughCopy("./src/_redirects");
 
