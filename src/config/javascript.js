@@ -8,7 +8,7 @@ module.exports = {
     outputFileExtension: "js",
     init: async function () {
         // Create the /assets/js directory on first build (prevents an error from directory not existing)
-        fs.mkdir("public/assets/js", { recursive: true }, (err) => {
+        fs.mkdir("docs/assets/js", { recursive: true }, (err) => {
             if (err) throw err;
         });
     },

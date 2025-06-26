@@ -1,6 +1,4 @@
 // Imports
-const pluginEleventyNavigation = require("@11ty/eleventy-navigation");
-const pluginMinifier = require("@sherby/eleventy-plugin-files-minifier");
 const pluginSitemap = require("@quasibit/eleventy-plugin-sitemap");
 
 // Configs
@@ -68,7 +66,7 @@ module.exports = function (eleventyConfig) {
     =======================================================================*/
 
     /**======================================================================
-       PASSTHROUGHS - Copy source files to /public with no 11ty processing
+       PASSTHROUGHS - Copy source files to /docs with no 11ty processing
     ========================================================================*/
     /** https://www.11ty.dev/docs/copy/ */
 
