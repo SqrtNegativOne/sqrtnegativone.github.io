@@ -1,0 +1,70 @@
+---
+title: "Sqrt-1's Blog"
+description: "Sqrt-1's Blog. Keep the weapons at the door."
+preloadImg: 
+permalink: "blog/"
+eleventyNavigation:
+    key: Blog
+    order: 500
+---
+
+{% extends "/_includes/layouts/blog-base.njk" %}
+
+{% block head %}
+<title>Sqrt-1's Frontpage.</title>
+<link href="/assets/images/favicon.png" rel="icon" type="image/png">
+
+<meta property="og:title" content="Sqrt-1's Blog.">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Sqrt-1's Blog. Keep the weapons at the door.">
+<meta property="og:url" content="sqrtnegativone.github.io/blog">
+<meta property="og:image" content="">
+<!--<meta name="twitter:card" content="summary_large_image">-->
+<meta name="twitter:creator" content="Sqrt-1">
+<!--<meta charset="UTF-8">-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Sqrt-1's Frontpage. Keep the weapons at the door.">
+
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="Sqrt-1, Sqrt-1's Blog, Blog">
+<meta name="author" content="Sqrt-1">
+<meta name="language" content="English">
+<meta name="theme-color" content="#000000">
+
+<link rel="stylesheet" href="/assets/css/blog-index.css">
+{% endblock %}
+
+{% block content %}
+<main>
+    <header>
+        <h1>The Blog.</h1>
+    </header>
+    <p>Hullo.<br>My name is Sqrt-1, and this is a webpage containing the tiny sliver of my writing which I have estimated to be socially acceptable.</p>
+
+    {% if collections.post | length == 0 %}
+        <h1>No Recent Posts</h1>
+    {% else %}
+        {%- for post in collections.post | reverse -%}
+            <article class="post">
+                <a href="{{ post.url }}" class="post-link">
+                    <h2 class="article-title">{{ post.data.title }}</h2>
+                    <span class="blog-date">{{ post.date | postDate }}</span>
+                    <p class="blog-desc">{{ post.data.description }}</p>
+                    <!--<span class="blog-tags">
+                        {% for tag in post.data.tags %}
+                            <a href="/blog/tags/{{ tag }}" class="tag">#{{ tag }}</a>{% if not loop.last %} {% endif %}
+                        {% endfor %}
+                    </span>-->
+                </a>
+            </article>
+        {%- endfor -%}
+    {% endif %}
+
+    <p><br><a href="/blog/feed.xml">Here</a> is my RSS feed, if you know what that is.</p>
+</main>
+
+<footer>
+    <p>Have a nice day.<br>@ 2038 Sqrt-1.</p>
+</footer>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends "blog-base.njk" %}
+
+{% block head %}
+<!-- Standard meta tags -->
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="{{ description }}" />
+<meta name="keywords" content="" />
+<link rel="canonical" href="{{ client.domain }}{{ page.url }}" />
+
+<!--Social Media Display-->
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:description" content="{{ description }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ client.domain }}{{ page.url }}" />
+<meta property="og:image" content="/assets/images/logo-small.png" />
+<meta
+    property="og:image:secure_url"
+    content="/assets/images/logo-small.png"
+/>
+
+<!-- Preload an image - tag not rendered if preloadImg is blank to stop console errors -->
+{% if preloadImg != '' %}
+    <link rel="preload" as="image" href="{{ preloadImg }}" />
+{% endif %}
+
+<!-- Sitewide Stylesheets and Scripts -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        {% if title %}"headline": "{{ title }}",{% endif %}
+        {% if image %}
+            "image": ["{{ image }}"],
+        {% endif %}
+        {% if date %}"datePublished": "{{ date | postDate }}",{% endif %}
+        {% if description %}"articleBody": "{{ description | safe }}",{% endif %}
+        {% if client.domain and page.url %}"url": "{{ client.domain }}{{ page.url }}",{% endif %}
+        {% if tags %}"articleSection": "{{ tags }}"{% endif %}
+    }
+</script>
+
+
+<link rel="stylesheet" href="/assets/css/posts.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/@swup/fade-theme@2"></script>
+<script type="module" src="/assets/js/swup.js"></script>
+
+<title>{{ title }}</title>
+{% endblock %}
+
+{% block content %}
+<a class="back-to-blog" href="/blog"> ← Back to blog.</a>
+
+<header>
+    <h1>{{ title }}</h1>
+    <time>{{ date | postDate }}</time>
+</header>
+
+<main id="main">
+    {{ content | safe }}
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.body.addEventListener('click', function (event) {
+            let el = event.target;
+
+            // Climb up the DOM tree until we hit a spoiler or the root
+            while (el && el !== document.body) {
+                if (el.classList && el.classList.contains('spoiler')) {
+                    el.classList.toggle('revealed');
+                    break;
+                }
+                el = el.parentElement;
+            }
+        });
+    });
+</script>
+{% endblock %}

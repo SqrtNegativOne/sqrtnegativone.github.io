@@ -1,63 +1,7 @@
-:root {
-  --bg: #121212;
-
-  /* stolen from ncase.me */
-  --link: #ff4040;
-  --link-hover: #ff8080;
-  
-  --font: "IBM Plex Sans", sans-serif;
-
-
-  --title-size: 60px;
-  --date-size: 14px; /* Haven't messed around with the date size yet so this variable is unused. */
-  --h1-size: 50px;
-  --h2-size: 30px;
-}
-
-html {
-  scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color: white var(--bg);
-}
-
-::selection {
-  color: black;
-  background-color: #fff;
-}
-
 #clock {
   position: fixed;
   bottom: 1px;
   right: 1px;
-}
-
-body {
-  margin: 0 auto;
-  max-width: 650px;
-  padding: 0 10px;
-
-  line-height: 1.6;
-  font-family: var(--font);
-  font-size: 18px;
-  color: white;
-
-  background-color: var(--bg);
-}
-
-/* Define a transition duration during page visits */
-html.is-changing .transition-fade {
-  transition: opacity 0.2s ease;
-  opacity: 1;
-}
-
-/* Define the styles for the unloaded pages */
-html.is-animating .transition-fade {
-  opacity: 0;
-}
-
-#swup {
-  min-height: 100vh;
-  background-color: inherit;
 }
 
 a.back-to-blog {
@@ -67,36 +11,6 @@ a.back-to-blog {
   color: var(--link);
   text-decoration: none;
   font-size: var(--date-size);
-}
-
-header h1 {
-  font-size: var(--title-size);
-  font-weight: normal;
-  margin-bottom: 0px;
-}
-
-header time {
-  font-size: var(--date-size);
-  display: block;
-  margin-bottom: 10px;
-}
-
-h1 {
-  font-size: var(--h1-size);
-  font-weight: normal;
-}
-
-h2 {
-  font-size: var(--h2-size);
-}
-
-a {
-  color: var(--link);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--link-hover);
 }
 
 .spoiler {
@@ -122,13 +36,4 @@ a:hover {
   pointer-events: auto;
   color: var(--link) !important; /* restores expected link color */
   text-decoration: underline;
-}
-
-time {
-  font-size: 0.8em;
-  padding-top: 0em;
-}
-
-footer {
-  font-size: small;
 }

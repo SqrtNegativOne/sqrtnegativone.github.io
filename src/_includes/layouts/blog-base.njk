@@ -1,0 +1,47 @@
+<!-- Everything common to both blog-index.html and post.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <!--Favicons-->
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/assets/favicons/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/assets/favicons/favicon-32x32.png?v1"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/assets/favicons/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/assets/favicons/site.webmanifest" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="stylesheet" href="/assets/css/blog-base.css" /> <!-- Other stylesheets go in the head block. -->
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+        <script type="module" src="/assets/js/swup.js"></script>
+
+        {% block head %}{% endblock %}
+    </head>
+
+
+    <body><div id="swup" class="transition-fade">
+        <!--Screen reader skip main nav-->
+        <a class="skip" aria-label="skip to main content" href="#main" tabindex="1" hidden>Click To Skip To Main Content</a>
+
+        {% block content %}{% endblock %}
+    </div></body>
+</html>

@@ -24,13 +24,14 @@
         <meta name="language" content="English">
         <meta name="theme-color" content="#000000">
 
-        <link rel="stylesheet" href="/assets/css/blog-index.css">
+        <link rel="preload" href="/assets/css/blog-index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/assets/css/blog-index.css"></noscript>
+
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
-        <script src="https://unpkg.com/@swup/fade-theme@2"></script>
         <script type="module" src="/assets/js/swup.js"></script>
     </head>
 

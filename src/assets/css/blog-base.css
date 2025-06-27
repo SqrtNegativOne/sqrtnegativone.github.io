@@ -1,0 +1,98 @@
+:root {
+  --bg: #121212;
+
+  --post-hover: #dcf8ff; /* Light blue for post hover in blog-index */
+
+  /* stolen from ncase.me */
+  --link: #ff4040;
+  --link-hover: #ff8080;
+  
+  --font: "IBM Plex Sans", sans-serif;
+
+
+  --title-size: 60px;
+  --date-size: 14px; /* Haven't messed around with the date size yet so this variable is unused. */
+  --h1-size: 50px;
+  --h2-size: 30px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: white var(--bg);
+
+  background-color: var(--bg);
+}
+
+::selection {
+  color: black;
+  background-color: #fff;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 650px;
+  padding: 0 10px;
+
+  line-height: 1.6;
+  font-family: var(--font);
+  font-size: 18px;
+  color: white;
+
+  background-color: var(--bg);
+}
+
+#swup {
+  min-height: 100vh;
+  background-color: var(--bg);
+}
+
+html.is-changing {
+  background: var(--bg); /* your site background */
+}
+
+/* Define a transition duration during page visits */
+html.is-changing .transition-fade {
+  transition: opacity 0.2s ease;
+  opacity: 1;
+}
+
+/* Define the styles for the unloaded pages */
+html.is-animating .transition-fade {
+  opacity: 0;
+}
+
+header h1 {
+  font-size: var(--title-size);
+  font-weight: normal;
+  margin-bottom: 0px;
+}
+
+header time {
+  font-size: var(--date-size);
+  display: block;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: var(--h1-size);
+  font-weight: normal;
+}
+
+h2 {
+  font-size: var(--h2-size);
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline dotted;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+footer {
+  margin-top: 20px;
+  font-size: small;
+}
