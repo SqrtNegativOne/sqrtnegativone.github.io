@@ -1,85 +1,112 @@
+<!-- Everything common to both blog-index.njk and post.njk -->
 
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
-        <title>Sqrt-1's Frontpage.</title>
-        <link href="/assets/images/favicon.png" rel="icon" type="image/png">
-        
-        <meta property="og:title" content="Sqrt-1's Blog.">
-        <meta property="og:type" content="website">
-        <meta property="og:description" content="Sqrt-1's Blog. Keep the weapons at the door.">
-        <meta property="og:url" content="sqrtnegativone.github.io/blog">
-        <meta property="og:image" content="">
-        <!--<meta name="twitter:card" content="summary_large_image">-->
-        <meta name="twitter:creator" content="Sqrt-1">
-        <!--<meta charset="UTF-8">-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <meta name="description" content="Sqrt-1's Frontpage. Keep the weapons at the door.">
+        <!--Favicons-->
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/assets/favicons/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/assets/favicons/favicon-32x32.png?v1"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/assets/favicons/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/assets/favicons/site.webmanifest" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
 
-        <meta name="robots" content="index, follow">
-        <meta name="keywords" content="Sqrt-1, Sqrt-1's Blog, Blog">
-        <meta name="author" content="Sqrt-1">
-        <meta name="language" content="English">
-        <meta name="theme-color" content="#000000">
-
-        <link rel="preload" href="/assets/css/blog-index.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="/assets/css/blog-index.css"></noscript>
-
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/css/ibm-fonts.css" /> <!-- Kinda inefficient because it uploads... every single Plex font but ok -->
+        <link rel="stylesheet" href="/assets/css/blog-base.css" /> <!-- Other stylesheets go in the head block. -->
 
         <script type="module" src="/assets/js/swup.js"></script>
+
+        
+<title>Sqrt-1's Frontpage.</title>
+<link href="/assets/images/favicon.png" rel="icon" type="image/png">
+
+<meta property="og:title" content="Sqrt-1's Blog.">
+<meta property="og:type" content="website">
+<meta property="og:description" content="Sqrt-1's Blog. Keep the weapons at the door.">
+<meta property="og:url" content="sqrtnegativone.github.io/blog">
+<meta property="og:image" content="">
+<!--<meta name="twitter:card" content="summary_large_image">-->
+<meta name="twitter:creator" content="Sqrt-1">
+<!--<meta charset="UTF-8">-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Sqrt-1's Frontpage. Keep the weapons at the door.">
+
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="Sqrt-1, Sqrt-1's Blog, Blog">
+<meta name="author" content="Sqrt-1">
+<meta name="language" content="English">
+<meta name="theme-color" content="#000000">
+
+<link rel="stylesheet" href="/assets/css/blog-index.css">
+
     </head>
 
 
     <body><div id="swup" class="transition-fade">
-        <main>
-            <header>
-                <h1>The Blog.</h1>
-            </header>
-            <p>Hullo.<br>My name is Sqrt-1, and this is a webpage containing the tiny sliver of my writing which I have estimated to be socially acceptable.</p>
+        <!--Screen reader skip main nav-->
+        <a class="skip" aria-label="skip to main content" href="#main" tabindex="1" hidden>Click To Skip To Main Content</a>
 
-            <article class="post">
-                        <a href="/blog/recommendations/" class="post-link">
-                            <h2 class="article-title">Recommendations</h2>
-                            <span class="blog-date">18 Jan 2025</span>
-                            <p class="blog-desc">collection of peak.</p>
-                            <!--<span class="blog-tags">
-                                
-                                    <a href="/blog/tags/sitemap" class="tag">#sitemap</a> 
-                                
-                                    <a href="/blog/tags/post" class="tag">#post</a> 
-                                
-                                    <a href="/blog/tags/post" class="tag">#post</a>
-                                
-                            </span>-->
-                        </a>
-                    </article><article class="post">
-                        <a href="/blog/knives-scary/" class="post-link">
-                            <h2 class="article-title">Knives are scary.</h2>
-                            <span class="blog-date">18 Jan 2025</span>
-                            <p class="blog-desc">They are scary.</p>
-                            <!--<span class="blog-tags">
-                                
-                                    <a href="/blog/tags/sitemap" class="tag">#sitemap</a> 
-                                
-                                    <a href="/blog/tags/post" class="tag">#post</a> 
-                                
-                                    <a href="/blog/tags/post" class="tag">#post</a>
-                                
-                            </span>-->
-                        </a>
-                    </article>
+        
+<main>
+    <header>
+        <h1>The Blog.</h1>
+    </header>
+    <p>Hullo.<br>My name is Sqrt-1, and this is a webpage containing the tiny sliver of my writing which I have estimated to be socially acceptable.</p>
 
-            <p><br><a href="/blog/feed.xml">Here</a> is my RSS feed, if you know what that is.</p>
-        </main>
+    <article class="post">
+                <a href="/blog/recommendations/" class="post-link">
+                    <h2 class="article-title">Recommendations</h2>
+                    <span class="blog-date">18 Jan 2025</span>
+                    <p class="blog-desc">collection of peak.</p>
+                    <!--<span class="blog-tags">
+                        
+                            <a href="/blog/tags/sitemap" class="tag">#sitemap</a> 
+                        
+                            <a href="/blog/tags/post" class="tag">#post</a> 
+                        
+                            <a href="/blog/tags/post" class="tag">#post</a>
+                        
+                    </span>-->
+                </a>
+            </article><article class="post">
+                <a href="/blog/knives-scary/" class="post-link">
+                    <h2 class="article-title">Knives are scary.</h2>
+                    <span class="blog-date">18 Jan 2025</span>
+                    <p class="blog-desc">They are scary.</p>
+                    <!--<span class="blog-tags">
+                        
+                            <a href="/blog/tags/sitemap" class="tag">#sitemap</a> 
+                        
+                            <a href="/blog/tags/post" class="tag">#post</a> 
+                        
+                            <a href="/blog/tags/post" class="tag">#post</a>
+                        
+                    </span>-->
+                </a>
+            </article>
 
-        <footer>
-            <p>Have a nice day.<br>@ 2038 Sqrt-1.</p>
-        </footer>
+    <p><br><a href="/blog/feed.xml">Here</a> is my RSS feed, if you know what that is.</p>
+</main>
+
+<footer>
+    <p>Have a nice day.<br>@ 2038 Sqrt-1.</p>
+</footer>
+
     </div></body>
 </html>

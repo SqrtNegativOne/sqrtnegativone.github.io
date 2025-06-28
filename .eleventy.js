@@ -64,9 +64,9 @@ module.exports = function (eleventyConfig) {
 
     eleventyConfig.addPassthroughCopy("./src/assets", {
         filter: ["**/*", "!**/*.js"], // JS files should be processed by esbuild so ignoring them here
-        watch: true
-    }); // Copy the assets folder to /docs/assets, and watch for changes
-    eleventyConfig.addPassthroughCopy("./src/admin");
+        watch: true                   // Watch for changes in the assets folder
+    });
+    // eleventyConfig.addPassthroughCopy("./src/admin"); // kinda just... deleted this folder so
     eleventyConfig.addPassthroughCopy("./src/_redirects");
 
     /**======================================================================

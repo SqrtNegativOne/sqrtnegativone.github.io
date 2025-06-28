@@ -1,21 +1,8 @@
-<!-- Everything common to both blog-index.html and post.html -->
+<!-- Everything common to both blog-index.njk and post.njk -->
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Standard meta tags -->
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="They are scary." />
-        <meta name="keywords" content="" />
-
-        <!--Social Media Display-->
-        <meta property="og:image" content="/assets/images/logo-small.png" />
-        <meta
-            property="og:image:secure_url"
-            content="/assets/images/logo-small.png"
-        />
 
         <!--Favicons-->
         <link
@@ -38,50 +25,61 @@
         <link rel="manifest" href="/assets/favicons/site.webmanifest" />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
-        
+
+        <link rel="stylesheet" href="/assets/css/ibm-fonts.css" /> <!-- Kinda inefficient because it uploads... every single Plex font but ok -->
         <link rel="stylesheet" href="/assets/css/blog-base.css" /> <!-- Other stylesheets go in the head block. -->
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-
-        <script src="https://unpkg.com/@swup/fade-theme@2"></script>
         <script type="module" src="/assets/js/swup.js"></script>
 
         
-    <!-- Standard meta tags -->
-    <link rel="canonical" href="/blog/knives-scary/" />
+<!-- Standard meta tags -->
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="They are scary." />
+<meta name="keywords" content="" />
+<link rel="canonical" href="/blog/knives-scary/" />
 
-    <!--Social Media Display-->
-    <meta property="og:title" content="Knives are scary." />
-    <meta property="og:description" content="They are scary." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="/blog/knives-scary/" />
-    <meta property="og:image" content="/assets/images/logo-small.png" />
-    <meta
-        property="og:image:secure_url"
-        content="/assets/images/logo-small.png"
-    />
+<!--Social Media Display-->
+<meta property="og:title" content="Knives are scary." />
+<meta property="og:description" content="They are scary." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/blog/knives-scary/" />
+<meta property="og:image" content="/assets/images/logo-small.png" />
+<meta
+    property="og:image:secure_url"
+    content="/assets/images/logo-small.png"
+/>
 
-    <!-- Preload an image - tag not rendered if preloadImg is blank to stop console errors -->
-    
-
-    <!-- Sitewide Stylesheets and Scripts -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": "Knives are scary.",
-            
-            "datePublished": "18 Jan 2025",
-            "articleBody": "They are scary.",
-            
-            "articleSection": "sitemap,post,post"
-        }
-    </script>
+<!-- Preload an image - tag not rendered if preloadImg is blank to stop console errors -->
 
 
-        <title>Knives are scary.</title>
+<!-- Sitewide Stylesheets and Scripts -->
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Knives are scary.",
+        
+        "datePublished": "18 Jan 2025",
+        "articleBody": "They are scary.",
+        
+        "articleSection": "sitemap,post,post"
+    }
+</script>
+
+
+<link rel="stylesheet" href="/assets/css/posts.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/@swup/fade-theme@2"></script>
+<script type="module" src="/assets/js/swup.js"></script>
+
+<title>Knives are scary.</title>
+
     </head>
 
 
@@ -89,15 +87,16 @@
         <!--Screen reader skip main nav-->
         <a class="skip" aria-label="skip to main content" href="#main" tabindex="1" hidden>Click To Skip To Main Content</a>
 
-        <a class="back-to-blog" href="/blog"> ← Back to blog.</a>
+        
+<a class="back-to-blog" href="/blog"> ← Back to blog.</a>
 
-        <header>
-            <h1>Knives are scary.</h1>
-            <time>18 Jan 2025</time>
-        </header>
+<header>
+    <h1>Knives are scary.</h1>
+    <time>18 Jan 2025</time>
+</header>
 
-        <main id="main">
-            <p>I have a confession to make; I have a minor phobia of knives.</p>
+<main id="main">
+    <p>I have a confession to make; I have a minor phobia of knives.</p>
 <p>It's strange because I am not that afraid of guns in movies as much as I find swords or knives <s>or pencils</s> or other sharp weapons, even though guns are much deadlier.</p>
 <p><s>It may be because I played too much Undertale and Omori, two of my favourite games, where the Knife does more damage than honest-to-god actual guns and both of their main characters can wield one sometime in the game but I digress</s></p>
 <p>But you know what's even deadlier than knives, swords, guns, rocket launchers, tanks or UAVs?</p>
@@ -120,23 +119,24 @@ The profound realisation that everyone, including strangers passing in the stree
 <p>Knives necessitate the visibility of this moral transaction that guns conceale. The gun is shown to be the quotidian tool for both the Good and the Bad. The knife is the weapon of psychpaths or the desparate. Its usage means the wielder has consciously agreed to the moral transaction and bartered a piece of their soul to use it. They at least partially comprehend the reality about the infinite irreality they are about to plunge their victim into.</p>
 <p>Knives are scary.</p>
 
-        </main>
+</main>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                document.body.addEventListener('click', function (event) {
-                    let el = event.target;
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.body.addEventListener('click', function (event) {
+            let el = event.target;
 
-                    // Climb up the DOM tree until we hit a spoiler or the root
-                    while (el && el !== document.body) {
-                        if (el.classList && el.classList.contains('spoiler')) {
-                            el.classList.toggle('revealed');
-                            break;
-                        }
-                        el = el.parentElement;
-                    }
-                });
-            });
-        </script>
+            // Climb up the DOM tree until we hit a spoiler or the root
+            while (el && el !== document.body) {
+                if (el.classList && el.classList.contains('spoiler')) {
+                    el.classList.toggle('revealed');
+                    break;
+                }
+                el = el.parentElement;
+            }
+        });
+    });
+</script>
+
     </div></body>
 </html>
