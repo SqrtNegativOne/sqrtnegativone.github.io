@@ -6,6 +6,7 @@ article.post {
 h2.article-title {
   font-size: 30px;
   margin: 0;
+  margin-bottom: -8px;
 }
 
 a.post-link {
@@ -18,19 +19,18 @@ a.post-link:hover {
 }
 
 .blog-date {
-  color: var(--post-hover);
+  margin: 0;
+  padding: 0;
   font-size: 0.8em;
 }
 
 .blog-desc {
-  color: var(--post-hover);
   font-size: 0.8em;
   margin: 0;
   padding: 0;
 }
 
 .blog-tags {
-  color: var(--post-hover);
   font-size: 0.8em;
   margin: 0;
   padding: 0;
