@@ -40,5 +40,23 @@
         <a class="skip" aria-label="skip to main content" href="#main" tabindex="1" hidden>Click To Skip To Main Content</a>
 
         {% block content %}{% endblock %}
+
+        <a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g" style="visibility: visible; opacity: 1;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+                <path d="M12 6H0l6-6z"></path>
+            </svg>
+        </a>
+        <script>
+            var mybutton = document.getElementById("top-link");
+            window.onscroll = function () {
+                if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+                    mybutton.style.visibility = "visible";
+                    mybutton.style.opacity = "1";
+                } else {
+                    mybutton.style.visibility = "hidden";
+                    mybutton.style.opacity = "0";
+                }
+            };
+        </script>
     </div></body>
 </html>
