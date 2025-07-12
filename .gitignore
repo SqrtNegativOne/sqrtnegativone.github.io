@@ -1,6 +1,4 @@
 .vscode
 .cache
 node_modules/
-Instruction Manual.md
-related ideas.md
-design
+ideas.md
