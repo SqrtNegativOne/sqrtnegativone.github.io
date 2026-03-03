@@ -6,6 +6,7 @@
     "scripts": {
         "clean": "rimraf docs",
         "format": "prettier --write '**/*.{html,css,scss,js,json,md}'",
+        "dev": "cross-env ELEVENTY_ENV=DEV eleventy --serve",
         "watch:eleventy": "cross-env ELEVENTY_ENV=DEV eleventy --serve",
         "build:eleventy": "cross-env ELEVENTY_ENV=PROD eleventy",
         "watch:cms": "npx decap-server",

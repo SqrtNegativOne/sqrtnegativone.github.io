@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,6 +41,7 @@
     </nav>
 
     <section id="home">
+        <canvas id="dither-bg" aria-hidden="true"></canvas>
         <hgroup id="profile">
             <div id="portrait">
                 <img alt="Yes, this is literally me." title="Yes, this is literally me." src="/assets/images/index/siffrin.jpg">
@@ -170,23 +172,33 @@
         </footer>
     </section>
 
+    <script src="/assets/js/dither.js" defer></script>
     <script>
+        // Show nav only after scrolling past the hero
+        const nav = document.querySelector('nav');
+        const hero = document.getElementById('home');
+        function updateNav() {
+            if (window.scrollY > hero.offsetHeight * 0.5) {
+                nav.classList.add('visible');
+            } else {
+                nav.classList.remove('visible');
+            }
+        }
+        window.addEventListener('scroll', updateNav, { passive: true });
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
-                    
-                    // Close mobile menu if open
-                    // mobileMenu.classList.add('hidden'); I don't have one.
                 }
             });
         });
