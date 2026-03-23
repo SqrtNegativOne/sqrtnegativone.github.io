@@ -95,11 +95,10 @@
       const dx = nx - smx;
       const dy = ny - smy;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      const glow = Math.max(0, 1 - dist * 5) ** 2 * 0.6;
-      return Math.min(1, v + glow);
+      const glow = Math.max(0, 1 - dist * 5) ** 2 * 0.7;
+      return Math.max(0, v - glow);
     }
-    const OFF_R = 18, OFF_G = 18, OFF_B = 18;
-    const ON_R = 26, ON_G = 48, ON_B = 50;
+    const ON_A = 170;
     let t = 0;
     function draw() {
       t += 0.01;
@@ -118,9 +117,7 @@
           const nx = cx / cw;
           const threshold = BAYER[bRow + cx % 8];
           const on = fieldValue(nx, ny, t) > threshold;
-          const r = on ? ON_R : OFF_R;
-          const g = on ? ON_G : OFF_G;
-          const b = on ? ON_B : OFF_B;
+          const a = on ? ON_A : 0;
           const x0 = cx * CELL, y0 = cy * CELL;
           const x1 = Math.min(x0 + CELL, W);
           const y1 = Math.min(y0 + CELL, H);
@@ -128,10 +125,10 @@
             const rowOff = py * W;
             for (let px = x0; px < x1; px++) {
               const i = (rowOff + px) * 4;
-              d[i] = r;
-              d[i + 1] = g;
-              d[i + 2] = b;
-              d[i + 3] = 255;
+              d[i] = 0;
+              d[i + 1] = 0;
+              d[i + 2] = 0;
+              d[i + 3] = a;
             }
           }
         }

@@ -56,20 +56,18 @@
       Math.sin(ny * 13.4 + t * 1.80) * 0.02
     ) * 0.5 + 0.5; // normalize to [0, 1]
 
-    // Mouse glow: a smooth radial bump that adds density near the cursor
+    // Mouse glow: subtracts near cursor, revealing the image beneath
     const dx = nx - smx;
     const dy = ny - smy;
     const dist = Math.sqrt(dx * dx + dy * dy);
-    const glow = Math.max(0, 1 - dist * 5.0) ** 2 * 0.60;
+    const glow = Math.max(0, 1 - dist * 5.0) ** 2 * 0.70;
 
-    return Math.min(1, v + glow);
+    return Math.max(0, v - glow);
   }
 
-  // Color palette — kept very dark to stay subtle
-  // "off" pixel: site background
-  const OFF_R = 18, OFF_G = 18, OFF_B = 18;
-  // "on" pixel: a dim cyan-tinted dark, visible but not garish
-  const ON_R  = 26, ON_G  = 48, ON_B  = 50;
+  // "on" pixel: semi-transparent dark overlay that dims the image
+  // "off" pixel: fully transparent — the mountain image shows through
+  const ON_A = 170; // ~67% opacity dark overlay
 
   let t = 0;
 
@@ -97,9 +95,9 @@
         const threshold = BAYER[bRow + (cx % 8)];
         const on        = fieldValue(nx, ny, t) > threshold;
 
-        const r = on ? ON_R  : OFF_R;
-        const g = on ? ON_G  : OFF_G;
-        const b = on ? ON_B  : OFF_B;
+        // on  → dark overlay pixel (dims the image)
+        // off → transparent (image shows through fully)
+        const a = on ? ON_A : 0;
 
         // Fill the CELL×CELL block
         const x0 = cx * CELL, y0 = cy * CELL;
@@ -110,10 +108,10 @@
           const rowOff = py * W;
           for (let px = x0; px < x1; px++) {
             const i    = (rowOff + px) * 4;
-            d[i]       = r;
-            d[i + 1]   = g;
-            d[i + 2]   = b;
-            d[i + 3]   = 255;
+            d[i]       = 0;
+            d[i + 1]   = 0;
+            d[i + 2]   = 0;
+            d[i + 3]   = a;
           }
         }
       }
