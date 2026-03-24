@@ -15,111 +15,48 @@
     63, 31, 55, 23, 61, 29, 53, 21,
   ].map(v => v / 64);
 
-  const CELL = 6; // pixel size of each dither cell
+  // Dark and light palette colors (dark = site bg, light = white)
+  const DARK  = [18,  18,  18];
+  const LIGHT = [255, 255, 255];
 
-  // Mouse position in normalized coords [-inf, inf]; starts off-screen
-  let mx = -10, my = -10;
-  // Smooth mouse tracking
-  let smx = -10, smy = -10;
+  const img = new Image();
+  img.src = '/assets/images/index/mountain.jpg';
+  img.onload = render;
+  window.addEventListener('resize', render);
 
-  document.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mx = (e.clientX - rect.left) / rect.width;
-    my = (e.clientY - rect.top) / rect.height;
-  });
+  function render() {
+    const W = canvas.offsetWidth;
+    const H = canvas.offsetHeight;
+    if (W === 0 || H === 0) return;
 
-  document.addEventListener('touchmove', e => {
-    const rect = canvas.getBoundingClientRect();
-    const touch = e.touches[0];
-    mx = (touch.clientX - rect.left) / rect.width;
-    my = (touch.clientY - rect.top) / rect.height;
-  }, { passive: true });
+    canvas.width  = W;
+    canvas.height = H;
 
-  function resize() {
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
+    // Draw the source image scaled to fill the canvas
+    ctx.drawImage(img, 0, 0, W, H);
 
-  // Layered sine-wave noise field — organic motion without external libraries
-  function fieldValue(nx, ny, t) {
-    const v = (
-      Math.sin(nx * 6.28 + t * 0.70) * 0.20 +
-      Math.sin(ny * 5.50 + t * 0.50) * 0.20 +
-      Math.sin((nx + ny) * 4.71 + t * 1.10) * 0.17 +
-      Math.sin((nx - ny) * 3.93 + t * 0.35) * 0.15 +
-      Math.sin(nx * 11.0 + t * 1.50) * 0.08 +
-      Math.sin(ny *  9.4 + t * 1.30) * 0.08 +
-      Math.sin((nx * 1.4 - ny * 0.9) * 7.8 + t * 0.90) * 0.07 +
-      Math.sin(nx * 15.7 + t * 2.10) * 0.03 +
-      Math.sin(ny * 13.4 + t * 1.80) * 0.02
-    ) * 0.5 + 0.5; // normalize to [0, 1]
+    // Pull every pixel into a byte array
+    const imageData = ctx.getImageData(0, 0, W, H);
+    const d = imageData.data;
 
-    // Mouse glow: subtracts near cursor, revealing the image beneath
-    const dx = nx - smx;
-    const dy = ny - smy;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-    const glow = Math.max(0, 1 - dist * 5.0) ** 2 * 0.70;
+    for (let y = 0; y < H; y++) {
+      const bayerRow = (y % 8) * 8;
+      for (let x = 0; x < W; x++) {
+        const i = (y * W + x) * 4;
 
-    return Math.max(0, v - glow);
-  }
+        // Perceived luminance (ITU-R BT.601 coefficients)
+        const lum = (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255;
 
-  // "on" pixel: semi-transparent dark overlay that dims the image
-  // "off" pixel: fully transparent — the mountain image shows through
-  const ON_A = 170; // ~67% opacity dark overlay
+        // Compare luminance against the Bayer threshold for this pixel position
+        const col = lum > BAYER[bayerRow + (x % 8)] ? LIGHT : DARK;
 
-  let t = 0;
-
-  function draw() {
-    t += 0.010;
-
-    // Ease mouse tracking so it trails smoothly
-    smx += (mx - smx) * 0.08;
-    smy += (my - smy) * 0.08;
-
-    const W  = canvas.width;
-    const H  = canvas.height;
-    const cw = Math.ceil(W / CELL);
-    const ch = Math.ceil(H / CELL);
-
-    const img = ctx.createImageData(W, H);
-    const d   = img.data;
-
-    for (let cy = 0; cy < ch; cy++) {
-      const ny  = cy / ch;
-      const bRow = (cy % 8) * 8;
-
-      for (let cx = 0; cx < cw; cx++) {
-        const nx        = cx / cw;
-        const threshold = BAYER[bRow + (cx % 8)];
-        const on        = fieldValue(nx, ny, t) > threshold;
-
-        // on  → dark overlay pixel (dims the image)
-        // off → transparent (image shows through fully)
-        const a = on ? ON_A : 0;
-
-        // Fill the CELL×CELL block
-        const x0 = cx * CELL, y0 = cy * CELL;
-        const x1 = Math.min(x0 + CELL, W);
-        const y1 = Math.min(y0 + CELL, H);
-
-        for (let py = y0; py < y1; py++) {
-          const rowOff = py * W;
-          for (let px = x0; px < x1; px++) {
-            const i    = (rowOff + px) * 4;
-            d[i]       = 0;
-            d[i + 1]   = 0;
-            d[i + 2]   = 0;
-            d[i + 3]   = a;
-          }
-        }
+        d[i]     = col[0];
+        d[i + 1] = col[1];
+        d[i + 2] = col[2];
+        // alpha stays 255
       }
     }
 
-    ctx.putImageData(img, 0, 0);
-    requestAnimationFrame(draw);
+    ctx.putImageData(imageData, 0, 0);
   }
-
-  draw();
 })();
