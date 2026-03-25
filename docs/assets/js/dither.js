@@ -70,30 +70,52 @@
       53,
       21
     ].map((v) => v / 64);
-    const DARK = [18, 18, 18];
-    const LIGHT = [255, 255, 255];
+    const LEVELS = 4;
+    const STEP = 255 / (LEVELS - 1);
     const img = new Image();
     img.src = "/assets/images/index/mountain.jpg";
     img.onload = render;
     window.addEventListener("resize", render);
+    function drawCover() {
+      const W = canvas.width;
+      const H = canvas.height;
+      const canvasAspect = W / H;
+      const imgAspect = img.naturalWidth / img.naturalHeight;
+      let sx, sy, sw, sh;
+      if (imgAspect > canvasAspect) {
+        sh = img.naturalHeight;
+        sw = sh * canvasAspect;
+        sx = (img.naturalWidth - sw) / 2;
+        sy = 0;
+      } else {
+        sw = img.naturalWidth;
+        sh = sw / canvasAspect;
+        sx = 0;
+        sy = (img.naturalHeight - sh) / 2;
+      }
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+    }
     function render() {
       const W = canvas.offsetWidth;
       const H = canvas.offsetHeight;
       if (W === 0 || H === 0) return;
       canvas.width = W;
       canvas.height = H;
-      ctx.drawImage(img, 0, 0, W, H);
+      drawCover();
       const imageData = ctx.getImageData(0, 0, W, H);
       const d = imageData.data;
       for (let y = 0; y < H; y++) {
         const bayerRow = y % 8 * 8;
         for (let x = 0; x < W; x++) {
           const i = (y * W + x) * 4;
-          const lum = (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255;
-          const col = lum > BAYER[bayerRow + x % 8] ? LIGHT : DARK;
-          d[i] = col[0];
-          d[i + 1] = col[1];
-          d[i + 2] = col[2];
+          const threshold = BAYER[bayerRow + x % 8];
+          for (let c = 0; c < 3; c++) {
+            const norm = d[i + c] / 255 * (LEVELS - 1);
+            const lo = Math.floor(norm);
+            const frac = norm - lo;
+            const q = frac > threshold ? Math.min(lo + 1, LEVELS - 1) : lo;
+            d[i + c] = Math.round(q * STEP);
+          }
         }
       }
       ctx.putImageData(imageData, 0, 0);
