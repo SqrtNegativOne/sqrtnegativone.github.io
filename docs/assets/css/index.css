@@ -85,6 +85,7 @@ nav ul {
   position: sticky;
 
   gap: 20px;
+  padding: 10px 20px;
 }
 
 nav ul li {
@@ -133,6 +134,8 @@ nav ul li a:hover::after {
   margin: 0;
   padding: 0;
   line-height: 1;
+  mix-blend-mode: difference;
+  color: white;
 }
 
 #name p {
