@@ -1,6 +1,6 @@
 ---
 title: "The Quick-n'-Dirty Guide to Not Produce Slop."
-date: 2025-01-18
+date: 2026-04-14
 description: "It's really easy and you have no excuse."
 ---
 
@@ -12,7 +12,7 @@ Contra homeopathy, diluting something does not make it stronger. It's harmless a
 
 But I also don't think you _need_ to be Dostovesky, or spend even more time reading or writing, to do something better than a large language model. I mean, it would be great if you did, but I am not elitist enough to gatekeep _writing_ of all things to only smart people. And I don't want being dumb to be a good excuse to speaking like a LinkedIn influencer.
 
-So. A low effort, Quick-n'-Dirty guide to not sound like a robot, in April, 2026.
+So. A low effort, Quick-n'-Dirty guide to not sound like a clanker, in April, 2026.
 1. Don't use correct English. It's a social construct. Use "passer-by's" instead of "passers-by". Use "talismen" instead of "talismans" because that just sounds weird.
 2. Use images. Empty your meme folder. Embed Youtube videos. Use quotes from your favourite music. Cite blogs, articles, papers, no one has read or will read, except you.
 3. Headings don't have to be topic organisers, they can be statements.
