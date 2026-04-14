@@ -1,0 +1,20 @@
+---
+layout: base.njk
+bodyClass: no-border
+---
+
+{% if section == "afterdark" %}
+<a href="/blog-afterdark/" class="post-back">&larr; All afterdark posts</a>
+{% else %}
+<a href="/blog/" class="post-back">&larr; All posts</a>
+{% endif %}
+
+<article>
+  <header class="post-header">
+    <h2 class="post-title">{{ title }}</h2>
+    <time class="post-date">{{ date | readableDate }}</time>
+  </header>
+  <div class="post-body">
+    {{ content | safe }}
+  </div>
+</article>

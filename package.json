@@ -1,44 +1,36 @@
 {
-    "name": "sqrt-blog",
-    "version": "1.0.0",
-    "description": "This is my blog.",
-    "main": "index.js",
-    "scripts": {
-        "clean": "rimraf docs",
-        "format": "prettier --write '**/*.{html,css,scss,js,json,md}'",
-        "dev": "cross-env ELEVENTY_ENV=DEV eleventy --serve",
-        "watch:eleventy": "cross-env ELEVENTY_ENV=DEV eleventy --serve",
-        "build:eleventy": "cross-env ELEVENTY_ENV=PROD eleventy",
-        "watch:cms": "npx decap-server",
-        "start": "npm-run-all --parallel watch:*",
-        "build": "run-s clean build:*"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/SqrtNegativOne/sqrtnegativone.github.io.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/SqrtNegativOne/sqrtnegativone.github.io/issues"
-    },
-    "homepage": "https://github.com/SqrtNegativOne/sqrtnegativone.github.io#readme",
-    "dependencies": {
-        "@swup/fade-theme": "^2.0.1",
-        "@swup/head-plugin": "^2.3.1",
-        "markdown-it-footnote": "^3.0.3"
-    },
-    "devDependencies": {
-        "@11ty/eleventy": "^3.1.2",
-        "@11ty/eleventy-plugin-rss": "^2.0.4",
-        "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.1",
-        "@quasibit/eleventy-plugin-sitemap": "^2.2.0",
-        "cross-env": "^7.0.3",
-        "rimraf": "^6.0.1",
-        "esbuild": "^0.25.5",
-        "npm-run-all": "^4.1.5",
-        "prettier": "^3.3.3",
-        "prettier-plugin-jinja-template": "^2.0.0"
-    }
+  "name": "site",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run blog:build && vite",
+    "build": "npm run blog:build && vite build && cp docs/index.html docs/404.html && echo sqrt.fyi > docs/CNAME",
+    "blog:build": "npx @11ty/eleventy",
+    "blog:watch": "npx @11ty/eleventy --watch",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@paper-design/shaders-react": "^0.0.72",
+    "@tailwindcss/vite": "^4.2.2",
+    "markdown-it-footnote": "^4.0.0",
+    "motion": "^12.38.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.2",
+    "tailwindcss": "^4.2.2"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.5",
+    "@eslint/js": "^9.39.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "vite": "^8.0.1"
+  }
 }

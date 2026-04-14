@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>afterdark — Ark Malhotra</title>
+  <title>{{ title | default("the Blog") }} — Ark Malhotra</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -378,52 +378,31 @@
     }
   </style>
 </head>
-
-<body class="">
-  <div class="blog-layout">
-    
+{% set isPost = bodyClass == "no-border" %}
+<body class="{{ bodyClass }}">
+  <div class="blog-layout{% if isPost %} is-post{% endif %}">
+    {% if not isPost %}
     <header class="blog-header">
       <h1 class="blog-title">
         <em>the</em>
         <span>BLOG</span>
-        <span class="afterdark-sub">afterdark</span>
+        {% if isAfterdark %}<span class="afterdark-sub">afterdark</span>{% endif %}
       </h1>
     </header>
 
     <div class="blog-divider"></div>
-    
+    {% endif %}
 
     <div class="blog-content">
-      
+      {% if not isPost %}
       <a href="/" class="blog-home-link">&larr; Back to site</a>
-      
-      
-<div class="afterdark-badge">afterdark</div>
-
-<ul class="post-list">
-  <li class="post-list-item">
-    <a href="/blog-afterdark/">
-      <h3 class="post-list-title">afterdark</h3>
-      <time class="post-list-date">April 14, 2026</time>
-      
-    </a>
-  </li>
-  <li class="post-list-item">
-    <a href="/blog-afterdark/hello-afterdark/">
-      <h3 class="post-list-title">Hello, afterdark.</h3>
-      <time class="post-list-date">March 24, 2025</time>
-      
-      <p class="post-list-desc">A test post for the afterdark section.</p>
-      
-    </a>
-  </li>
-</ul>
-
+      {% endif %}
+      {{ content | safe }}
     </div>
   </div>
 
-  
-  
+  {% if not bodyClass %}
+  {# Listing pages: animate border out when clicking a post link #}
   <script>
     document.querySelectorAll('.post-list-item a').forEach(function(link) {
       link.addEventListener('click', function(e) {
@@ -436,6 +415,6 @@
       });
     });
   </script>
-  
+  {% endif %}
 </body>
 </html>

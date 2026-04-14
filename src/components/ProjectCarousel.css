@@ -1,0 +1,59 @@
+/* ── Carousel wrapper ───────────────────────────── */
+.carousel-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── Scrollable card track ──────────────────────── */
+.carousel-track {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 1rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x proximity;
+  /* Thin scrollbar as visual affordance for scrollability */
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-secondary) transparent;
+  padding-bottom: 6px; /* space for the scrollbar */
+  padding-right: 2rem; /* breathing room at end */
+}
+
+.carousel-track::-webkit-scrollbar {
+  height: 3px;
+}
+
+.carousel-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.carousel-track::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  opacity: 0.4;
+}
+
+/* ── Scroll progress bar ────────────────────────── */
+.carousel-progress-bar {
+  height: 1px;
+  background: var(--glass-border);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.carousel-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--text-secondary);
+  opacity: 0.6;
+  transition: width 0.15s ease;
+}
+
+@media (max-width: 640px) {
+  .carousel-track {
+    padding-right: 1rem;
+  }
+}

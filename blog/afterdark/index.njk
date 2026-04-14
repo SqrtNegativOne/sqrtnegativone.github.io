@@ -1,0 +1,28 @@
+---
+layout: base.njk
+title: "afterdark"
+permalink: /blog-afterdark/index.html
+isAfterdark: true
+---
+
+<div class="afterdark-badge">afterdark</div>
+
+<ul class="post-list">
+  {%- for post in collections.afterdark %}
+  <li class="post-list-item">
+    <a href="{{ post.url }}">
+      <h3 class="post-list-title">{{ post.data.title }}</h3>
+      <time class="post-list-date">{{ post.date | readableDate }}</time>
+      {% if post.data.description %}
+      <p class="post-list-desc">{{ post.data.description }}</p>
+      {% endif %}
+    </a>
+  </li>
+  {%- endfor %}
+</ul>
+
+{%- if collections.afterdark.length == 0 %}
+<p style="color: var(--text-secondary); font-size: 0.85rem; font-style: italic;">
+  Nothing here yet.
+</p>
+{%- endif %}

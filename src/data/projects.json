@@ -1,0 +1,112 @@
+[
+  {
+    "id": "floatchat",
+    "name": "FloatChat",
+    "description": "Conversational interface for oceanographic data visualisation. FastAPI backend with an MCP interface for AI agents querying the ARGO Oceanographic API. Selected top 90 of 200+ college teams at SIH 2025.",
+    "tags": ["FastAPI", "PydanticAI", "LangChain", "Docker", "MCP"],
+    "github": null,
+    "url": null,
+    "image": "https://picsum.photos/seed/floatchat-ocean/400/220"
+  },
+  {
+    "id": "ai-factcheck",
+    "name": "AI Factcheck",
+    "description": "Modular Python pipeline that automatically fact-checks claims using AI. Pluggable architecture for web-scraping, NLP semantic search, and LLM/NLI verification. Pydantic typing, cached embeddings, local LLMs via Ollama.",
+    "tags": ["Python", "LangChain", "Ollama", "NLP"],
+    "github": "https://github.com/SqrtNegativOne/AI-factcheck",
+    "url": null,
+    "image": "https://picsum.photos/seed/factcheck-research/400/220"
+  },
+  {
+    "id": "hand-cricket-mab",
+    "name": "Hand Cricket MAB",
+    "description": "Multi-armed bandit using Experts-as-Arms to beat you at Hand Cricket. Combines PyTorch neural nets, n-Gram expert models, and heuristics via the Hedge algorithm.",
+    "tags": ["Python", "PyTorch", "Game Theory"],
+    "github": null,
+    "url": null,
+    "image": "https://picsum.photos/seed/cricket-mab-game/400/220",
+    "private": true
+  },
+  {
+    "id": "vectorblock",
+    "name": "VectorBlock",
+    "description": "LeechBlockNG but AI-powered. Blocks sites that don't align with your current goal — won't let you scroll Wikipedia articles on pop singers if you're meant to be studying Operating Systems.",
+    "tags": ["AI", "Browser Extension"],
+    "github": null,
+    "url": null,
+    "image": "https://picsum.photos/seed/vectorblock-focus/400/220",
+    "private": true
+  },
+  {
+    "id": "presence",
+    "name": "Presence",
+    "description": "AI-powered attendance system that uses face recognition to automatically mark students present from a single group photo taken after enrollment. DIY-Palantir.",
+    "tags": ["Python", "Face Recognition", "CV"],
+    "github": "https://github.com/SqrtNegativOne/presence",
+    "url": null,
+    "image": "https://picsum.photos/seed/presence-faces/400/220"
+  },
+  {
+    "id": "music-turing-test",
+    "name": "Music Turing Test",
+    "description": "Interactive web game: listen to short music clips and bet on whether each was made by AI or a human. Points based on accuracy and streaks.",
+    "tags": ["Web"],
+    "github": "https://github.com/SqrtNegativOne/music-turing-test",
+    "url": null,
+    "image": "https://picsum.photos/seed/music-turing-audio/400/220"
+  },
+  {
+    "id": "axiom-web",
+    "name": "Axiom Web",
+    "description": "Website for Axiom, the Philosophy Society at NSUT. Built with React + Eleventy; features a newsletter, blog, and member information.",
+    "tags": ["React", "Eleventy", "Web"],
+    "github": "https://github.com/SqrtNegativOne/axiom-web",
+    "url": null,
+    "image": "https://picsum.photos/seed/axiom-philosophy/400/220"
+  },
+  {
+    "id": "gdg-llm",
+    "name": "GDG LLM Presentation",
+    "description": "Presentation on Large Language Models for GDG NSUT, with interactive HTML demos covering tokenization (BPE), attention mechanisms, and reinforcement learning. Delivered as ML Mentor.",
+    "tags": ["ML", "Python", "PyTorch"],
+    "github": "https://github.com/SqrtNegativOne/GDG-LLM-Presentation",
+    "url": null,
+    "image": "https://picsum.photos/seed/gdg-llm-tech/400/220"
+  },
+  {
+    "id": "pysdf",
+    "name": "pySdf",
+    "description": "Python library implementing signed distance functions (SDFs) for 2D/3D geometry via NumPy — 50 2D shapes, 30 3D primitives, STL-to-SDF conversion, and Boolean composition operators. Open-source contribution.",
+    "tags": ["Python", "NumPy", "Open Source"],
+    "github": "https://github.com/HARSHDIPSAHA/pySdf",
+    "url": null,
+    "image": "https://picsum.photos/seed/pysdf-geometry/400/220"
+  },
+  {
+    "id": "anki-toolbar",
+    "name": "Anki Toolbar Addon",
+    "description": "Anki addon that rips apart the editor toolbar for finer layout control. ~150 lines; the challenge was navigating Anki's large internal codebase to make a meaningful dent.",
+    "tags": ["Python", "Anki"],
+    "github": null,
+    "url": "https://ankiweb.net/shared/info/568644593",
+    "image": "https://picsum.photos/seed/anki-study-cards/400/220"
+  },
+  {
+    "id": "weekly-fetch",
+    "name": "Weekly Fetch",
+    "description": "TODO: add description.",
+    "tags": [],
+    "github": null,
+    "url": null,
+    "image": "https://picsum.photos/seed/weekly-fetch-data/400/220"
+  },
+  {
+    "id": "nextcode",
+    "name": "NextCode",
+    "description": "TODO: add description.",
+    "tags": [],
+    "github": null,
+    "url": null,
+    "image": "https://picsum.photos/seed/nextcode-editor/400/220"
+  }
+]

@@ -1,0 +1,5 @@
+/* ── Projects page wrapper ─────────────────────── */
+.projects-page {
+  width: 100%;
+  min-width: 0; /* prevent grid blowout */
+}

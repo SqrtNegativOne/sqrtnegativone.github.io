@@ -1,0 +1,6 @@
+{
+  "layout": "post.njk",
+  "tags": "afterdark",
+  "permalink": "/blog-afterdark/{{ page.fileSlug }}/index.html",
+  "section": "afterdark"
+}
