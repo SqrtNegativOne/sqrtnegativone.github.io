@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>the Blog — Ark Malhotra</title>
+  <title>afterdark — Ark Malhotra</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -77,21 +77,6 @@
       padding: 4rem;
     }
 
-    /* Single post: center content, no side header */
-    .blog-layout.is-post {
-      justify-content: center;
-      padding: 3rem 2rem;
-    }
-
-    .blog-layout.is-post .blog-content {
-      padding-left: 0;
-      padding-top: 0;
-      max-width: 640px;
-      width: 100%;
-      max-height: none;
-      overflow-y: visible;
-    }
-
     /* Left panel: "the BLOG" title */
     .blog-header {
       flex-shrink: 0;
@@ -119,17 +104,6 @@
       font-style: normal;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-    }
-
-    .blog-title .afterdark-sub {
-      display: block;
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.45em;
-      font-style: normal;
-      text-transform: lowercase;
-      letter-spacing: 0.08em;
-      color: var(--text-secondary);
-      margin-top: 0.15em;
     }
 
     /* Vertical divider */
@@ -298,56 +272,6 @@
       opacity: 0.6;
     }
 
-    /* ── Footnotes ── */
-    .footnotes {
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(128, 128, 128, 0.2);
-      font-size: 0.78rem;
-      color: var(--text-secondary);
-    }
-
-    .footnotes ol {
-      padding-left: 1.4rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .footnotes li {
-      line-height: 1.6;
-    }
-
-    /* Inline footnote reference superscript */
-    .footnote-ref a {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.65rem;
-      color: var(--text-secondary);
-      text-decoration: none;
-      padding: 0 0.15em;
-      border-bottom: 1px solid var(--text-secondary);
-      vertical-align: super;
-      transition: color 0.2s;
-    }
-
-    .footnote-ref a:hover {
-      color: var(--text);
-      border-color: var(--text);
-    }
-
-    /* Back-reference arrow */
-    .footnote-backref {
-      font-size: 0.7rem;
-      text-decoration: none;
-      color: var(--text-secondary);
-      margin-left: 0.3em;
-      transition: color 0.2s;
-    }
-
-    .footnote-backref:hover {
-      color: var(--text);
-    }
-
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .blog-layout {
@@ -378,42 +302,36 @@
     }
   </style>
 </head>
-
 <body class="">
   <div class="blog-layout">
-    
     <header class="blog-header">
       <h1 class="blog-title">
         <em>the</em>
         <span>BLOG</span>
-        
       </h1>
     </header>
 
     <div class="blog-divider"></div>
-    
 
     <div class="blog-content">
-      
       <a href="/" class="blog-home-link">&larr; Back to site</a>
       
-      
+<div class="afterdark-badge">afterdark</div>
+
 <ul class="post-list">
   <li class="post-list-item">
-    <a href="/blog/knives-are-scary/">
-      <h3 class="post-list-title">Knives are scary.</h3>
-      <time class="post-list-date">January 18, 2025</time>
-      
-      <p class="post-list-desc">They are scary.</p>
+    <a href="/afterdark/">
+      <h3 class="post-list-title">afterdark</h3>
+      <time class="post-list-date">March 24, 2026</time>
       
     </a>
   </li>
   <li class="post-list-item">
-    <a href="/blog/nonslop/">
-      <h3 class="post-list-title">The Quick-n&#39;-Dirty Guide to Not Produce Slop.</h3>
-      <time class="post-list-date">January 18, 2025</time>
+    <a href="/afterdark/hello-afterdark/">
+      <h3 class="post-list-title">Hello, afterdark.</h3>
+      <time class="post-list-date">March 24, 2025</time>
       
-      <p class="post-list-desc">It&#39;s really easy and you have no excuse.</p>
+      <p class="post-list-desc">A test post for the afterdark section.</p>
       
     </a>
   </li>
