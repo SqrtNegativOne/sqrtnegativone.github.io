@@ -1,16 +1,30 @@
 import { useEffect, useRef } from "react";
 import { createThomas } from "./visualizations/thomas";
+import { createThomasWebGL } from "./visualizations/thomas-webgl";
 
-// To swap the visualization, replace this import and the createThomas() call below.
 // Any visualization must implement: { init, frame, resize, destroy }
+// We prefer the WebGL2 renderer; fall back to Canvas 2D if unavailable.
 
 export default function Home() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d", { alpha: false });
-    const viz = createThomas();
+
+    // Try WebGL2 first. createThomasWebGL.init() returns true on success;
+    // if it returns false we fall back to the Canvas 2D renderer.
+    const webglViz = createThomasWebGL();
+    const useWebGL = webglViz.init(canvas);
+
+    let viz, ctx;
+    if (useWebGL) {
+      viz = webglViz;
+      ctx = null;
+    } else {
+      webglViz.destroy();
+      ctx = canvas.getContext("2d", { alpha: false });
+      viz = createThomas();
+    }
 
     let W, H, animId;
     let targetAz = 0, targetEl = 0.3, az = 0, el = 0.3;
@@ -23,7 +37,7 @@ export default function Home() {
       canvas.height = (H * dpr) | 0;
       canvas.style.width  = W + "px";
       canvas.style.height = H + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!useWebGL) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       viz.resize(W, H);
     }
 
@@ -64,7 +78,7 @@ export default function Home() {
     window.addEventListener("resize", onResize);
 
     resize();
-    viz.init(ctx, W, H);
+    if (!useWebGL) viz.init(ctx, W, H);
     render();
 
     return () => {
