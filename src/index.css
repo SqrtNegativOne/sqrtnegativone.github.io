@@ -83,12 +83,13 @@ body::before {
   }
 }
 
-/* ── Theme toggle — sits on the left border edge ── */
+/* ── Theme toggle — sits on the bottom-left border edge, rotated vertical ── */
 .theme-toggle {
   position: fixed;
-  top: 40px;
+  bottom: 40px;
   left: 40px;
-  transform: translateY(-50%);
+  transform: translateY(50%) rotate(-90deg);
+  transform-origin: center;
   z-index: 10000;
   background: var(--bg);
   border: none;
@@ -108,10 +109,11 @@ body::before {
 
 @media (max-width: 640px) {
   .theme-toggle {
-    top: 16px;
+    bottom: 16px;
     left: 16px;
   }
 }
+
 
 /* ── Custom cursor — inverted circle ──────────── */
 .custom-cursor {

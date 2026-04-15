@@ -2,6 +2,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ThemeToggle from "./components/ThemeToggle";
 import Cursor from "./components/Cursor";
+import AsciiBackground from "./components/AsciiBackground";
 
 import Bio from "./components/Bio";
 import Skills from "./components/Skills";
@@ -31,8 +32,9 @@ function App() {
   if (!isKnown) {
     return (
       <>
+        <AsciiBackground />
         <NotFound />
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <Cursor />
       </>
     );
@@ -42,13 +44,14 @@ function App() {
   if (location.pathname === "/") {
     return (
       <>
+        <AsciiBackground />
         <Home />
         <div className="home-name-overlay">
-          <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
           <HeroName />
+          <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
         </div>
         <Navbar view="home" />
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
         <Cursor />
       </>
     );
@@ -61,12 +64,13 @@ function App() {
 
   return (
     <div className={`page${showPortrait ? "" : " no-portrait"}`}>
-      {/* Quote + Name group — top-left */}
+      <AsciiBackground />
+      {/* Name + Quote group — top-left */}
       <div className="name-group">
-        <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
         <footer className="bottom-bar">
           <HeroName />
         </footer>
+        <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
       </div>
 
       {/* Portrait — bottom-left (hidden on skills/projects) */}
@@ -93,8 +97,8 @@ function App() {
       {/* Navbar — fixed top-right */}
       <Navbar view={currentView} />
 
-      {/* Theme toggle — left border edge */}
-      <ThemeToggle />
+      {/* Theme toggle — intentionally disabled, light mode unimplemented */}
+      {/* <ThemeToggle /> */}
 
       {/* Custom cursor */}
       <Cursor />

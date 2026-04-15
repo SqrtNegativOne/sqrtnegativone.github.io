@@ -23,7 +23,7 @@ src/                    # React SPA source
     Projects.jsx/css     # Projects (no portrait)
     Contact.jsx/css      # Contact info
     Quote.jsx            # Rotating quote component
-    ThemeToggle.jsx      # Light/dark toggle on left border
+    ThemeToggle.jsx      # Light/dark toggle — DISABLED, light mode intentionally unimplemented
     Cursor.jsx           # Custom inverted-circle cursor
     Blog.jsx/css         # UNUSED — blog now handled by 11ty
     DitheredImage.jsx    # Canvas Bayer dithering utility
@@ -66,3 +66,4 @@ eleventy.config.js      # 11ty config
 - Blog posts are Markdown files in `blog/posts/`. Afterdark drafts go in `blog/afterdark/`.
 - The Blog React component (`src/components/Blog.jsx`) is no longer used — blog is served as static 11ty HTML
 - Font carousel in HeroName is commented out but preserved for future re-enablement
+- ThemeToggle is commented out in App.jsx — light mode is intentionally unimplemented; do not re-enable without implementing light mode styles
