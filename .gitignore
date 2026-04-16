@@ -13,6 +13,7 @@ dist
 dist-ssr
 public/blog
 public/blog-afterdark
+public/sitemap.xml
 *.local
 
 # Editor directories and files
