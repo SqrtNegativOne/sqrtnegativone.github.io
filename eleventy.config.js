@@ -34,6 +34,11 @@ export default function (eleventyConfig) {
     });
   });
 
+  // ISO 8601 date filter for sitemap
+  eleventyConfig.addFilter("isoDate", (dateObj) => {
+    return new Date(dateObj).toISOString().split("T")[0];
+  });
+
   return {
     dir: {
       input: "blog",

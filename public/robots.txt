@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /blog/afterdark/
+Disallow: /blog-afterdark/
+
+Sitemap: https://sqrt.fyi/sitemap.xml
