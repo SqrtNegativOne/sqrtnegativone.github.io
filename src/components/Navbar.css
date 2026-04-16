@@ -1,118 +1,245 @@
-/* ── Glassmorphic nav pill (top-right) ─────── */
-.nav-pill {
+/* ══════════════════════════════════════════════
+   Hamburger / X button — fixed top-right
+   ══════════════════════════════════════════════ */
+.nav-burger {
   position: fixed;
   top: 4rem;
   right: 4rem;
+  z-index: 10001;
   display: flex;
-  align-items: center;
-  padding: 0.7rem 0.85rem;
-  background: rgba(227, 227, 227, 0.5);
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 999px;
-  z-index: 100;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s ease;
+  transition: background 0.25s, border-color 0.25s;
 }
 
-[data-theme="dark"] .nav-pill {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+.nav-burger:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
-.nav-pill:hover,
-.nav-pill.open {
-  padding: 0.7rem 1.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+.nav-burger span {
+  display: block;
+  height: 1.5px;
+  width: 100%;
+  background: var(--text);
+  transform-origin: center;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity  0.2s ease;
 }
 
-[data-theme="dark"] .nav-pill:hover,
-[data-theme="dark"] .nav-pill.open {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
+/* Morph lines → X */
+.nav-burger--open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger--open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-burger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-.nav-icon {
-  flex-shrink: 0;
-  color: var(--text);
-  transition: opacity 0.3s ease, width 0.3s ease;
-}
-
-.nav-pill:hover .nav-icon,
-.nav-pill.open .nav-icon {
-  opacity: 0;
-  width: 0;
+/* ══════════════════════════════════════════════
+   Overlay — flush against the viewport border frame
+   (inset: 40px matches body::before on desktop)
+   ══════════════════════════════════════════════ */
+.menu-overlay {
+  position: fixed;
+  /* top/right/bottom/left set via inline style (JS-computed for pixel-perfect fit) */
+  z-index: 500;
   overflow: hidden;
+  /* gap colour — 1px background bleeds through as hairlines */
+  background: rgba(255, 255, 255, 0.05);
+  animation: overlay-in 0.1s ease both;
 }
 
-.nav-links {
+.menu-overlay--closing {
+  animation: overlay-out 0.36s ease both;
+  pointer-events: none;
+}
+
+@keyframes overlay-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes overlay-out { from { opacity: 1; } to { opacity: 0; } }
+
+/* ══════════════════════════════════════════════
+   Bento grid — desktop: 6 equal columns
+   grid-auto-rows = col width → perfect 1:1 squares
+   ══════════════════════════════════════════════ */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: calc((100vw - 80px) / 6);
+  grid-auto-flow: row dense;
+  gap: 1px;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════
+   Importance tiers
+   imp3: 2×2 square block
+   imp2: 2×1 wide rectangle (variety between sizes)
+   imp1: 1×1 square block
+   ══════════════════════════════════════════════ */
+.menu-cell--imp3 {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.menu-cell--imp3 .menu-cell__label {
+  font-size: clamp(2rem, 5.5vw, 6rem);
+}
+
+.menu-cell--imp2 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.menu-cell--imp2 .menu-cell__label {
+  font-size: clamp(1.2rem, 2.8vw, 3rem);
+}
+
+.menu-cell--imp1 .menu-cell__label {
+  font-size: clamp(0.85rem, 1.6vw, 1.8rem);
+  color: rgba(255, 255, 255, 0.35);
+}
+.menu-cell--imp1:hover .menu-cell__label {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ══════════════════════════════════════════════
+   Individual cells
+   ══════════════════════════════════════════════ */
+.menu-cell {
+  position: relative;
   display: flex;
-  align-items: center;
-  gap: 0;
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease 0.1s,
-              gap 0.4s ease;
-}
-
-.nav-pill:hover .nav-links,
-.nav-pill.open .nav-links {
-  max-width: 600px;
-  opacity: 1;
-  gap: 1.5rem;
-}
-
-.nav-link {
-  background: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: clamp(0.5rem, 1.5vw, 1.25rem);
+  background: var(--bg, #0e0e0e);
   border: none;
-  padding: 0;
-  font-family: inherit;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-size: 0.7rem;
-  font-weight: 500;
+  overflow: hidden;
+  transition: background 0.2s;
+  text-align: left;
+}
+
+.menu-cell:not(.menu-cell--deco):hover {
+  background: #1a1a1a;
+}
+
+.menu-cell--active {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.menu-cell--deco {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* Index label — top-left */
+.menu-cell__num {
+  position: absolute;
+  top: clamp(0.4rem, 1vw, 0.85rem);
+  left: clamp(0.4rem, 1vw, 0.85rem);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(0.45rem, 0.6vw, 0.6rem);
   letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.18);
   text-transform: uppercase;
-  white-space: nowrap;
   transition: color 0.2s;
 }
 
-.nav-link:hover,
-.nav-link.active {
-  color: var(--text);
+.menu-cell:hover .menu-cell__num,
+.menu-cell--active .menu-cell__num {
+  color: rgba(255, 255, 255, 0.4);
 }
 
-/* ── Responsive ──────────────────────────────── */
+/* Page label — bottom-left */
+.menu-cell__label {
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(1.2rem, 3vw, 3rem);
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  line-height: 1;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.menu-cell:hover .menu-cell__label {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.menu-cell--active .menu-cell__label {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ══════════════════════════════════════════════
+   Slide-IN keyframes — one per direction
+   overflow:hidden on each cell clips the animation to its bounds
+   ══════════════════════════════════════════════ */
+@keyframes cell-from-top    { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+@keyframes cell-from-bottom { from { transform: translateY(100%);  } to { transform: translateY(0); } }
+@keyframes cell-from-left   { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes cell-from-right  { from { transform: translateX(100%);  } to { transform: translateX(0); } }
+
+.menu-cell--top    { animation: cell-from-top    0.42s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms) both; }
+.menu-cell--bottom { animation: cell-from-bottom 0.42s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms) both; }
+.menu-cell--left   { animation: cell-from-left   0.42s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms) both; }
+.menu-cell--right  { animation: cell-from-right  0.42s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms) both; }
+
+/* ══════════════════════════════════════════════
+   Slide-OUT — reverse direction, staggered from last→first
+   Triggered by adding .menu-cell--out while closing
+   ══════════════════════════════════════════════ */
+@keyframes cell-to-top    { from { transform: translateY(0); } to { transform: translateY(-100%); } }
+@keyframes cell-to-bottom { from { transform: translateY(0); } to { transform: translateY(100%);  } }
+@keyframes cell-to-left   { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@keyframes cell-to-right  { from { transform: translateX(0); } to { transform: translateX(100%);  } }
+
+.menu-cell--out.menu-cell--top    { animation: cell-to-top    0.32s cubic-bezier(0.4, 0, 0.8, 1) var(--out-delay, 0ms) both; }
+.menu-cell--out.menu-cell--bottom { animation: cell-to-bottom 0.32s cubic-bezier(0.4, 0, 0.8, 1) var(--out-delay, 0ms) both; }
+.menu-cell--out.menu-cell--left   { animation: cell-to-left   0.32s cubic-bezier(0.4, 0, 0.8, 1) var(--out-delay, 0ms) both; }
+.menu-cell--out.menu-cell--right  { animation: cell-to-right  0.32s cubic-bezier(0.4, 0, 0.8, 1) var(--out-delay, 0ms) both; }
+
+/* ══════════════════════════════════════════════
+   Responsive — tablet (641px – 1024px)
+   4 columns; imp3 still spans 2×2, imp2 spans 2×1
+   ══════════════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 641px) {
-  .nav-pill {
-    top: 4rem;
-    right: 4rem;
+  .menu-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: calc((100vw - 80px) / 4);
   }
 
-  .nav-pill:hover .nav-links,
-  .nav-pill.open .nav-links {
-    gap: 1rem;
-  }
+  .menu-cell--imp3 .menu-cell__label { font-size: clamp(2rem, 8vw, 5rem); }
+  .menu-cell--imp2 .menu-cell__label { font-size: clamp(1.2rem, 4vw, 2.5rem); }
+  .menu-cell--imp1 .menu-cell__label { font-size: clamp(0.85rem, 3vw, 1.8rem); }
 }
 
+/* ══════════════════════════════════════════════
+   Responsive — mobile (≤640px, inset 16px)
+   2 columns; all spans collapse to 1×1
+   ══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  .nav-pill {
-    top: 4rem;
-    right: 4rem;
+  .nav-burger {
+    top: 3rem;
+    right: 3rem;
   }
 
-  .nav-pill:hover .nav-links,
-  .nav-pill.open .nav-links {
-    gap: 0.8rem;
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: calc((100vw - 32px) / 2);
   }
 
-  .nav-link {
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
+  /* Collapse all spans on mobile */
+  .menu-cell--imp3,
+  .menu-cell--imp2 {
+    grid-column: span 1;
+    grid-row: span 1;
   }
+
+  .menu-cell--imp3 .menu-cell__label { font-size: clamp(1.5rem, 9vw, 2.8rem); }
+  .menu-cell--imp2 .menu-cell__label { font-size: clamp(1.1rem, 7vw, 2rem); }
+  .menu-cell--imp1 .menu-cell__label { font-size: clamp(0.85rem, 5vw, 1.5rem); }
 }

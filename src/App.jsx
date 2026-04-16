@@ -9,6 +9,7 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import NotFound from "./components/NotFound";
+import ComingSoon from "./components/ComingSoon";
 import Quote from "./components/Quote";
 import HeroName from "./components/HeroName";
 import HalftoneImage from "./components/HalftoneImage";
@@ -17,7 +18,10 @@ import { useQuote } from "./hooks/useQuote";
 import "./App.css";
 
 // Known React routes — everything else is a 404
-const KNOWN_ROUTES = ["/", "/about", "/skills", "/projects", "/contact"];
+const KNOWN_ROUTES = [
+  "/", "/about", "/skills", "/projects", "/contact",
+  "/now", "/colophon", "/minis", "/media-library",
+];
 
 // Pages where the portrait should be hidden
 const HIDE_PORTRAIT = ["/skills", "/projects"];
@@ -58,7 +62,7 @@ function App() {
   }
 
   // Derive the current nav key from the pathname for Navbar highlighting
-  const currentView = location.pathname.slice(1); // "about", "skills", "projects", "contact"
+  const currentView = location.pathname.slice(1); // "about", "skills", "projects", "contact", etc.
 
   const showPortrait = !HIDE_PORTRAIT.includes(location.pathname);
 
@@ -87,10 +91,14 @@ function App() {
       {/* Content — bottom-right, swaps based on route */}
       <main className={`content${location.pathname === "/projects" || location.pathname === "/skills" ? " content--fill" : ""}`} key={location.pathname}>
         <Routes>
-          <Route path="/about" element={<Bio />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/about"         element={<Bio />} />
+          <Route path="/skills"        element={<Skills />} />
+          <Route path="/projects"      element={<Projects />} />
+          <Route path="/contact"       element={<Contact />} />
+          <Route path="/now"           element={<ComingSoon />} />
+          <Route path="/colophon"      element={<ComingSoon />} />
+          <Route path="/minis"         element={<ComingSoon />} />
+          <Route path="/media-library" element={<ComingSoon />} />
         </Routes>
       </main>
 

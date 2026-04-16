@@ -67,19 +67,28 @@ body {
 }
 
 /* ── Viewport border frame (like Keita Yamada) ── */
+/* --frame-v is set by JS when the menu opens so the border snaps to the
+   exact grid height; it resets to the default when the menu closes.      */
 body::before {
   content: '';
   position: fixed;
-  inset: 40px;
+  top:    var(--frame-v, 40px);
+  bottom: var(--frame-v, 40px);
+  left:   40px;
+  right:  40px;
   border: 1px solid var(--text);
   opacity: 0.18;
   pointer-events: none;
   z-index: 9999;
+  transition: top 0.18s ease, bottom 0.18s ease;
 }
 
 @media (max-width: 640px) {
   body::before {
-    inset: 16px;
+    top:    var(--frame-v, 16px);
+    bottom: var(--frame-v, 16px);
+    left:   16px;
+    right:  16px;
   }
 }
 
