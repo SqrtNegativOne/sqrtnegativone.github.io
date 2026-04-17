@@ -3,6 +3,7 @@ import { createThomas } from "./visualizations/thomas";
 import { createThomasWebGL } from "./visualizations/thomas-webgl";
 
 // Any visualization must implement: { init, frame, resize, destroy }
+// WebGL renderer additionally implements setColors(colors) called on theme change.
 // We prefer the WebGL2 renderer; fall back to Canvas 2D if unavailable.
 
 export default function Home() {
@@ -11,8 +12,6 @@ export default function Home() {
   useEffect(() => {
     const canvas = canvasRef.current;
 
-    // Try WebGL2 first. createThomasWebGL.init() returns true on success;
-    // if it returns false we fall back to the Canvas 2D renderer.
     const webglViz = createThomasWebGL();
     const useWebGL = webglViz.init(canvas);
 
@@ -44,14 +43,28 @@ export default function Home() {
     function getColors() {
       const isDark = document.documentElement.getAttribute("data-theme") === "dark";
       return isDark
-        ? { bg: "5,5,8",         litBase: 42, litSpd: 32 }
-        : { bg: "245,242,237",   litBase: 20, litSpd: 25 };
+        ? { bg: "5,5,8",       litBase: 42, litSpd: 32 }
+        : { bg: "245,242,237", litBase: 20, litSpd: 25 };
     }
+
+    // Cache colors; only re-read on theme change via MutationObserver.
+    let cachedColors = getColors();
+    if (useWebGL) viz.setColors(cachedColors);
+
+    const themeObserver = new MutationObserver(() => {
+      cachedColors = getColors();
+      if (useWebGL) viz.setColors(cachedColors);
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
 
     function render() {
       az += (targetAz - az) * 0.06;
       el += (targetEl - el) * 0.06;
-      viz.frame(ctx, W, H, az, el, getColors());
+      // WebGL renderer ignores cachedColors (uses setColors); Canvas 2D uses it.
+      viz.frame(ctx, W, H, az, el, cachedColors);
       animId = requestAnimationFrame(render);
     }
 
@@ -83,6 +96,7 @@ export default function Home() {
 
     return () => {
       cancelAnimationFrame(animId);
+      themeObserver.disconnect();
       viz.destroy();
       window.removeEventListener("mousemove", onMouseMove);
       canvas.removeEventListener("touchmove", onTouchMove);
