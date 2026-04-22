@@ -39,7 +39,7 @@ function getMenuGeometry() {
   return { top: v, right: h, bottom: v, left: h, rows, cols, cell };
 }
 
-export default function Navbar({ view }) {
+export default function Navbar({ view, onMenuChange }) {
   const [open,         setOpen]         = useState(false);
   const [closing,      setClosing]      = useState(false);
   const [overlayStyle, setOverlayStyle] = useState({});
@@ -50,11 +50,13 @@ export default function Navbar({ view }) {
   const close = () => {
     if (closing) return;
     setClosing(true);
+    onMenuChange?.("closing");
     closeTimer.current = setTimeout(() => {
       setOpen(false);
       setClosing(false);
       // Remove the computed frame variable — border snaps back to default
       document.documentElement.style.removeProperty("--frame-v");
+      onMenuChange?.(null);
     }, EXIT_MS);
   };
 
@@ -91,6 +93,7 @@ export default function Navbar({ view }) {
       left:   geo.left,
     });
     setOpen(true);
+    onMenuChange?.("open");
   };
 
   const handleNav = (item) => {

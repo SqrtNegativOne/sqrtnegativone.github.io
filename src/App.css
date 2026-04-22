@@ -87,7 +87,11 @@
   max-height: 100%;
   min-height: 0;
   overflow-y: auto;
-  animation: viewFadeIn 0.35s ease;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+@starting-style {
+  .content { opacity: 0; transform: translateY(6px); }
 }
 
 /* Projects page: stretch to fill the full grid row, center carousel vertically */
@@ -99,10 +103,6 @@
   align-items: center;
 }
 
-@keyframes viewFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
 
 /* ══════════════════════════════════════════════
    Shared text utilities
@@ -274,6 +274,86 @@
 
 .name-short {
   display: none;
+}
+
+/* ══════════════════════════════════════════════
+   Menu disintegrate / materialize
+   Elements scatter when menu opens, reassemble on close.
+   Each section drifts a different direction for an organic feel.
+   ══════════════════════════════════════════════ */
+
+/* Name: drifts up-left */
+@keyframes bg-scatter-name {
+  from { opacity: 1; transform: translate(0, 0);         filter: blur(0); }
+  to   { opacity: 0; transform: translate(-32px, -20px); filter: blur(6px); }
+}
+@keyframes bg-gather-name {
+  from { opacity: 0; transform: translate(-32px, -20px); filter: blur(6px); }
+  to   { opacity: 1; transform: translate(0, 0);         filter: blur(0); }
+}
+
+/* Quote: drifts down-left */
+@keyframes bg-scatter-quote {
+  from { opacity: 1; transform: translate(0, 0);        filter: blur(0); }
+  to   { opacity: 0; transform: translate(-20px, 20px); filter: blur(5px); }
+}
+@keyframes bg-gather-quote {
+  from { opacity: 0; transform: translate(-20px, 20px); filter: blur(5px); }
+  to   { opacity: 1; transform: translate(0, 0);        filter: blur(0); }
+}
+
+/* Portrait: drifts left */
+@keyframes bg-scatter-portrait {
+  from { opacity: 1; transform: translateX(0);     filter: blur(0); }
+  to   { opacity: 0; transform: translateX(-48px); filter: blur(7px); }
+}
+@keyframes bg-gather-portrait {
+  from { opacity: 0; transform: translateX(-48px); filter: blur(7px); }
+  to   { opacity: 1; transform: translateX(0);     filter: blur(0); }
+}
+
+/* Content: drifts right */
+@keyframes bg-scatter-content {
+  from { opacity: 1; transform: translateX(0);    filter: blur(0); }
+  to   { opacity: 0; transform: translateX(40px); filter: blur(7px); }
+}
+@keyframes bg-gather-content {
+  from { opacity: 0; transform: translateX(40px); filter: blur(7px); }
+  to   { opacity: 1; transform: translateX(0);    filter: blur(0); }
+}
+
+/* ── Disintegrate (menu opening) ───────────── */
+.page.menu-active .name-wrapper,
+.home-name-overlay.menu-active {
+  animation: bg-scatter-name 0.35s cubic-bezier(0.4, 0, 1, 1) both;
+  pointer-events: none;
+}
+.page.menu-active .quote {
+  animation: bg-scatter-quote 0.35s 0.03s cubic-bezier(0.4, 0, 1, 1) both;
+  pointer-events: none;
+}
+.page.menu-active .portrait-column {
+  animation: bg-scatter-portrait 0.38s 0.02s cubic-bezier(0.4, 0, 1, 1) both;
+  pointer-events: none;
+}
+.page.menu-active .content {
+  animation: bg-scatter-content 0.38s 0.04s cubic-bezier(0.4, 0, 1, 1) both;
+  pointer-events: none;
+}
+
+/* ── Materialize (menu closing) ────────────── */
+.page.menu-closing .name-wrapper,
+.home-name-overlay.menu-closing {
+  animation: bg-gather-name 0.28s cubic-bezier(0, 0, 0.2, 1) both;
+}
+.page.menu-closing .quote {
+  animation: bg-gather-quote 0.28s 0.02s cubic-bezier(0, 0, 0.2, 1) both;
+}
+.page.menu-closing .portrait-column {
+  animation: bg-gather-portrait 0.3s 0.01s cubic-bezier(0, 0, 0.2, 1) both;
+}
+.page.menu-closing .content {
+  animation: bg-gather-content 0.3s 0.03s cubic-bezier(0, 0, 0.2, 1) both;
 }
 
 /* ══════════════════════════════════════════════

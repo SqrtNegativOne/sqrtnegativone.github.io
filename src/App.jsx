@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ThemeToggle from "./components/ThemeToggle";
@@ -29,6 +30,8 @@ const HIDE_PORTRAIT = ["/skills", "/projects"];
 function App() {
   const location = useLocation();
   const quote = useQuote();
+  const [menuState, setMenuState] = useState(null); // null | "open" | "closing"
+  const menuCls = menuState === "open" ? " menu-active" : menuState === "closing" ? " menu-closing" : "";
 
   const isKnown = KNOWN_ROUTES.includes(location.pathname);
 
@@ -50,11 +53,11 @@ function App() {
       <>
         <AsciiBackground />
         <Home />
-        <div className="home-name-overlay">
+        <div className={`home-name-overlay${menuCls}`}>
           <HeroName />
           <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
         </div>
-        <Navbar view="home" />
+        <Navbar view="home" onMenuChange={setMenuState} />
         {/* <ThemeToggle /> */}
         <Cursor />
       </>
@@ -67,7 +70,7 @@ function App() {
   const showPortrait = !HIDE_PORTRAIT.includes(location.pathname);
 
   return (
-    <div className={`page${showPortrait ? "" : " no-portrait"}`}>
+    <div className={`page${showPortrait ? "" : " no-portrait"}${menuCls}`}>
       <AsciiBackground />
       {/* Name + Quote group — top-left */}
       <div className="name-group">
@@ -103,7 +106,7 @@ function App() {
       </main>
 
       {/* Navbar — fixed top-right */}
-      <Navbar view={currentView} />
+      <Navbar view={currentView} onMenuChange={setMenuState} />
 
       {/* Theme toggle — intentionally disabled, light mode unimplemented */}
       {/* <ThemeToggle /> */}
