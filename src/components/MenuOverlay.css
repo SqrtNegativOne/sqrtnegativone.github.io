@@ -42,17 +42,68 @@
 .nav-burger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* ══════════════════════════════════════════════
-   Overlay — flush against the viewport border frame
+   Liquid-glass backdrop — full viewport
+   Sits beneath the menu cells and frosts the entire area
+   inside the original border frame. clip-path grows the
+   glass outward from the old 40px border line to the
+   viewport edges, so the effect appears to emerge from
+   the border itself.
+   ══════════════════════════════════════════════ */
+.menu-glass {
+  position: fixed;
+  inset: 0;
+  z-index: 499;
+  pointer-events: none;
+  background:
+    radial-gradient(140% 90% at 18% 0%,   rgba(255, 255, 255, 0.10), transparent 55%),
+    radial-gradient(140% 90% at 82% 100%, rgba(255, 255, 255, 0.06), transparent 55%),
+    linear-gradient(135deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 50%,
+      rgba(0,   0,   0,   0.10) 100%);
+  backdrop-filter: blur(28px) saturate(180%) brightness(1.06) contrast(1.02);
+  -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.06) contrast(1.02);
+  /* Specular rim — bright top-left highlight, soft bottom-right shadow */
+  box-shadow:
+    inset  1px  1px 0 rgba(255, 255, 255, 0.22),
+    inset -1px -1px 0 rgba(0,   0,   0,   0.30);
+  animation: glass-in 0.5s cubic-bezier(0.22, 0.7, 0.2, 1) both;
+}
+
+.menu-glass--closing {
+  animation: glass-out 0.42s cubic-bezier(0.55, 0.05, 0.75, 0.4) both;
+}
+
+@keyframes glass-in {
+  from { clip-path: inset(40px); opacity: 0; }
+  to   { clip-path: inset(0);    opacity: 1; }
+}
+@keyframes glass-out {
+  from { clip-path: inset(0);    opacity: 1; }
+  to   { clip-path: inset(40px); opacity: 0; }
+}
+
+@media (max-width: 640px) {
+  @keyframes glass-in {
+    from { clip-path: inset(16px); opacity: 0; }
+    to   { clip-path: inset(0);    opacity: 1; }
+  }
+  @keyframes glass-out {
+    from { clip-path: inset(0);    opacity: 1; }
+    to   { clip-path: inset(16px); opacity: 0; }
+  }
+}
+
+/* ══════════════════════════════════════════════
+   Overlay — grid container, sits over the glass
    ══════════════════════════════════════════════ */
 .menu-overlay {
   position: fixed;
   /* top/right/bottom/left set via inline style (JS-computed for pixel-perfect fit) */
   z-index: 500;
   overflow: hidden;
-  /* Hairlines between cells bleed through this background */
-  background: rgba(255, 255, 255, 0.06);
-  /* No fade on open — cells must be visible while sliding in from the edge.
-     A parent opacity transition would hide them mid-slide. */
+  /* Hairlines between cells bleed through as faint glass seams */
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .menu-overlay--closing {
@@ -99,9 +150,9 @@
 }
 
 /* ══════════════════════════════════════════════
-   Cells — frosted glass panels
-   Layered: tinted backdrop-blur + SVG turbulence grain
-   + faint inner bevel for glass thickness.
+   Cells — transparent panes over the liquid-glass backdrop
+   Each cell gets a faint diagonal sheen + inset rim so the
+   grid reads as separated panes of glass.
    ══════════════════════════════════════════════ */
 .menu-cell {
   position: relative;
@@ -110,78 +161,34 @@
   align-items: flex-start;
   justify-content: flex-end;
   padding: clamp(0.5rem, 1.5vw, 1.25rem);
-  /* Translucent slate so background still shows through faintly */
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(14, 14, 14, 0.38);
-  backdrop-filter: blur(22px) saturate(1.35) brightness(0.92);
-  -webkit-backdrop-filter: blur(22px) saturate(1.35) brightness(0.92);
-  /* Faint inner bevel — top-left highlight, bottom-right shadow */
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 60%);
   box-shadow:
-    inset  1px  1px 0 rgba(255, 255, 255, 0.07),
-    inset -1px -1px 0 rgba(0,   0,   0,   0.22);
+    inset  1px  1px 0 rgba(255, 255, 255, 0.06),
+    inset -1px -1px 0 rgba(0,   0,   0,   0.12);
   border: none;
   overflow: hidden;
-  transition: background 0.25s ease;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
   text-align: left;
-}
-
-/* Fine grain — SVG turbulence rendered into a tiling noise field.
-   background-attachment: fixed makes every cell sample from the same
-   viewport-locked canvas so the noise feels continuous across cells
-   rather than repeating per-tile. */
-.menu-cell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-  background-size: 220px 220px;
-  background-attachment: fixed;
-  mix-blend-mode: overlay;
-  opacity: 0.55;
-}
-
-/* Coarser grain pass — sparse flecks for that "sandblasted" feel
-   instead of a uniform film. */
-.menu-cell::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='340'><filter id='n2'><feTurbulence type='fractalNoise' baseFrequency='0.22' numOctaves='1' stitchTiles='stitch' seed='13'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n2)'/></svg>");
-  background-size: 320px 320px;
-  background-attachment: fixed;
-  mix-blend-mode: soft-light;
-  opacity: 0.7;
-}
-
-/* Keep label/number above the noise layers */
-.menu-cell__num,
-.menu-cell__label {
-  position: relative;
-  z-index: 1;
 }
 
 .menu-cell:not(.menu-cell--deco):hover {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(255, 255, 255, 0.10);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.02) 60%);
+  box-shadow:
+    inset  1px  1px 0 rgba(255, 255, 255, 0.18),
+    inset -1px -1px 0 rgba(0,   0,   0,   0.18);
 }
 
 .menu-cell--active {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(255, 255, 255, 0.08);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 60%);
 }
 
 .menu-cell--deco {
   pointer-events: none;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(14, 14, 14, 0.28);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 60%);
 }
 
 /* Index label — top-left */
