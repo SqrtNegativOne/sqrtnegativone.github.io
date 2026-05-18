@@ -16,7 +16,7 @@ src/                    # React SPA source
   App.css               # Page layout, grid, responsive breakpoints
   index.css             # Reset, theme vars, cursor, border frame, toggle
   components/
-    Navbar.jsx/css       # Top-right pill nav (no Blog link)
+    MenuOverlay.jsx/css  # Hamburger button + full-screen frosted-glass bento menu
     HeroName.jsx         # Name display (font carousel commented out)
     Bio.jsx              # About page
     Skills.jsx/css       # Skills grid (no intro text, no portrait)
@@ -59,6 +59,10 @@ eleventy.config.js      # 11ty config
 - Portrait is hidden on `/skills` and `/projects` routes
 - Blog has its own full-page layout (no React shell): "the BLOG" on left, vertical divider, content on right
 - Custom cursor: inverted circle (`mix-blend-mode: difference`), expands on interactive elements, hidden on touch devices
+
+## Deploy
+
+This site is served from the `docs/` directory on GitHub Pages — **no GitHub Actions, no CI build step**. The deployed site is whatever `docs/` looks like at the latest pushed commit. That means: after any source change to `src/`, `blog/`, `public/`, or `eleventy.config.js`, you **must** run `npm run build` and commit the resulting `docs/` changes for them to appear on the live site. Pushing only source files will leave the live site stale.
 
 ## Important Notes
 

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Navbar.css";
+import "./MenuOverlay.css";
 
 // importance: 3 = 2×2 square, 2 = 2×1 wide rectangle, 1 = 1×1 square
 // Sorted descending before render → highest importance lands upper-left.
@@ -18,32 +18,75 @@ const NAV_ITEMS = [
   { key: "colophon",     label: "Colophon",     path: "/colophon",      importance: 1 },
 ];
 
-const dir = (i) => ["top", "left", "bottom", "right"][i % 4];
-
-// Duration (ms) the exit animation plays before the overlay unmounts
-const EXIT_MS = 360;
+const EXIT_MS = 420;
 
 // Compute the overlay inset so the grid rows snap flush to the border frame.
-// Horizontal inset is fixed (matches body::before); vertical inset is adjusted
-// so that exactly N whole rows fit with zero leftover pixels.
 function getMenuGeometry() {
   const W = window.innerWidth;
   const H = window.innerHeight;
   const mobile = W <= 640;
   const tablet = W <= 1024 && !mobile;
   const cols   = mobile ? 2 : tablet ? 4 : 6;
-  const h      = mobile ? 16 : 40;          // horizontal inset in px
-  const cell   = (W - 2 * h) / cols;        // exact cell size
+  const h      = mobile ? 16 : 40;
+  const cell   = (W - 2 * h) / cols;
   const rows   = Math.floor((H - 2 * h) / cell);
-  const v      = (H - rows * cell) / 2;     // vertical inset for perfect fit
-  return { top: v, right: h, bottom: v, left: h, rows, cols, cell };
+  const v      = (H - rows * cell) / 2;
+  return { top: v, right: h, bottom: v, left: h, rows, cols, cell, mobile };
 }
 
-export default function Navbar({ view }) {
+function cellDims(item, mobile) {
+  if (mobile)                  return { w: 1, h: 1 };
+  if (item.importance === 3)   return { w: 2, h: 2 };
+  if (item.importance === 2)   return { w: 2, h: 1 };
+  return { w: 1, h: 1 };
+}
+
+// Simulate grid-auto-flow: row dense — returns {row, col, w, h} for each item
+// in the order provided so we know where every cell actually lands.
+function packGrid(items, cols) {
+  const occ = [];
+  const fits = (r, c, w, h) => {
+    if (c + w > cols) return false;
+    for (let dr = 0; dr < h; dr++)
+      for (let dc = 0; dc < w; dc++)
+        if (occ[r + dr]?.[c + dc]) return false;
+    return true;
+  };
+  const set = (r, c, w, h) => {
+    for (let dr = 0; dr < h; dr++) {
+      if (!occ[r + dr]) occ[r + dr] = [];
+      for (let dc = 0; dc < w; dc++) occ[r + dr][c + dc] = true;
+    }
+  };
+  return items.map(({ w, h }) => {
+    for (let r = 0; ; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (fits(r, c, w, h)) { set(r, c, w, h); return { row: r, col: c, w, h }; }
+      }
+    }
+  });
+}
+
+// Pick the border edge a cell is closest to, and the translate offset that
+// parks the cell just outside that edge of its slot. Distance is in grid
+// cells from the cell's outer face to the overlay border.
+function edgeMotion(p, rows, cols, cellPx) {
+  const dT = p.row;
+  const dB = rows - p.row - p.h;
+  const dL = p.col;
+  const dR = cols - p.col - p.w;
+  const m = Math.min(dT, dB, dL, dR);
+  if (m === dT) return { x: 0,             y: -p.h * cellPx, dist: dT };
+  if (m === dB) return { x: 0,             y:  p.h * cellPx, dist: dB };
+  if (m === dL) return { x: -p.w * cellPx, y: 0,             dist: dL };
+  return          { x:  p.w * cellPx, y: 0,             dist: dR };
+}
+
+export default function MenuOverlay({ view }) {
   const [open,         setOpen]         = useState(false);
   const [closing,      setClosing]      = useState(false);
   const [overlayStyle, setOverlayStyle] = useState({});
-  const [decoCount,    setDecoCount]    = useState(12);
+  const [layout,       setLayout]       = useState({ nav: [], deco: [], maxDist: 0 });
   const closeTimer = useRef(null);
   const navigate   = useNavigate();
 
@@ -53,7 +96,6 @@ export default function Navbar({ view }) {
     closeTimer.current = setTimeout(() => {
       setOpen(false);
       setClosing(false);
-      // Remove the computed frame variable — border snaps back to default
       document.documentElement.style.removeProperty("--frame-v");
     }, EXIT_MS);
   };
@@ -63,7 +105,6 @@ export default function Navbar({ view }) {
     document.documentElement.style.removeProperty("--frame-v");
   }, []);
 
-  // Escape key
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => { if (e.key === "Escape") close(); };
@@ -73,23 +114,39 @@ export default function Navbar({ view }) {
 
   const handleOpen = () => {
     const geo = getMenuGeometry();
-
-    // Tell body::before to match the computed vertical inset
     document.documentElement.style.setProperty("--frame-v", `${geo.top}px`);
 
-    // Enough deco cells to fill all rows beyond the nav items
-    const sorted = [...NAV_ITEMS]
+    const sortedNav = NAV_ITEMS
+      .filter((item) => item.key !== view)
+      .slice()
       .sort((a, b) => b.importance - a.importance)
-      .filter((item) => item.key !== view);
-    const totalSlots = geo.rows * geo.cols;
-    setDecoCount(Math.max(0, totalSlots - sorted.length));
+      .map((item) => ({ ...item, ...cellDims(item, geo.mobile) }));
 
-    setOverlayStyle({
-      top:    geo.top,
-      right:  geo.right,
-      bottom: geo.bottom,
-      left:   geo.left,
-    });
+    const totalSlots = geo.rows * geo.cols;
+    const used = sortedNav.reduce((s, it) => s + it.w * it.h, 0);
+    const decoCount = Math.max(0, totalSlots - used);
+    const decoItems = Array.from({ length: decoCount }, () => ({ w: 1, h: 1 }));
+
+    const placements = packGrid([...sortedNav, ...decoItems], geo.cols);
+    const navPlacements  = placements.slice(0, sortedNav.length);
+    const decoPlacements = placements.slice(sortedNav.length);
+
+    const nav = sortedNav.map((it, i) => ({
+      item: it,
+      motion: edgeMotion(navPlacements[i], geo.rows, geo.cols, geo.cell),
+    }));
+    const deco = decoPlacements.map((p) => ({
+      motion: edgeMotion(p, geo.rows, geo.cols, geo.cell),
+    }));
+
+    const maxDist = Math.max(
+      0,
+      ...nav.map((c) => c.motion.dist),
+      ...deco.map((c) => c.motion.dist),
+    );
+
+    setLayout({ nav, deco, maxDist });
+    setOverlayStyle({ top: geo.top, right: geo.right, bottom: geo.bottom, left: geo.left });
     setOpen(true);
   };
 
@@ -101,13 +158,13 @@ export default function Navbar({ view }) {
     }, EXIT_MS);
   };
 
-  const sorted = [...NAV_ITEMS]
-    .sort((a, b) => b.importance - a.importance)
-    .filter((item) => item.key !== view);
+  // Stagger so the wave radiates from the border inward.
+  // Closing reverses it: interior leaves first, edge cells retreat last.
+  const inDelay  = (dist) => `${dist * 60}ms`;
+  const outDelay = (dist) => `${(layout.maxDist - dist) * 35}ms`;
 
   return (
     <>
-      {/* Hamburger / X toggle */}
       <button
         className={`nav-burger${open ? " nav-burger--open" : ""}`}
         onClick={() => { if (open) close(); else handleOpen(); }}
@@ -118,7 +175,6 @@ export default function Navbar({ view }) {
         <span />
       </button>
 
-      {/* Bento grid overlay — inset computed for pixel-perfect row fit */}
       {open && (
         <div
           className={`menu-overlay${closing ? " menu-overlay--closing" : ""}`}
@@ -126,19 +182,19 @@ export default function Navbar({ view }) {
           onClick={close}
         >
           <div className="menu-grid" onClick={(e) => e.stopPropagation()}>
-
-            {sorted.map((item, i) => (
+            {layout.nav.map(({ item, motion }, i) => (
               <button
                 key={item.key}
                 className={[
                   "menu-cell",
                   `menu-cell--imp${item.importance}`,
-                  `menu-cell--${dir(i)}`,
                   closing ? "menu-cell--out" : "",
                 ].filter(Boolean).join(" ")}
                 style={{
-                  "--delay":     `${i * 50}ms`,
-                  "--out-delay": `${(sorted.length - 1 - i) * 32}ms`,
+                  "--from-x":    `${motion.x}px`,
+                  "--from-y":    `${motion.y}px`,
+                  "--delay":     inDelay(motion.dist),
+                  "--out-delay": outDelay(motion.dist),
                 }}
                 onClick={() => handleNav(item)}
               >
@@ -147,22 +203,22 @@ export default function Navbar({ view }) {
               </button>
             ))}
 
-            {Array.from({ length: decoCount }, (_, i) => (
+            {layout.deco.map(({ motion }, i) => (
               <div
                 key={`deco-${i}`}
                 className={[
                   "menu-cell",
                   "menu-cell--deco",
-                  `menu-cell--${dir(sorted.length + i)}`,
                   closing ? "menu-cell--out" : "",
                 ].filter(Boolean).join(" ")}
                 style={{
-                  "--delay":     `${(sorted.length + i) * 22}ms`,
-                  "--out-delay": "0ms",
+                  "--from-x":    `${motion.x}px`,
+                  "--from-y":    `${motion.y}px`,
+                  "--delay":     inDelay(motion.dist),
+                  "--out-delay": outDelay(motion.dist),
                 }}
               />
             ))}
-
           </div>
         </div>
       )}
