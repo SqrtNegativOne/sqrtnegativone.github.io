@@ -16,7 +16,7 @@ src/                    # React SPA source
   App.css               # Page layout, grid, responsive breakpoints
   index.css             # Reset, theme vars, cursor, border frame, toggle
   components/
-    Navbar.jsx/css       # Top-right pill nav (no Blog link)
+    MenuOverlay.jsx/css  # Hamburger button + full-screen frosted-glass bento menu
     HeroName.jsx         # Name display (font carousel commented out)
     Bio.jsx              # About page
     Skills.jsx/css       # Skills grid (no intro text, no portrait)

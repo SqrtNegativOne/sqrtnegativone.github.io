@@ -43,29 +43,24 @@
 
 /* ══════════════════════════════════════════════
    Overlay — flush against the viewport border frame
-   (inset: 40px matches body::before on desktop)
    ══════════════════════════════════════════════ */
 .menu-overlay {
   position: fixed;
   /* top/right/bottom/left set via inline style (JS-computed for pixel-perfect fit) */
   z-index: 500;
   overflow: hidden;
-  /* gap colour — 1px background bleeds through as hairlines */
-  background: rgba(255, 255, 255, 0.05);
-  animation: overlay-in 0.1s ease both;
+  /* Hairlines between cells bleed through this background */
+  background: rgba(255, 255, 255, 0.06);
+  /* No fade on open — cells must be visible while sliding in from the edge.
+     A parent opacity transition would hide them mid-slide. */
 }
 
 .menu-overlay--closing {
-  animation: overlay-out 0.36s ease both;
   pointer-events: none;
 }
 
-@keyframes overlay-in  { from { opacity: 0; } to { opacity: 1; } }
-@keyframes overlay-out { from { opacity: 1; } to { opacity: 0; } }
-
 /* ══════════════════════════════════════════════
    Bento grid — desktop: 6 equal columns
-   grid-auto-rows = col width → perfect 1:1 squares
    ══════════════════════════════════════════════ */
 .menu-grid {
   display: grid;
@@ -78,9 +73,6 @@
 
 /* ══════════════════════════════════════════════
    Importance tiers
-   imp3: 2×2 square block
-   imp2: 2×1 wide rectangle (variety between sizes)
-   imp1: 1×1 square block
    ══════════════════════════════════════════════ */
 .menu-cell--imp3 {
   grid-column: span 2;
@@ -107,7 +99,9 @@
 }
 
 /* ══════════════════════════════════════════════
-   Individual cells
+   Cells — frosted glass panels
+   Layered: tinted backdrop-blur + SVG turbulence grain
+   + faint inner bevel for glass thickness.
    ══════════════════════════════════════════════ */
 .menu-cell {
   position: relative;
@@ -116,24 +110,78 @@
   align-items: flex-start;
   justify-content: flex-end;
   padding: clamp(0.5rem, 1.5vw, 1.25rem);
-  background: var(--bg, #0e0e0e);
+  /* Translucent slate so background still shows through faintly */
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(14, 14, 14, 0.38);
+  backdrop-filter: blur(22px) saturate(1.35) brightness(0.92);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35) brightness(0.92);
+  /* Faint inner bevel — top-left highlight, bottom-right shadow */
+  box-shadow:
+    inset  1px  1px 0 rgba(255, 255, 255, 0.07),
+    inset -1px -1px 0 rgba(0,   0,   0,   0.22);
   border: none;
   overflow: hidden;
-  transition: background 0.2s;
+  transition: background 0.25s ease;
   text-align: left;
 }
 
+/* Fine grain — SVG turbulence rendered into a tiling noise field.
+   background-attachment: fixed makes every cell sample from the same
+   viewport-locked canvas so the noise feels continuous across cells
+   rather than repeating per-tile. */
+.menu-cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='7'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 220px 220px;
+  background-attachment: fixed;
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
+
+/* Coarser grain pass — sparse flecks for that "sandblasted" feel
+   instead of a uniform film. */
+.menu-cell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='340' height='340'><filter id='n2'><feTurbulence type='fractalNoise' baseFrequency='0.22' numOctaves='1' stitchTiles='stitch' seed='13'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n2)'/></svg>");
+  background-size: 320px 320px;
+  background-attachment: fixed;
+  mix-blend-mode: soft-light;
+  opacity: 0.7;
+}
+
+/* Keep label/number above the noise layers */
+.menu-cell__num,
+.menu-cell__label {
+  position: relative;
+  z-index: 1;
+}
+
 .menu-cell:not(.menu-cell--deco):hover {
-  background: #1a1a1a;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(255, 255, 255, 0.10);
 }
 
 .menu-cell--active {
-  background: rgba(255, 255, 255, 0.05);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(255, 255, 255, 0.08);
 }
 
 .menu-cell--deco {
   pointer-events: none;
-  opacity: 0.55;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(14, 14, 14, 0.28);
 }
 
 /* Index label — top-left */
@@ -158,7 +206,7 @@
 .menu-cell__label {
   font-family: "Instrument Serif", serif;
   font-size: clamp(1.2rem, 3vw, 3rem);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.55);
   letter-spacing: -0.02em;
   font-weight: 400;
   line-height: 1;
@@ -167,44 +215,60 @@
 }
 
 .menu-cell:hover .menu-cell__label {
-  color: rgba(255, 255, 255, 0.95);
+  color: rgba(255, 255, 255, 0.98);
 }
 
 .menu-cell--active .menu-cell__label {
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* ══════════════════════════════════════════════
-   Slide-IN keyframes — one per direction
-   overflow:hidden on each cell clips the animation to its bounds
+   Edge-aware slide animation
+   Each cell receives per-instance --from-x / --from-y from JS, computed
+   so the cell starts parked just outside the overlay edge nearest to it.
+   --delay staggers the in-wave from border inward;
+   --out-delay reverses it on close.
    ══════════════════════════════════════════════ */
-@keyframes cell-from-top    { from { transform: translateY(-100%); } to { transform: translateY(0); } }
-@keyframes cell-from-bottom { from { transform: translateY(100%);  } to { transform: translateY(0); } }
-@keyframes cell-from-left   { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-@keyframes cell-from-right  { from { transform: translateX(100%);  } to { transform: translateX(0); } }
+@keyframes cell-from-edge {
+  from {
+    transform: translate(var(--from-x, 0), var(--from-y, 0));
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
 
-.menu-cell--top    { animation: cell-from-top    0.42s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms) both; }
-.menu-cell--bottom { animation: cell-from-bottom 0.42s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms) both; }
-.menu-cell--left   { animation: cell-from-left   0.42s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms) both; }
-.menu-cell--right  { animation: cell-from-right  0.42s cubic-bezier(0.4, 0, 0.2, 1) var(--delay, 0ms) both; }
+@keyframes cell-to-edge {
+  from {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(var(--from-x, 0), var(--from-y, 0));
+    opacity: 0;
+  }
+}
 
-/* ══════════════════════════════════════════════
-   Slide-OUT — reverse direction, staggered from last→first
-   Triggered by adding .menu-cell--out while closing
-   ══════════════════════════════════════════════ */
-@keyframes cell-to-top    { from { transform: translateY(0); } to { transform: translateY(-100%); } }
-@keyframes cell-to-bottom { from { transform: translateY(0); } to { transform: translateY(100%);  } }
-@keyframes cell-to-left   { from { transform: translateX(0); } to { transform: translateX(-100%); } }
-@keyframes cell-to-right  { from { transform: translateX(0); } to { transform: translateX(100%);  } }
+.menu-cell {
+  animation: cell-from-edge 0.52s cubic-bezier(0.22, 0.7, 0.2, 1) var(--delay, 0ms) both;
+  will-change: transform, opacity;
+}
 
-.menu-cell--out.menu-cell--top    { animation: cell-to-top    0.32s cubic-bezier(0.4, 0, 0.8, 1) var(--out-delay, 0ms) both; }
-.menu-cell--out.menu-cell--bottom { animation: cell-to-bottom 0.32s cubic-bezier(0.4, 0, 0.8, 1) var(--out-delay, 0ms) both; }
-.menu-cell--out.menu-cell--left   { animation: cell-to-left   0.32s cubic-bezier(0.4, 0, 0.8, 1) var(--out-delay, 0ms) both; }
-.menu-cell--out.menu-cell--right  { animation: cell-to-right  0.32s cubic-bezier(0.4, 0, 0.8, 1) var(--out-delay, 0ms) both; }
+.menu-cell--out {
+  animation: cell-to-edge 0.4s cubic-bezier(0.55, 0.05, 0.75, 0.4) var(--out-delay, 0ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-cell,
+  .menu-cell--out {
+    animation-duration: 0.001s;
+  }
+}
 
 /* ══════════════════════════════════════════════
    Responsive — tablet (641px – 1024px)
-   4 columns; imp3 still spans 2×2, imp2 spans 2×1
    ══════════════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 641px) {
   .menu-grid {
@@ -219,7 +283,6 @@
 
 /* ══════════════════════════════════════════════
    Responsive — mobile (≤640px, inset 16px)
-   2 columns; all spans collapse to 1×1
    ══════════════════════════════════════════════ */
 @media (max-width: 640px) {
   .nav-burger {
@@ -232,7 +295,6 @@
     grid-auto-rows: calc((100vw - 32px) / 2);
   }
 
-  /* Collapse all spans on mobile */
   .menu-cell--imp3,
   .menu-cell--imp2 {
     grid-column: span 1;

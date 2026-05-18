@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import MenuOverlay from "./components/MenuOverlay";
 import ThemeToggle from "./components/ThemeToggle";
 import Cursor from "./components/Cursor";
 import AsciiBackground from "./components/AsciiBackground";
@@ -54,14 +54,14 @@ function App() {
           <HeroName />
           <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
         </div>
-        <Navbar view="home" />
+        <MenuOverlay view="home" />
         {/* <ThemeToggle /> */}
         <Cursor />
       </>
     );
   }
 
-  // Derive the current nav key from the pathname for Navbar highlighting
+  // Derive the current nav key from the pathname for menu highlighting
   const currentView = location.pathname.slice(1); // "about", "skills", "projects", "contact", etc.
 
   const showPortrait = !HIDE_PORTRAIT.includes(location.pathname);
@@ -102,8 +102,8 @@ function App() {
         </Routes>
       </main>
 
-      {/* Navbar — fixed top-right */}
-      <Navbar view={currentView} />
+      {/* Menu — hamburger button fixed top-right, opens full-screen bento overlay */}
+      <MenuOverlay view={currentView} />
 
       {/* Theme toggle — intentionally disabled, light mode unimplemented */}
       {/* <ThemeToggle /> */}
