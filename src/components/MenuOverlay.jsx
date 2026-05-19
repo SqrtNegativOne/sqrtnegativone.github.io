@@ -68,18 +68,20 @@ function packGrid(items, cols) {
 }
 
 // Pick the border edge a cell is closest to, and the translate offset that
-// parks the cell just outside that edge of its slot. Distance is in grid
-// cells from the cell's outer face to the overlay border.
+// parks the cell fully outside that edge of the overlay (not just one cell
+// away from its own slot). Combined with overflow:hidden on .menu-overlay,
+// this means cells are clipped while sliding in and only appear once they
+// cross into the overlay — no mid-grid pop-in.
 function edgeMotion(p, rows, cols, cellPx) {
   const dT = p.row;
   const dB = rows - p.row - p.h;
   const dL = p.col;
   const dR = cols - p.col - p.w;
   const m = Math.min(dT, dB, dL, dR);
-  if (m === dT) return { x: 0,             y: -p.h * cellPx, dist: dT };
-  if (m === dB) return { x: 0,             y:  p.h * cellPx, dist: dB };
-  if (m === dL) return { x: -p.w * cellPx, y: 0,             dist: dL };
-  return          { x:  p.w * cellPx, y: 0,             dist: dR };
+  if (m === dT) return { x: 0,                          y: -(p.row + p.h) * cellPx, dist: dT };
+  if (m === dB) return { x: 0,                          y:  (rows - p.row) * cellPx, dist: dB };
+  if (m === dL) return { x: -(p.col + p.w) * cellPx,    y: 0,                        dist: dL };
+  return          { x:  (cols - p.col) * cellPx,    y: 0,                        dist: dR };
 }
 
 export default function MenuOverlay({ view }) {
@@ -93,16 +95,21 @@ export default function MenuOverlay({ view }) {
   const close = () => {
     if (closing) return;
     setClosing(true);
+    // Start the border-frame transition immediately so it animates in parallel
+    // with the cells sliding out, instead of racing with a route change at
+    // EXIT_MS (which can cancel the transition during the React re-render).
+    document.documentElement.style.removeProperty("--frame-v");
+    document.body.classList.remove("menu-is-open");
     closeTimer.current = setTimeout(() => {
       setOpen(false);
       setClosing(false);
-      document.documentElement.style.removeProperty("--frame-v");
     }, EXIT_MS);
   };
 
   useEffect(() => () => {
     clearTimeout(closeTimer.current);
     document.documentElement.style.removeProperty("--frame-v");
+    document.body.classList.remove("menu-is-open");
   }, []);
 
   useEffect(() => {
@@ -115,6 +122,7 @@ export default function MenuOverlay({ view }) {
   const handleOpen = () => {
     const geo = getMenuGeometry();
     document.documentElement.style.setProperty("--frame-v", `${geo.top}px`);
+    document.body.classList.add("menu-is-open");
 
     const sortedNav = NAV_ITEMS
       .filter((item) => item.key !== view)

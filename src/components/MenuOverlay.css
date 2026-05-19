@@ -112,9 +112,9 @@
   padding: clamp(0.5rem, 1.5vw, 1.25rem);
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(14, 14, 14, 0.38);
-  backdrop-filter: blur(22px) saturate(1.35) brightness(0.92);
-  -webkit-backdrop-filter: blur(22px) saturate(1.35) brightness(0.92);
+    rgba(14, 14, 14, 0.82);
+  backdrop-filter: blur(28px) saturate(1.35) brightness(0.7);
+  -webkit-backdrop-filter: blur(28px) saturate(1.35) brightness(0.7);
   box-shadow:
     inset  1px  1px 0 rgba(255, 255, 255, 0.07),
     inset -1px -1px 0 rgba(0,   0,   0,   0.22);
@@ -127,20 +127,20 @@
 .menu-cell:not(.menu-cell--deco):hover {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(255, 255, 255, 0.10);
+    rgba(28, 28, 28, 0.88);
 }
 
 .menu-cell--active {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(255, 255, 255, 0.08);
+    rgba(28, 28, 28, 0.85);
 }
 
 .menu-cell--deco {
   pointer-events: none;
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(14, 14, 14, 0.28);
+    rgba(14, 14, 14, 0.78);
 }
 
 /* Index label — top-left */
@@ -188,26 +188,18 @@
    --delay staggers the in-wave from border inward;
    --out-delay reverses it on close.
    ══════════════════════════════════════════════ */
+/* No opacity transition — cells start fully outside the overlay edge (JS sets
+   --from-x/--from-y to the full offset to outside) and overflow:hidden on
+   .menu-overlay clips them until they slide into view, so they appear as a
+   clean push from the edge rather than fading in mid-grid. */
 @keyframes cell-from-edge {
-  from {
-    transform: translate(var(--from-x, 0), var(--from-y, 0));
-    opacity: 0;
-  }
-  to {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
+  from { transform: translate(var(--from-x, 0), var(--from-y, 0)); }
+  to   { transform: translate(0, 0); }
 }
 
 @keyframes cell-to-edge {
-  from {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-  to {
-    transform: translate(var(--from-x, 0), var(--from-y, 0));
-    opacity: 0;
-  }
+  from { transform: translate(0, 0); }
+  to   { transform: translate(var(--from-x, 0), var(--from-y, 0)); }
 }
 
 .menu-cell {

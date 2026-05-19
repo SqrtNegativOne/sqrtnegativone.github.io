@@ -11,6 +11,19 @@
   gap: 0.25rem;
 }
 
+/* Everything inside the border frame fades as one unit when the menu opens
+   (opacity only — no transform) so the eye doesn't read the sliding menu
+   cells as the name/portrait drifting across the screen. MenuOverlay and
+   Cursor sit outside .page-content so the X button stays visible. */
+.page-content {
+  transition: opacity 0.28s ease;
+}
+
+body.menu-is-open .page-content {
+  opacity: 0;
+  pointer-events: none;
+}
+
 @media (max-width: 640px) {
   .home-name-overlay {
     top: 2rem;
