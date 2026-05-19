@@ -62,6 +62,7 @@ eleventy.config.js      # 11ty config
 
 ## Important Notes
 
+- After every code change, run `npm run build` and commit the updated `docs/` folder — this is what GitHub Pages serves; there is no CI pipeline.
 - `public/blog/` is gitignored — always run `npm run blog:build` after editing blog posts
 - Blog posts are Markdown files in `blog/posts/`. Afterdark drafts go in `blog/afterdark/`.
 - The Blog React component (`src/components/Blog.jsx`) is no longer used — blog is served as static 11ty HTML
