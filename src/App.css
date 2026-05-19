@@ -11,6 +11,24 @@
   gap: 0.25rem;
 }
 
+/* Background page content fades out cleanly (opacity only — no transform)
+   while the menu opens, so the eye doesn't read the sliding menu cells as
+   the name/quote/portrait drifting across the screen. */
+.home-name-overlay,
+.name-group,
+.portrait-column,
+.content {
+  transition: opacity 0.28s ease;
+}
+
+body.menu-is-open .home-name-overlay,
+body.menu-is-open .name-group,
+body.menu-is-open .portrait-column,
+body.menu-is-open .content {
+  opacity: 0;
+  pointer-events: none;
+}
+
 @media (max-width: 640px) {
   .home-name-overlay {
     top: 2rem;

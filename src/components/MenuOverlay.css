@@ -188,26 +188,18 @@
    --delay staggers the in-wave from border inward;
    --out-delay reverses it on close.
    ══════════════════════════════════════════════ */
+/* No opacity transition — cells start fully outside the overlay edge (JS sets
+   --from-x/--from-y to the full offset to outside) and overflow:hidden on
+   .menu-overlay clips them until they slide into view, so they appear as a
+   clean push from the edge rather than fading in mid-grid. */
 @keyframes cell-from-edge {
-  from {
-    transform: translate(var(--from-x, 0), var(--from-y, 0));
-    opacity: 0;
-  }
-  to {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
+  from { transform: translate(var(--from-x, 0), var(--from-y, 0)); }
+  to   { transform: translate(0, 0); }
 }
 
 @keyframes cell-to-edge {
-  from {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-  to {
-    transform: translate(var(--from-x, 0), var(--from-y, 0));
-    opacity: 0;
-  }
+  from { transform: translate(0, 0); }
+  to   { transform: translate(var(--from-x, 0), var(--from-y, 0)); }
 }
 
 .menu-cell {
