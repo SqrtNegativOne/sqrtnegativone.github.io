@@ -44,15 +44,19 @@ function App() {
     );
   }
 
-  // Home gets a full-screen layout — canvas + name/quote overlay + nav + cursor
+  // Home gets a full-screen layout — canvas + name/quote overlay + nav + cursor.
+  // .page-content is the wrapper that fades when the menu opens — MenuOverlay
+  // and Cursor live outside it so the X button and cursor stay visible.
   if (location.pathname === "/") {
     return (
       <>
-        <AsciiBackground />
-        <Home />
-        <div className="home-name-overlay">
-          <HeroName />
-          <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
+        <div className="page-content">
+          <AsciiBackground />
+          <Home />
+          <div className="home-name-overlay">
+            <HeroName />
+            <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
+          </div>
         </div>
         <MenuOverlay view="home" />
         {/* <ThemeToggle /> */}
@@ -67,40 +71,42 @@ function App() {
   const showPortrait = !HIDE_PORTRAIT.includes(location.pathname);
 
   return (
-    <div className={`page${showPortrait ? "" : " no-portrait"}`}>
-      <AsciiBackground />
-      {/* Name + Quote group — top-left */}
-      <div className="name-group">
-        <footer className="bottom-bar">
-          <HeroName />
-        </footer>
-        <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
-      </div>
-
-      {/* Portrait — bottom-left (hidden on skills/projects) */}
-      {showPortrait && (
-        <div className="portrait-column">
-          <HalftoneImage
-            src="/portraits/tower.jpg"
-            alt="Ark Malhotra portrait"
-            className="portrait"
-          />
+    <>
+      <div className={`page page-content${showPortrait ? "" : " no-portrait"}`}>
+        <AsciiBackground />
+        {/* Name + Quote group — top-left */}
+        <div className="name-group">
+          <footer className="bottom-bar">
+            <HeroName />
+          </footer>
+          <Quote displayed={quote.displayed} phase={quote.phase} onCycle={quote.cycleQuote} />
         </div>
-      )}
 
-      {/* Content — bottom-right, swaps based on route */}
-      <main className={`content${location.pathname === "/projects" || location.pathname === "/skills" ? " content--fill" : ""}`} key={location.pathname}>
-        <Routes>
-          <Route path="/about"         element={<Bio />} />
-          <Route path="/skills"        element={<Skills />} />
-          <Route path="/projects"      element={<Projects />} />
-          <Route path="/contact"       element={<Contact />} />
-          <Route path="/now"           element={<ComingSoon />} />
-          <Route path="/colophon"      element={<ComingSoon />} />
-          <Route path="/minis"         element={<ComingSoon />} />
-          <Route path="/media-library" element={<ComingSoon />} />
-        </Routes>
-      </main>
+        {/* Portrait — bottom-left (hidden on skills/projects) */}
+        {showPortrait && (
+          <div className="portrait-column">
+            <HalftoneImage
+              src="/portraits/tower.jpg"
+              alt="Ark Malhotra portrait"
+              className="portrait"
+            />
+          </div>
+        )}
+
+        {/* Content — bottom-right, swaps based on route */}
+        <main className={`content${location.pathname === "/projects" || location.pathname === "/skills" ? " content--fill" : ""}`} key={location.pathname}>
+          <Routes>
+            <Route path="/about"         element={<Bio />} />
+            <Route path="/skills"        element={<Skills />} />
+            <Route path="/projects"      element={<Projects />} />
+            <Route path="/contact"       element={<Contact />} />
+            <Route path="/now"           element={<ComingSoon />} />
+            <Route path="/colophon"      element={<ComingSoon />} />
+            <Route path="/minis"         element={<ComingSoon />} />
+            <Route path="/media-library" element={<ComingSoon />} />
+          </Routes>
+        </main>
+      </div>
 
       {/* Menu — hamburger button fixed top-right, opens full-screen bento overlay */}
       <MenuOverlay view={currentView} />
@@ -110,7 +116,7 @@ function App() {
 
       {/* Custom cursor */}
       <Cursor />
-    </div>
+    </>
   );
 }
 
