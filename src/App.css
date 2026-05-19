@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════ */
 .home-name-overlay {
   position: fixed;
-  top: 4rem;
+  top: 6rem;
   left: 4rem;
   z-index: 10;
   display: flex;
@@ -44,7 +44,7 @@ body.menu-is-open .page-content {
   grid-template-areas:
     "header   header"
     "portrait bio";
-  padding: 4rem;
+  padding: 6rem 4rem;
   gap: 1rem 2rem;
   overflow: hidden;
 }
