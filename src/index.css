@@ -16,7 +16,7 @@
 
 /* ── Light theme (daytime default) ─────────────── */
 :root {
-  --frame-v: 40px;
+  --frame-v: 72px;
   --bg: #f5f2ed;
   --text: #1a1a1a;
   --text-secondary: #555;
@@ -83,6 +83,12 @@ body::before {
   z-index: 9999;
   transition: top 0.42s cubic-bezier(0.22, 0.7, 0.2, 1),
               bottom 0.42s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+@media (max-width: 1024px) and (min-width: 641px) {
+  :root {
+    --frame-v: 40px;
+  }
 }
 
 @media (max-width: 640px) {
