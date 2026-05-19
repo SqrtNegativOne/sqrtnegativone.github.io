@@ -16,6 +16,7 @@
 
 /* ── Light theme (daytime default) ─────────────── */
 :root {
+  --frame-v: 40px;
   --bg: #f5f2ed;
   --text: #1a1a1a;
   --text-secondary: #555;
@@ -72,21 +73,23 @@ body {
 body::before {
   content: '';
   position: fixed;
-  top:    var(--frame-v, 40px);
-  bottom: var(--frame-v, 40px);
+  top:    var(--frame-v);
+  bottom: var(--frame-v);
   left:   40px;
   right:  40px;
   border: 1px solid var(--text);
   opacity: 0.18;
   pointer-events: none;
   z-index: 9999;
-  transition: top 0.18s ease, bottom 0.18s ease;
+  transition: top 0.42s cubic-bezier(0.22, 0.7, 0.2, 1),
+              bottom 0.42s cubic-bezier(0.22, 0.7, 0.2, 1);
 }
 
 @media (max-width: 640px) {
+  :root {
+    --frame-v: 16px;
+  }
   body::before {
-    top:    var(--frame-v, 16px);
-    bottom: var(--frame-v, 16px);
     left:   16px;
     right:  16px;
   }
