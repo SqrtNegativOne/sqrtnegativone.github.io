@@ -47,10 +47,28 @@ eleventy.config.js      # 11ty config
 
 ## Commands
 
-- `npm run dev` — builds blog then starts Vite dev server
-- `npm run build` — builds blog then runs Vite production build
+- `npm run dev` — builds media + blog then starts Vite dev server
+- `npm run build` — builds media + blog then runs Vite production build
 - `npm run blog:build` — runs 11ty only
 - `npm run blog:watch` — runs 11ty in watch mode (for blog-only dev)
+- `npm run media:build` — fetches metadata/posters for the media library (see below)
+
+## Media Library
+
+`/media-library` is generated from `media/media.json` (the only file the user edits):
+each entry has `type` (game | movie | show | book), `id`, `rating` (1–7), and
+`status` (todo | doing | done). `scripts/build-media.mjs` runs before the Vite
+build, enriching that source into `src/data/media.json` (titles, years, poster
+paths) and downloading cover art to `public/media-posters/`.
+
+- Books: Open Library (no API key required) — `id` is the ISBN.
+- Movies/Shows: TMDB — `id` is the TMDB ID; needs `TMDB_API_KEY` env var.
+- Games: RAWG — `id` is the RAWG ID/slug; needs `RAWG_API_KEY` env var.
+
+Results are memoised in `media/cache.json` and posters in `public/media-posters/`
+so once a build has populated them, future builds can run offline. Missing keys
+or failed fetches degrade gracefully — the entry still renders with a fallback
+poster and the type+ID as title.
 
 ## Design Conventions
 

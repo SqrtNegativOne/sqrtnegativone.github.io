@@ -1,0 +1,38 @@
+[
+  {
+    "type": "book",
+    "id": "9780553103540",
+    "rating": 7,
+    "status": "doing"
+  },
+  {
+    "type": "movie",
+    "id": "27205",
+    "rating": 7,
+    "status": "done"
+  },
+  {
+    "type": "show",
+    "id": "1399",
+    "rating": 6,
+    "status": "doing"
+  },
+  {
+    "type": "game",
+    "id": "3498",
+    "rating": 7,
+    "status": "done"
+  },
+  {
+    "type": "book",
+    "id": "9780441172719",
+    "rating": 6,
+    "status": "todo"
+  },
+  {
+    "type": "movie",
+    "id": "157336",
+    "rating": 7,
+    "status": "todo"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "book:9780553103540": {
+    "title": "A Game of Thrones",
+    "subtitle": "George R. R. Martin",
+    "year": "2011",
+    "coverUrl": "https://covers.openlibrary.org/b/id/11293305-L.jpg"
+  },
+  "book:9780441172719": {
+    "title": "Dune",
+    "subtitle": "Frank Herbert",
+    "year": "2020",
+    "coverUrl": "https://covers.openlibrary.org/b/id/15110282-L.jpg"
+  }
+}

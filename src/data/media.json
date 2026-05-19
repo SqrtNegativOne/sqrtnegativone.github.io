@@ -1,0 +1,62 @@
+[
+  {
+    "type": "book",
+    "id": "9780553103540",
+    "rating": 7,
+    "status": "doing",
+    "title": "A Game of Thrones",
+    "subtitle": "George R. R. Martin",
+    "year": "2011",
+    "poster": null
+  },
+  {
+    "type": "movie",
+    "id": "27205",
+    "rating": 7,
+    "status": "done",
+    "title": "movie 27205",
+    "subtitle": "",
+    "year": null,
+    "poster": null
+  },
+  {
+    "type": "show",
+    "id": "1399",
+    "rating": 6,
+    "status": "doing",
+    "title": "show 1399",
+    "subtitle": "",
+    "year": null,
+    "poster": null
+  },
+  {
+    "type": "game",
+    "id": "3498",
+    "rating": 7,
+    "status": "done",
+    "title": "game 3498",
+    "subtitle": "",
+    "year": null,
+    "poster": null
+  },
+  {
+    "type": "book",
+    "id": "9780441172719",
+    "rating": 6,
+    "status": "todo",
+    "title": "Dune",
+    "subtitle": "Frank Herbert",
+    "year": "2020",
+    "poster": null
+  },
+  {
+    "type": "movie",
+    "id": "157336",
+    "rating": 7,
+    "status": "todo",
+    "title": "movie 157336",
+    "subtitle": "",
+    "year": null,
+    "poster": null
+  }
+]

@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run blog:build && vite",
-    "build": "npm run blog:build && vite build && cp docs/index.html docs/404.html && echo sqrt.fyi > docs/CNAME",
+    "dev": "npm run media:build && npm run blog:build && vite",
+    "build": "npm run media:build && npm run blog:build && vite build && cp docs/index.html docs/404.html && echo sqrt.fyi > docs/CNAME",
     "blog:build": "npx @11ty/eleventy",
     "blog:watch": "npx @11ty/eleventy --watch",
+    "media:build": "node scripts/build-media.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

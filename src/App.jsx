@@ -14,6 +14,7 @@ import Quote from "./components/Quote";
 import HeroName from "./components/HeroName";
 import HalftoneImage from "./components/HalftoneImage";
 import Home from "./components/Home";
+import MediaLibrary from "./components/MediaLibrary";
 import { useQuote } from "./hooks/useQuote";
 import "./App.css";
 
@@ -39,6 +40,17 @@ function App() {
         <AsciiBackground />
         <NotFound />
         {/* <ThemeToggle /> */}
+        <Cursor />
+      </>
+    );
+  }
+
+  // Media Library has its own full-page Netflix-style layout — no shell.
+  if (location.pathname === "/media-library") {
+    return (
+      <>
+        <MediaLibrary />
+        <MenuOverlay view="media-library" />
         <Cursor />
       </>
     );
@@ -103,7 +115,6 @@ function App() {
             <Route path="/now"           element={<ComingSoon />} />
             <Route path="/colophon"      element={<ComingSoon />} />
             <Route path="/minis"         element={<ComingSoon />} />
-            <Route path="/media-library" element={<ComingSoon />} />
           </Routes>
         </main>
       </div>
