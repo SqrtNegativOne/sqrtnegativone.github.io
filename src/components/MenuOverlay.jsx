@@ -177,13 +177,6 @@ export default function MenuOverlay({ view }) {
 
       {open && (
         <div
-          className={`menu-glass${closing ? " menu-glass--closing" : ""}`}
-          aria-hidden="true"
-        />
-      )}
-
-      {open && (
-        <div
           className={`menu-overlay${closing ? " menu-overlay--closing" : ""}`}
           style={overlayStyle}
           onClick={close}

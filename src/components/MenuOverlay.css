@@ -42,68 +42,17 @@
 .nav-burger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* ══════════════════════════════════════════════
-   Liquid-glass backdrop — full viewport
-   Sits beneath the menu cells and frosts the entire area
-   inside the original border frame. clip-path grows the
-   glass outward from the old 40px border line to the
-   viewport edges, so the effect appears to emerge from
-   the border itself.
-   ══════════════════════════════════════════════ */
-.menu-glass {
-  position: fixed;
-  inset: 0;
-  z-index: 499;
-  pointer-events: none;
-  background:
-    radial-gradient(140% 90% at 18% 0%,   rgba(255, 255, 255, 0.10), transparent 55%),
-    radial-gradient(140% 90% at 82% 100%, rgba(255, 255, 255, 0.06), transparent 55%),
-    linear-gradient(135deg,
-      rgba(255, 255, 255, 0.06) 0%,
-      rgba(255, 255, 255, 0.02) 50%,
-      rgba(0,   0,   0,   0.10) 100%);
-  backdrop-filter: blur(28px) saturate(180%) brightness(1.06) contrast(1.02);
-  -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.06) contrast(1.02);
-  /* Specular rim — bright top-left highlight, soft bottom-right shadow */
-  box-shadow:
-    inset  1px  1px 0 rgba(255, 255, 255, 0.22),
-    inset -1px -1px 0 rgba(0,   0,   0,   0.30);
-  animation: glass-in 0.5s cubic-bezier(0.22, 0.7, 0.2, 1) both;
-}
-
-.menu-glass--closing {
-  animation: glass-out 0.42s cubic-bezier(0.55, 0.05, 0.75, 0.4) both;
-}
-
-@keyframes glass-in {
-  from { clip-path: inset(40px); opacity: 0; }
-  to   { clip-path: inset(0);    opacity: 1; }
-}
-@keyframes glass-out {
-  from { clip-path: inset(0);    opacity: 1; }
-  to   { clip-path: inset(40px); opacity: 0; }
-}
-
-@media (max-width: 640px) {
-  @keyframes glass-in {
-    from { clip-path: inset(16px); opacity: 0; }
-    to   { clip-path: inset(0);    opacity: 1; }
-  }
-  @keyframes glass-out {
-    from { clip-path: inset(0);    opacity: 1; }
-    to   { clip-path: inset(16px); opacity: 0; }
-  }
-}
-
-/* ══════════════════════════════════════════════
-   Overlay — grid container, sits over the glass
+   Overlay — flush against the viewport border frame
    ══════════════════════════════════════════════ */
 .menu-overlay {
   position: fixed;
   /* top/right/bottom/left set via inline style (JS-computed for pixel-perfect fit) */
   z-index: 500;
   overflow: hidden;
-  /* Hairlines between cells bleed through as faint glass seams */
-  background: rgba(255, 255, 255, 0.04);
+  /* Hairlines between cells bleed through this background */
+  background: rgba(255, 255, 255, 0.06);
+  /* No fade on open — cells must be visible while sliding in from the edge.
+     A parent opacity transition would hide them mid-slide. */
 }
 
 .menu-overlay--closing {
@@ -150,9 +99,9 @@
 }
 
 /* ══════════════════════════════════════════════
-   Cells — transparent panes over the liquid-glass backdrop
-   Each cell gets a faint diagonal sheen + inset rim so the
-   grid reads as separated panes of glass.
+   Cells — frosted glass panels
+   Plain backdrop-blur over the page content, faint
+   diagonal highlight, inset bevel for thickness.
    ══════════════════════════════════════════════ */
 .menu-cell {
   position: relative;
@@ -162,33 +111,36 @@
   justify-content: flex-end;
   padding: clamp(0.5rem, 1.5vw, 1.25rem);
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 60%);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(14, 14, 14, 0.38);
+  backdrop-filter: blur(22px) saturate(1.35) brightness(0.92);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35) brightness(0.92);
   box-shadow:
-    inset  1px  1px 0 rgba(255, 255, 255, 0.06),
-    inset -1px -1px 0 rgba(0,   0,   0,   0.12);
+    inset  1px  1px 0 rgba(255, 255, 255, 0.07),
+    inset -1px -1px 0 rgba(0,   0,   0,   0.22);
   border: none;
   overflow: hidden;
-  transition: background 0.25s ease, box-shadow 0.25s ease;
+  transition: background 0.25s ease;
   text-align: left;
 }
 
 .menu-cell:not(.menu-cell--deco):hover {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.02) 60%);
-  box-shadow:
-    inset  1px  1px 0 rgba(255, 255, 255, 0.18),
-    inset -1px -1px 0 rgba(0,   0,   0,   0.18);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(255, 255, 255, 0.10);
 }
 
 .menu-cell--active {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.02) 60%);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(255, 255, 255, 0.08);
 }
 
 .menu-cell--deco {
   pointer-events: none;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 60%);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(14, 14, 14, 0.28);
 }
 
 /* Index label — top-left */
