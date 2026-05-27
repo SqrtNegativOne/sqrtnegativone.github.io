@@ -1,0 +1,5 @@
+https://fonts.google.com/specimen/Doto?preview.script=Latn&preview.text=press%20space%20to%20open%20menu&categoryFilters=Appearance%3A%2FTheme%2FPixel&specimen.preview.text=press%20space%20to%20open%20menu
+
+https://github.com/rektdeckard/departure-mono/releases/tag/v1.500 amazing font for tables and stat and math info and infographics; also used in papers please
+
+https://joefatula.com/twoslice.html 2 pixel tall font for secrets
