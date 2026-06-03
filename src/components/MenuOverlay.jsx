@@ -119,6 +119,21 @@ export default function MenuOverlay({ view }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open, closing]);
 
+  // Desktop only: pressing Space anywhere opens the menu (unless typing in a field).
+  useEffect(() => {
+    if (open) return;
+    const onKey = (e) => {
+      if (e.code !== "Space" && e.key !== " ") return;
+      if (window.innerWidth <= 640) return;
+      const t = e.target;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      e.preventDefault();
+      handleOpen();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
+
   const handleOpen = () => {
     const geo = getMenuGeometry();
     document.documentElement.style.setProperty("--frame-v", `${geo.top}px`);
@@ -182,6 +197,8 @@ export default function MenuOverlay({ view }) {
         <span />
         <span />
       </button>
+
+      <div className="menu-hint" aria-hidden="true">press space to activate menu</div>
 
       {open && (
         <div
