@@ -203,6 +203,7 @@ export default function MenuOverlay({ view }) {
       {open && (
         <div
           className={`menu-scrim${closing ? " menu-scrim--closing" : ""}`}
+          style={overlayStyle}
           onClick={close}
         />
       )}
