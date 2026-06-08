@@ -105,7 +105,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{ position: "fixed", inset: 0 }}>
+    <div style={{ position: "fixed", inset: 0, transform: "translateZ(0)" }}>
       <canvas
         ref={canvasRef}
         style={{ display: "block", width: "100vw", height: "100vh" }}

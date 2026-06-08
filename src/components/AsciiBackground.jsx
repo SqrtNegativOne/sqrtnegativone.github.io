@@ -108,9 +108,11 @@ void main(){
 function frameClipPath() {
   const w = window.innerWidth;
   const h = window.innerHeight;
-  const i = w <= 640 ? 16 : 40; // match body::before inset
-  // Outer rect CW + inner rect CCW → even-odd rule punches a hole
-  return `path(evenodd, 'M 0 0 L ${w} 0 L ${w} ${h} L 0 ${h} Z M ${i} ${i} L ${w - i} ${i} L ${w - i} ${h - i} L ${i} ${h - i} Z')`;
+  const ix = w <= 640 ? 16 : 40;
+  const rootStyles = getComputedStyle(document.documentElement);
+  const iy = parseFloat(rootStyles.getPropertyValue('--frame-v')) || (w <= 1024 && w > 640 ? 40 : w <= 640 ? 16 : 72);
+  // Outer rect CW + inner rect CCW -> even-odd rule punches a hole
+  return `path(evenodd, 'M 0 0 L ${w} 0 L ${w} ${h} L 0 ${h} Z M ${ix} ${iy} L ${w - ix} ${iy} L ${w - ix} ${h - iy} L ${ix} ${h - iy} Z')`;
 }
 
 export default function AsciiBackground() {
@@ -210,6 +212,7 @@ export default function AsciiBackground() {
         pointerEvents: 'none',
         opacity: 0.2,
         clipPath: clip,
+        transform: 'translateZ(0)',
       }}
     />
   );
