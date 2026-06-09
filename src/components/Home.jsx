@@ -61,10 +61,12 @@ export default function Home() {
     });
 
     function render() {
-      az += (targetAz - az) * 0.06;
-      el += (targetEl - el) * 0.06;
-      // WebGL renderer ignores cachedColors (uses setColors); Canvas 2D uses it.
-      viz.frame(ctx, W, H, az, el, cachedColors);
+      if (!document.body.classList.contains("menu-is-open")) {
+        az += (targetAz - az) * 0.06;
+        el += (targetEl - el) * 0.06;
+        // WebGL renderer ignores cachedColors (uses setColors); Canvas 2D uses it.
+        viz.frame(ctx, W, H, az, el, cachedColors);
+      }
       animId = requestAnimationFrame(render);
     }
 
