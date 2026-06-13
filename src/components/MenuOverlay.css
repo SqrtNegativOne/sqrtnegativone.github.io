@@ -101,6 +101,18 @@ body.menu-is-open .menu-hint {
   will-change: transform, opacity;
 }
 
+@supports (-moz-appearance:none) {
+  .nav-burger, .menu-scrim {
+    backdrop-filter: none;
+  }
+  .menu-scrim {
+    background: rgba(0, 0, 0, 0.95);
+  }
+  .nav-burger {
+    background: rgba(40, 40, 40, 0.9);
+  }
+}
+
 .menu-scrim--closing {
   pointer-events: none;
   animation: overlay-bg-out 0.42s ease forwards;

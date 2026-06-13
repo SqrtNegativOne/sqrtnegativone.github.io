@@ -198,7 +198,7 @@ export default function MenuOverlay({ view }) {
         <span />
       </button>
 
-      <div className="menu-hint" aria-hidden="true">press space to activate menu</div>
+      <div className="menu-hint" aria-hidden="true" onClick={() => { if (!open) handleOpen(); }} style={{cursor: 'pointer'}}>press space to activate menu</div>
 
       {open && (
         <div

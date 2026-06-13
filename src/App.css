@@ -235,6 +235,13 @@ body.menu-is-open .page-content {
   padding: 0.3rem 0 0;
 }
 
+@supports (-moz-appearance:none) {
+  .name-wrapper {
+    backdrop-filter: none;
+    background: var(--bg);
+  }
+}
+
 .name {
   font-family: "Instrument Serif", serif;
   font-weight: 300;

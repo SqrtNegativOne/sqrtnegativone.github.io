@@ -143,9 +143,11 @@ body::before {
   pointer-events: none;
   z-index: 99999;
   mix-blend-mode: difference;
-  transform: translate(-50%, -50%);
+  left: 0;
+  top: 0;
+  transform: translate3d(0, 0, 0) translate(-50%, -50%);
   transition: width 0.2s ease, height 0.2s ease, border-radius 0.2s ease;
-  will-change: left, top;
+  will-change: transform;
 }
 
 .custom-cursor.cursor-expanded {
