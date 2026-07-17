@@ -15,6 +15,7 @@ const NAV_ITEMS = [
   { key: "now",          label: "Now",          path: "/now",           importance: 1 },
   { key: "minis",        label: "Minis",        path: "/minis",         importance: 1 },
   { key: "media-library",label: "Media Library",path: "/media-library", importance: 1 },
+  { key: "questions",    label: "Questions",    path: "/questions",     importance: 1 },
   { key: "colophon",     label: "Colophon",     path: "/colophon",      importance: 1 },
 ];
 
@@ -84,7 +85,7 @@ function edgeMotion(p, rows, cols, cellPx) {
   return          { x:  (cols - p.col) * cellPx,    y: 0,                        dist: dR };
 }
 
-export default function MenuOverlay({ view }) {
+export default function MenuOverlay({ view, hideHint }) {
   const [open,         setOpen]         = useState(false);
   const [closing,      setClosing]      = useState(false);
   const [overlayStyle, setOverlayStyle] = useState({});
@@ -198,7 +199,9 @@ export default function MenuOverlay({ view }) {
         <span />
       </button>
 
-      <div className="menu-hint" aria-hidden="true" onClick={() => { if (!open) handleOpen(); }} style={{cursor: 'pointer'}}>press space to activate menu</div>
+      {!hideHint && (
+        <div className="menu-hint" aria-hidden="true" onClick={() => { if (!open) handleOpen(); }} style={{cursor: 'pointer'}}>press space to activate menu</div>
+      )}
 
       {open && (
         <div

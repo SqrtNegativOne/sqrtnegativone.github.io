@@ -300,8 +300,8 @@ body.menu-is-open .page-content {
    Responsive — MEDIUM  (tablet / split-screen)
    ══════════════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 641px) {
-  /* Keep body hidden; scroll happens inside #root so content clips at the border */
-  #root {
+  /* Keep body hidden; scroll happens inside .with-frame so content clips at the border */
+  .with-frame {
     position: fixed;
     inset: 40px;
     overflow-y: auto;
@@ -379,8 +379,8 @@ body.menu-is-open .page-content {
    Responsive — SMALL  (mobile)
    ══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  /* Keep body hidden; scroll happens inside #root so content clips at the border */
-  #root {
+  /* Keep body hidden; scroll happens inside .with-frame so content clips at the border */
+  .with-frame {
     position: fixed;
     inset: 16px;
     overflow-y: auto;

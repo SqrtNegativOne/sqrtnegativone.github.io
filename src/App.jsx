@@ -14,6 +14,7 @@ import Quote from "./components/Quote";
 import HeroName from "./components/HeroName";
 import HalftoneImage from "./components/HalftoneImage";
 import Home from "./components/Home";
+import Questions from "./components/Questions";
 import { useQuote } from "./hooks/useQuote";
 import "./App.css";
 
@@ -21,6 +22,7 @@ import "./App.css";
 const KNOWN_ROUTES = [
   "/", "/about", "/skills", "/projects", "/contact",
   "/now", "/colophon", "/minis", "/media-library",
+  "/questions",
 ];
 
 // Pages where the portrait should be hidden
@@ -35,12 +37,12 @@ function App() {
   // 404 gets its own minimal layout — no name, no portrait, no quote
   if (!isKnown) {
     return (
-      <>
+      <div className="with-frame">
         <AsciiBackground />
         <NotFound />
         {/* <ThemeToggle /> */}
         <Cursor />
-      </>
+      </div>
     );
   }
 
@@ -50,7 +52,7 @@ function App() {
   if (location.pathname === "/") {
     return (
       <>
-        <div className="page-content">
+        <div className="page-content with-frame">
           <AsciiBackground />
           <Home />
           <div className="home-name-overlay">
@@ -65,6 +67,16 @@ function App() {
     );
   }
 
+  // Questions gets a completely blank/black layout
+  if (location.pathname === "/questions") {
+    return (
+      <>
+        <Questions />
+        <Cursor />
+      </>
+    );
+  }
+
   // Derive the current nav key from the pathname for menu highlighting
   const currentView = location.pathname.slice(1); // "about", "skills", "projects", "contact", etc.
 
@@ -72,7 +84,7 @@ function App() {
 
   return (
     <>
-      <div className={`page page-content${showPortrait ? "" : " no-portrait"}`}>
+      <div className={`page page-content with-frame${showPortrait ? "" : " no-portrait"}`}>
         <AsciiBackground />
         {/* Name + Quote group — top-left */}
         <div className="name-group">
