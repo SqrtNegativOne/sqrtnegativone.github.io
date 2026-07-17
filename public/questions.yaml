@@ -1,0 +1,9 @@
+- id: "1"
+  text: "How can we prove that fiction is a form of play and not the other way around?"
+  solved: false
+- id: "2"
+  text: "How do people actually, *actually*, come up with murder mystery ideas?"
+  solved: false
+- id: "3"
+  text: "Why is there so little / why did it take so much time for there to be good research in short-term and medium-term memory to create efficient scheduling algorithms (like for Anki)? Long-term is understandably difficult but others are tractable, important, easily testable."
+  solved: false

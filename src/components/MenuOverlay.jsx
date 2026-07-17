@@ -15,6 +15,7 @@ const NAV_ITEMS = [
   { key: "now",          label: "Now",          path: "/now",           importance: 1 },
   { key: "minis",        label: "Minis",        path: "/minis",         importance: 1 },
   { key: "media-library",label: "Media Library",path: "/media-library", importance: 1 },
+  { key: "questions",    label: "Questions",    path: "/questions",     importance: 1 },
   { key: "colophon",     label: "Colophon",     path: "/colophon",      importance: 1 },
 ];
 
@@ -84,7 +85,7 @@ function edgeMotion(p, rows, cols, cellPx) {
   return          { x:  (cols - p.col) * cellPx,    y: 0,                        dist: dR };
 }
 
-export default function MenuOverlay({ view }) {
+export default function MenuOverlay({ view, hideHint }) {
   const [open,         setOpen]         = useState(false);
   const [closing,      setClosing]      = useState(false);
   const [overlayStyle, setOverlayStyle] = useState({});
@@ -118,6 +119,21 @@ export default function MenuOverlay({ view }) {
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
   }, [open, closing]);
+
+  // Desktop only: pressing Space anywhere opens the menu (unless typing in a field).
+  useEffect(() => {
+    if (open) return;
+    const onKey = (e) => {
+      if (e.code !== "Space" && e.key !== " ") return;
+      if (window.innerWidth <= 640) return;
+      const t = e.target;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+      e.preventDefault();
+      handleOpen();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
   const handleOpen = () => {
     const geo = getMenuGeometry();
@@ -183,9 +199,14 @@ export default function MenuOverlay({ view }) {
         <span />
       </button>
 
+      {!hideHint && (
+        <div className="menu-hint" aria-hidden="true" onClick={() => { if (!open) handleOpen(); }} style={{cursor: 'pointer'}}>press space to activate menu</div>
+      )}
+
       {open && (
         <div
           className={`menu-scrim${closing ? " menu-scrim--closing" : ""}`}
+          style={overlayStyle}
           onClick={close}
         />
       )}

@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════ */
 .home-name-overlay {
   position: fixed;
-  top: 4rem;
+  top: 6rem;
   left: 4rem;
   z-index: 10;
   display: flex;
@@ -44,7 +44,7 @@ body.menu-is-open .page-content {
   grid-template-areas:
     "header   header"
     "portrait bio";
-  padding: 4rem;
+  padding: 6rem 4rem;
   gap: 1rem 2rem;
   overflow: hidden;
 }
@@ -235,6 +235,13 @@ body.menu-is-open .page-content {
   padding: 0.3rem 0 0;
 }
 
+@supports (-moz-appearance:none) {
+  .name-wrapper {
+    backdrop-filter: none;
+    background: var(--bg);
+  }
+}
+
 .name {
   font-family: "Instrument Serif", serif;
   font-weight: 300;
@@ -293,8 +300,8 @@ body.menu-is-open .page-content {
    Responsive — MEDIUM  (tablet / split-screen)
    ══════════════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 641px) {
-  /* Keep body hidden; scroll happens inside #root so content clips at the border */
-  #root {
+  /* Keep body hidden; scroll happens inside .with-frame so content clips at the border */
+  .with-frame {
     position: fixed;
     inset: 40px;
     overflow-y: auto;
@@ -372,8 +379,8 @@ body.menu-is-open .page-content {
    Responsive — SMALL  (mobile)
    ══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  /* Keep body hidden; scroll happens inside #root so content clips at the border */
-  #root {
+  /* Keep body hidden; scroll happens inside .with-frame so content clips at the border */
+  .with-frame {
     position: fixed;
     inset: 16px;
     overflow-y: auto;

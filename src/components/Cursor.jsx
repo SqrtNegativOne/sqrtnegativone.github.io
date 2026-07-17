@@ -10,8 +10,7 @@ export default function Cursor() {
     if (!dot) return;
 
     const onMove = (e) => {
-      dot.style.left = `${e.clientX}px`;
-      dot.style.top = `${e.clientY}px`;
+      dot.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
     };
 
     const onOver = (e) => {

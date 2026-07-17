@@ -16,7 +16,7 @@
 
 /* ── Light theme (daytime default) ─────────────── */
 :root {
-  --frame-v: 40px;
+  --frame-v: 72px;
   --bg: #f5f2ed;
   --text: #1a1a1a;
   --text-secondary: #555;
@@ -70,7 +70,7 @@ body {
 /* ── Viewport border frame (like Keita Yamada) ── */
 /* --frame-v is set by JS when the menu opens so the border snaps to the
    exact grid height; it resets to the default when the menu closes.      */
-body::before {
+.with-frame::before {
   content: '';
   position: fixed;
   top:    var(--frame-v);
@@ -85,11 +85,17 @@ body::before {
               bottom 0.42s cubic-bezier(0.22, 0.7, 0.2, 1);
 }
 
+@media (max-width: 1024px) and (min-width: 641px) {
+  :root {
+    --frame-v: 40px;
+  }
+}
+
 @media (max-width: 640px) {
   :root {
     --frame-v: 16px;
   }
-  body::before {
+  .with-frame::before {
     left:   16px;
     right:  16px;
   }
@@ -137,9 +143,11 @@ body::before {
   pointer-events: none;
   z-index: 99999;
   mix-blend-mode: difference;
-  transform: translate(-50%, -50%);
+  left: 0;
+  top: 0;
+  transform: translate3d(0, 0, 0) translate(-50%, -50%);
   transition: width 0.2s ease, height 0.2s ease, border-radius 0.2s ease;
-  will-change: left, top;
+  will-change: transform;
 }
 
 .custom-cursor.cursor-expanded {

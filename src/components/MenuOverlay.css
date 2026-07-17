@@ -1,12 +1,13 @@
 /* ══════════════════════════════════════════════
-   Hamburger / X button — fixed top-right
+   Hamburger / X button — mobile only (desktop uses Space key)
    ══════════════════════════════════════════════ */
 .nav-burger {
+  display: none;
   position: fixed;
-  top: 4rem;
-  right: 4rem;
+  top: 3rem;
+  right: 3rem;
   z-index: 10001;
-  display: flex;
+  flex-direction: column;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
@@ -42,6 +43,35 @@
 .nav-burger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* ══════════════════════════════════════════════
+   Menu hint — "press space to activate menu"
+   Sits centered in the bottom margin space, outside the border frame.
+   ══════════════════════════════════════════════ */
+.menu-hint {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: var(--frame-v);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: rgba(var(--text-secondary-rgb), 0.7);
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.28s ease;
+}
+
+body.menu-is-open .menu-hint {
+  opacity: 0;
+}
+
+/* ══════════════════════════════════════════════
    Overlay — flush against the viewport border frame
    ══════════════════════════════════════════════ */
 .menu-overlay {
@@ -63,15 +93,24 @@
    ══════════════════════════════════════════════ */
 .menu-scrim {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: 499;
   background: rgba(0, 0, 0, 0.72);
   backdrop-filter: blur(24px) saturate(0.75) brightness(0.4);
   -webkit-backdrop-filter: blur(24px) saturate(0.75) brightness(0.4);
   animation: overlay-bg-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@supports (-moz-appearance:none) {
+  .nav-burger, .menu-scrim {
+    backdrop-filter: none;
+  }
+  .menu-scrim {
+    background: rgba(0, 0, 0, 0.95);
+  }
+  .nav-burger {
+    background: rgba(40, 40, 40, 0.9);
+  }
 }
 
 .menu-scrim--closing {
@@ -143,8 +182,6 @@
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%),
     rgba(14, 14, 14, 0.82);
-  backdrop-filter: blur(28px) saturate(1.35) brightness(0.7);
-  -webkit-backdrop-filter: blur(28px) saturate(1.35) brightness(0.7);
   box-shadow:
     inset  1px  1px 0 rgba(255, 255, 255, 0.07),
     inset -1px -1px 0 rgba(0,   0,   0,   0.22);
@@ -252,6 +289,14 @@
    Responsive — tablet (641px – 1024px)
    ══════════════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 641px) {
+  .nav-burger {
+    display: flex;
+  }
+
+  .menu-hint {
+    display: none;
+  }
+
   .menu-grid {
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: calc((100vw - 80px) / 4);
@@ -267,8 +312,11 @@
    ══════════════════════════════════════════════ */
 @media (max-width: 640px) {
   .nav-burger {
-    top: 3rem;
-    right: 3rem;
+    display: flex;
+  }
+
+  .menu-hint {
+    display: none;
   }
 
   .menu-grid {

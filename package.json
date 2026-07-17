@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npm run media:build && npm run blog:build && vite",
-    "build": "npm run media:build && npm run blog:build && vite build && cp docs/index.html docs/404.html && echo sqrt.fyi > docs/CNAME",
+    "build": "npm run media:build && npm run blog:build && vite build && node -e \"require('fs').copyFileSync('docs/index.html', 'docs/404.html'); require('fs').writeFileSync('docs/CNAME', 'sqrt.fyi')\"",
     "blog:build": "npx @11ty/eleventy",
     "blog:watch": "npx @11ty/eleventy --watch",
     "media:build": "node scripts/build-media.mjs",
