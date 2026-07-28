@@ -1,16 +1,13 @@
-import { useEffect, useRef } from "react";
-import { createThomas } from "./visualizations/thomas";
-import { createThomasWebGL } from "./visualizations/thomas-webgl";
+<script>
+  import { onMount, onDestroy } from "svelte";
+  import { createThomas } from "./visualizations/thomas";
+  import { createThomasWebGL } from "./visualizations/thomas-webgl";
 
-// Any visualization must implement: { init, frame, resize, destroy }
-// WebGL renderer additionally implements setColors(colors) called on theme change.
-// We prefer the WebGL2 renderer; fall back to Canvas 2D if unavailable.
+  let canvasRef;
 
-export default function Home() {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
+  onMount(() => {
+    const canvas = canvasRef;
+    if (!canvas) return;
 
     const webglViz = createThomasWebGL();
     const useWebGL = webglViz.init(canvas);
@@ -47,7 +44,6 @@ export default function Home() {
         : { bg: "245,242,237", litBase: 20, litSpd: 25 };
     }
 
-    // Cache colors; only re-read on theme change via MutationObserver.
     let cachedColors = getColors();
     if (useWebGL) viz.setColors(cachedColors);
 
@@ -64,7 +60,6 @@ export default function Home() {
       if (!document.body.classList.contains("menu-is-open")) {
         az += (targetAz - az) * 0.06;
         el += (targetEl - el) * 0.06;
-        // WebGL renderer ignores cachedColors (uses setColors); Canvas 2D uses it.
         viz.frame(ctx, W, H, az, el, cachedColors);
       }
       animId = requestAnimationFrame(render);
@@ -104,14 +99,12 @@ export default function Home() {
       canvas.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("resize", onResize);
     };
-  }, []);
+  });
+</script>
 
-  return (
-    <div style={{ position: "fixed", inset: 0, transform: "translateZ(0)" }}>
-      <canvas
-        ref={canvasRef}
-        style={{ display: "block", width: "100vw", height: "100vh" }}
-      />
-    </div>
-  );
-}
+<div style="position: fixed; inset: 0; transform: translateZ(0);">
+  <canvas
+    bind:this={canvasRef}
+    style="display: block; width: 100vw; height: 100vh;"
+  ></canvas>
+</div>

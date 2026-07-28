@@ -1,21 +1,18 @@
-import { useState } from "react";
-import "./Blog.css";
+<script>
+  import "./Blog.css";
 
-const posts = [
-  {
-    title: "Knives are scary.",
-    date: "2025-01-18",
-    description: "They are scary.",
-    body: (
-      <>
+  const posts = [
+    {
+      title: "Knives are scary.",
+      date: "2025-01-18",
+      description: "They are scary.",
+      body: `
         <p>
           I have a confession to make; I have a minor phobia of knives.
         </p>
         <p>
           It&rsquo;s strange because I am not that afraid of guns in movies as much as
-          I find swords or knives{" "}
-          <del>or pencils</del>{" "}
-          or other sharp weapons, even though guns are much deadlier.
+          I find swords or knives <del>or pencils</del> or other sharp weapons, even though guns are much deadlier.
         </p>
         <p>
           <del>
@@ -81,9 +78,9 @@ const posts = [
           crimson pool leaking from under the ear, kissing the welt of your
           shoe.
         </p>
-        <dl className="definition-box">
+        <dl class="definition-box">
           <dt>sonder</dt>
-          <dd className="pronunciation">(son&middot;der)</dd>
+          <dd class="pronunciation">(son&middot;der)</dd>
           <dd>
             The profound realisation that everyone, including strangers passing
             in the street, has a life as complex as one&rsquo;s own, which they
@@ -107,49 +104,43 @@ const posts = [
           they are about to plunge their victim into.
         </p>
         <p><strong>Knives are scary.</strong></p>
-      </>
-    ),
-  },
-];
+      `
+    }
+  ];
 
-export default function Blog() {
-  const [activePost, setActivePost] = useState(null);
+  let activePost = null;
+</script>
 
-  if (activePost !== null) {
-    const post = posts[activePost];
-    return (
-      <div className="text-column blog-view">
-        <button className="blog-back" onClick={() => setActivePost(null)}>
-          &larr; Back
-        </button>
-        <article className="blog-post">
-          <h2 className="blog-post-title">{post.title}</h2>
-          <time className="blog-post-date">{post.date}</time>
-          <div className="blog-post-body">{post.body}</div>
+{#if activePost !== null}
+  <div class="text-column blog-view">
+    <button class="blog-back" onclick={() => activePost = null}>
+      &larr; Back
+    </button>
+    <article class="blog-post">
+      <h2 class="blog-post-title">{posts[activePost].title}</h2>
+      <time class="blog-post-date">{posts[activePost].date}</time>
+      <div class="blog-post-body">{@html posts[activePost].body}</div>
+    </article>
+  </div>
+{:else}
+  <div class="text-column blog-view">
+    <p class="section-intro">
+      A tiny sliver of my writing which I have estimated to be socially
+      acceptable.
+    </p>
+    <div class="blog-list">
+      {#each posts as post, i}
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+        <article
+          class="blog-item"
+          onclick={() => activePost = i}
+        >
+          <h3 class="blog-item-title">{post.title}</h3>
+          <time class="blog-item-date">{post.date}</time>
+          <p class="blog-item-desc">{post.description}</p>
         </article>
-      </div>
-    );
-  }
-
-  return (
-    <div className="text-column blog-view">
-      <p className="section-intro">
-        A tiny sliver of my writing which I have estimated to be socially
-        acceptable.
-      </p>
-      <div className="blog-list">
-        {posts.map((post, i) => (
-          <article
-            key={i}
-            className="blog-item"
-            onClick={() => setActivePost(i)}
-          >
-            <h3 className="blog-item-title">{post.title}</h3>
-            <time className="blog-item-date">{post.date}</time>
-            <p className="blog-item-desc">{post.description}</p>
-          </article>
-        ))}
-      </div>
+      {/each}
     </div>
-  );
-}
+  </div>
+{/if}

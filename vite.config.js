@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
 import tailwindcss from '@tailwindcss/vite'
 import { existsSync } from 'fs'
 import { resolve } from 'path'
@@ -33,7 +33,7 @@ function blogStaticPlugin() {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss(), blogStaticPlugin(), react()],
+  plugins: [tailwindcss(), blogStaticPlugin(), svelte()],
   build: {
     outDir: 'docs',
     emptyOutDir: true,
