@@ -18,7 +18,7 @@ function stepParticle(x, y, z, steps) {
 }
 
 // Colour cache keyed by (hue bucket × lightness bucket) — avoids string alloc per frame
-const colCache = new Array(400);
+const colCache = Array.from({ length: 400 });
 function getCol(hue, lightness) {
   const hk  = (hue / 10) | 0;
   const lk  = (lightness / 5) | 0;

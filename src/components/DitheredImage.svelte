@@ -5,8 +5,7 @@
   export let alt = "";
   let className = "";
   export { className as class };
-
-  let canvasRef;
+  let canvasRef; // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
   let loaded = false;
 
   const BAYER_4x4 = [

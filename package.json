@@ -9,7 +9,7 @@
     "blog:build": "npx @11ty/eleventy",
     "blog:watch": "npx @11ty/eleventy --watch",
     "media:build": "node scripts/build-media.mjs",
-    "lint": "eslint .",
+    "lint": "oxlint -c .oxlintrc.json",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -22,12 +22,9 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.5",
-    "@eslint/js": "^9.39.4",
     "@sveltejs/vite-plugin-svelte": "^7.2.0",
-    "eslint": "^9.39.4",
-    "globals": "^17.4.0",
+    "oxlint": "^1.76.0",
     "svelte": "^5.56.8",
-    "svelte-routing": "^2.13.0",
     "vite": "^8.0.1"
   }
 }

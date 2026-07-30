@@ -1,7 +1,5 @@
 <script>
   import { onMount } from 'svelte';
-  import { Link } from 'svelte-routing';
-  import './Questions.css';
 
   let questions = [];
 
@@ -24,5 +22,55 @@
       </li>
     {/each}
   </ul>
-  <Link to="/" class="back-link">&lt; back to main</Link>
+  <a href="/" class="back-link">&lt; back to main</a>
 </div>
+
+<style>
+.questions-page {
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
+}
+
+.questions-page,
+.questions-page * {
+  font-family: "Datatype", sans-serif !important;
+}
+
+.questions-title {
+  font-weight: 500;
+  font-size: 5rem;
+  margin: 0 0 2rem 0;
+  letter-spacing: -0.02em;
+}
+
+.questions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.question-item {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.back-link {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  color: #0000EE !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+}
+
+.back-link:visited {
+  color: #551A8B !important;
+}
+
+</style>

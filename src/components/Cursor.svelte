@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from "svelte";
 
   const INTERACTIVE = "a, button, [role='button'], .nav-link, .blog-item, .skill-item";
-  let dotRef;
+  let dotRef; // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
 
   function onMove(e) {
     if (!dotRef) return;

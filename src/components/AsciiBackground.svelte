@@ -114,7 +114,7 @@
     return `path(evenodd, 'M 0 0 L ${w} 0 L ${w} ${h} L 0 ${h} Z M ${ix} ${iy} L ${w - ix} ${iy} L ${w - ix} ${h - iy} L ${ix} ${h - iy} Z')`;
   }
 
-  let wrapperRef;
+  let wrapperRef; // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
   let clip = $state("");
 
   function updateClip() {

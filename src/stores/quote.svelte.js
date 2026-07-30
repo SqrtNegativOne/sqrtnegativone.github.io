@@ -10,7 +10,6 @@ export function createQuoteStore() {
   let nextText = $state(null);
 
   let typeTimer;
-  let deleteTimer;
 
   function init() {
     getRandomQuote().then(text => {
@@ -35,7 +34,7 @@ export function createQuoteStore() {
   function startDeleting() {
     if (phase !== "deleting") return;
     if (displayed.length > 0) {
-      deleteTimer = setTimeout(() => {
+      setTimeout(() => {
         displayed = displayed.slice(0, -1);
         startDeleting();
       }, DELETE_MS);

@@ -1,6 +1,5 @@
 <script>
-  import { Router, Route } from "svelte-routing";
-  import MenuOverlay from "./components/MenuOverlay.svelte";
+      import MenuOverlay from "./components/MenuOverlay.svelte";
   import ThemeToggle from "./components/ThemeToggle.svelte";
   import Cursor from "./components/Cursor.svelte";
   import AsciiBackground from "./components/AsciiBackground.svelte";
@@ -21,7 +20,9 @@
   import { quoteStore } from "./stores/quote.svelte.js";
   import "./App.css";
 
+
   let currentPath = $state(window.location.pathname);
+
 
   const KNOWN_ROUTES = [
     "/", "/about", "/skills", "/projects", "/contact",
@@ -37,12 +38,6 @@
   let contentFill = $derived(currentPath === "/projects" || currentPath === "/skills");
 </script>
 
-<svelte:window on:popstate={() => currentPath = window.location.pathname} />
-
-<!-- svelte-ignore a11y_click_events_have_key_events -->
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<div onclick={() => setTimeout(() => currentPath = window.location.pathname, 10)}>
-<Router url={currentPath}>
   {#if !isKnown}
     <div class="with-frame">
       <AsciiBackground />
@@ -92,13 +87,13 @@
 
       <!-- Content — bottom-right, swaps based on route -->
       <main class="content {contentFill ? 'content--fill' : ''}">
-        <Route path="/about" component={Bio} />
-        <Route path="/skills" component={Skills} />
-        <Route path="/projects" component={Projects} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/now" component={ComingSoon} />
-        <Route path="/colophon" component={ComingSoon} />
-        <Route path="/minis" component={ComingSoon} />
+        {#if currentPath === "/about"} <Bio /> {/if}
+        {#if currentPath === "/skills"} <Skills /> {/if}
+        {#if currentPath === "/projects"} <Projects /> {/if}
+        {#if currentPath === "/contact"} <Contact /> {/if}
+        {#if currentPath === "/now"} <ComingSoon /> {/if}
+        {#if currentPath === "/colophon"} <ComingSoon /> {/if}
+        {#if currentPath === "/minis"} <ComingSoon /> {/if}
       </main>
     </div>
 
@@ -108,5 +103,3 @@
     <!-- Custom cursor -->
     <Cursor />
   {/if}
-</Router>
-</div>

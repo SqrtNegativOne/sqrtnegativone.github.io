@@ -14,3 +14,39 @@
     {/if}
   </p>
 {/if}
+
+<style>
+.quote {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--quote-color);
+  user-select: none;
+  max-width: 70%;
+  z-index: 11;
+}
+.quote-cursor {
+  font-style: normal;
+  margin-left: 1px;
+  animation: blink-cursor 0.75s step-end infinite;
+}
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+@media (max-width: 1024px) and (min-width: 641px) {
+  .quote {
+    grid-area: quote;
+    max-width: 100%;
+    font-size: 0.9rem;
+    margin: 0;
+    align-self: start;
+  }
+}
+@media (max-width: 640px) {
+  .quote {
+    grid-area: quote;
+    max-width: 100%;
+    font-size: 0.85rem;
+  }
+}
+</style>

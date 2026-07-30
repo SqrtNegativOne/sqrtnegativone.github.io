@@ -1,7 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
-  import { navigate } from "svelte-routing";
-  import "./MenuOverlay.css";
+    
 
   export let view = "";
   export let hideHint = false;
@@ -139,7 +138,7 @@
     closeMenu();
     setTimeout(() => {
       if (item.external) window.location.href = item.path;
-      else navigate(item.path);
+      else window.location.href = item.path;
     }, EXIT_MS);
   }
 
@@ -235,3 +234,343 @@
     </div>
   </div>
 {/if}
+
+<style>
+/* ══════════════════════════════════════════════
+   Hamburger / X button — mobile only (desktop uses Space key)
+   ══════════════════════════════════════════════ */
+.nav-burger {
+  display: none;
+  position: fixed;
+  top: 3rem;
+  right: 3rem;
+  z-index: 10001;
+  flex-direction: column;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 42px;
+  height: 42px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.nav-burger:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.nav-burger span {
+  display: block;
+  height: 1.5px;
+  width: 100%;
+  background: var(--text);
+  transform-origin: center;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity  0.2s ease;
+}
+
+/* Morph lines → X */
+.nav-burger--open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-burger--open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-burger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* ══════════════════════════════════════════════
+   Menu hint — "press space to activate menu"
+   Sits centered in the bottom margin space, outside the border frame.
+   ══════════════════════════════════════════════ */
+.menu-hint {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: var(--frame-v);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: rgba(var(--text-secondary-rgb), 0.7);
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.28s ease;
+}
+
+body.menu-is-open .menu-hint {
+  opacity: 0;
+}
+
+/* ══════════════════════════════════════════════
+   Overlay — flush against the viewport border frame
+   ══════════════════════════════════════════════ */
+.menu-overlay {
+  position: fixed;
+  /* top/right/bottom/left set via inline style (JS-computed for pixel-perfect fit) */
+  z-index: 500;
+  overflow: hidden;
+  background: transparent;
+}
+
+.menu-overlay--closing {
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════
+   Full-viewport scrim — separate from overlay so it isn't
+   clipped by overflow:hidden and backdrop-filter works on
+   all mobile browsers without pseudo-element quirks.
+   ══════════════════════════════════════════════ */
+.menu-scrim {
+  position: fixed;
+  z-index: 499;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(24px) saturate(0.75) brightness(0.4);
+  -webkit-backdrop-filter: blur(24px) saturate(0.75) brightness(0.4);
+  animation: overlay-bg-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@supports (-moz-appearance:none) {
+  .nav-burger, .menu-scrim {
+    backdrop-filter: none;
+  }
+  .menu-scrim {
+    background: rgba(0, 0, 0, 0.95);
+  }
+  .nav-burger {
+    background: rgba(40, 40, 40, 0.9);
+  }
+}
+
+.menu-scrim--closing {
+  pointer-events: none;
+  animation: overlay-bg-out 0.42s ease forwards;
+}
+
+@keyframes overlay-bg-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes overlay-bg-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ══════════════════════════════════════════════
+   Bento grid — desktop: 6 equal columns
+   ══════════════════════════════════════════════ */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: calc((100vw - 80px) / 6);
+  grid-auto-flow: row dense;
+  gap: 1px;
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════
+   Importance tiers
+   ══════════════════════════════════════════════ */
+.menu-cell--imp3 {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.menu-cell--imp3 .menu-cell__label {
+  font-size: clamp(2rem, 5.5vw, 6rem);
+}
+
+.menu-cell--imp2 {
+  grid-column: span 2;
+  grid-row: span 1;
+}
+.menu-cell--imp2 .menu-cell__label {
+  font-size: clamp(1.2rem, 2.8vw, 3rem);
+}
+
+.menu-cell--imp1 .menu-cell__label {
+  font-size: clamp(0.85rem, 1.6vw, 1.8rem);
+  color: rgba(255, 255, 255, 0.35);
+}
+.menu-cell--imp1:hover .menu-cell__label {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* ══════════════════════════════════════════════
+   Cells — frosted glass panels
+   Plain backdrop-blur over the page content, faint
+   diagonal highlight, inset bevel for thickness.
+   ══════════════════════════════════════════════ */
+.menu-cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: clamp(0.5rem, 1.5vw, 1.25rem);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(14, 14, 14, 0.82);
+  box-shadow:
+    inset  1px  1px 0 rgba(255, 255, 255, 0.07),
+    inset -1px -1px 0 rgba(0,   0,   0,   0.22);
+  border: none;
+  overflow: hidden;
+  transition: background 0.25s ease;
+  text-align: left;
+}
+
+.menu-cell:not(.menu-cell--deco):hover {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(28, 28, 28, 0.88);
+}
+
+.menu-cell--active {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(28, 28, 28, 0.85);
+}
+
+.menu-cell--deco {
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 55%),
+    rgba(14, 14, 14, 0.78);
+}
+
+/* Index label — top-left */
+.menu-cell__num {
+  position: absolute;
+  top: clamp(0.4rem, 1vw, 0.85rem);
+  left: clamp(0.4rem, 1vw, 0.85rem);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(0.45rem, 0.6vw, 0.6rem);
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.18);
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.menu-cell:hover .menu-cell__num,
+.menu-cell--active .menu-cell__num {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Page label — bottom-left */
+.menu-cell__label {
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(1.2rem, 3vw, 3rem);
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  line-height: 1;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.menu-cell:hover .menu-cell__label {
+  color: rgba(255, 255, 255, 0.98);
+}
+
+.menu-cell--active .menu-cell__label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ══════════════════════════════════════════════
+   Edge-aware slide animation
+   Each cell receives per-instance --from-x / --from-y from JS, computed
+   so the cell starts parked just outside the overlay edge nearest to it.
+   --delay staggers the in-wave from border inward;
+   --out-delay reverses it on close.
+   ══════════════════════════════════════════════ */
+/* No opacity transition — cells start fully outside the overlay edge (JS sets
+   --from-x/--from-y to the full offset to outside) and overflow:hidden on
+   .menu-overlay clips them until they slide into view, so they appear as a
+   clean push from the edge rather than fading in mid-grid. */
+@keyframes cell-from-edge {
+  from { transform: translate(var(--from-x, 0), var(--from-y, 0)); }
+  to   { transform: translate(0, 0); }
+}
+
+@keyframes cell-to-edge {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(var(--from-x, 0), var(--from-y, 0)); }
+}
+
+.menu-cell {
+  animation: cell-from-edge 0.52s cubic-bezier(0.22, 0.7, 0.2, 1) var(--delay, 0ms) both;
+  will-change: transform, opacity;
+}
+
+.menu-cell--out {
+  animation: cell-to-edge 0.4s cubic-bezier(0.55, 0.05, 0.75, 0.4) var(--out-delay, 0ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-cell,
+  .menu-cell--out {
+    animation-duration: 0.001s;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   Responsive — tablet (641px – 1024px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 1024px) and (min-width: 641px) {
+  .nav-burger {
+    display: flex;
+  }
+
+  .menu-hint {
+    display: none;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: calc((100vw - 80px) / 4);
+  }
+
+  .menu-cell--imp3 .menu-cell__label { font-size: clamp(2rem, 8vw, 5rem); }
+  .menu-cell--imp2 .menu-cell__label { font-size: clamp(1.2rem, 4vw, 2.5rem); }
+  .menu-cell--imp1 .menu-cell__label { font-size: clamp(0.85rem, 3vw, 1.8rem); }
+}
+
+/* ══════════════════════════════════════════════
+   Responsive — mobile (≤640px, inset 16px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .nav-burger {
+    display: flex;
+  }
+
+  .menu-hint {
+    display: none;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: calc((100vw - 32px) / 2);
+  }
+
+  .menu-cell--imp3,
+  .menu-cell--imp2 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .menu-cell--imp3 .menu-cell__label { font-size: clamp(1.5rem, 9vw, 2.8rem); }
+  .menu-cell--imp2 .menu-cell__label { font-size: clamp(1.1rem, 7vw, 2rem); }
+  .menu-cell--imp1 .menu-cell__label { font-size: clamp(0.85rem, 5vw, 1.5rem); }
+}
+
+</style>

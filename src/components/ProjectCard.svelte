@@ -4,8 +4,8 @@
   import { clickOutside } from "../actions/clickOutside.js";
   import ShaderImage from "./ShaderImage.svelte";
 
-  export let project;
-  export let index;
+  export let project; // oxlint-disable-line no-unassigned-vars - false positive: assigned by svelte compiler
+  export let index; // oxlint-disable-line no-unassigned-vars - false positive: assigned by svelte compiler
 
   let expanded = false;
 

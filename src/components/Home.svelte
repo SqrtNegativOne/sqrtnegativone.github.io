@@ -3,7 +3,7 @@
   import { createThomas } from "./visualizations/thomas";
   import { createThomasWebGL } from "./visualizations/thomas-webgl";
 
-  let canvasRef;
+  let canvasRef; // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
 
   onMount(() => {
     const canvas = canvasRef;

@@ -119,7 +119,7 @@ async function main() {
       try {
         const fresh = await fetchMeta(item);
         if (fresh) {
-          meta = { ...(meta || {}), ...fresh };
+          meta = { ...meta, ...fresh };
           cache[key] = meta;
           console.log(`[media] fetched ${key} → ${meta.title}`);
         } else if (!meta) {
