@@ -28,7 +28,7 @@
       <div class="ml-hero-row">
         {#each doing as item (item.type + '-' + item.id)}
           <article class="ml-hero-card">
-            <div class={`ml-poster ml-poster--lg`}>
+            <div class="ml-poster ml-poster--lg">
               {#if item.poster}
                 <img src={item.poster} alt="" loading="lazy" />
               {:else}

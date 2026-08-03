@@ -1,7 +1,5 @@
 <script>
-  export let displayed = "";
-  export let phase = "idle";
-  export let onCycle = () => {};
+  let { displayed = "", phase = "idle", onCycle = () => {} } = $props();
 </script>
 
 {#if phase !== "idle" || displayed}

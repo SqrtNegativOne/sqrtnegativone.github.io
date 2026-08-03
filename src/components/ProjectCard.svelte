@@ -4,12 +4,11 @@
   import { clickOutside } from "../actions/clickOutside.js";
   import ShaderImage from "./ShaderImage.svelte";
 
-  export let project; // oxlint-disable-line no-unassigned-vars - false positive: assigned by svelte compiler
-  export let index; // oxlint-disable-line no-unassigned-vars - false positive: assigned by svelte compiler
+  let { project, index } = $props(); // oxlint-disable-line no-unassigned-vars - false positive: assigned by svelte compiler
 
   let expanded = false;
 
-  const id = Math.random().toString(36).substr(2, 9);
+  const id = Math.random().toString(36).substring(2, 11);
   const cardId = `card-${project.id}-${id}`;
   const imgId = `img-${project.id}-${id}`;
   const titleId = `title-${project.id}-${id}`;

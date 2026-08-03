@@ -1,6 +1,5 @@
 <script>
-      import MenuOverlay from "./components/MenuOverlay.svelte";
-  import ThemeToggle from "./components/ThemeToggle.svelte";
+  import MenuOverlay from "./components/MenuOverlay.svelte";
   import Cursor from "./components/Cursor.svelte";
   import AsciiBackground from "./components/AsciiBackground.svelte";
 
@@ -63,7 +62,7 @@
     <Questions />
     <Cursor />
   {:else}
-    <div class="page page-content with-frame {showPortrait ? '' : 'no-portrait'}">
+    <div class="page page-content with-frame" class:no-portrait={!showPortrait}>
       <AsciiBackground />
 
       <!-- Name + Quote group — top-left -->

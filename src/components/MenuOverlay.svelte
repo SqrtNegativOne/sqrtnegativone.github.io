@@ -1,9 +1,7 @@
 <script>
   import { onMount, onDestroy } from "svelte";
-    
 
-  export let view = "";
-  export let hideHint = false;
+  let { view = "", hideHint = false } = $props();
 
   const NAV_ITEMS = [
     { key: "home",         label: "Home",         path: "/",              importance: 3 },
@@ -137,7 +135,7 @@
   function handleNav(item) {
     closeMenu();
     setTimeout(() => {
-      if (item.external) window.location.href = item.path;
+      if (item.external) window.open(item.path, '_blank', 'noopener,noreferrer');
       else window.location.href = item.path;
     }, EXIT_MS);
   }
@@ -245,7 +243,6 @@
   top: 3rem;
   right: 3rem;
   z-index: 10001;
-  flex-direction: column;
   flex-direction: column;
   justify-content: center;
   gap: 5px;

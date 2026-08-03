@@ -3,7 +3,7 @@
   import ProjectCard from "./ProjectCard.svelte";
   
 
-  export let projects = [];
+  let { projects = [] } = $props();
 
   let trackRef; // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
   let progress = 0;

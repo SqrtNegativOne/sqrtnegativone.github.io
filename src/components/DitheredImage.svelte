@@ -1,12 +1,9 @@
 <script>
   import { onMount } from "svelte";
 
-  export let src = "";
-  export let alt = "";
-  let className = "";
-  export { className as class };
-  let canvasRef; // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
-  let loaded = false;
+  let { src = "", alt = "", class: className = "" } = $props();
+  let canvasRef = $state(null); // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
+  let loaded = $state(false);
 
   const BAYER_4x4 = [
     [ 0,  8,  2, 10],

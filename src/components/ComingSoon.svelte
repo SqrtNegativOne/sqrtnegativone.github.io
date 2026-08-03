@@ -1,6 +1,3 @@
-<script>
-</script>
-
 <div class="not-found">
   <h2 class="not-found-code">WIP</h2>
   <p class="not-found-message">
