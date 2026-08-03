@@ -76,10 +76,10 @@
     return          { x:  (cols - p.col) * cellPx,    y: 0,                        dist: dR };
   }
 
-  let open = false;
-  let closing = false;
-  let overlayStyle = {};
-  let layout = { nav: [], deco: [], maxDist: 0 };
+  let open = $state(false);
+  let closing = $state(false);
+  let overlayStyle = $state({});
+  let layout = $state({ nav: [], deco: [], maxDist: 0 });
   let closeTimer;
 
   function closeMenu() {
