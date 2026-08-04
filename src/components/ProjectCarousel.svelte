@@ -5,8 +5,8 @@
 
   let { projects = [] } = $props();
 
-  let trackRef; // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
-  let progress = 0;
+  let trackRef = $state(null); // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
+  let progress = $state(0);
 
   function onScroll() {
     if (!trackRef) return;
