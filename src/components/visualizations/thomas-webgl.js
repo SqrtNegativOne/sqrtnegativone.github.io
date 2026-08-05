@@ -142,7 +142,15 @@ export function createThomasWebGL() {
   let litBase = 42, litSpd = 32;
   let colorDirty = true;       // litBase/litSpd need uploading to draw shader
 
-  let fpsFrames = 0, fpsStart = 0, adapted = false;
+  // -- Time Accumulator state --
+  let lastFrameTime = 0;
+  let timeAccumulator = 0;
+  const SIM_STEP_MS = 1000 / 60;
+  
+  let fpsDiv = null;
+  let secFrames = 0;
+  let secStart = 0;
+  let lastSimSteps = 0;
 
   function tryGetContext(canvas) {
     const ctx = canvas.getContext("webgl2", {
@@ -317,6 +325,8 @@ export function createThomasWebGL() {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
         colorDirty = true;
+        lastFrameTime = performance.now();
+        secStart = lastFrameTime;
         return true;
       } catch (e) {
         console.warn("WebGL init failed, falling back:", e);
@@ -338,21 +348,21 @@ export function createThomasWebGL() {
     frame(_ctx, W, H, az, el) {
       if (!gl) return;
 
-      // Adaptive quality: sample 90 frames; halve N if FPS < 38.
-      if (!adapted) {
-        if (fpsFrames === 0) fpsStart = performance.now();
-        if (++fpsFrames === 90) {
-          const fps = 90000 / (performance.now() - fpsStart);
-          if (fps < 38) {
-            N = Math.max(600, (N * 0.55) | 0);
-            rebuildForN();
-          }
-          adapted = true;
-        }
-      }
+      const now = performance.now();
+      const dt = Math.min(now - lastFrameTime, 100); // clamp at 100ms
+      timeAccumulator += dt;
 
-      // --- GPU simulation pass (replaces JS loop + bufferSubData) ---
-      simulate(1);
+      let simSteps = 0;
+      while (timeAccumulator >= SIM_STEP_MS) {
+        simSteps++;
+        timeAccumulator -= SIM_STEP_MS;
+      }
+      
+      if (simSteps > 0) {
+        simulate(simSteps);
+      }
+      lastFrameTime = now;
+      lastSimSteps = simSteps;
 
       // --- Draw pass ---
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);

@@ -66,9 +66,7 @@
     }
 
     function onResize() {
-      cancelAnimationFrame(animId);
       resize();
-      render();
     }
 
     window.addEventListener("mousemove", onMouseMove);

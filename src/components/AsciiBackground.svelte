@@ -60,6 +60,8 @@
   uniform float uFrequency;
   uniform float uSpeed;
   uniform float uValue;
+  uniform vec2 uResolution;
+  uniform vec2 uFrameMargin;
   in vec2 vUv;
   out vec4 fragColor;
   ${CNOISE}
@@ -69,6 +71,11 @@
     return c.z*mix(K.xxx,clamp(p-K.xxx,0.0,1.0),c.y);
   }
   void main(){
+    vec2 pix=gl_FragCoord.xy;
+    if (pix.x > uFrameMargin.x && pix.x < uResolution.x - uFrameMargin.x &&
+        pix.y > uFrameMargin.y && pix.y < uResolution.y - uFrameMargin.y) {
+        discard;
+    }
     float hue=abs(cnoise(vec3(vUv*uFrequency,uTime*uSpeed)));
     fragColor=vec4(hsv2rgb(vec3(hue,1.0,uValue)),1.0);
   }`;
@@ -77,6 +84,7 @@
   const ASCII_FRAG = /* glsl */ `#version 300 es
   precision highp float;
   uniform vec2 uResolution;
+  uniform vec2 uFrameMargin;
   uniform sampler2D uTexture;
   out vec4 fragColor;
 
@@ -90,6 +98,13 @@
   }
   void main(){
     vec2 pix=gl_FragCoord.xy;
+    // Transparent center to replace CSS clip-path
+    if (pix.x > uFrameMargin.x && pix.x < uResolution.x - uFrameMargin.x &&
+        pix.y > uFrameMargin.y && pix.y < uResolution.y - uFrameMargin.y) {
+        fragColor = vec4(0.0);
+        return;
+    }
+    
     vec3 col=texture(uTexture,floor(pix/16.0)*16.0/uResolution.xy).rgb;
     float g=0.3*col.r+0.59*col.g+0.11*col.b;
     int n=4096;
@@ -101,34 +116,27 @@
     if(g>0.7)n=13195790;
     if(g>0.8)n=11512810;
     vec2 p=mod(pix/8.0,2.0)-vec2(1.0);
-    fragColor=vec4(col*character(n,p),1.0);
+    // Render opaque pixels for the border (CSS opacity will make it 0.2)
+    fragColor=vec4(col*character(n,p), 1.0);
   }`;
 
-  function frameClipPath() {
-    if (typeof window === 'undefined') return '';
+  function getMargins() {
+    if (typeof window === 'undefined') return [0, 0];
     const w = window.innerWidth;
-    const h = window.innerHeight;
     const ix = w <= 640 ? 16 : 40;
     const rootStyles = getComputedStyle(document.documentElement);
     const iy = parseFloat(rootStyles.getPropertyValue('--frame-v')) || (w <= 1024 && w > 640 ? 40 : w <= 640 ? 16 : 72);
-    return `path(evenodd, 'M 0 0 L ${w} 0 L ${w} ${h} L 0 ${h} Z M ${ix} ${iy} L ${w - ix} ${iy} L ${w - ix} ${h - iy} L ${ix} ${h - iy} Z')`;
+    return [ix, iy];
   }
 
   let wrapperRef; // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this
-  let clip = $state("");
-
-  function updateClip() {
-    clip = frameClipPath();
-  }
 
   onMount(() => {
-    clip = frameClipPath();
-    window.addEventListener('resize', updateClip);
-
     const wrapper = wrapperRef;
     if (!wrapper) return;
 
-    const renderer = new Renderer({ dpr: 1, webgl: 2 });
+    // Use alpha: true so the center can be transparent!
+    const renderer = new Renderer({ dpr: 1, webgl: 2, alpha: true });
     const gl = renderer.gl;
     gl.canvas.style.cssText = 'width:100%;height:100%;display:block;';
     wrapper.appendChild(gl.canvas);
@@ -136,14 +144,24 @@
     const camera = new Camera(gl, { near: 0.1, far: 100 });
     camera.position.set(0, 0, 3);
 
+    let perlinProgram, asciiProgram;
+
     const handleResize = () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
       camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+      
+      if (perlinProgram && asciiProgram) {
+        const res = [gl.canvas.width, gl.canvas.height];
+        const margins = getMargins();
+        perlinProgram.uniforms.uResolution.value = res;
+        perlinProgram.uniforms.uFrameMargin.value = margins;
+        asciiProgram.uniforms.uResolution.value = res;
+        asciiProgram.uniforms.uFrameMargin.value = margins;
+      }
     };
     window.addEventListener('resize', handleResize);
-    handleResize();
 
-    const perlinProgram = new Program(gl, {
+    perlinProgram = new Program(gl, {
       vertex: VERT,
       fragment: PERLIN_FRAG,
       uniforms: {
@@ -151,6 +169,8 @@
         uFrequency: { value: 5.0 },
         uSpeed:     { value: 0.015 },
         uValue:     { value: 0.4 },
+        uResolution:  { value: [window.innerWidth, window.innerHeight] },
+        uFrameMargin: { value: getMargins() },
       },
     });
     const perlinMesh = new Mesh(gl, {
@@ -159,11 +179,12 @@
     });
     const target = new RenderTarget(gl);
 
-    const asciiProgram = new Program(gl, {
+    asciiProgram = new Program(gl, {
       vertex: VERT,
       fragment: ASCII_FRAG,
       uniforms: {
-        uResolution: { value: [gl.canvas.width, gl.canvas.height] },
+        uResolution: { value: [window.innerWidth, window.innerHeight] },
+        uFrameMargin: { value: getMargins() },
         uTexture:    { value: target.texture },
       },
     });
@@ -171,6 +192,8 @@
       geometry: new Plane(gl, { width: 2, height: 2 }),
       program: asciiProgram,
     });
+
+    handleResize();
 
     let rafId;
     let lastTime = 0;
@@ -190,7 +213,6 @@
     rafId = requestAnimationFrame(tick);
 
     return () => {
-      window.removeEventListener('resize', updateClip);
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', handleResize);
       try { wrapper.removeChild(gl.canvas); } catch (_) {}
@@ -207,7 +229,6 @@
     z-index: 9998;
     pointer-events: none;
     opacity: 0.2;
-    clip-path: {clip};
     transform: translateZ(0);
   "
 ></div>

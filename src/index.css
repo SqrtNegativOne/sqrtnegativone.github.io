@@ -89,31 +89,8 @@ body {
 
 
 
-/* ── Custom cursor — inverted circle ──────────── */
-.custom-cursor {
-  position: fixed;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #fff;
-  pointer-events: none;
-  z-index: 99999;
-  left: 0;
-  top: 0;
-  transform: translate3d(0, 0, 0) translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, border-radius 0.2s ease;
-  will-change: transform;
-}
-
-.custom-cursor.cursor-expanded {
-  width: 44px;
-  height: 44px;
-}
-
-
-/* Hide custom cursor on touch devices */
+/* ── Custom Cursor Styles Moved to Cursor.svelte ──────────── */
 @media (hover: none) and (pointer: coarse) {
-  .custom-cursor { display: none; }
   *, *::before, *::after { cursor: auto !important; }
 }
 
