@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun run media:build && bun run blog:build && vite dev",
-    "build": "bun run media:build && bun run blog:build && vite build && node -e \"require('fs').writeFileSync('docs/CNAME', 'sqrt.fyi')\"",
+    "build": "bun run media:build && bun run blog:build && vite build",
     "blog:build": "bunx @11ty/eleventy",
     "blog:watch": "bunx @11ty/eleventy --watch",
     "media:build": "node scripts/build-media.mjs",
