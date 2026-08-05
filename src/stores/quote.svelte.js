@@ -1,3 +1,4 @@
+import { browser } from '$app/environment';
 import { getRandomQuote } from "../data/quotes";
 
 const TYPE_MS = 28;
@@ -12,6 +13,7 @@ export function createQuoteStore() {
   let typeTimer;
 
   function init() {
+    if (!browser) return;
     getRandomQuote().then(text => {
       fullText = text;
       phase = "typing";

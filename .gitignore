@@ -11,9 +11,9 @@ node_modules
 dist
 .cache
 dist-ssr
-public/blog
-public/blog-afterdark
-public/sitemap.xml
+static/blog
+static/blog-afterdark
+static/sitemap.xml
 *.local
 
 # Editor directories and files
@@ -29,3 +29,4 @@ public/sitemap.xml
 
 bash.exe.stackdump
 ideas.md
+.svelte-kit

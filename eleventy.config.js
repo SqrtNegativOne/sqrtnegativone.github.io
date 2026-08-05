@@ -42,7 +42,7 @@ export default function (eleventyConfig) {
   return {
     dir: {
       input: "blog",
-      output: "public",
+      output: "static",
       includes: "_includes",
     },
   };

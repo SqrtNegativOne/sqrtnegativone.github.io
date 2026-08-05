@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run media:build && npm run blog:build && vite",
-    "build": "npm run media:build && npm run blog:build && vite build && node -e \"require('fs').copyFileSync('docs/index.html', 'docs/404.html'); require('fs').writeFileSync('docs/CNAME', 'sqrt.fyi')\"",
-    "blog:build": "npx @11ty/eleventy",
-    "blog:watch": "npx @11ty/eleventy --watch",
+    "dev": "bun run media:build && bun run blog:build && vite dev",
+    "build": "bun run media:build && bun run blog:build && vite build && node -e \"require('fs').writeFileSync('docs/CNAME', 'sqrt.fyi')\"",
+    "blog:build": "bunx @11ty/eleventy",
+    "blog:watch": "bunx @11ty/eleventy --watch",
     "media:build": "node scripts/build-media.mjs",
     "lint": "oxlint -c .oxlintrc.json",
     "preview": "vite preview"
@@ -22,6 +22,8 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.5",
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.70.2",
     "@sveltejs/vite-plugin-svelte": "^7.2.0",
     "oxlint": "^1.76.0",
     "svelte": "^5.56.8",

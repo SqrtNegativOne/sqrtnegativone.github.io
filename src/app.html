@@ -31,9 +31,9 @@
     />
     <script data-goatcounter="https://sqrt.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
+    %sveltekit.head%
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.js"></script>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>
