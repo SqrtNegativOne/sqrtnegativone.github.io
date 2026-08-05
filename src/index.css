@@ -98,7 +98,6 @@ body {
   background: #fff;
   pointer-events: none;
   z-index: 99999;
-  mix-blend-mode: difference;
   left: 0;
   top: 0;
   transform: translate3d(0, 0, 0) translate(-50%, -50%);

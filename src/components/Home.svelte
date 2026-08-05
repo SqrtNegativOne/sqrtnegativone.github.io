@@ -89,7 +89,7 @@
   });
 </script>
 
-<div style="position: fixed; inset: 0; transform: translateZ(0);">
+<div style="position: fixed; inset: 0;">
   <canvas
     bind:this={canvasRef}
     style="display: block; width: 100vw; height: 100vh;"

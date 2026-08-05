@@ -31,15 +31,8 @@
 
 <style>
 .name-wrapper {
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
   padding: 0.3rem 0 0;
-}
-@supports (-moz-appearance:none) {
-  .name-wrapper {
-    backdrop-filter: none;
-    background: var(--bg);
-  }
+  width: max-content;
 }
 .name {
   font-family: "Instrument Serif", serif;
