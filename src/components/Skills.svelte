@@ -91,9 +91,7 @@
   pointer-events: none;
 }
 
-[data-theme="light"] .skill-item::before {
-  background: radial-gradient(circle at 50% 60%, rgba(0, 0, 0, 0.04), transparent 70%);
-}
+
 
 .skill-item:hover,
 .skill-item:focus-visible {

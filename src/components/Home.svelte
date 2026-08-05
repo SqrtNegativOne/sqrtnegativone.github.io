@@ -38,23 +38,11 @@
     }
 
     function getColors() {
-      const isDark = document.documentElement.getAttribute("data-theme") === "dark";
-      return isDark
-        ? { bg: "5,5,8",       litBase: 42, litSpd: 32 }
-        : { bg: "245,242,237", litBase: 20, litSpd: 25 };
+      return { bg: "5,5,8", litBase: 42, litSpd: 32 };
     }
 
     let cachedColors = getColors();
     if (useWebGL) viz.setColors(cachedColors);
-
-    const themeObserver = new MutationObserver(() => {
-      cachedColors = getColors();
-      if (useWebGL) viz.setColors(cachedColors);
-    });
-    themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
 
     function render() {
       if (!document.body.classList.contains("menu-is-open")) {
@@ -93,7 +81,6 @@
 
     return () => {
       cancelAnimationFrame(animId);
-      themeObserver.disconnect();
       viz.destroy();
       window.removeEventListener("mousemove", onMouseMove);
       canvas.removeEventListener("touchmove", onTouchMove);

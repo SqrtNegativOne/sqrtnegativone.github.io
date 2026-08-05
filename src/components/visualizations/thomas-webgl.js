@@ -325,7 +325,7 @@ export function createThomasWebGL() {
       }
     },
 
-    // Call once at init and whenever data-theme changes (MutationObserver in Home.jsx).
+    // Call once at init.
     // Parses bg color once instead of every frame.
     setColors(colors) {
       const parts = colors.bg.split(",");

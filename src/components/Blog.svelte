@@ -166,7 +166,7 @@
   border-color: rgba(0, 0, 0, 0.12);
 }
 
-[data-theme="dark"] .blog-item:hover {
+.blog-item:hover {
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(255, 255, 255, 0.15);
 }

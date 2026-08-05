@@ -54,16 +54,7 @@
   color: var(--text);
   font-weight: 400;
 }
-.inline-link {
-  color: var(--text);
-  text-decoration: none;
-  border-bottom: 1px dotted var(--text-secondary);
-  transition: border-color 0.2s, color 0.2s;
-}
-.inline-link:hover {
-  border-bottom-style: solid;
-  color: var(--text-secondary);
-}
+
 @media (max-width: 640px) {
   .bio p { font-size: 1rem; }
 }

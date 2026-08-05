@@ -14,23 +14,9 @@
   }
 }
 
-/* ── Light theme (daytime default) ─────────────── */
+/* ── Theme (dark only) ───────────────────────── */
 :root {
   --frame-v: 72px;
-  --bg: #f5f2ed;
-  --text: #1a1a1a;
-  --text-secondary: #555;
-  --text-secondary-rgb: 85, 85, 85;
-  --accent: #1a1a1a;
-  --glass-bg: rgba(255, 255, 255, 0.25);
-  --glass-border: rgba(255, 255, 255, 0.45);
-  --glass-shadow: rgba(0, 0, 0, 0.08);
-  --quote-color: #888;
-  --name-color: #1a1a1a;
-}
-
-/* ── Dark theme (nighttime) ────────────────────── */
-[data-theme="dark"] {
   --bg: #0e0e0e;
   --text: #e8e8e8;
   --text-secondary: #aaa;
@@ -101,36 +87,6 @@ body {
   }
 }
 
-/* ── Theme toggle — sits on the bottom-left border edge, rotated vertical ── */
-.theme-toggle {
-  position: fixed;
-  bottom: 40px;
-  left: 40px;
-  transform: translateY(50%) rotate(-90deg);
-  transform-origin: center;
-  z-index: 10000;
-  background: var(--bg);
-  border: none;
-  padding: 0.2rem 0.6rem;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: lowercase;
-  color: var(--text-secondary);
-  transition: color 0.3s;
-}
-
-.theme-toggle:hover {
-  color: var(--text);
-}
-
-@media (max-width: 640px) {
-  .theme-toggle {
-    bottom: 16px;
-    left: 16px;
-  }
-}
 
 
 /* ── Custom cursor — inverted circle ──────────── */

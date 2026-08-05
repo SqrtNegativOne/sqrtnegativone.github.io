@@ -122,10 +122,7 @@
   outline: none;
 }
 
-[data-theme="light"] .social-link:hover,
-[data-theme="light"] .social-link:focus-visible {
-  background-color: rgba(0, 0, 0, 0.03);
-}
+
 
 .social-icon {
   display: inline-flex;
@@ -136,7 +133,7 @@
   flex-shrink: 0;
 }
 
-.social-icon svg {
+.social-icon :global(svg) {
   width: 100%;
   height: 100%;
 }

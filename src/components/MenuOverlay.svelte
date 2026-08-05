@@ -302,9 +302,7 @@
   transition: opacity 0.28s ease;
 }
 
-body.menu-is-open .menu-hint {
-  opacity: 0;
-}
+
 
 /* ══════════════════════════════════════════════
    Overlay — flush against the viewport border frame
