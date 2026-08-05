@@ -9,6 +9,7 @@
   import HalftoneImage from "../components/HalftoneImage.svelte";
 
   import { quoteStore } from "../stores/quote.svelte.js";
+  import "../index.css";
   import "../App.css";
 
   import { page } from "$app/stores";
