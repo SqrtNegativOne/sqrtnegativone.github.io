@@ -218,7 +218,7 @@
     <div class="bg-[#1e293b] border border-[#334155] rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
       <div class="p-6 border-b border-[#334155] flex justify-between items-center">
         <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Media' : 'Add New Media'}</h2>
-        <button onclick={() => isModalOpen = false} class="text-[#94a3b8] hover:text-white">
+        <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[#94a3b8] hover:text-white">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
@@ -235,13 +235,13 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">ID (Unique)</label>
-            <input type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
+            <label for="media-id" class="block text-sm font-medium text-[#94a3b8]">ID (Unique)</label>
+            <input id="media-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Type</label>
-            <select name="type" bind:value={currentItem.type} class="input-field">
+            <label for="media-type" class="block text-sm font-medium text-[#94a3b8]">Type</label>
+            <select id="media-type" name="type" bind:value={currentItem.type} class="input-field">
               <option value="book">Book</option>
               <option value="movie">Movie</option>
               <option value="show">Show</option>
@@ -250,28 +250,28 @@
           </div>
           
           <div class="space-y-2">
-            <label class="flex justify-between items-end block text-sm font-medium text-[#94a3b8]">
+            <label for="media-title" class="flex justify-between items-end block text-sm font-medium text-[#94a3b8]">
               <span>Title</span>
               <button type="button" onclick={handleSearch} disabled={isSearching || !currentItem.title} class="text-xs text-blue-400 hover:text-blue-300 disabled:opacity-50">
                 {isSearching ? 'Searching...' : 'Search Metadata'}
               </button>
             </label>
-            <input type="text" name="title" bind:value={currentItem.title} class="input-field" required />
+            <input id="media-title" type="text" name="title" bind:value={currentItem.title} class="input-field" required />
           </div>
           
           <div class="space-y-2 md:col-span-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Subtitle (Optional)</label>
-            <input type="text" name="subtitle" bind:value={currentItem.subtitle} class="input-field" placeholder="e.g. Director, Author, or Tagline" />
+            <label for="media-subtitle" class="block text-sm font-medium text-[#94a3b8]">Subtitle (Optional)</label>
+            <input id="media-subtitle" type="text" name="subtitle" bind:value={currentItem.subtitle} class="input-field" placeholder="e.g. Director, Author, or Tagline" />
           </div>
 
           <div class="space-y-2 md:col-span-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Description</label>
-            <textarea name="description" bind:value={currentItem.description} class="input-field min-h-[100px] resize-y" placeholder="Extended description..."></textarea>
+            <label for="media-desc" class="block text-sm font-medium text-[#94a3b8]">Description</label>
+            <textarea id="media-desc" name="description" bind:value={currentItem.description} class="input-field min-h-[100px] resize-y" placeholder="Extended description..."></textarea>
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Status</label>
-            <select name="status" bind:value={currentItem.status} class="input-field">
+            <label for="media-status" class="block text-sm font-medium text-[#94a3b8]">Status</label>
+            <select id="media-status" name="status" bind:value={currentItem.status} class="input-field">
               <option value="finished">Finished</option>
               <option value="abandoned">Abandoned</option>
               <option value="wishlist">Wishlist</option>
@@ -282,15 +282,15 @@
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Rating (1-7)</label>
-            <input type="number" step="0.1" min="1" max="7" name="rating" bind:value={currentItem.rating} onkeydown={handleRatingKeydown} class="input-field" required />
+            <label for="media-rating" class="block text-sm font-medium text-[#94a3b8]">Rating (1-7)</label>
+            <input id="media-rating" type="number" step="0.1" min="1" max="7" name="rating" bind:value={currentItem.rating} onkeydown={handleRatingKeydown} class="input-field" required />
           </div>
 
 
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Poster Image URL</label>
-            <input type="text" name="poster_image" bind:value={currentItem.poster_image} onpaste={handlePaste} placeholder="URL or paste image here..." class="input-field" />
+            <label for="media-poster" class="block text-sm font-medium text-[#94a3b8]">Poster Image URL</label>
+            <input id="media-poster" type="text" name="poster_image" bind:value={currentItem.poster_image} onpaste={handlePaste} placeholder="URL or paste image here..." class="input-field" />
           </div>
         </div>
         

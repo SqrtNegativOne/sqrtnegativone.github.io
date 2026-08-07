@@ -54,7 +54,7 @@
     "type": "movie",
     "rating": 5.5,
     "status": "wishlist",
-    "title": "Project Hail Mary",
+    "title": "Project: Hail Mary",
     "subtitle": "It's not a gene. You just need to find someone to be brave for.",
     "description": "I NEED THE 8 HOUR CUT RIGHT NOW AMAZON",
     "poster_image": "/media-posters/movie_project_hail_mary.jpg"
@@ -64,9 +64,29 @@
     "type": "book",
     "rating": 5.5,
     "status": "wishlist",
-    "title": "Project Hail Mary",
+    "title": "Project: Hail Mary",
     "subtitle": "I spend a lot of time un-suiciding this suicide mission.",
     "description": "",
     "poster_image": "/media-posters/book_project_hail_mary_book.jpg"
+  },
+  {
+    "id": "hot_fuzz",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Hot Fuzz",
+    "subtitle": "How many payoffs does this movie have???",
+    "description": "Literally a perfect movie.",
+    "poster_image": "/media-posters/movie_hot_fuzz.jpg"
+  },
+  {
+    "id": "fight_club",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "wishlist",
+    "title": "Fight Club",
+    "subtitle": "Self improvement is masturbation. Now self destruction...",
+    "description": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
+    "poster_image": "/media-posters/movie_fight_club.jpg"
   }
 ]

@@ -29,7 +29,7 @@
     };
     isModalOpen = true;
   }
-  let fileInput: HTMLInputElement;
+  let fileInput: HTMLInputElement | undefined = $state();
 
   function handlePaste(e: ClipboardEvent) {
     if (!isModalOpen) return;
@@ -142,7 +142,7 @@
     <div class="bg-[#1e293b] border border-[#334155] rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
       <div class="p-6 border-b border-[#334155] flex justify-between items-center">
         <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Project' : 'Add New Project'}</h2>
-        <button onclick={() => isModalOpen = false} class="text-[#94a3b8] hover:text-white">
+        <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[#94a3b8] hover:text-white">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
@@ -159,39 +159,40 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">ID (Unique)</label>
-            <input type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
+            <label for="project-id" class="block text-sm font-medium text-[#94a3b8]">ID (Unique)</label>
+            <input id="project-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Name</label>
-            <input type="text" name="name" bind:value={currentItem.name} class="input-field" required />
+            <label for="project-name" class="block text-sm font-medium text-[#94a3b8]">Name</label>
+            <input id="project-name" type="text" name="name" bind:value={currentItem.name} class="input-field" required />
           </div>
           
           <div class="space-y-2 md:col-span-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Description</label>
-            <textarea name="description" bind:value={currentItem.description} rows="3" class="input-field resize-none"></textarea>
+            <label for="project-desc" class="block text-sm font-medium text-[#94a3b8]">Description</label>
+            <textarea id="project-desc" name="description" bind:value={currentItem.description} rows="3" class="input-field resize-none"></textarea>
           </div>
           
           <div class="space-y-2 md:col-span-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Tags (comma separated)</label>
-            <input type="text" name="tags" bind:value={currentItem.tags} class="input-field" placeholder="React, Node.js, Tailwind" />
+            <label for="project-tags" class="block text-sm font-medium text-[#94a3b8]">Tags (comma separated)</label>
+            <input id="project-tags" type="text" name="tags" bind:value={currentItem.tags} class="input-field" placeholder="React, Node.js, Tailwind" />
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">GitHub URL</label>
-            <input type="text" name="github" bind:value={currentItem.github} class="input-field" />
+            <label for="project-github" class="block text-sm font-medium text-[#94a3b8]">GitHub URL</label>
+            <input id="project-github" type="text" name="github" bind:value={currentItem.github} class="input-field" />
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Website URL</label>
-            <input type="text" name="url" bind:value={currentItem.url} class="input-field" />
+            <label for="project-url" class="block text-sm font-medium text-[#94a3b8]">Website URL</label>
+            <input id="project-url" type="text" name="url" bind:value={currentItem.url} class="input-field" />
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Image (Paste anywhere to upload)</label>
-            <input type="file" name="imageFile" bind:this={fileInput} accept="image/*" class="w-full text-sm text-[#94a3b8] file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20" />
-            <input type="text" name="image" bind:value={currentItem.image} class="input-field mt-2" placeholder="/projects/image.png" />
+            <label for="project-image" class="block text-sm font-medium text-[#94a3b8]">Image (Paste anywhere to upload)</label>
+            <input id="project-image" type="file" name="imageFile" bind:this={fileInput} accept="image/*" class="w-full text-sm text-[#94a3b8] file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20" />
+            <label for="project-image-text" class="sr-only">Image path</label>
+            <input id="project-image-text" type="text" name="image" bind:value={currentItem.image} class="input-field mt-2" placeholder="/projects/image.png" />
           </div>
           
           <div class="space-y-2 flex items-center pt-8">

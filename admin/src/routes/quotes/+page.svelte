@@ -73,7 +73,7 @@
     <div class="bg-[#1e293b] border border-[#334155] rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
       <div class="p-6 border-b border-[#334155] flex justify-between items-center">
         <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Quote' : 'Add New Quote'}</h2>
-        <button onclick={() => isModalOpen = false} class="text-[#94a3b8] hover:text-white">
+        <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[#94a3b8] hover:text-white">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
@@ -93,8 +93,8 @@
         
         <div class="space-y-4">
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Quote Content</label>
-            <textarea name="quote" bind:value={currentQuote} rows="5" class="input-field resize-none w-full" required placeholder="Enter quote here..."></textarea>
+            <label for="quote-content" class="block text-sm font-medium text-[#94a3b8]">Quote Content</label>
+            <textarea id="quote-content" name="quote" bind:value={currentQuote} rows="5" class="input-field resize-none w-full" required placeholder="Enter quote here..."></textarea>
           </div>
         </div>
         

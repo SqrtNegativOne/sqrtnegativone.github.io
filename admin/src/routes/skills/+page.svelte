@@ -81,7 +81,7 @@
     <div class="bg-[#1e293b] border border-[#334155] rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden">
       <div class="p-6 border-b border-[#334155] flex justify-between items-center">
         <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Skill' : 'Add New Skill'}</h2>
-        <button onclick={() => isModalOpen = false} class="text-[#94a3b8] hover:text-white">
+        <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[#94a3b8] hover:text-white">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
@@ -98,23 +98,23 @@
         <input type="hidden" name="originalName" value={currentItem.originalName} />
         
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-[#94a3b8]">Name</label>
-          <input type="text" name="name" bind:value={currentItem.name} class="input-field" required />
+          <label for="skill-name" class="block text-sm font-medium text-[#94a3b8]">Name</label>
+          <input id="skill-name" type="text" name="name" bind:value={currentItem.name} class="input-field" required />
         </div>
         
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-[#94a3b8]">Icon (e.g. devicon class)</label>
-          <input type="text" name="icon" bind:value={currentItem.icon} class="input-field" />
+          <label for="skill-icon" class="block text-sm font-medium text-[#94a3b8]">Icon (e.g. devicon class)</label>
+          <input id="skill-icon" type="text" name="icon" bind:value={currentItem.icon} class="input-field" />
         </div>
         
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-[#94a3b8]">Logo Path</label>
-          <input type="text" name="logo" bind:value={currentItem.logo} class="input-field" />
+          <label for="skill-logo" class="block text-sm font-medium text-[#94a3b8]">Logo Path</label>
+          <input id="skill-logo" type="text" name="logo" bind:value={currentItem.logo} class="input-field" />
         </div>
         
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-[#94a3b8]">Mono Logo Path</label>
-          <input type="text" name="mono" bind:value={currentItem.mono} class="input-field" />
+          <label for="skill-mono" class="block text-sm font-medium text-[#94a3b8]">Mono Logo Path</label>
+          <input id="skill-mono" type="text" name="mono" bind:value={currentItem.mono} class="input-field" />
         </div>
         
         <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[#334155]">

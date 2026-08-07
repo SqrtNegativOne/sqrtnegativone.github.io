@@ -229,17 +229,17 @@
   gap: 1rem;
 }
 
-.blog-post-body p {
+:global(.blog-post-body p) {
   font-size: 0.9rem;
   line-height: 1.7;
   color: var(--text);
 }
 
-.blog-post-body del {
+:global(.blog-post-body del) {
   opacity: 0.5;
 }
 
-.blog-post-body blockquote {
+:global(.blog-post-body blockquote) {
   border-left: 2px solid var(--text-secondary);
   padding-left: 1.2rem;
   margin: 0.5rem 0;
@@ -248,38 +248,38 @@
   gap: 0.8rem;
 }
 
-.blog-post-body blockquote p {
+:global(.blog-post-body blockquote p) {
   font-style: italic;
   color: var(--text-secondary);
   font-size: 0.85rem;
 }
 
-.blog-post-body strong {
+:global(.blog-post-body strong) {
   font-weight: 700;
 }
 
 /* Definition box */
-.definition-box {
+:global(.definition-box) {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 6px;
   padding: 1rem 1.2rem;
   margin: 0.5rem 0;
 }
 
-.definition-box dt {
+:global(.definition-box dt) {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text);
   font-style: italic;
 }
 
-.definition-box .pronunciation {
+:global(.definition-box .pronunciation) {
   font-size: 0.8rem;
   color: var(--text-secondary);
   margin: 0.15rem 0 0;
 }
 
-.definition-box dd:last-child {
+:global(.definition-box dd:last-child) {
   font-size: 0.85rem;
   color: var(--text);
   line-height: 1.6;
@@ -292,7 +292,7 @@
     font-size: 1.1rem;
   }
 
-  .blog-post-body p {
+  :global(.blog-post-body p) {
     font-size: 0.85rem;
   }
 }
