@@ -45,8 +45,7 @@
   .ml-modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 100;
     display: flex;
     align-items: center;
