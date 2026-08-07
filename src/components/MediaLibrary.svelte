@@ -1,13 +1,16 @@
-<script>
-  import mediaData from "../data/media.json";
+<script lang="ts">
+  import { mediaData } from "../generated/media.ts";
   
-
   const TYPE_LABEL = { game: "Game", movie: "Movie", show: "Show", book: "Book" };
 
-  const { doing, done, todo } = (() => {
-    const buckets = { doing: [], done: [], todo: [] };
+  const { consuming, library } = (() => {
+    const buckets = { consuming: [], library: [] };
     for (const item of mediaData) {
-      (buckets[item.status] || (buckets[item.status] = [])).push(item);
+      if (item.status === "consuming") {
+        buckets.consuming.push(item);
+      } else {
+        buckets.library.push(item);
+      }
     }
     for (const k of Object.keys(buckets)) {
       buckets[k].sort((a, b) => (b.rating || 0) - (a.rating || 0) || a.title.localeCompare(b.title));
@@ -22,11 +25,11 @@
     <p class="ml-tagline">Things I'm watching, reading, playing.</p>
   </header>
 
-  {#if doing.length > 0}
+  {#if consuming.length > 0}
     <section class="ml-section ml-section--hero">
       <h2 class="ml-section-title">Currently</h2>
       <div class="ml-hero-row">
-        {#each doing as item (item.type + '-' + item.id)}
+        {#each consuming as item (item.type + '-' + item.id)}
           <article class="ml-hero-card">
             <div class="ml-poster ml-poster--lg">
               {#if item.poster}
@@ -61,7 +64,7 @@
     </section>
   {/if}
 
-  {#if done.length > 0 || todo.length > 0}
+  {#if library.length > 0}
     <section class="ml-section">
       <h2 class="ml-section-title">Library</h2>
       <div class="ml-table" role="table">
@@ -72,7 +75,7 @@
           <span role="columnheader" class="ml-col-status">Status</span>
           <span role="columnheader" class="ml-col-rating">Rating</span>
         </div>
-        {#each [...done, ...todo] as item (item.type + '-' + item.id)}
+        {#each library as item (item.type + '-' + item.id)}
           <div class="ml-row" role="row">
             <span role="cell" class="ml-col-poster">
               <div class={`ml-poster ml-poster--xs`}>
@@ -378,9 +381,12 @@
   border-radius: 3px;
 }
 
-.ml-status--doing { background: rgba(255, 200, 60, 0.15);  color: #ffcc55; }
-.ml-status--done  { background: rgba(80, 200, 120, 0.15);  color: #5dd29a; }
-.ml-status--todo  { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
+.ml-status--consuming  { background: rgba(255, 200, 60, 0.15);  color: #ffcc55; }
+.ml-status--finished   { background: rgba(80, 200, 120, 0.15);  color: #5dd29a; }
+.ml-status--wishlist   { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
+.ml-status--rewishlist { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
+.ml-status--next\ up   { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
+.ml-status--abandoned  { background: rgba(220, 50, 50, 0.15); color: #d25050; }
 
 .ml-empty {
   color: #6e6e78;
