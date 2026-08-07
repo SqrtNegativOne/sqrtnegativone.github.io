@@ -2,6 +2,10 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import fs from 'fs';
 import path from 'path';
+import dns from 'node:dns';
+
+// Bypass TMDB DNS block in India for requests made by this Node process
+dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 let TMDB_KEY = "";
 try {
