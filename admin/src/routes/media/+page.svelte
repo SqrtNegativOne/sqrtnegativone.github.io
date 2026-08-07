@@ -27,16 +27,20 @@
   }
 
   async function handleSearch() {
-    if (!currentItem.id || !currentItem.type) return;
+    if (!currentItem.title || !currentItem.type) return;
     isSearching = true;
     try {
-      const res = await fetch(`/media/search?type=${currentItem.type}&id=${currentItem.id}`);
+      const res = await fetch(`/media/search?type=${currentItem.type}&query=${encodeURIComponent(currentItem.title)}`);
       if (res.ok) {
         const data = await res.json();
         if (data.title) currentItem.title = data.title;
         if (data.subtitle) currentItem.subtitle = data.subtitle;
         if (data.description) currentItem.description = data.description;
         if (data.coverUrl) currentItem.poster_image = data.coverUrl;
+        
+        if (!currentItem.id && data.title) {
+          currentItem.id = data.title.toLowerCase().replace(/[^a-z0-9_-]/g, "_").replace(/_+/g, "_");
+        }
       } else {
         const err = await res.json();
         alert(`Search failed: ${err.error || 'Not found'}`);
@@ -184,12 +188,7 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label class="flex justify-between items-end block text-sm font-medium text-[#94a3b8]">
-              <span>ID (Unique)</span>
-              <button type="button" onclick={handleSearch} disabled={isSearching || !currentItem.id} class="text-xs text-blue-400 hover:text-blue-300 disabled:opacity-50">
-                {isSearching ? 'Searching...' : 'Search TMDB/Steam'}
-              </button>
-            </label>
+            <label class="block text-sm font-medium text-[#94a3b8]">ID (Unique)</label>
             <input type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
           </div>
           
@@ -204,7 +203,12 @@
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Title</label>
+            <label class="flex justify-between items-end block text-sm font-medium text-[#94a3b8]">
+              <span>Title</span>
+              <button type="button" onclick={handleSearch} disabled={isSearching || !currentItem.title} class="text-xs text-blue-400 hover:text-blue-300 disabled:opacity-50">
+                {isSearching ? 'Searching...' : 'Search Metadata'}
+              </button>
+            </label>
             <input type="text" name="title" bind:value={currentItem.title} class="input-field" required />
           </div>
           

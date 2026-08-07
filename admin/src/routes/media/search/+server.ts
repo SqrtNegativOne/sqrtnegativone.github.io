@@ -1,67 +1,84 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import fs from 'fs';
+import path from 'path';
 
-const TMDB_KEY = process.env.TMDB_API_KEY || "";
+let TMDB_KEY = "";
+try {
+  const envContent = fs.readFileSync(path.resolve('../.env'), 'utf-8');
+  const match = envContent.match(/TMDB_API_KEY=(.*)/);
+  if (match) TMDB_KEY = match[1].trim();
+} catch (e) {}
 
-async function fetchBook(id: string) {
-  const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${id}&format=json&jscmd=data`;
-  const res = await fetch(url);
+async function searchBook(query: string) {
+  const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=1`;
+  const res = await fetch(url, { headers: { "User-Agent": "MyMediaApp/1.0" } });
   if (!res.ok) return null;
-  const data = await res.json() as Record<string, any>;
-  const book = data[`ISBN:${id}`];
+  const data = await res.json() as any;
+  const book = data.docs?.[0];
   if (!book) return null;
   return {
     title: book.title,
-    subtitle: (book.authors || []).map((a: any) => a.name).join(", "),
-    coverUrl:
-      book.cover?.large ||
-      book.cover?.medium ||
-      `https://covers.openlibrary.org/b/isbn/${id}-L.jpg`,
+    subtitle: (book.author_name || []).join(", "),
+    coverUrl: book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg` : null,
   };
 }
 
-async function fetchTmdb(kind: "movie" | "tv", id: string) {
+async function searchTmdb(kind: "movie" | "tv", query: string) {
   if (!TMDB_KEY) return { error: "TMDB_API_KEY environment variable is missing." };
-  const url = `https://api.themoviedb.org/3/${kind}/${id}?api_key=${TMDB_KEY}`;
+  const url = `https://api.themoviedb.org/3/search/${kind}?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&page=1`;
   const res = await fetch(url);
   if (!res.ok) return null;
-  const d = await res.json() as any;
+  const data = await res.json() as any;
+  const d = data.results?.[0];
+  if (!d) return null;
   return {
     title: d.title || d.name,
-    subtitle: (d.tagline || "").slice(0, 120),
+    subtitle: "",
+    description: d.overview || "",
     coverUrl: d.poster_path ? `https://image.tmdb.org/t/p/w500${d.poster_path}` : null,
   };
 }
 
-async function fetchSteamGame(id: string) {
-  const url = `https://store.steampowered.com/api/appdetails?appids=${id}`;
-  const res = await fetch(url);
-  if (!res.ok) return null;
-  const data = await res.json() as any;
-  const d = data[id]?.data;
+async function searchSteamGame(query: string) {
+  const searchUrl = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(query)}&l=english&cc=US`;
+  const searchRes = await fetch(searchUrl);
+  if (!searchRes.ok) return null;
+  const searchData = await searchRes.json() as any;
+  const firstMatch = searchData.items?.[0];
+  if (!firstMatch) return null;
+  const id = firstMatch.id;
+
+  const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${id}`;
+  const detailsRes = await fetch(detailsUrl);
+  if (!detailsRes.ok) return null;
+  const detailsData = await detailsRes.json() as any;
+  const d = detailsData[id]?.data;
   if (!d) return null;
+
   return {
     title: d.name,
     subtitle: (d.developers || []).slice(0, 1).join(", "),
+    description: d.short_description || "",
     coverUrl: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${id}/library_600x900_2x.jpg`,
   };
 }
 
 export const GET: RequestHandler = async ({ url }) => {
   const type = url.searchParams.get('type');
-  const id = url.searchParams.get('id');
+  const query = url.searchParams.get('query');
 
-  if (!type || !id) {
-    return json({ error: 'Missing type or id' }, { status: 400 });
+  if (!type || !query) {
+    return json({ error: 'Missing type or query' }, { status: 400 });
   }
 
   let result = null;
 
   try {
-    if (type === 'book') result = await fetchBook(id);
-    else if (type === 'movie') result = await fetchTmdb('movie', id);
-    else if (type === 'show') result = await fetchTmdb('tv', id);
-    else if (type === 'game') result = await fetchSteamGame(id);
+    if (type === 'book') result = await searchBook(query);
+    else if (type === 'movie') result = await searchTmdb('movie', query);
+    else if (type === 'show') result = await searchTmdb('tv', query);
+    else if (type === 'game') result = await searchSteamGame(query);
     
     if (result && 'error' in result) {
         return json({ error: result.error }, { status: 400 });
@@ -70,9 +87,13 @@ export const GET: RequestHandler = async ({ url }) => {
     if (result) {
       return json(result);
     } else {
-      return json({ error: 'Not found or invalid ID' }, { status: 404 });
+      return json({ error: 'No results found for your query.' }, { status: 404 });
     }
   } catch (err: any) {
-    return json({ error: err.message }, { status: 500 });
+    let msg = err.message;
+    if (err.cause) {
+      msg += ` (Cause: ${err.cause.message || err.cause})`;
+    }
+    return json({ error: msg }, { status: 500 });
   }
 };

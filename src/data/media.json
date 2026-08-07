@@ -18,5 +18,35 @@
     "subtitle": "The friendly RPG where no one has to die.",
     "year": 2026,
     "poster_image": "/media-posters/game_undertale.png"
+  },
+  {
+    "id": "portal_2",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "Portal 2",
+    "subtitle": "You dangerous. Mute. Lunatic.",
+    "description": "",
+    "poster_image": "/media-posters/game_portal_2.jpg"
+  },
+  {
+    "id": "atomic_habits",
+    "type": "book",
+    "rating": 6,
+    "status": "finished",
+    "title": "Atomic Habits",
+    "subtitle": "",
+    "description": "Popular, yes, but hated unnecessarily.",
+    "poster_image": "/media-posters/book_atomic_habits.jpg"
+  },
+  {
+    "id": "hollow_knight",
+    "type": "game",
+    "rating": 4,
+    "status": "abandoned",
+    "title": "Hollow Knight",
+    "subtitle": "A world you gave to bug and beast as they had never dreamed of.",
+    "description": "Didn't like how the save points were so far away from most bosses. Made the game less fun because you had to go through a boring walk of humiliation to defeat the boss again. As far as I have played, the lore was rather sparse, contrary to what I believed about the game.",
+    "poster_image": "/media-posters/game_hollow_knight.jpg"
   }
 ]
