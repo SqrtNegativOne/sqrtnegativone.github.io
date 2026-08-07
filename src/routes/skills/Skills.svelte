@@ -1,5 +1,5 @@
 <script lang="ts">
-  import skills from "../data/skills.json";
+  import skills from "../../data/skills.json";
 </script>
 
 <div class="skills-page">

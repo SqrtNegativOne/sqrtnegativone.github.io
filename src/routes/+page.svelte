@@ -1,6 +1,6 @@
 <script>
-  import Home from '../components/Home.svelte';
-  import SocialIcons from '../components/SocialIcons.svelte';
+  import Home from './Home.svelte';
+  import SocialIcons from './SocialIcons.svelte';
 </script>
 
 <Home />

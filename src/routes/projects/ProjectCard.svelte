@@ -1,6 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
-  import { clickOutside } from "../actions/clickOutside.js";
+  import { clickOutside } from "../../actions/clickOutside.js";
   import ShaderImage from "./ShaderImage.svelte";
 
   let { project, index } = $props();

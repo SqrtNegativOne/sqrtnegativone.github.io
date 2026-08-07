@@ -1,5 +1,5 @@
 <script>
-  import projects from "../data/projects.json";
+  import projects from "../../data/projects.json";
   import ProjectCarousel from "./ProjectCarousel.svelte";
   
 </script>

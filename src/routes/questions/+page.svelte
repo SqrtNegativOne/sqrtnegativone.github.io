@@ -1,5 +1,5 @@
 <script>
-  import Questions from '../../components/Questions.svelte';
+  import Questions from './Questions.svelte';
 </script>
 
 <Questions />

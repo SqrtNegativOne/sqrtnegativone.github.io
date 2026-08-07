@@ -1,5 +1,5 @@
 <script>
-  import Skills from '../../components/Skills.svelte';
+  import Skills from './Skills.svelte';
 </script>
 
 <Skills />
