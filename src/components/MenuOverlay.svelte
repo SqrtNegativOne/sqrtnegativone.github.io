@@ -339,9 +339,7 @@
 .menu-scrim {
   position: fixed;
   z-index: 499;
-  background: rgba(0, 0, 0, 0.72);
-  backdrop-filter: blur(24px) saturate(0.75) brightness(0.4);
-  -webkit-backdrop-filter: blur(24px) saturate(0.75) brightness(0.4);
+  background: rgba(0, 0, 0, 0.95);
   animation: overlay-bg-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   will-change: transform, opacity;
 }

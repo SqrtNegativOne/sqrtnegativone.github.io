@@ -36,12 +36,10 @@
   <div class="with-frame">
     <AsciiBackground />
     {@render children()}
-    <Cursor />
   </div>
 {:else if currentPath === "/media-library"}
   {@render children()}
   <MenuOverlay view="media-library" />
-  <Cursor />
 {:else if currentPath === "/"}
   <div class="page-content with-frame">
     <AsciiBackground />
@@ -52,10 +50,8 @@
     </div>
   </div>
   <MenuOverlay view="home" />
-  <Cursor />
 {:else if currentPath === "/questions"}
   {@render children()}
-  <Cursor />
 {:else}
   <div class="page page-content with-frame" class:no-portrait={!showPortrait}>
     <AsciiBackground />
@@ -87,7 +83,6 @@
 
   <!-- Menu — hamburger button fixed top-right, opens full-screen bento overlay -->
   <MenuOverlay view={currentView} />
-
-  <!-- Custom cursor -->
-  <Cursor />
 {/if}
+
+<Cursor />

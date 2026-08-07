@@ -1,5 +1,6 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
+  import RatingChart from "./RatingChart.svelte";
   
   let { item, openDetails } = $props<{ item: any; openDetails: (item: any) => void }>();
 </script>
@@ -19,11 +20,7 @@
   <div class="ml-hero-meta">
     <div class="ml-hero-title-row">
       <h3 class="ml-hero-title">{item.title}</h3>
-      <span class="ml-rating" aria-label={`${item.rating} out of 7`}>
-        <span class="ml-rating-num">{item.rating}</span>
-        <span class="ml-rating-sep">/</span>
-        <span class="ml-rating-max">7</span>
-      </span>
+      <RatingChart rating={item.rating} />
     </div>
     {#if item.subtitle}
       <p class="ml-hero-sub">{item.subtitle}</p>

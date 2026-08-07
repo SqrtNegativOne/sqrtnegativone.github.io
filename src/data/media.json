@@ -16,7 +16,7 @@
     "status": "finished",
     "title": "UNDERTALE",
     "subtitle": "The friendly RPG where no one has to die.",
-    "year": 2026,
+    "description": "“Have you ever played a game so great that you were sad and felt empty after beating it since there was nothing out there like it?”",
     "poster_image": "/media-posters/game_undertale.png"
   },
   {
@@ -26,7 +26,7 @@
     "status": "finished",
     "title": "Portal 2",
     "subtitle": "You dangerous. Mute. Lunatic.",
-    "description": "",
+    "description": "Video game development gone right. Humour, action, puzzle and lore; this game has everything. It feels unfair to give this game anything less than a perfect rating... but it just didn't affect me in an emotional, life-changing way. Of course, it wasn't trying to...",
     "poster_image": "/media-posters/game_portal_2.jpg"
   },
   {
@@ -53,7 +53,7 @@
     "id": "project_hail_mary",
     "type": "movie",
     "rating": 5.5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "Project: Hail Mary",
     "subtitle": "It's not a gene. You just need to find someone to be brave for.",
     "description": "I NEED THE 8 HOUR CUT RIGHT NOW AMAZON",
@@ -63,7 +63,7 @@
     "id": "project_hail_mary_book",
     "type": "book",
     "rating": 5.5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "Project: Hail Mary",
     "subtitle": "I spend a lot of time un-suiciding this suicide mission.",
     "description": "",
@@ -73,7 +73,7 @@
     "id": "hot_fuzz",
     "type": "movie",
     "rating": 6,
-    "status": "wishlist",
+    "status": "finished",
     "title": "Hot Fuzz",
     "subtitle": "How many payoffs does this movie have???",
     "description": "Literally a perfect movie.",
@@ -83,10 +83,210 @@
     "id": "fight_club",
     "type": "movie",
     "rating": 6.5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "Fight Club",
     "subtitle": "Self improvement is masturbation. Now self destruction...",
     "description": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
     "poster_image": "/media-posters/movie_fight_club.jpg"
+  },
+  {
+    "id": "house_of_leaves",
+    "type": "book",
+    "rating": 6.5,
+    "status": "finished",
+    "title": "House of Leaves",
+    "subtitle": "This is not for you.",
+    "description": "",
+    "poster_image": "/media-posters/book_house_of_leaves.jpg"
+  },
+  {
+    "id": "the_martian",
+    "type": "book",
+    "rating": 5.5,
+    "status": "finished",
+    "title": "The Martian",
+    "subtitle": "How come Aquaman can control whales? They're mammals! Makes no sense.",
+    "description": "",
+    "poster_image": "/media-posters/book_the_martian.jpg"
+  },
+  {
+    "id": "the_myth_of_sisyphus_and_other_essays",
+    "type": "book",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "The Myth of Sisyphus and Other Essays",
+    "subtitle": "Albert Camus",
+    "description": "",
+    "poster_image": "/media-posters/book_the_myth_of_sisyphus_and_other_essays.jpg"
+  },
+  {
+    "id": "the_last_of_us_s1",
+    "type": "show",
+    "rating": 6,
+    "status": "finished",
+    "title": "The Last of Us (S1)",
+    "subtitle": "Best zombie media I have consumed.",
+    "description": "",
+    "poster_image": "/media-posters/show_the_last_of_us_s1.jpg"
+  },
+  {
+    "id": "the_last_of_us_part_ii_remastered",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "The Last of Us Part II",
+    "subtitle": "",
+    "description": "",
+    "poster_image": "/media-posters/game_the_last_of_us_part_ii_remastered.jpg"
+  },
+  {
+    "id": "the_handmaid_s_tale",
+    "type": "book",
+    "rating": 4,
+    "status": "finished",
+    "title": "The Handmaid's Tale",
+    "subtitle": "Nolite te bastardes carborundorum.",
+    "description": "Good writing but Atwood isn't nearly the clever poet she thinks she is. My expectations from the book were also a bit distorted; I had heard from someone who had seen the show about the titular character, in the finale, making her clever escape through some train... I was reading the novel in expectance of some strategem, but the protagonist is nothing but a mere ragdoll thrown around mostly by the schemes of those that surround her. Guess it makes more sense for the point of the novel for her to have no agency.",
+    "poster_image": "/media-posters/book_the_handmaid_s_tale.jpg"
+  },
+  {
+    "id": "outer_wilds",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "Outer Wilds",
+    "subtitle": "The Universe is, and we are.",
+    "description": "I would tell you about the premise of this game, but that'd be a spoiler.",
+    "poster_image": "/media-posters/game_outer_wilds.jpg"
+  },
+  {
+    "id": "of_the_devil",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "of the Devil",
+    "subtitle": "Do whatever it takes to win.",
+    "description": "see my steam comments or something\ndescribed by many as: \"Lesbian Death Note\"",
+    "poster_image": "/media-posters/game_of_the_devil.jpg"
+  },
+  {
+    "id": "ena_dream_bbq",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "ENA: Dream BBQ",
+    "subtitle": "",
+    "description": "",
+    "poster_image": "/media-posters/game_ena_dream_bbq.jpg"
+  },
+  {
+    "id": "half-life_2",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "Half-Life 2",
+    "subtitle": "",
+    "description": "",
+    "poster_image": "/media-posters/game_half-life_2.jpg"
+  },
+  {
+    "id": "oneshot",
+    "type": "game",
+    "rating": 7,
+    "status": "wishlist",
+    "title": "OneShot",
+    "subtitle": "Deltarune if Kris wasn't a \"—cking traitor\"?",
+    "description": "",
+    "poster_image": "/media-posters/game_oneshot.jpg"
+  },
+  {
+    "id": "omori",
+    "type": "game",
+    "rating": 4,
+    "status": "finished",
+    "title": "OMORI",
+    "subtitle": "It's a long way down...",
+    "description": "I hated the RPG part of the game. The enemies, fight mechanics, environment, and the music was not that good. But I absolutely loved the true story that lied underneath it.",
+    "poster_image": "/media-posters/game_omori.jpg"
+  },
+  {
+    "id": "in_stars_and_time",
+    "type": "game",
+    "rating": 6.5,
+    "status": "finished",
+    "title": "In Stars And Time",
+    "subtitle": "Pray to the stars and free yourself from time.",
+    "description": "Live with the ever-present burden of being trapped in a time loop only you can know about in this turn-based RPG. Create a better future for you and your friends. Find hope where there is none left. Pray to the stars and free yourself from time.\n\nPretty sure the author just.... broke the encryption on my Veracrypt vault storing my old journal pages to write the main character.",
+    "poster_image": "/media-posters/game_in_stars_and_time.jpg"
+  },
+  {
+    "id": "inscryption",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "Inscryption",
+    "subtitle": "Game-breaker's toolkit.",
+    "description": "Inscryption is an inky black card-based odyssey that blends the deckbuilding roguelike, escape-room style puzzles, and psychological horror into a blood-laced smoothie. Darker still are the secrets inscrybed upon the cards...",
+    "poster_image": "/media-posters/game_inscryption.jpg"
+  },
+  {
+    "id": "the_hollow_man",
+    "type": "book",
+    "rating": 5,
+    "status": "finished",
+    "title": "The Hollow Man",
+    "subtitle": "Carr's masterpiece",
+    "description": "Too unfair. But deserves a shelf in a murder mystery fan's basement for its excellent dissection of the locked room.",
+    "poster_image": "/media-posters/book_the_hollow_man.jpg"
+  },
+  {
+    "id": "danganronpa_trigger_happy_havoc",
+    "type": "game",
+    "rating": 5,
+    "status": "finished",
+    "title": "Danganronpa: Trigger Happy Havoc",
+    "subtitle": "Ace Attorney, but if it had Pedophilia instead.",
+    "description": "7/7 music, 7/7 premise, 4.5/7 cases, and 1.5/7 writing.",
+    "poster_image": "/media-posters/game_danganronpa_trigger_happy_havoc.jpg"
+  },
+  {
+    "id": "danganronpa_2_goodbye_despair",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "Danganronpa 2: Goodbye Despair",
+    "subtitle": "Live And Let The Languid World Live",
+    "description": "7/7 music, 6/7 premise, 6/7 cases, and tolerable writing.\nNagito Komaeda is the hottest character in any anime game, and has generously offered to be embroiled in, not one of, but *the* best case I have read in detective fiction.",
+    "poster_image": "/media-posters/game_danganronpa_2_goodbye_despair.jpg"
+  },
+  {
+    "id": "danganronpa_v3_killing_harmony",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "Danganronpa V3: Killing Harmony",
+    "subtitle": "",
+    "description": "The last case was just a middle finger to the fanbase, to be honest. Every Danganronpa had insane potential, but also something wrong with it. Danganronpa 1 with poor cases, poor characters, poor writing, and clunky ending. 2, also lacking in the ending department, unable to top-up its penultimate case.\n\nThe writer has not written enough of, anything, actually, to be making the point he seems to be trying to make. Leave good 4th wall breaking to Toby Fox, please.\n\nLoved the cases though. Glad they hired an actual mystery writer.",
+    "poster_image": "/media-posters/game_danganronpa_v3_killing_harmony.jpg"
+  },
+  {
+    "id": "dweller_s_empty_path",
+    "type": "game",
+    "rating": 5,
+    "status": "finished",
+    "title": "Dweller's Empty Path",
+    "subtitle": "A game by Temmie Chang.",
+    "description": "I feel kind of… guilty for liking this one. It wasn’t that good… but it felt really good. The ending was sudden, though, very lacklustre, and I hated the generic “heroes” quest, even if it was meant as satire. But there was something about it... the subtle hopelessness? Treated as... ordinary. I don't know. I felt it just helping me, a bit.",
+    "poster_image": ""
+  },
+  {
+    "id": "disco_elysium_-_the_final_cut",
+    "type": "game",
+    "rating": 7,
+    "status": "finished",
+    "title": "Disco Elysium - The Final Cut",
+    "subtitle": "A tragicomedy of hope and redemption.",
+    "description": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
+    "poster_image": "/media-posters/game_disco_elysium_-_the_final_cut.jpg"
   }
 ]

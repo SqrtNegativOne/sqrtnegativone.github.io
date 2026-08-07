@@ -1,5 +1,6 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
+  import RatingChart from "./RatingChart.svelte";
   
   let { item, closeDetails } = $props<{ item: any; closeDetails: () => void }>();
 </script>
@@ -27,9 +28,7 @@
         <div class="ml-modal-meta">
           <span class={`ml-badge ml-badge--${item.type} static inline-block !relative !top-0 !left-0`}>{TYPE_LABEL[item.type] || item.type}</span>
           <span class={`ml-status ml-status--${item.status} ml-2`}>{item.status}</span>
-          <span class="ml-rating ml-2">
-            <span class="ml-rating-num">{item.rating}</span><span class="ml-rating-sep">/</span><span class="ml-rating-max">7</span>
-          </span>
+          <RatingChart rating={item.rating} />
         </div>
         {#if item.description}
           <div class="ml-modal-desc">
@@ -45,7 +44,8 @@
   .ml-modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.95); /* Replaced backdrop-filter with darker solid color */
+    transform: translateZ(0);
     z-index: 100;
     display: flex;
     align-items: center;

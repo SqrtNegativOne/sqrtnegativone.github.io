@@ -10,7 +10,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  /* Hide cursor globally, EXCEPT for elements (and their children) with .use-native-cursor */
+  *:not(.use-native-cursor):not(.use-native-cursor *) {
     cursor: none !important;
+  }
+
+  /* Force native cursor on these elements */
+  .use-native-cursor,
+  .use-native-cursor * {
+    cursor: auto !important;
   }
 }
 
