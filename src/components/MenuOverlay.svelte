@@ -193,7 +193,7 @@
         <span>press esc to escape</span>
         <span>press the tile's number to open that tile</span>
       </div>
-    {#else}
+    {:else}
       press space to activate menu
     {/if}
   </div>

@@ -16,7 +16,6 @@
           <span>{TYPE_LABEL[item.type] || item.type}</span>
         </div>
       {/if}
-      <span class={`ml-badge ml-badge--${item.type}`}>{TYPE_LABEL[item.type] || item.type}</span>
     </div>
   </span>
   <span role="cell" class="ml-col-title">
@@ -113,26 +112,6 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
   }
-
-  .ml-badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 7px;
-    border-radius: 3px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    background: rgba(0, 0, 0, 0.65);
-    color: #f5f5f7;
-    backdrop-filter: blur(4px);
-  }
-
-  .ml-badge--game  { background: rgba(132, 73, 230, 0.85); }
-  .ml-badge--movie { background: rgba(229, 9, 20, 0.85); }
-  .ml-badge--show  { background: rgba(0, 122, 200, 0.85); }
-  .ml-badge--book  { background: rgba(184, 134, 11, 0.85); }
 
   .ml-status {
     display: inline-block;

@@ -8,7 +8,7 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div class="ml-modal-backdrop" onclick={closeDetails}>
   <div class="ml-modal-content" onclick={(e) => e.stopPropagation()}>
-    <button class="ml-modal-close" onclick={closeDetails}>
+    <button class="ml-modal-close" onclick={closeDetails} aria-label="Close details">
       <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
     <div class="ml-modal-grid">
