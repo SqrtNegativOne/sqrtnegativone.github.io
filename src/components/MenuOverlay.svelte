@@ -147,6 +147,13 @@
     if (open && e.key === "Escape") {
       closeMenu();
     }
+    if (open && e.key >= "0" && e.key <= "9") {
+      let index = parseInt(e.key, 10) - 1;
+      if (index === -1) index = 9; // '0' maps to 10th item (index 9)
+      if (layout.nav[index]) {
+        handleNav(layout.nav[index].item);
+      }
+    }
     if (!open && (e.code === "Space" || e.key === " ")) {
       if (window.innerWidth <= 640) return;
       const t = e.target;
@@ -181,7 +188,14 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="menu-hint" aria-hidden="true" onclick={() => { if (!open) handleOpen(); }} style="cursor: pointer;">
-    press space to activate menu
+    {#if open}
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+        <span>press esc to escape</span>
+        <span>press the tile's number to open that tile</span>
+      </div>
+    {#else}
+      press space to activate menu
+    {/if}
   </div>
 {/if}
 

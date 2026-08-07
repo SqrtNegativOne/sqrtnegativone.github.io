@@ -11,6 +11,26 @@
   });
   let isSearching = $state(false);
 
+  let searchQuery = $state("");
+  let typeFilter = $state("all");
+  let statusFilter = $state("all");
+  let sortOrder = $state("title-asc");
+
+  let filteredMedia = $derived(
+    data.media.filter((item: any) => {
+      if (searchQuery && !item.title?.toLowerCase().includes(searchQuery.toLowerCase()) && !item.id?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+      if (typeFilter !== "all" && item.type !== typeFilter) return false;
+      if (statusFilter !== "all" && item.status !== statusFilter) return false;
+      return true;
+    }).sort((a: any, b: any) => {
+      if (sortOrder === "title-asc") return (a.title || "").localeCompare(b.title || "");
+      if (sortOrder === "title-desc") return (b.title || "").localeCompare(a.title || "");
+      if (sortOrder === "rating-desc") return (b.rating || 0) - (a.rating || 0);
+      if (sortOrder === "rating-asc") return (a.rating || 0) - (b.rating || 0);
+      return 0;
+    })
+  );
+
   function openNew() {
     isEditing = false;
     currentItem = { 
@@ -86,16 +106,43 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <div class="flex justify-between items-center">
-    <div>
-      <h1 class="text-3xl font-bold text-white tracking-tight">Media</h1>
-      <p class="text-[#94a3b8] mt-2">Manage your books, movies, shows, and games.</p>
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-white">Media Library</h1>
+      <button onclick={openNew} class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded shadow transition-colors flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        Add Media
+      </button>
     </div>
-    <button onclick={openNew} class="btn-primary flex items-center">
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-      Add Media
-    </button>
-  </div>
+
+    <div class="bg-[#1e293b] border border-[#334155] rounded-xl shadow-lg mb-8 p-4 flex flex-col md:flex-row gap-4">
+      <div class="flex-1">
+        <input type="text" bind:value={searchQuery} placeholder="Search media by title or ID..." class="input-field w-full" />
+      </div>
+      <div class="flex gap-4">
+        <select bind:value={typeFilter} class="input-field">
+          <option value="all">All Types</option>
+          <option value="book">Books</option>
+          <option value="movie">Movies</option>
+          <option value="show">Shows</option>
+          <option value="game">Games</option>
+        </select>
+        <select bind:value={statusFilter} class="input-field">
+          <option value="all">All Statuses</option>
+          <option value="finished">Finished</option>
+          <option value="abandoned">Abandoned</option>
+          <option value="wishlist">Wishlist</option>
+          <option value="rewishlist">Rewishlist</option>
+          <option value="next up">Next Up</option>
+          <option value="consuming">Consuming</option>
+        </select>
+        <select bind:value={sortOrder} class="input-field">
+          <option value="title-asc">Title (A-Z)</option>
+          <option value="title-desc">Title (Z-A)</option>
+          <option value="rating-desc">Rating (High to Low)</option>
+          <option value="rating-asc">Rating (Low to High)</option>
+        </select>
+      </div>
+    </div>
 
   {#if form?.error}
     <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">
@@ -116,8 +163,8 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-[#334155]">
-        {#each data.media as item}
-          <tr class="hover:bg-[#334155]/30 transition-colors">
+        {#each filteredMedia as item}
+          <tr class="hover:bg-[#0f172a]/50 transition-colors group">
             <td class="p-4">
               <div class="w-12 h-16 bg-[#1e293b] rounded overflow-hidden flex items-center justify-center shrink-0 border border-[#334155]">
                 <img 
@@ -156,9 +203,9 @@
             </td>
           </tr>
         {/each}
-        {#if data.media.length === 0}
+        {#if filteredMedia.length === 0}
           <tr>
-            <td colspan="6" class="p-8 text-center text-[#94a3b8]">No media found. Add some!</td>
+            <td colspan="6" class="p-8 text-center text-[#94a3b8]">No media found matching your filters.</td>
           </tr>
         {/if}
       </tbody>

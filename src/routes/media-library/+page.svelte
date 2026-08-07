@@ -1,5 +1,5 @@
 <script>
-  import MediaLibrary from '../../components/MediaLibrary.svelte';
+  import MediaLibrary from '../../components/MediaLibrary/MediaLibrary.svelte';
 </script>
 
 <MediaLibrary />

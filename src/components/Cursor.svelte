@@ -10,6 +10,7 @@
   
   let isHovering = false;
   let hoverRect = null;
+  let hoverEl = null;
   
   let rafId;
   let isVisible = false;
@@ -29,6 +30,7 @@
     const el = e.target.closest(INTERACTIVE);
     if (el) {
       isHovering = true;
+      hoverEl = el;
       hoverRect = el.getBoundingClientRect();
     }
   }
@@ -36,6 +38,7 @@
   function onOut(e) {
     if (e.target.closest(INTERACTIVE)) {
       isHovering = false;
+      hoverEl = null;
       hoverRect = null;
     }
   }
@@ -46,7 +49,14 @@
       return;
     }
     
-    if (isHovering && hoverRect) {
+    if (isHovering && hoverRect && hoverEl) {
+      if (!document.body.contains(hoverEl)) {
+        isHovering = false;
+        hoverEl = null;
+        hoverRect = null;
+        rafId = requestAnimationFrame(loop);
+        return;
+      }
       const centerX = hoverRect.left + hoverRect.width / 2;
       const centerY = hoverRect.top + hoverRect.height / 2;
       dotX += (centerX - dotX) * 0.2;
