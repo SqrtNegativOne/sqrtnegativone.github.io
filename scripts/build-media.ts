@@ -2,7 +2,7 @@
 // titles, years, and locally-cached poster images. Pulls from:
 //   - books:        Open Library (no key required)
 //   - movies/shows: TMDB         (TMDB_API_KEY env var)
-//   - games:        RAWG         (RAWG_API_KEY env var)
+//   - games:        Steam        (No key required)
 // Results are memoised in media/cache.json and posters land in
 // public/media-posters/ so the live build can run offline once warmed up.
 
@@ -18,21 +18,39 @@ const OUT = path.join(root, "src", "data", "media.json");
 const POSTERS_DIR = path.join(root, "public", "media-posters");
 
 const TMDB_KEY = process.env.TMDB_API_KEY || "";
-const RAWG_KEY = process.env.RAWG_API_KEY || "";
 
-async function readJson(p, fallback) {
+interface MediaItem {
+  type: "book" | "movie" | "show" | "game";
+  id: string;
+  rating: number;
+  status: "todo" | "doing" | "done";
+  poster_image?: string;
+  title?: string;
+  subtitle?: string;
+  year?: string;
+}
+
+interface MediaMetadata {
+  title: string;
+  subtitle: string;
+  year: string | null;
+  coverUrl: string | null;
+  posterFile?: string | null;
+}
+
+async function readJson<T>(p: string, fallback: T): Promise<T> {
   try {
-    return JSON.parse(await fs.readFile(p, "utf8"));
+    return JSON.parse(await fs.readFile(p, "utf8")) as T;
   } catch {
     return fallback;
   }
 }
 
-function safeId(id) {
+function safeId(id: string): string {
   return String(id).replace(/[^A-Za-z0-9_-]/g, "_");
 }
 
-async function downloadImage(url, destBase) {
+async function downloadImage(url: string, destBase: string): Promise<string | null> {
   try {
     const res = await fetch(url, { redirect: "follow" });
     if (!res.ok) return null;
@@ -49,16 +67,16 @@ async function downloadImage(url, destBase) {
   }
 }
 
-async function fetchBook(id) {
+async function fetchBook(id: string): Promise<MediaMetadata | null> {
   const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${id}&format=json&jscmd=data`;
   const res = await fetch(url);
   if (!res.ok) return null;
-  const data = await res.json();
+  const data = await res.json() as Record<string, any>;
   const book = data[`ISBN:${id}`];
   if (!book) return null;
   return {
     title: book.title,
-    subtitle: (book.authors || []).map((a) => a.name).join(", "),
+    subtitle: (book.authors || []).map((a: any) => a.name).join(", "),
     year: (book.publish_date || "").match(/\d{4}/)?.[0] || null,
     coverUrl:
       book.cover?.large ||
@@ -67,12 +85,12 @@ async function fetchBook(id) {
   };
 }
 
-async function fetchTmdb(kind, id) {
+async function fetchTmdb(kind: "movie" | "tv", id: string): Promise<MediaMetadata | null> {
   if (!TMDB_KEY) return null;
   const url = `https://api.themoviedb.org/3/${kind}/${id}?api_key=${TMDB_KEY}`;
   const res = await fetch(url);
   if (!res.ok) return null;
-  const d = await res.json();
+  const d = await res.json() as any;
   return {
     title: d.title || d.name,
     subtitle: (d.tagline || "").slice(0, 120),
@@ -81,25 +99,28 @@ async function fetchTmdb(kind, id) {
   };
 }
 
-async function fetchGame(id) {
-  if (!RAWG_KEY) return null;
-  const url = `https://api.rawg.io/api/games/${id}?key=${RAWG_KEY}`;
+async function fetchSteamGame(id: string): Promise<MediaMetadata | null> {
+  const url = `https://store.steampowered.com/api/appdetails?appids=${id}`;
   const res = await fetch(url);
   if (!res.ok) return null;
-  const d = await res.json();
+  const json = await res.json() as any;
+  const data = json[id];
+  if (!data || !data.success || !data.data) return null;
+  const d = data.data;
   return {
     title: d.name,
-    subtitle: (d.developers || []).slice(0, 1).map((x) => x.name).join(", "),
-    year: (d.released || "").slice(0, 4) || null,
-    coverUrl: d.background_image || null,
+    subtitle: (d.developers || []).slice(0, 1).join(", "),
+    year: (d.release_date?.date || "").match(/\d{4}/)?.[0] || null,
+    // Using the high-res 600x900 grid image from Steam CDN
+    coverUrl: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${id}/library_600x900_2x.jpg`,
   };
 }
 
-async function fetchMeta(item) {
+async function fetchMeta(item: MediaItem): Promise<MediaMetadata | null> {
   if (item.type === "book") return fetchBook(item.id);
   if (item.type === "movie") return fetchTmdb("movie", item.id);
   if (item.type === "show") return fetchTmdb("tv", item.id);
-  if (item.type === "game") return fetchGame(item.id);
+  if (item.type === "game") return fetchSteamGame(item.id);
   return null;
 }
 
@@ -107,10 +128,10 @@ async function main() {
   await fs.mkdir(POSTERS_DIR, { recursive: true });
   await fs.mkdir(path.dirname(OUT), { recursive: true });
 
-  const items = await readJson(SRC, []);
-  const cache = await readJson(CACHE_PATH, {});
+  const items = await readJson<MediaItem[]>(SRC, []);
+  const cache = await readJson<Record<string, MediaMetadata>>(CACHE_PATH, {});
 
-  const out = [];
+  const out: any[] = [];
   for (const item of items) {
     const key = `${item.type}:${item.id}`;
     let meta = cache[key] || null;
@@ -125,34 +146,45 @@ async function main() {
         } else if (!meta) {
           console.warn(`[media] no metadata for ${key} (missing API key or network?)`);
         }
-      } catch (e) {
+      } catch (e: any) {
         console.warn(`[media] fetch failed for ${key}:`, e.message);
       }
     }
 
-    // Resolve poster: existing local file, then download if we have a URL.
-    let posterFile = meta?.posterFile || null;
-    const base = path.join(POSTERS_DIR, `${item.type}-${safeId(item.id)}`);
-    if (!posterFile) {
-      for (const ext of ["jpg", "png", "webp"]) {
-        if (existsSync(`${base}.${ext}`)) {
-          posterFile = `${item.type}-${safeId(item.id)}.${ext}`;
-          break;
+    let finalPosterPath: string | null = null;
+
+    if (item.poster_image) {
+      finalPosterPath = item.poster_image;
+    } else {
+      // Resolve poster: existing local file, then download if we have a URL.
+      let posterFile = meta?.posterFile || null;
+      const base = path.join(POSTERS_DIR, `${item.type}-${safeId(item.id)}`);
+      
+      if (!posterFile) {
+        for (const ext of ["jpg", "png", "webp"]) {
+          if (existsSync(`${base}.${ext}`)) {
+            posterFile = `${item.type}-${safeId(item.id)}.${ext}`;
+            break;
+          }
+        }
+      } else if (!existsSync(path.join(POSTERS_DIR, posterFile))) {
+        posterFile = null; // cache references file that no longer exists
+      }
+      
+      if (!posterFile && meta?.coverUrl) {
+        const fname = await downloadImage(meta.coverUrl, base);
+        if (fname) {
+          posterFile = fname;
+          console.log(`[media] downloaded poster for ${key}`);
         }
       }
-    } else if (!existsSync(path.join(POSTERS_DIR, posterFile))) {
-      posterFile = null; // cache references file that no longer exists
-    }
-    if (!posterFile && meta?.coverUrl) {
-      const fname = await downloadImage(meta.coverUrl, base);
-      if (fname) {
-        posterFile = fname;
-        console.log(`[media] downloaded poster for ${key}`);
+      
+      if (meta && posterFile) {
+        meta.posterFile = posterFile;
+        cache[key] = meta;
       }
-    }
-    if (meta && posterFile) {
-      meta.posterFile = posterFile;
-      cache[key] = meta;
+      
+      finalPosterPath = posterFile ? `/media-posters/${posterFile}` : null;
     }
 
     out.push({
@@ -163,7 +195,7 @@ async function main() {
       title: meta?.title || `${item.type} ${item.id}`,
       subtitle: meta?.subtitle || "",
       year: meta?.year || null,
-      poster: posterFile ? `/media-posters/${posterFile}` : null,
+      poster: finalPosterPath,
     });
   }
 

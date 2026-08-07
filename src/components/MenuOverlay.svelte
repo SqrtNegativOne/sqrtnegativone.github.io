@@ -1,5 +1,6 @@
 <script>
   import { onMount, onDestroy } from "svelte";
+  import { goto } from "$app/navigation";
 
   let { view = "", hideHint = false } = $props();
 
@@ -9,7 +10,6 @@
     { key: "about",        label: "About",        path: "/about",         importance: 2 },
     { key: "blog",         label: "Blog",         path: "/blog/",         importance: 2, external: true },
     { key: "skills",       label: "Skills",       path: "/skills",        importance: 1 },
-    { key: "contact",      label: "Contact",      path: "/contact",       importance: 1 },
     { key: "now",          label: "Now",          path: "/now",           importance: 1 },
     { key: "minis",        label: "Minis",        path: "/minis",         importance: 1 },
     { key: "media-library",label: "Media Library",path: "/media-library", importance: 1 },
@@ -136,7 +136,7 @@
     closeMenu();
     setTimeout(() => {
       if (item.external) window.open(item.path, '_blank', 'noopener,noreferrer');
-      else window.location.href = item.path;
+      else goto(item.path);
     }, EXIT_MS);
   }
 

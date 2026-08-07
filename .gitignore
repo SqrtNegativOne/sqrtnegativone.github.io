@@ -32,3 +32,4 @@ bash.exe.stackdump
 ideas.md
 .svelte-kit
 docs/
+.env

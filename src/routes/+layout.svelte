@@ -19,7 +19,7 @@
   let currentPath = $derived($page.url.pathname.replace(/\/$/, '') || '/');
 
   const KNOWN_ROUTES = [
-    "/", "/about", "/skills", "/projects", "/contact",
+    "/", "/about", "/skills", "/projects",
     "/now", "/colophon", "/minis", "/media-library",
     "/questions",
   ];

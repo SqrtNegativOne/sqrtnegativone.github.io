@@ -62,7 +62,7 @@
     "tags": ["React", "Eleventy", "Web"],
     "github": "https://github.com/SqrtNegativOne/axiom-web",
     "url": null,
-    "image": "https://picsum.photos/seed/axiom-philosophy/400/220"
+    "image": "/projects/axiom-home-hero.png"
   },
   {
     "id": "gdg-llm",

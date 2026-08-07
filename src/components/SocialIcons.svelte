@@ -1,14 +1,14 @@
 <script>
-  
-
   const GithubIcon = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" /></svg>`;
   const LinkedInIcon = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>`;
   const InstagramIcon = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>`;
   const BlueskyIcon = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8Z" /></svg>`;
   const LeetCodeIcon = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z" /></svg>`;
   const KaggleIcon = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.046.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.358" /></svg>`;
+  const MailIcon = `<svg viewBox="2 4 20 16" fill="currentColor" aria-hidden="true"><path d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" /></svg>`;
 
   const socials = [
+    { name: "Email", url: "mailto:sqrtnegativ1@gmail.com", Icon: MailIcon },
     { name: "GitHub", url: "https://github.com/SqrtNegativOne", Icon: GithubIcon },
     { name: "LinkedIn", url: "https://www.linkedin.com/in/ark-malhotra-431938323/", Icon: LinkedInIcon },
     { name: "Instagram", url: "https://www.instagram.com/sqrtnegativ1/", Icon: InstagramIcon },
@@ -18,144 +18,53 @@
   ];
 </script>
 
-<div class="text-column">
-  <div class="contact-group">
-    <p class="contact-label">Email</p>
-    <div class="contact-emails">
-      <a href="mailto:sqrtnegativ1@gmail.com" class="contact-link">
-        sqrtnegativ1@gmail.com
-      </a>
-      <a href="mailto:ark.malhotra.ug24@nsut.ac.in" class="contact-link">
-        ark.malhotra.ug24@nsut.ac.in
-      </a>
-    </div>
-  </div>
-
-  <div class="contact-group">
-    <p class="contact-label">Elsewhere</p>
-    <div class="contact-socials">
-      {#each socials as { name, url, Icon }}
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="social-link"
-          aria-label={name}
-        >
-          <span class="social-icon">{@html Icon}</span>
-          <span class="social-name">{name}</span>
-        </a>
-      {/each}
-    </div>
-  </div>
+<div class="social-icons">
+  {#each socials as { name, url, Icon }}
+    <a href={url} target="_blank" rel="noopener noreferrer" aria-label={name} class="icon-link">
+      {@html Icon}
+    </a>
+  {/each}
 </div>
 
 <style>
-/* ── Contact ──────────────────────────────────── */
-.contact-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.contact-group + .contact-group {
-  margin-top: 1.5rem;
-}
-
-.contact-label {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.65rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--text-secondary);
-  opacity: 0.7;
-}
-
-.contact-emails {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.contact-link {
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.9rem;
-  border-bottom: 1px dotted transparent;
-  transition: border-color 0.2s, color 0.2s;
-  width: fit-content;
-}
-
-.contact-link:hover {
-  border-bottom-color: var(--text-secondary);
-  color: var(--text-secondary);
-}
-
-.contact-socials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.7rem;
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
-  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
-}
-
-.social-link:hover,
-.social-link:focus-visible {
-  color: var(--text);
-  border-color: var(--text-secondary);
-  background-color: rgba(255, 255, 255, 0.03);
-  transform: translateY(-1px);
-  outline: none;
-}
-
-
-
-.social-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
-}
-
-.social-icon :global(svg) {
-  width: 100%;
-  height: 100%;
-}
-
-.social-name {
-  line-height: 1;
-}
-
-@media (max-width: 640px) {
-  .contact-socials {
-    gap: 0.5rem;
+  .social-icons {
+    position: fixed;
+    bottom: 6rem;
+    right: 4rem;
+    display: flex;
+    gap: 1.25rem;
+    z-index: 10;
+  }
+  
+  .icon-link {
+    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .social-link {
-    padding: 0.4rem 0.55rem;
-    font-size: 0.6rem;
+  .icon-link:hover {
+    color: var(--text, white);
+    transform: translateY(-2px);
   }
 
-  .social-icon {
-    width: 0.85rem;
-    height: 0.85rem;
+  .icon-link :global(svg) {
+    width: 100%;
+    height: 100%;
   }
-}
 
+  @media (max-width: 640px) {
+    .social-icons {
+      bottom: 2rem;
+      right: 2rem;
+      gap: 1rem;
+    }
+    .icon-link {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
 </style>

@@ -257,9 +257,31 @@
       max-width: 520px;
     }
 
-    .post-body p {
+    .post-body p,
+    .post-body li {
       font-size: 0.9rem;
       line-height: 1.7;
+    }
+
+    .post-body ul,
+    .post-body ol {
+      padding-left: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin: 0.5rem 0;
+    }
+
+    .post-body a {
+      color: var(--text);
+      text-decoration: underline;
+      text-decoration-color: var(--text-secondary);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s;
+    }
+
+    .post-body a:hover {
+      text-decoration-color: var(--text);
     }
 
     .post-body del {
@@ -336,19 +358,15 @@
 
     /* Inline footnote reference superscript */
     .footnote-ref a {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       color: var(--text-secondary);
       text-decoration: none;
-      padding: 0 0.15em;
-      border-bottom: 1px solid var(--text-secondary);
       vertical-align: super;
       transition: color 0.2s;
     }
 
     .footnote-ref a:hover {
       color: var(--text);
-      border-color: var(--text);
     }
 
     /* Back-reference arrow */
