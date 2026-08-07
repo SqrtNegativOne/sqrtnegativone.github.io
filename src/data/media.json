@@ -5,8 +5,18 @@
     "rating": 7,
     "status": "finished",
     "title": "Deltarune",
-    "subtitle": "",
+    "subtitle": "There's something more important than reaching the end.",
+    "description": "",
+    "poster_image": "/media-posters/game_deltarune.png"
+  },
+  {
+    "id": "undertale",
+    "type": "game",
+    "rating": 7,
+    "status": "finished",
+    "title": "UNDERTALE",
+    "subtitle": "The friendly RPG where no one has to die.",
     "year": 2026,
-    "poster_image": "https://deltarune.wiki/images/Deltarune_Dark_Fountain_artwork.png?cb=trbhkz&h=thumb.php&f=Deltarune_Dark_Fountain_artwork.png"
+    "poster_image": "/media-posters/game_undertale.png"
   }
 ]

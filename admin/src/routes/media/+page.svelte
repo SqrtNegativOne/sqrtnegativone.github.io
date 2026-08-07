@@ -5,16 +5,17 @@
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
-  let currentItem = $state({
-    id: '', type: 'movie', rating: 0, status: 'wishlist',
-    title: '', subtitle: '', year: new Date().getFullYear(), poster_image: ''
+  let currentItem: any = $state({
+    id: '', type: 'movie', rating: 1, status: 'wishlist',
+    title: '', subtitle: '', description: '', poster_image: ''
   });
+  let isSearching = $state(false);
 
   function openNew() {
     isEditing = false;
-    currentItem = {
-      id: '', type: 'movie', rating: 0, status: 'wishlist',
-      title: '', subtitle: '', year: new Date().getFullYear(), poster_image: ''
+    currentItem = { 
+      id: '', type: 'movie', rating: 1, status: 'wishlist',
+      title: '', subtitle: '', description: '', poster_image: ''
     };
     isModalOpen = true;
   }
@@ -23,6 +24,56 @@
     isEditing = true;
     currentItem = { ...item };
     isModalOpen = true;
+  }
+
+  async function handleSearch() {
+    if (!currentItem.id || !currentItem.type) return;
+    isSearching = true;
+    try {
+      const res = await fetch(`/media/search?type=${currentItem.type}&id=${currentItem.id}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.title) currentItem.title = data.title;
+        if (data.subtitle) currentItem.subtitle = data.subtitle;
+        if (data.description) currentItem.description = data.description;
+        if (data.coverUrl) currentItem.poster_image = data.coverUrl;
+      } else {
+        const err = await res.json();
+        alert(`Search failed: ${err.error || 'Not found'}`);
+      }
+    } catch (err) {
+      alert("Error searching metadata");
+    } finally {
+      isSearching = false;
+    }
+  }
+
+  function handlePaste(e: ClipboardEvent) {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        const file = item.getAsFile();
+        if (!file) continue;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          currentItem.poster_image = e.target?.result as string;
+        };
+        reader.readAsDataURL(file);
+        e.preventDefault();
+        break;
+      }
+    }
+  }
+
+  function handleRatingKeydown(e: KeyboardEvent) {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      currentItem.rating = Math.min(7, Math.floor((currentItem.rating || 1) + 1));
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      currentItem.rating = Math.max(1, Math.ceil((currentItem.rating || 1) - 1));
+    }
   }
 </script>
 
@@ -76,9 +127,7 @@
             <td class="p-4">
               <div class="font-medium text-white">{item.title || item.id}</div>
               {#if item.subtitle}
-                <div class="text-sm text-[#94a3b8]">{item.subtitle} ({item.year || '?'})</div>
-              {:else if item.year}
-                <div class="text-sm text-[#94a3b8]">{item.year}</div>
+                <div class="text-sm text-[#94a3b8]">{item.subtitle}</div>
               {/if}
             </td>
             <td class="p-4">
@@ -135,7 +184,12 @@
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">ID (Unique)</label>
+            <label class="flex justify-between items-end block text-sm font-medium text-[#94a3b8]">
+              <span>ID (Unique)</span>
+              <button type="button" onclick={handleSearch} disabled={isSearching || !currentItem.id} class="text-xs text-blue-400 hover:text-blue-300 disabled:opacity-50">
+                {isSearching ? 'Searching...' : 'Search TMDB/Steam'}
+              </button>
+            </label>
             <input type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
           </div>
           
@@ -154,9 +208,14 @@
             <input type="text" name="title" bind:value={currentItem.title} class="input-field" required />
           </div>
           
-          <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Subtitle</label>
-            <input type="text" name="subtitle" bind:value={currentItem.subtitle} class="input-field" />
+          <div class="space-y-2 md:col-span-2">
+            <label class="block text-sm font-medium text-[#94a3b8]">Subtitle (Optional)</label>
+            <input type="text" name="subtitle" bind:value={currentItem.subtitle} class="input-field" placeholder="e.g. Director, Author, or Tagline" />
+          </div>
+
+          <div class="space-y-2 md:col-span-2">
+            <label class="block text-sm font-medium text-[#94a3b8]">Description</label>
+            <textarea name="description" bind:value={currentItem.description} class="input-field min-h-[100px] resize-y" placeholder="Extended description..."></textarea>
           </div>
           
           <div class="space-y-2">
@@ -172,18 +231,15 @@
           </div>
           
           <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Rating (0-7)</label>
-            <input type="number" step="0.1" min="0" max="7" name="rating" bind:value={currentItem.rating} class="input-field" required />
+            <label class="block text-sm font-medium text-[#94a3b8]">Rating (1-7)</label>
+            <input type="number" step="0.1" min="1" max="7" name="rating" bind:value={currentItem.rating} onkeydown={handleRatingKeydown} class="input-field" required />
           </div>
 
-          <div class="space-y-2">
-            <label class="block text-sm font-medium text-[#94a3b8]">Year</label>
-            <input type="number" name="year" bind:value={currentItem.year} class="input-field" required />
-          </div>
+
           
           <div class="space-y-2">
             <label class="block text-sm font-medium text-[#94a3b8]">Poster Image URL</label>
-            <input type="text" name="poster_image" bind:value={currentItem.poster_image} class="input-field" />
+            <input type="text" name="poster_image" bind:value={currentItem.poster_image} onpaste={handlePaste} placeholder="URL or paste image here..." class="input-field" />
           </div>
         </div>
         

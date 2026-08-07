@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { mediaData } from "../generated/media.ts";
+  import mediaData from "../data/media.json";
   
   const TYPE_LABEL = { game: "Game", movie: "Movie", show: "Show", book: "Book" };
 
@@ -17,6 +17,18 @@
     }
     return buckets;
   })();
+
+  let activeItem: any = $state(null);
+
+  function openDetails(item: any) {
+    activeItem = item;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDetails() {
+    activeItem = null;
+    document.body.style.overflow = '';
+  }
 </script>
 
 <div class="ml-root">
@@ -30,10 +42,12 @@
       <h2 class="ml-section-title">Currently</h2>
       <div class="ml-hero-row">
         {#each consuming as item (item.type + '-' + item.id)}
-          <article class="ml-hero-card">
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+          <article class="ml-hero-card" onclick={() => openDetails(item)}>
             <div class="ml-poster ml-poster--lg">
-              {#if item.poster}
-                <img src={item.poster} alt="" loading="lazy" />
+              {#if item.poster_image}
+                <img src={item.poster_image} alt="" loading="lazy" />
               {:else}
                 <div class="ml-poster-fallback">
                   <span>{TYPE_LABEL[item.type] || item.type}</span>
@@ -55,7 +69,6 @@
               {/if}
               <p class="ml-hero-line">
                 {TYPE_LABEL[item.type] || item.type}
-                {item.year ? ` · ${item.year}` : ""}
               </p>
             </div>
           </article>
@@ -76,11 +89,13 @@
           <span role="columnheader" class="ml-col-rating">Rating</span>
         </div>
         {#each library as item (item.type + '-' + item.id)}
-          <div class="ml-row" role="row">
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_interactive_supports_focus -->
+          <div class="ml-row cursor-pointer" role="row" onclick={() => openDetails(item)}>
             <span role="cell" class="ml-col-poster">
               <div class={`ml-poster ml-poster--xs`}>
-                {#if item.poster}
-                  <img src={item.poster} alt="" loading="lazy" />
+                {#if item.poster_image}
+                  <img src={item.poster_image} alt="" loading="lazy" />
                 {:else}
                   <div class="ml-poster-fallback">
                     <span>{TYPE_LABEL[item.type] || item.type}</span>
@@ -114,6 +129,45 @@
 
   {#if mediaData.length === 0}
     <p class="ml-empty">Nothing here yet.</p>
+  {/if}
+
+  {#if activeItem}
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div class="ml-modal-backdrop" onclick={closeDetails}>
+      <div class="ml-modal-content" onclick={(e) => e.stopPropagation()}>
+        <button class="ml-modal-close" onclick={closeDetails}>
+          <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <div class="ml-modal-grid">
+          <div class="ml-modal-poster">
+            {#if activeItem.poster_image}
+              <img src={activeItem.poster_image} alt="" />
+            {:else}
+              <div class="ml-poster-fallback"><span>{TYPE_LABEL[activeItem.type] || activeItem.type}</span></div>
+            {/if}
+          </div>
+          <div class="ml-modal-info">
+            <h2 class="ml-modal-title">{activeItem.title}</h2>
+            {#if activeItem.subtitle}
+              <p class="ml-modal-subtitle">{activeItem.subtitle}</p>
+            {/if}
+            <div class="ml-modal-meta">
+              <span class={`ml-badge ml-badge--${activeItem.type} static inline-block !relative !top-0 !left-0`}>{TYPE_LABEL[activeItem.type] || activeItem.type}</span>
+              <span class={`ml-status ml-status--${activeItem.status} ml-2`}>{activeItem.status}</span>
+              <span class="ml-rating ml-2">
+                <span class="ml-rating-num">{activeItem.rating}</span><span class="ml-rating-sep">/</span><span class="ml-rating-max">7</span>
+              </span>
+            </div>
+            {#if activeItem.description}
+              <div class="ml-modal-desc">
+                {activeItem.description}
+              </div>
+            {/if}
+          </div>
+        </div>
+      </div>
+    </div>
   {/if}
 </div>
 
@@ -429,6 +483,117 @@
     grid-area: meta;
     display: inline-block;
     margin-right: 10px;
+  }
+}
+
+/* ---------- Modal ---------- */
+
+.ml-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ml-modal-content {
+  background: #111114;
+  border: 1px solid #1f1f25;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+  padding: 32px;
+}
+
+.ml-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #8a8a93;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.ml-modal-close:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ml-modal-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 32px;
+}
+
+.ml-modal-poster {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1d1d22;
+  aspect-ratio: 2/3;
+  width: 100%;
+}
+
+.ml-modal-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ml-modal-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ml-modal-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-family: "Instrument Serif", serif;
+}
+
+.ml-modal-subtitle {
+  margin: 8px 0 0;
+  color: #9a9aa3;
+  font-size: 16px;
+}
+
+.ml-modal-meta {
+  margin: 16px 0 24px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ml-modal-desc {
+  color: #d1d1d6;
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 640px) {
+  .ml-modal-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .ml-modal-poster {
+    width: 140px;
   }
 }
 

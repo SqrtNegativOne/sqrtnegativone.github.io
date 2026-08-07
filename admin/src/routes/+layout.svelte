@@ -1,6 +1,7 @@
 <script lang="ts">
   import '../app.css';
   import { page } from '$app/state';
+  import { navItems } from '$lib/nav';
   let { children } = $props();
   let mobileMenuOpen = $state(false);
 
@@ -32,22 +33,12 @@
         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
         Dashboard
       </a>
-      <a href="/media" class="flex items-center px-4 py-3 rounded-lg transition-colors {page.url.pathname.startsWith('/media') ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'text-[#94a3b8] hover:bg-[#27272a] hover:text-white'}">
-        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path></svg>
-        Media
-      </a>
-      <a href="/projects" class="flex items-center px-4 py-3 rounded-lg transition-colors {page.url.pathname.startsWith('/projects') ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'text-[#94a3b8] hover:bg-[#27272a] hover:text-white'}">
-        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-        Projects
-      </a>
-      <a href="/skills" class="flex items-center px-4 py-3 rounded-lg transition-colors {page.url.pathname.startsWith('/skills') ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'text-[#94a3b8] hover:bg-[#27272a] hover:text-white'}">
-        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
-        Skills
-      </a>
-      <a href="/quotes" class="flex items-center px-4 py-3 rounded-lg transition-colors {page.url.pathname.startsWith('/quotes') ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'text-[#94a3b8] hover:bg-[#27272a] hover:text-white'}">
-        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-        Quotes
-      </a>
+      {#each navItems as item}
+        <a href={item.href} class="flex items-center px-4 py-3 rounded-lg transition-colors {page.url.pathname.startsWith(item.href) ? `${item.navActiveBg} ${item.navActiveText} border ${item.navActiveBorder}` : 'text-[#94a3b8] hover:bg-[#27272a] hover:text-white'}">
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">{@html item.path}</svg>
+          {item.label}
+        </a>
+      {/each}
       
       <div class="pt-6 mt-6 border-t border-[#27272a]">
         <button onclick={shutdown} class="w-full flex items-center px-4 py-3 rounded-lg transition-colors text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20">
