@@ -86,7 +86,6 @@
         <div class="ml-table-head" role="row">
           <span role="columnheader" class="ml-col-poster"></span>
           <span role="columnheader" class="ml-col-title">Title</span>
-          <span role="columnheader" class="ml-col-type">Type</span>
           <span role="columnheader" class="ml-col-status">Status</span>
           <span role="columnheader" class="ml-col-rating">Rating</span>
         </div>
@@ -222,7 +221,7 @@
 
 .ml-table-head {
   display: grid;
-  grid-template-columns: 60px 1fr 100px 110px 90px;
+  grid-template-columns: 60px 1fr 110px 90px;
   align-items: center;
   gap: 16px;
   padding: 12px 8px;

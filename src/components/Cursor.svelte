@@ -7,6 +7,11 @@
   let cursor;
 
   onMount(() => {
+    // Disable on mobile/touch devices
+    if (window.matchMedia('(max-width: 768px)').matches || ('ontouchstart' in window) || navigator.maxTouchPoints > 0) {
+      return;
+    }
+
     MouseFollower.registerGSAP(gsap);
     
     cursor = new MouseFollower({
@@ -30,6 +35,12 @@
   /* Base state is already set to exclusion by the library when class -exclusion is present */
   :global(.mf-cursor) {
     z-index: 99999 !important;
+  }
+
+  @media (max-width: 768px) {
+    :global(.mf-cursor) {
+      display: none !important;
+    }
   }
 
   /* Bulletproof CSS override: If a modal or menu is open ANYWHERE on the page, 

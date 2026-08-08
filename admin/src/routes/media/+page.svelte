@@ -7,7 +7,7 @@
   let isEditing = $state(false);
   let currentItem: any = $state({
     id: '', type: 'movie', rating: 1, status: 'wishlist',
-    title: '', subtitle: '', description: '', poster_image: ''
+    title: '', subtitle: '', description: '', poster_image: '', private_notes: ''
   });
   let isSearching = $state(false);
 
@@ -35,7 +35,7 @@
     isEditing = false;
     currentItem = { 
       id: '', type: 'movie', rating: 1, status: 'wishlist',
-      title: '', subtitle: '', description: '', poster_image: ''
+      title: '', subtitle: '', description: '', poster_image: '', private_notes: ''
     };
     isModalOpen = true;
   }
@@ -105,7 +105,7 @@
   <title>Manage Media | Admin</title>
 </svelte:head>
 
-{#snippet typeBadge(type)}
+{#snippet typeBadge(type: string)}
   {#if type === 'book'}
     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-amber-500/10 text-amber-500 border border-amber-500/20 capitalize">
       <svg class="w-3.5 h-3.5 mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
@@ -133,7 +133,7 @@
   {/if}
 {/snippet}
 
-{#snippet statusBadge(status)}
+{#snippet statusBadge(status: string)}
   {#if status === 'finished'}
     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 capitalize">
       <svg class="w-3.5 h-3.5 mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -171,7 +171,7 @@
   {/if}
 {/snippet}
 
-{#snippet ratingDisplay(rating)}
+{#snippet ratingDisplay(rating: number)}
   {@const percent = (rating / 7) * 100}
   {@const colorClass = rating >= 6 ? 'text-emerald-400' : rating >= 4 ? 'text-blue-400' : rating >= 2 ? 'text-amber-400' : 'text-red-400'}
   {@const bgClass = rating >= 6 ? 'text-emerald-500/20' : rating >= 4 ? 'text-blue-500/20' : rating >= 2 ? 'text-amber-500/20' : 'text-red-500/20'}
@@ -253,7 +253,7 @@
                   src={item.poster_image || `/media-posters/${item.type}_${item.id}.jpg`} 
                   alt="Poster"
                   class="w-full h-full object-cover"
-                  onerror={(e) => e.currentTarget.style.display = 'none'}
+                  onerror={(e) => (e.currentTarget as HTMLImageElement).style.display = 'none'}
                 />
               </div>
             </td>
@@ -351,6 +351,13 @@
           <div class="space-y-2 md:col-span-2">
             <label for="media-desc" class="block text-sm font-medium text-[#94a3b8]">Description</label>
             <textarea id="media-desc" name="description" bind:value={currentItem.description} class="input-field min-h-[100px] resize-y" placeholder="Extended description..."></textarea>
+          </div>
+
+          <div class="space-y-2 md:col-span-2">
+            <label for="media-private" class="flex justify-between items-end block text-sm font-medium text-[#94a3b8]">
+              <span class="flex items-center text-amber-500/80"><svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Private Notes</span>
+            </label>
+            <textarea id="media-private" name="private_notes" bind:value={currentItem.private_notes} class="input-field min-h-[100px] resize-y border-amber-500/30 focus:border-amber-500 focus:ring-amber-500/20" placeholder="These notes are encrypted securely and never exposed publicly..."></textarea>
           </div>
           
           <div class="space-y-2">

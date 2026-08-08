@@ -1,4 +1,5 @@
 import { readData, writeData } from '$lib/server/db';
+import { encrypt, decrypt } from '$lib/server/crypto';
 import { fail } from '@sveltejs/kit';
 import fs from 'fs/promises';
 import path from 'path';
@@ -13,11 +14,31 @@ interface MediaItem {
   subtitle: string;
   description: string;
   poster_image: string;
+  private_notes?: string;
+}
+
+interface PrivateNoteItem {
+  id: string;
+  notes: string;
 }
 
 export const load: PageServerLoad = async () => {
   const media = await readData<MediaItem>('media.json');
-  return { media };
+  let privateNotes = await readData<PrivateNoteItem>('media-private.json');
+  
+  if (!Array.isArray(privateNotes)) privateNotes = [];
+
+  const notesMap = new Map<string, string>();
+  for (const item of privateNotes) {
+     notesMap.set(item.id, decrypt(item.notes));
+  }
+
+  const mergedMedia = media.map(item => ({
+      ...item,
+      private_notes: notesMap.get(item.id) || ''
+  }));
+
+  return { media: mergedMedia };
 };
 
 export const actions: Actions = {
@@ -30,6 +51,7 @@ export const actions: Actions = {
     const title = data.get('title') as string;
     const subtitle = (data.get('subtitle') as string) || '';
     const description = (data.get('description') as string) || '';
+    const private_notes = (data.get('private_notes') as string) || '';
     let poster_image = (data.get('poster_image') as string) || '';
     const isNew = data.get('isNew') === 'true';
     
@@ -128,6 +150,24 @@ export const actions: Actions = {
     }
     
     await writeData('media.json', items);
+
+    // Save private notes
+    let privateNotes = await readData<PrivateNoteItem>('media-private.json');
+    if (!Array.isArray(privateNotes)) privateNotes = [];
+
+    if (private_notes.trim()) {
+        const encrypted = encrypt(private_notes);
+        const pIdx = privateNotes.findIndex(n => n.id === id);
+        if (pIdx !== -1) {
+             privateNotes[pIdx].notes = encrypted;
+        } else {
+             privateNotes.push({ id, notes: encrypted });
+        }
+    } else {
+        privateNotes = privateNotes.filter(n => n.id !== id);
+    }
+    await writeData('media-private.json', privateNotes);
+
     return { success: true };
   },
   
@@ -137,8 +177,14 @@ export const actions: Actions = {
     
     let items = await readData<MediaItem>('media.json');
     items = items.filter(i => i.id !== id);
-    
     await writeData('media.json', items);
+
+    let privateNotes = await readData<PrivateNoteItem>('media-private.json');
+    if (Array.isArray(privateNotes)) {
+        privateNotes = privateNotes.filter(n => n.id !== id);
+        await writeData('media-private.json', privateNotes);
+    }
+
     return { success: true };
   }
 };

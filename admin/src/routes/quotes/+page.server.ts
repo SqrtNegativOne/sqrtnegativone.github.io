@@ -9,7 +9,7 @@ export const load: PageServerLoad = async () => {
   try {
     const content = await fs.readFile(QUOTES_FILE, 'utf-8');
     // Read and split by \n\n, filter out empty
-    const quotes = content.split('\n\n').filter(q => q.trim() !== '');
+    const quotes = content.split('\n\n').filter((q: string) => q.trim() !== '');
     return { quotes };
   } catch (error) {
     console.error('Error reading quotes.txt:', error);
@@ -30,12 +30,12 @@ export const actions: Actions = {
 
     try {
       let content = await fs.readFile(QUOTES_FILE, 'utf-8');
-      let quotes = content.split('\n\n').filter(q => q.trim() !== '');
+      let quotes = content.split('\n\n').filter((q: string) => q.trim() !== '');
       
       if (isNew) {
         quotes.push(newQuote);
       } else {
-        const index = quotes.findIndex(q => q.trim() === originalQuote.trim());
+        const index = quotes.findIndex((q: string) => q.trim() === originalQuote.trim());
         if (index !== -1) {
           quotes[index] = newQuote;
         } else {
@@ -61,9 +61,9 @@ export const actions: Actions = {
 
     try {
       let content = await fs.readFile(QUOTES_FILE, 'utf-8');
-      let quotes = content.split('\n\n').filter(q => q.trim() !== '');
+      let quotes = content.split('\n\n').filter((q: string) => q.trim() !== '');
       
-      quotes = quotes.filter(q => q.trim() !== quoteToDelete);
+      quotes = quotes.filter((q: string) => q.trim() !== quoteToDelete);
       
       await fs.writeFile(QUOTES_FILE, quotes.join('\n\n\n'), 'utf-8');
       return { success: true };

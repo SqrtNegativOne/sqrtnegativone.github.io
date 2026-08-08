@@ -102,11 +102,11 @@
   {
     "id": "the_martian",
     "type": "book",
-    "rating": 5.5,
+    "rating": 6,
     "status": "finished",
     "title": "The Martian",
     "subtitle": "How come Aquaman can control whales? They're mammals! Makes no sense.",
-    "description": "",
+    "description": "Science Guy Solves Science Puzzles... In Space! also he's really funny\n\nMy favourite was when the main character had to hide out in his car away from his hub because of a chemical reaction gone awry, and when he rides through craters dust storm with no satellite.",
     "poster_image": "/media-posters/book_the_martian.jpg"
   },
   {
@@ -277,7 +277,7 @@
     "title": "Dweller's Empty Path",
     "subtitle": "A game by Temmie Chang.",
     "description": "I feel kind of… guilty for liking this one. It wasn’t that good… but it felt really good. The ending was sudden, though, very lacklustre, and I hated the generic “heroes” quest, even if it was meant as satire. But there was something about it... the subtle hopelessness? Treated as... ordinary. I don't know. I felt it just helping me, a bit.",
-    "poster_image": ""
+    "poster_image": "/media-posters/game_dweller_s_empty_path.png"
   },
   {
     "id": "disco_elysium_-_the_final_cut",
@@ -288,5 +288,85 @@
     "subtitle": "A tragicomedy of hope and redemption.",
     "description": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
     "poster_image": "/media-posters/game_disco_elysium_-_the_final_cut.jpg"
+  },
+  {
+    "id": "the_hunger_games",
+    "type": "book",
+    "rating": 4,
+    "status": "wishlist",
+    "title": "The Hunger Games",
+    "subtitle": "PUBG with romance, on a metaphorical and literal level.",
+    "description": "It has its moments, but I thought the ending, with the corny romance and all, was boring. I had also played Disco Elysium side-by-side so the drastic drop in writing quality was more apparent, I guess.",
+    "poster_image": "/media-posters/book_the_hunger_games.jpg"
+  },
+  {
+    "id": "mindhacker",
+    "type": "book",
+    "rating": 5.5,
+    "status": "finished",
+    "title": "Mindhacker",
+    "subtitle": "Useless retro-tech advice, but makes you think.",
+    "description": "I get nostalgic for times that were stolen from me a lot. ...Remind me to add this feature soon, I want to add here an excerpt from my diary.",
+    "poster_image": "/media-posters/book_mindhacker.jpg"
+  },
+  {
+    "id": "harry_potter_and_the_methods_of_rationality",
+    "type": "book",
+    "rating": 5.5,
+    "status": "finished",
+    "title": "Harry Potter and the Methods of Rationality",
+    "subtitle": "The epic fanfic that set the AI Safety movement back by 10 years.",
+    "description": "I wouldn't recommend this to a Harry Potter fan; it takes everything good about Harry Potter, and makes it bad. Everything else, however...",
+    "poster_image": "/media-posters/book_harry_potter_and_the_methods_of_rationality.jpg"
+  },
+  {
+    "id": "foundation",
+    "type": "book",
+    "rating": 3,
+    "status": "finished",
+    "title": "Foundation",
+    "subtitle": "Is it fair of me to just say, \"Dune was better.\" for any given sci-fi book?",
+    "description": "I have heard the show is better. Full disclaimer, I only read the first book, and I wouldn't recommend it. Every protagonist of each act is the same, hard, male, and every antagonist is tricked in some way, and these tricks are *not* consistent with each other. The book did have its moments with politics, however. Everything else was either bad (worldbuiling, characterization) or mid (writing).",
+    "poster_image": "/media-posters/book_foundation.jpg"
+  },
+  {
+    "id": "a_mind_for_numbers",
+    "type": "book",
+    "rating": 2,
+    "status": "finished",
+    "title": "A Mind for Numbers",
+    "subtitle": "The first book written by ChatGPT, before ChatGPT.",
+    "description": "",
+    "poster_image": "/media-posters/book_a_mind_for_numbers.jpg"
+  },
+  {
+    "id": "the_quantum_thief",
+    "type": "book",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "The Quantum Thief",
+    "subtitle": "",
+    "description": "Hard sci-fi recommended by Gwern.",
+    "poster_image": "/media-posters/book_the_quantum_thief.jpg"
+  },
+  {
+    "id": "the_fifth_science",
+    "type": "book",
+    "rating": 5.5,
+    "status": "abandoned",
+    "title": "The Fifth Science",
+    "subtitle": "",
+    "description": "Got Foundation and Dune vibes from this, might just be me. Might come around to finishing that last 30% of it.",
+    "poster_image": "/media-posters/book_the_fifth_science.jpg"
+  },
+  {
+    "id": "worm_web_serial",
+    "type": "book",
+    "rating": 7,
+    "status": "wishlist",
+    "title": "WORM",
+    "subtitle": "",
+    "description": "",
+    "poster_image": "/media-posters/book_worm_web_serial.jpg"
   }
 ]
