@@ -21,7 +21,7 @@
   }
   
   .icon-link {
-    color: var(--text-secondary, rgba(255, 255, 255, 0.7));
+    color: var(--text-secondary, oklch(1 0 0 / 0.7));
     width: 1.5rem;
     height: 1.5rem;
     transition: color 0.2s ease, transform 0.2s ease;

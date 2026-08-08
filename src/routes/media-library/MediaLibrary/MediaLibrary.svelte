@@ -143,7 +143,7 @@
 .ml-full-poster-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.95);
+  background: oklch(0 0 0 / 0.95);
   z-index: 200;
   display: flex;
   align-items: center;
@@ -156,7 +156,7 @@
   max-height: 100%;
   object-fit: contain;
   border-radius: 8px;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 24px 48px oklch(0 0 0 / 0.6);
 }
 
 .ml-root {
@@ -164,8 +164,8 @@
   inset: 0;
   z-index: 5;
   overflow-y: auto;
-  background: #0b0b0d;
-  color: #f5f5f7;
+  background: oklch(0.1505 0.0042 285.88);
+  color: oklch(0.9707 0.0027 286.35);
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   padding: clamp(24px, 5vw, 64px) clamp(20px, 5vw, 72px) 96px;
   -webkit-font-smoothing: antialiased;
@@ -187,7 +187,7 @@
 
 .ml-tagline {
   margin: 12px 0 0;
-  color: #8a8a93;
+  color: oklch(0.6363 0.0133 286.02);
   font-size: 14px;
   letter-spacing: 0.02em;
 }
@@ -207,9 +207,9 @@
 
 .ml-search-input,
 .ml-select {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #f5f5f7;
+  background: oklch(1 0 0 / 0.05);
+  border: 1px solid oklch(1 0 0 / 0.1);
+  color: oklch(0.9707 0.0027 286.35);
   padding: 10px 16px;
   border-radius: 8px;
   font-family: "Inter", system-ui, sans-serif;
@@ -220,8 +220,8 @@
 
 .ml-search-input:focus,
 .ml-select:focus {
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: oklch(1 0 0 / 0.3);
+  background: oklch(1 0 0 / 0.08);
 }
 
 .ml-search-input {
@@ -239,8 +239,8 @@
 }
 
 .ml-select option {
-  background: #111114;
-  color: #f5f5f7;
+  background: oklch(0.179 0.0061 285.77);
+  color: oklch(0.9707 0.0027 286.35);
 }
 
 .ml-section-title {
@@ -248,7 +248,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: #b8b8c0;
+  color: oklch(0.785 0.0112 286.14);
   margin: 0 0 16px;
 }
 
@@ -265,7 +265,7 @@
 .ml-table {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid #1f1f25;
+  border-top: 1px solid oklch(0.2419 0.0114 285.52);
 }
 
 .ml-table-head {
@@ -274,18 +274,18 @@
   align-items: center;
   gap: 16px;
   padding: 12px 8px;
-  border-bottom: 1px solid #1f1f25;
+  border-bottom: 1px solid oklch(0.2419 0.0114 285.52);
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #6e6e78;
+  color: oklch(0.5416 0.0154 285.87);
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
 .ml-empty {
-  color: #6e6e78;
+  color: oklch(0.5416 0.0154 285.87);
   text-align: center;
   padding: 80px 0;
   font-style: italic;

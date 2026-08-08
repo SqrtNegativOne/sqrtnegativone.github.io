@@ -155,20 +155,20 @@
 
 .blog-item {
   padding: 1rem 1.2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid oklch(1 0 0 / 0.08);
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.25s, border-color 0.25s;
 }
 
 .blog-item:hover {
-  background: rgba(0, 0, 0, 0.03);
-  border-color: rgba(0, 0, 0, 0.12);
+  background: oklch(0 0 0 / 0.03);
+  border-color: oklch(0 0 0 / 0.12);
 }
 
 .blog-item:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: oklch(1 0 0 / 0.04);
+  border-color: oklch(1 0 0 / 0.15);
 }
 
 .blog-item-title {
@@ -260,7 +260,7 @@
 
 /* Definition box */
 :global(.definition-box) {
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid oklch(1 0 0 / 0.12);
   border-radius: 6px;
   padding: 1rem 1.2rem;
   margin: 0.5rem 0;

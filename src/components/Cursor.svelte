@@ -49,20 +49,20 @@
     mix-blend-mode: normal !important;
   }
   :global(body:has(.ml-modal-backdrop, .menu-overlay, .menu-scrim) .mf-cursor:before) {
-    background: #fff !important;
+    background: oklch(1 0 0) !important;
   }
 
   /* Override the default -pointer state to EXPAND instead of shrink */
   :global(.mf-cursor.-pointer:before) {
     transform: scale(0.8) !important;
     background: transparent !important;
-    border: 1px solid #fff;
+    border: 1px solid oklch(1 0 0);
   }
 
   /* Style for external links (adds a top-right arrow inside) */
   :global(.mf-cursor.-external:before) {
     transform: scale(0.8) !important;
-    background: #fff !important;
+    background: oklch(1 0 0) !important;
   }
   
   :global(.mf-cursor.-external:after) {
@@ -73,7 +73,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #000;
+    color: oklch(0 0 0);
     font-weight: 700;
     font-size: 16px;
     font-family: sans-serif;

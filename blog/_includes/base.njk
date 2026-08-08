@@ -35,15 +35,15 @@
     }
 
     :root {
-      --bg: #f5f2ed;
-      --text: #1a1a1a;
-      --text-secondary: #555;
+      --bg: oklch(0.9621 0.0074 80.72);
+      --text: oklch(0.2178 0 0);
+      --text-secondary: oklch(0.4495 0 0);
     }
 
     [data-theme="dark"] {
-      --bg: #0e0e0e;
-      --text: #e8e8e8;
-      --text-secondary: #aaa;
+      --bg: oklch(0.1638 0 0);
+      --text: oklch(0.931 0 0);
+      --text-secondary: oklch(0.738 0 0);
     }
 
     html, body {
@@ -197,19 +197,19 @@
       color: var(--text);
       display: block;
       padding: 1rem 1.2rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid oklch(1 0 0 / 0.08);
       border-radius: 8px;
       transition: background 0.25s, border-color 0.25s;
     }
 
     [data-theme="dark"] .post-list-item a:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.15);
+      background: oklch(1 0 0 / 0.04);
+      border-color: oklch(1 0 0 / 0.15);
     }
 
     .post-list-item a:hover {
-      background: rgba(0, 0, 0, 0.03);
-      border-color: rgba(0, 0, 0, 0.12);
+      background: oklch(0 0 0 / 0.03);
+      border-color: oklch(0 0 0 / 0.12);
     }
 
     .post-list-title {
@@ -340,7 +340,7 @@
     .footnotes {
       margin-top: 3rem;
       padding-top: 1.5rem;
-      border-top: 1px solid rgba(128, 128, 128, 0.2);
+      border-top: 1px solid oklch(0.5999 0 0 / 0.2);
       font-size: 0.78rem;
       color: var(--text-secondary);
     }

@@ -56,7 +56,7 @@
   .ml-modal-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.95); /* Replaced backdrop-filter with darker solid color */
+    background: oklch(0 0 0 / 0.95); /* Replaced backdrop-filter with darker solid color */
     transform: translateZ(0);
     z-index: 100;
     display: flex;
@@ -66,15 +66,15 @@
   }
 
   .ml-modal-content {
-    background: #111114;
-    border: 1px solid #1f1f25;
+    background: oklch(0.179 0.0061 285.77);
+    border: 1px solid oklch(0.2419 0.0114 285.52);
     border-radius: 16px;
     width: 100%;
     max-width: 700px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 24px 48px oklch(0 0 0 / 0.6);
     padding: 32px;
   }
 
@@ -82,7 +82,7 @@
     position: absolute;
     top: 20px;
     right: 20px;
-    color: #8a8a93;
+    color: oklch(0.6363 0.0133 286.02);
     background: transparent;
     border: none;
     cursor: pointer;
@@ -93,7 +93,7 @@
 
   .ml-modal-close:hover {
     color: white;
-    background: rgba(255, 255, 255, 0.1);
+    background: oklch(1 0 0 / 0.1);
   }
 
   .ml-modal-grid {
@@ -105,7 +105,7 @@
   .ml-modal-poster {
     border-radius: 8px;
     overflow: hidden;
-    background: #1d1d22;
+    background: oklch(0.2329 0.0095 285.64);
     aspect-ratio: 2/3;
     width: 100%;
   }
@@ -124,12 +124,12 @@
     justify-content: center;
     background: repeating-linear-gradient(
       135deg,
-      #1d1d22 0px,
-      #1d1d22 8px,
-      #16161a 8px,
-      #16161a 16px
+      oklch(0.2329 0.0095 285.64) 0px,
+      oklch(0.2329 0.0095 285.64) 8px,
+      oklch(0.202 0.0079 285.67) 8px,
+      oklch(0.202 0.0079 285.67) 16px
     );
-    color: #4d4d56;
+    color: oklch(0.4235 0.0148 285.75);
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -151,7 +151,7 @@
 
   .ml-modal-subtitle {
     margin: 8px 0 0;
-    color: #9a9aa3;
+    color: oklch(0.6891 0.013 286.05);
     font-size: 18px;
   }
 
@@ -164,7 +164,7 @@
   }
 
   .ml-modal-desc {
-    color: #d1d1d6;
+    color: oklch(0.8622 0.0068 286.26);
     font-size: 15px;
     line-height: 1.6;
     white-space: pre-wrap;
@@ -177,15 +177,15 @@
     padding: 3px 7px;
     border-radius: 3px;
     font-family: "IBM Plex Mono", ui-monospace, monospace;
-    background: rgba(0, 0, 0, 0.65);
-    color: #f5f5f7;
+    background: oklch(0 0 0 / 0.65);
+    color: oklch(0.9707 0.0027 286.35);
     backdrop-filter: blur(4px);
   }
 
-  .ml-badge--game  { background: rgba(132, 73, 230, 0.85); }
-  .ml-badge--movie { background: rgba(229, 9, 20, 0.85); }
-  .ml-badge--show  { background: rgba(0, 122, 200, 0.85); }
-  .ml-badge--book  { background: rgba(184, 134, 11, 0.85); }
+  .ml-badge--game  { background: oklch(0.5611 0.2236 295.48 / 0.85); }
+  .ml-badge--movie { background: oklch(0.5814 0.2349 27.99 / 0.85); }
+  .ml-badge--show  { background: oklch(0.5645 0.1497 247.37 / 0.85); }
+  .ml-badge--book  { background: oklch(0.6521 0.1322 81.57 / 0.85); }
 
   .ml-status {
     display: inline-flex;
@@ -210,18 +210,18 @@
     height: 100%;
   }
 
-  .ml-status--consuming  { background: rgba(255, 200, 60, 0.15);  color: #ffcc55; }
-  .ml-status--finished   { background: rgba(80, 200, 120, 0.15);  color: #5dd29a; }
-  .ml-status--wishlist   { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-  .ml-status--rewishlist { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
-  .ml-status--next-up    { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
-  .ml-status--dropped    { background: rgba(220, 50, 50, 0.15); color: #d25050; }
-  .ml-status--shelved    { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+  .ml-status--consuming  { background: oklch(0.8594 0.1588 85.88 / 0.15);  color: oklch(0.869 0.1453 85.42); }
+  .ml-status--finished   { background: oklch(0.7451 0.1577 151.54 / 0.15);  color: oklch(0.7815 0.1344 160.05); }
+  .ml-status--wishlist   { background: oklch(0.5854 0.2041 277.12 / 0.15); color: oklch(0.6801 0.1583 276.93); }
+  .ml-status--rewishlist { background: oklch(0.6056 0.2189 292.72 / 0.15); color: oklch(0.709 0.1592 293.54); }
+  .ml-status--next-up    { background: oklch(0.7148 0.1257 215.22 / 0.15); color: oklch(0.7971 0.1339 211.53); }
+  .ml-status--dropped    { background: oklch(0.5866 0.2061 26.36 / 0.15); color: oklch(0.6047 0.1648 23.41); }
+  .ml-status--shelved    { background: oklch(0.7137 0.0192 261.32 / 0.15); color: oklch(0.7137 0.0192 261.32); }
 
   .ml-rating {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-size: 12px;
-    color: #f5f5f7;
+    color: oklch(0.9707 0.0027 286.35);
     white-space: nowrap;
   }
 
@@ -231,7 +231,7 @@
 
   .ml-rating-sep,
   .ml-rating-max {
-    color: #6e6e78;
+    color: oklch(0.5416 0.0154 285.87);
   }
 
   @media (max-width: 640px) {

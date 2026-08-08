@@ -27,8 +27,8 @@
 
 <style>
 .questions-page {
-  background-color: #000;
-  color: #fff;
+  background-color: oklch(0 0 0);
+  color: oklch(1 0 0);
   min-height: 100vh;
   width: 100vw;
   padding: 4rem 2rem;
@@ -64,13 +64,13 @@
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  color: #0000EE !important;
+  color: oklch(0.429 0.2973 264.05) !important;
   text-decoration: underline !important;
   cursor: pointer !important;
 }
 
 .back-link:visited {
-  color: #551A8B !important;
+  color: oklch(0.3784 0.1716 302.15) !important;
 }
 
 </style>

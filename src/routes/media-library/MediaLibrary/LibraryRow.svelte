@@ -34,7 +34,7 @@
   <span role="cell" class="ml-col-title">
     <span class="ml-row-title-container">
       <span class="ml-row-title">{item.title}</span>
-      <span class="ml-type-icon" style="color: {item.type === 'movie' ? '#60a5fa' : item.type === 'show' ? '#c084fc' : item.type === 'game' ? '#4ade80' : item.type === 'book' ? '#facc15' : '#94a3b8'}">
+      <span class="ml-type-icon" style="color: {item.type === 'movie' ? 'oklch(0.7137 0.1434 254.62)' : item.type === 'show' ? 'oklch(0.7217 0.1767 305.5)' : item.type === 'game' ? 'oklch(0.8003 0.1821 151.71)' : item.type === 'book' ? 'oklch(0.8606 0.1731 91.94)' : 'oklch(0.7107 0.0351 256.79)'}">
         {@html icons[`type-${item.type}`] || icons['type-default']}
       </span>
     </span>
@@ -57,12 +57,12 @@
     align-items: center;
     gap: 16px;
     padding: 12px 8px;
-    border-bottom: 1px solid #1f1f25;
+    border-bottom: 1px solid oklch(0.2419 0.0114 285.52);
     transition: background-color 120ms ease;
   }
 
   .ml-row:hover {
-    background-color: #14141a;
+    background-color: oklch(0.1941 0.012 285.23);
   }
 
   .ml-row-title {
@@ -75,7 +75,7 @@
   .ml-row-sub {
     display: block;
     font-size: 14px;
-    color: #8a8a93;
+    color: oklch(0.6363 0.0133 286.02);
     margin-top: 2px;
   }
 
@@ -100,7 +100,7 @@
 
   .ml-poster {
     position: relative;
-    background: #1d1d22;
+    background: oklch(0.2329 0.0095 285.64);
     overflow: hidden;
   }
 
@@ -126,12 +126,12 @@
     justify-content: center;
     background: repeating-linear-gradient(
       135deg,
-      #1d1d22 0px,
-      #1d1d22 8px,
-      #16161a 8px,
-      #16161a 16px
+      oklch(0.2329 0.0095 285.64) 0px,
+      oklch(0.2329 0.0095 285.64) 8px,
+      oklch(0.202 0.0079 285.67) 8px,
+      oklch(0.202 0.0079 285.67) 16px
     );
-    color: #4d4d56;
+    color: oklch(0.4235 0.0148 285.75);
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -160,18 +160,18 @@
     height: 100%;
   }
 
-  .ml-status--consuming  { background: rgba(255, 200, 60, 0.15);  color: #ffcc55; }
-  .ml-status--finished   { background: rgba(80, 200, 120, 0.15);  color: #5dd29a; }
-  .ml-status--wishlist   { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
-  .ml-status--rewishlist { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
-  .ml-status--next-up    { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
-  .ml-status--dropped    { background: rgba(220, 50, 50, 0.15); color: #d25050; }
-  .ml-status--shelved    { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
+  .ml-status--consuming  { background: oklch(0.8594 0.1588 85.88 / 0.15);  color: oklch(0.869 0.1453 85.42); }
+  .ml-status--finished   { background: oklch(0.7451 0.1577 151.54 / 0.15);  color: oklch(0.7815 0.1344 160.05); }
+  .ml-status--wishlist   { background: oklch(0.5854 0.2041 277.12 / 0.15); color: oklch(0.6801 0.1583 276.93); }
+  .ml-status--rewishlist { background: oklch(0.6056 0.2189 292.72 / 0.15); color: oklch(0.709 0.1592 293.54); }
+  .ml-status--next-up    { background: oklch(0.7148 0.1257 215.22 / 0.15); color: oklch(0.7971 0.1339 211.53); }
+  .ml-status--dropped    { background: oklch(0.5866 0.2061 26.36 / 0.15); color: oklch(0.6047 0.1648 23.41); }
+  .ml-status--shelved    { background: oklch(0.7137 0.0192 261.32 / 0.15); color: oklch(0.7137 0.0192 261.32); }
 
   .ml-rating {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     font-size: 12px;
-    color: #f5f5f7;
+    color: oklch(0.9707 0.0027 286.35);
     white-space: nowrap;
   }
 
@@ -181,7 +181,7 @@
 
   .ml-rating-sep,
   .ml-rating-max {
-    color: #6e6e78;
+    color: oklch(0.5416 0.0154 285.87);
   }
 
   @media (max-width: 640px) {

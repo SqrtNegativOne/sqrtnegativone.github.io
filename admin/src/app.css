@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-bg: #09090b;
-  --color-panel: #18181b;
-  --color-border: #27272a;
-  --color-text: #f8fafc;
-  --color-text-muted: #94a3b8;
+  --color-primary: oklch(0.6231 0.188 259.81);
+  --color-primary-hover: oklch(0.5461 0.2152 262.88);
+  --color-bg: oklch(0.1408 0.0044 285.82);
+  --color-panel: oklch(0.2103 0.0059 285.89);
+  --color-border: oklch(0.2739 0.0055 286.03);
+  --color-text: oklch(0.9842 0.0034 247.86);
+  --color-text-muted: oklch(0.7107 0.0351 256.79);
 }
 
 body {
-  @apply bg-[#09090b] text-[#f8fafc] antialiased;
+  @apply bg-[oklch(0.1408 0.0044 285.82)] text-[oklch(0.9842 0.0034 247.86)] antialiased;
   font-family: 'Inter', system-ui, sans-serif;
 }
 
 .input-field {
-  @apply w-full bg-[#09090b] border border-[#27272a] rounded-lg px-4 py-2 text-[#f8fafc] focus:outline-none focus:ring-2 focus:ring-[#3b82f6] transition-all;
+  @apply w-full bg-[oklch(0.1408 0.0044 285.82)] border border-[oklch(0.2739 0.0055 286.03)] rounded-lg px-4 py-2 text-[oklch(0.9842 0.0034 247.86)] focus:outline-none focus:ring-2 focus:ring-[oklch(0.6231 0.188 259.81)] transition-all;
 }
 
 .btn-primary {
-  @apply bg-[#3b82f6] hover:bg-[#2563eb] text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20;
+  @apply bg-[oklch(0.6231 0.188 259.81)] hover:bg-[oklch(0.5461 0.2152 262.88)] text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20;
 }
 
 .btn-secondary {
-  @apply bg-[#18181b] hover:bg-[#27272a] border border-[#27272a] text-white px-4 py-2 rounded-lg font-medium transition-colors;
+  @apply bg-[oklch(0.2103 0.0059 285.89)] hover:bg-[oklch(0.2739 0.0055 286.03)] border border-[oklch(0.2739 0.0055 286.03)] text-white px-4 py-2 rounded-lg font-medium transition-colors;
 }
 
 .btn-danger {
@@ -32,5 +32,5 @@ body {
 }
 
 .card {
-  @apply bg-[#18181b] border border-[#27272a] rounded-xl overflow-hidden shadow-xl;
+  @apply bg-[oklch(0.2103 0.0059 285.89)] border border-[oklch(0.2739 0.0055 286.03)] rounded-xl overflow-hidden shadow-xl;
 }

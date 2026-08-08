@@ -56,7 +56,7 @@
   place-items: center;
   aspect-ratio: 1 / 1;
   padding: 1.5rem;
-  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--glass-border, oklch(1 0 0 / 0.08));
   background-color: transparent;
   transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
   outline: none;
@@ -67,7 +67,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 60%, rgba(255, 255, 255, 0.04), transparent 70%);
+  background: radial-gradient(circle at 50% 60%, oklch(1 0 0 / 0.04), transparent 70%);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;

@@ -35,16 +35,16 @@
 
 <style>
   .ml-hero-card {
-    background: linear-gradient(180deg, #18181c 0%, #111114 100%);
+    background: linear-gradient(180deg, oklch(0.2108 0.0078 285.71) 0%, oklch(0.179 0.0061 285.77) 100%);
     border-radius: 12px;
     overflow: hidden;
     transition: transform 180ms ease, box-shadow 180ms ease;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.03) inset;
+    box-shadow: 0 1px 0 oklch(1 0 0 / 0.03) inset;
   }
 
   .ml-hero-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 12px 40px oklch(0 0 0 / 0.5);
   }
 
   .ml-hero-meta {
@@ -68,14 +68,14 @@
 
   .ml-hero-sub {
     margin: 6px 0 0;
-    color: #9a9aa3;
+    color: oklch(0.6891 0.013 286.05);
     font-size: 13px;
     line-height: 1.4;
   }
 
   .ml-hero-line {
     margin: 10px 0 0;
-    color: #6e6e78;
+    color: oklch(0.5416 0.0154 285.87);
     font-size: 12px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -83,7 +83,7 @@
 
   .ml-poster {
     position: relative;
-    background: #1d1d22;
+    background: oklch(0.2329 0.0095 285.64);
     overflow: hidden;
   }
 
@@ -107,12 +107,12 @@
     justify-content: center;
     background: repeating-linear-gradient(
       135deg,
-      #1d1d22 0px,
-      #1d1d22 8px,
-      #16161a 8px,
-      #16161a 16px
+      oklch(0.2329 0.0095 285.64) 0px,
+      oklch(0.2329 0.0095 285.64) 8px,
+      oklch(0.202 0.0079 285.67) 8px,
+      oklch(0.202 0.0079 285.67) 16px
     );
-    color: #4d4d56;
+    color: oklch(0.4235 0.0148 285.75);
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;

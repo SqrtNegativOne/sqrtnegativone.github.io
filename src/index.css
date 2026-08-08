@@ -27,16 +27,16 @@
 /* ── Theme (dark only) ───────────────────────── */
 :root {
   --frame-v: 72px;
-  --bg: #0e0e0e;
-  --text: #e8e8e8;
-  --text-secondary: #aaa;
+  --bg: oklch(0.1638 0 0);
+  --text: oklch(0.931 0 0);
+  --text-secondary: oklch(0.738 0 0);
   --text-secondary-rgb: 170, 170, 170;
-  --accent: #e8e8e8;
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --glass-shadow: rgba(0, 0, 0, 0.3);
-  --quote-color: #777;
-  --name-color: #e8e8e8;
+  --accent: oklch(0.931 0 0);
+  --glass-bg: oklch(1 0 0 / 0.08);
+  --glass-border: oklch(1 0 0 / 0.15);
+  --glass-shadow: oklch(0 0 0 / 0.3);
+  --quote-color: oklch(0.5693 0 0);
+  --name-color: oklch(0.931 0 0);
 }
 
 html,

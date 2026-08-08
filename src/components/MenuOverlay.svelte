@@ -263,15 +263,15 @@
   width: 42px;
   height: 42px;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: oklch(1 0 0 / 0.08);
+  border: 1px solid oklch(1 0 0 / 0.14);
   border-radius: 999px;
   transition: background 0.25s, border-color 0.25s;
 }
 
 .nav-burger:hover {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: oklch(1 0 0 / 0.14);
+  border-color: oklch(1 0 0 / 0.25);
 }
 
 .nav-burger span {
@@ -339,7 +339,7 @@
 .menu-scrim {
   position: fixed;
   z-index: 499;
-  background: rgba(0, 0, 0, 0.95);
+  background: oklch(0 0 0 / 0.95);
   animation: overlay-bg-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   will-change: transform, opacity;
 }
@@ -349,10 +349,10 @@
     backdrop-filter: none;
   }
   .menu-scrim {
-    background: rgba(0, 0, 0, 0.95);
+    background: oklch(0 0 0 / 0.95);
   }
   .nav-burger {
-    background: rgba(40, 40, 40, 0.9);
+    background: oklch(0.2768 0 0 / 0.9);
   }
 }
 
@@ -404,10 +404,10 @@
 
 .menu-cell--imp1 .menu-cell__label {
   font-size: clamp(0.85rem, 1.6vw, 1.8rem);
-  color: rgba(255, 255, 255, 0.35);
+  color: oklch(1 0 0 / 0.35);
 }
 .menu-cell--imp1:hover .menu-cell__label {
-  color: rgba(255, 255, 255, 0.85);
+  color: oklch(1 0 0 / 0.85);
 }
 
 /* ══════════════════════════════════════════════
@@ -423,11 +423,11 @@
   justify-content: flex-end;
   padding: clamp(0.5rem, 1.5vw, 1.25rem);
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(14, 14, 14, 0.82);
+    linear-gradient(135deg, oklch(1 0 0 / 0.06) 0%, oklch(1 0 0 / 0) 55%),
+    oklch(0.1638 0 0 / 0.82);
   box-shadow:
-    inset  1px  1px 0 rgba(255, 255, 255, 0.07),
-    inset -1px -1px 0 rgba(0,   0,   0,   0.22);
+    inset  1px  1px 0 oklch(1 0 0 / 0.07),
+    inset -1px -1px 0 oklch(0 0 0 / 0.22);
   border: none;
   overflow: hidden;
   transition: background 0.25s ease;
@@ -436,21 +436,21 @@
 
 .menu-cell:not(.menu-cell--deco):hover {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(28, 28, 28, 0.88);
+    linear-gradient(135deg, oklch(1 0 0 / 0.12) 0%, oklch(1 0 0 / 0) 55%),
+    oklch(0.2264 0 0 / 0.88);
 }
 
 .menu-cell--active {
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(28, 28, 28, 0.85);
+    linear-gradient(135deg, oklch(1 0 0 / 0.1) 0%, oklch(1 0 0 / 0) 55%),
+    oklch(0.2264 0 0 / 0.85);
 }
 
 .menu-cell--deco {
   pointer-events: none;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(14, 14, 14, 0.78);
+    linear-gradient(135deg, oklch(1 0 0 / 0.04) 0%, oklch(1 0 0 / 0) 55%),
+    oklch(0.1638 0 0 / 0.78);
 }
 
 /* Index label — top-left */
@@ -461,21 +461,21 @@
   font-family: "IBM Plex Mono", monospace;
   font-size: clamp(0.45rem, 0.6vw, 0.6rem);
   letter-spacing: 0.15em;
-  color: rgba(255, 255, 255, 0.18);
+  color: oklch(1 0 0 / 0.18);
   text-transform: uppercase;
   transition: color 0.2s;
 }
 
 .menu-cell:hover .menu-cell__num,
 .menu-cell--active .menu-cell__num {
-  color: rgba(255, 255, 255, 0.4);
+  color: oklch(1 0 0 / 0.4);
 }
 
 /* Page label — bottom-left */
 .menu-cell__label {
   font-family: "Instrument Serif", serif;
   font-size: clamp(1.2rem, 3vw, 3rem);
-  color: rgba(255, 255, 255, 0.55);
+  color: oklch(1 0 0 / 0.55);
   letter-spacing: -0.02em;
   font-weight: 400;
   line-height: 1;
@@ -484,11 +484,11 @@
 }
 
 .menu-cell:hover .menu-cell__label {
-  color: rgba(255, 255, 255, 0.98);
+  color: oklch(1 0 0 / 0.98);
 }
 
 .menu-cell--active .menu-cell__label {
-  color: rgba(255, 255, 255, 0.9);
+  color: oklch(1 0 0 / 0.9);
 }
 
 /* ══════════════════════════════════════════════
