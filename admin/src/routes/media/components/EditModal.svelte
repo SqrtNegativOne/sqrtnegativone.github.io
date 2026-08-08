@@ -72,7 +72,8 @@
             <label for="media-status" class="block text-sm font-medium text-[#94a3b8]">Status</label>
             <select id="media-status" name="status" bind:value={currentItem.status} class="input-field">
               <option value="finished">Finished</option>
-              <option value="abandoned">Abandoned</option>
+              <option value="dropped">Dropped</option>
+              <option value="shelved">Shelved</option>
               <option value="wishlist">Wishlist</option>
               <option value="rewishlist">Rewishlist</option>
               <option value="next up">Next Up</option>

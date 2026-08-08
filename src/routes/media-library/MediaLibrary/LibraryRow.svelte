@@ -1,15 +1,27 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
   import RatingChart from "./RatingChart.svelte";
+  import { icons } from "$lib/icons";
   
-  let { item, openDetails } = $props<{ item: any; openDetails: (item: any) => void }>();
+  let { item, openDetails, openFullPoster } = $props<{ item: any; openDetails: (item: any) => void; openFullPoster?: (url: string) => void }>();
 </script>
+
+{#snippet statusBadge(status: string)}
+  <span class={`ml-status ml-status--${status.replace(' ', '-')}`}>
+    <span class="ml-status-icon">
+      {@html icons[`status-${status.replace(' ', '-')}`] || icons['type-default']}
+    </span>
+    {status}
+  </span>
+{/snippet}
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_interactive_supports_focus -->
 <div class="ml-row cursor-pointer" role="row" onclick={() => openDetails(item)}>
   <span role="cell" class="ml-col-poster">
-    <div class={`ml-poster ml-poster--xs`}>
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div class={`ml-poster ml-poster--xs`} onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }}>
       {#if item.poster_image}
         <img src={item.poster_image} alt="" loading="lazy" />
       {:else}
@@ -22,24 +34,16 @@
   <span role="cell" class="ml-col-title">
     <span class="ml-row-title-container">
       <span class="ml-row-title">{item.title}</span>
-      {#if item.type === 'movie'}
-        <svg class="ml-type-icon" style="color: #60a5fa;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
-      {:else if item.type === 'show'}
-        <svg class="ml-type-icon" style="color: #c084fc;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>
-      {:else if item.type === 'game'}
-        <svg class="ml-type-icon" style="color: #4ade80;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"></line><line x1="8" y1="10" x2="8" y2="14"></line><line x1="15" y1="13" x2="15.01" y2="13"></line><line x1="18" y1="11" x2="18.01" y2="11"></line><rect x="2" y="6" width="20" height="12" rx="2"></rect></svg>
-      {:else if item.type === 'book'}
-        <svg class="ml-type-icon" style="color: #facc15;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-      {:else}
-        <svg class="ml-type-icon" style="color: #94a3b8;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-      {/if}
+      <span class="ml-type-icon" style="color: {item.type === 'movie' ? '#60a5fa' : item.type === 'show' ? '#c084fc' : item.type === 'game' ? '#4ade80' : item.type === 'book' ? '#facc15' : '#94a3b8'}">
+        {@html icons[`type-${item.type}`] || icons['type-default']}
+      </span>
     </span>
     {#if item.subtitle}
       <span class="ml-row-sub">{item.subtitle}</span>
     {/if}
   </span>
   <span role="cell" class="ml-col-status">
-    <span class={`ml-status ml-status--${item.status}`}>{item.status}</span>
+    {@render statusBadge(item.status)}
   </span>
   <span role="cell" class="ml-col-rating">
     <RatingChart rating={item.rating} />
@@ -49,7 +53,7 @@
 <style>
   .ml-row {
     display: grid;
-    grid-template-columns: 60px 1fr 110px 90px;
+    grid-template-columns: 76px 1fr 130px 100px;
     align-items: center;
     gap: 16px;
     padding: 12px 8px;
@@ -63,14 +67,14 @@
 
   .ml-row-title {
     display: block;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
     letter-spacing: -0.005em;
   }
 
   .ml-row-sub {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     color: #8a8a93;
     margin-top: 2px;
   }
@@ -86,6 +90,12 @@
     height: 14px;
     flex-shrink: 0;
     opacity: 0.8;
+    display: inline-flex;
+  }
+
+  .ml-type-icon :global(svg) {
+    width: 100%;
+    height: 100%;
   }
 
   .ml-poster {
@@ -103,8 +113,8 @@
 
   .ml-poster--xs {
     aspect-ratio: 2 / 3;
-    width: 44px;
-    border-radius: 4px;
+    width: 60px;
+    border-radius: 6px;
     flex-shrink: 0;
   }
 
@@ -128,21 +138,35 @@
   }
 
   .ml-status {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 10px;
-    letter-spacing: 0.14em;
+    font-size: 12px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 4px 8px;
-    border-radius: 3px;
+    padding: 6px 10px;
+    border-radius: 4px;
+  }
+
+  .ml-status-icon {
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+  }
+
+  .ml-status-icon :global(svg) {
+    width: 100%;
+    height: 100%;
   }
 
   .ml-status--consuming  { background: rgba(255, 200, 60, 0.15);  color: #ffcc55; }
   .ml-status--finished   { background: rgba(80, 200, 120, 0.15);  color: #5dd29a; }
-  .ml-status--wishlist   { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
-  .ml-status--rewishlist { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
-  .ml-status--next\ up   { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
-  .ml-status--abandoned  { background: rgba(220, 50, 50, 0.15); color: #d25050; }
+  .ml-status--wishlist   { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+  .ml-status--rewishlist { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+  .ml-status--next-up    { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+  .ml-status--dropped    { background: rgba(220, 50, 50, 0.15); color: #d25050; }
+  .ml-status--shelved    { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
 
   .ml-rating {
     font-family: "IBM Plex Mono", ui-monospace, monospace;

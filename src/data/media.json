@@ -43,7 +43,7 @@
     "id": "hollow_knight",
     "type": "game",
     "rating": 4,
-    "status": "abandoned",
+    "status": "dropped",
     "title": "Hollow Knight",
     "subtitle": "A world you gave to bug and beast as they had never dreamed of.",
     "description": "Didn't like how the save points were so far away from most bosses. Made the game less fun because you had to go through a boring walk of humiliation to defeat the boss again. As far as I have played, the lore was rather sparse, contrary to what I believed about the game.",
@@ -195,7 +195,7 @@
     "rating": 7,
     "status": "wishlist",
     "title": "OneShot",
-    "subtitle": "Deltarune if Kris wasn't a \"—cking traitor\"?",
+    "subtitle": "Deltarune if it was good?",
     "description": "",
     "poster_image": "/media-posters/game_oneshot.jpg"
   },
@@ -284,7 +284,7 @@
     "type": "game",
     "rating": 7,
     "status": "finished",
-    "title": "Disco Elysium - The Final Cut",
+    "title": "Disco Elysium — The Final Cut",
     "subtitle": "A tragicomedy of hope and redemption.",
     "description": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
     "poster_image": "/media-posters/game_disco_elysium_-_the_final_cut.jpg"
@@ -353,7 +353,7 @@
     "id": "the_fifth_science",
     "type": "book",
     "rating": 5.5,
-    "status": "abandoned",
+    "status": "shelved",
     "title": "The Fifth Science",
     "subtitle": "Hell isn't a fire pit but a museum of regrets.",
     "description": "Got Foundation and Dune vibes from this, might just be me. Might come around to finishing that last 30% of it.",
@@ -388,15 +388,5 @@
     "subtitle": "Fun",
     "description": "Ending didn't hit hard though.",
     "poster_image": "/media-posters/game_god_of_war.jpg"
-  },
-  {
-    "id": "test",
-    "type": "movie",
-    "rating": 5,
-    "status": "finished",
-    "title": "Test",
-    "subtitle": "",
-    "description": "",
-    "poster_image": "/media-posters/test.jpg"
   }
 ]

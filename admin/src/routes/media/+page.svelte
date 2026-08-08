@@ -143,7 +143,8 @@
       <select bind:value={statusFilter} class="input-field">
         <option value="all">All Statuses</option>
         <option value="finished">Finished</option>
-        <option value="abandoned">Abandoned</option>
+        <option value="dropped">Dropped</option>
+        <option value="shelved">Shelved</option>
         <option value="wishlist">Wishlist</option>
         <option value="rewishlist">Rewishlist</option>
         <option value="next up">Next Up</option>

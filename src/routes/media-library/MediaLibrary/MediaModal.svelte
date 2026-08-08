@@ -1,9 +1,19 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
   import RatingChart from "./RatingChart.svelte";
+  import { icons } from "$lib/icons";
   
-  let { item, closeDetails } = $props<{ item: any; closeDetails: () => void }>();
+  let { item, closeDetails, openFullPoster } = $props<{ item: any; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
 </script>
+
+{#snippet statusBadge(status: string)}
+  <span class={`ml-status ml-status--${status.replace(' ', '-')} ml-2`}>
+    <span class="ml-status-icon">
+      {@html icons[`status-${status.replace(' ', '-')}`] || icons['type-default']}
+    </span>
+    {status}
+  </span>
+{/snippet}
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -13,7 +23,9 @@
       <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
     <div class="ml-modal-grid">
-      <div class="ml-modal-poster">
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
+      <div class="ml-modal-poster" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }} style={openFullPoster && item.poster_image ? "cursor: pointer;" : ""}>
         {#if item.poster_image}
           <img src={item.poster_image} alt="" />
         {:else}
@@ -27,7 +39,7 @@
         {/if}
         <div class="ml-modal-meta">
           <span class={`ml-badge ml-badge--${item.type} static inline-block !relative !top-0 !left-0`}>{TYPE_LABEL[item.type] || item.type}</span>
-          <span class={`ml-status ml-status--${item.status} ml-2`}>{item.status}</span>
+          {@render statusBadge(item.status)}
           <RatingChart rating={item.rating} />
         </div>
         {#if item.description}
@@ -86,7 +98,7 @@
 
   .ml-modal-grid {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 220px 1fr;
     gap: 32px;
   }
 
@@ -130,7 +142,7 @@
 
   .ml-modal-title {
     margin: 0;
-    font-size: 32px;
+    font-size: 40px;
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.1;
@@ -140,7 +152,7 @@
   .ml-modal-subtitle {
     margin: 8px 0 0;
     color: #9a9aa3;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .ml-modal-meta {
@@ -176,21 +188,35 @@
   .ml-badge--book  { background: rgba(184, 134, 11, 0.85); }
 
   .ml-status {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 10px;
-    letter-spacing: 0.14em;
+    font-size: 12px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 4px 8px;
-    border-radius: 3px;
+    padding: 6px 10px;
+    border-radius: 4px;
+  }
+
+  .ml-status-icon {
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+  }
+
+  .ml-status-icon :global(svg) {
+    width: 100%;
+    height: 100%;
   }
 
   .ml-status--consuming  { background: rgba(255, 200, 60, 0.15);  color: #ffcc55; }
   .ml-status--finished   { background: rgba(80, 200, 120, 0.15);  color: #5dd29a; }
-  .ml-status--wishlist   { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
-  .ml-status--rewishlist { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
-  .ml-status--next\ up   { background: rgba(120, 130, 150, 0.15); color: #9aa2b2; }
-  .ml-status--abandoned  { background: rgba(220, 50, 50, 0.15); color: #d25050; }
+  .ml-status--wishlist   { background: rgba(99, 102, 241, 0.15); color: #818cf8; }
+  .ml-status--rewishlist { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+  .ml-status--next-up    { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+  .ml-status--dropped    { background: rgba(220, 50, 50, 0.15); color: #d25050; }
+  .ml-status--shelved    { background: rgba(156, 163, 175, 0.15); color: #9ca3af; }
 
   .ml-rating {
     font-family: "IBM Plex Mono", ui-monospace, monospace;

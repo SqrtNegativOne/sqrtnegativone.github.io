@@ -2,13 +2,15 @@
   import { TYPE_LABEL } from "./constants";
   import RatingChart from "./RatingChart.svelte";
   
-  let { item, openDetails } = $props<{ item: any; openDetails: (item: any) => void }>();
+  let { item, openDetails, openFullPoster } = $props<{ item: any; openDetails: (item: any) => void; openFullPoster?: (url: string) => void }>();
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <article class="ml-hero-card" onclick={() => openDetails(item)}>
-  <div class="ml-poster ml-poster--lg">
+  <!-- svelte-ignore a11y_click_events_have_key_events -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div class="ml-poster ml-poster--lg" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }}>
     {#if item.poster_image}
       <img src={item.poster_image} alt="" loading="lazy" />
     {:else}
@@ -114,22 +116,6 @@
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-  }
-
-  .ml-rating {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px;
-    color: #f5f5f7;
-    white-space: nowrap;
-  }
-
-  .ml-rating-num {
-    font-weight: 600;
-  }
-
-  .ml-rating-sep,
-  .ml-rating-max {
-    color: #6e6e78;
   }
 
   @media (max-width: 640px) {

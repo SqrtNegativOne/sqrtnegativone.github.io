@@ -33,6 +33,7 @@
   })());
 
   let activeItem: any = $state(null);
+  let fullPosterUrl: string | null = $state(null);
 
   function openDetails(item: any) {
     activeItem = item;
@@ -41,7 +42,23 @@
 
   function closeDetails() {
     activeItem = null;
-    document.body.style.overflow = '';
+    if (!fullPosterUrl) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  function openFullPoster(url: string | undefined | null) {
+    if (url) {
+      fullPosterUrl = url;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeFullPoster() {
+    fullPosterUrl = null;
+    if (!activeItem) {
+      document.body.style.overflow = '';
+    }
   }
 </script>
 
@@ -73,7 +90,7 @@
       <h2 class="ml-section-title">Currently</h2>
       <div class="ml-hero-row">
         {#each filteredBuckets.consuming as item (item.type + '-' + item.id)}
-          <HeroCard {item} {openDetails} />
+          <HeroCard {item} {openDetails} {openFullPoster} />
         {/each}
       </div>
     </section>
@@ -90,7 +107,7 @@
           <span role="columnheader" class="ml-col-rating">Rating</span>
         </div>
         {#each filteredBuckets.library as item (item.type + '-' + item.id)}
-          <LibraryRow {item} {openDetails} />
+          <LibraryRow {item} {openDetails} {openFullPoster} />
         {/each}
       </div>
     </section>
@@ -101,7 +118,20 @@
   {/if}
 
   {#if activeItem}
-    <MediaModal item={activeItem} {closeDetails} />
+    <MediaModal item={activeItem} {closeDetails} {openFullPoster} />
+  {/if}
+
+  {#if fullPosterUrl}
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
+    <div class="ml-full-poster-backdrop" onclick={closeFullPoster}>
+      <!-- svelte-ignore a11y_click_events_have_key_events -->
+      <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+      <img src={fullPosterUrl} alt="Full view" class="ml-full-poster-img" onclick={(e) => e.stopPropagation()} />
+      <button class="ml-modal-close" onclick={closeFullPoster} aria-label="Close poster">
+        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
   {/if}
 </div>
 
@@ -109,6 +139,25 @@
 /* Media Library — standalone Netflix-ish layout, intentionally not matching
    the rest of the site. Lives in a fixed full-viewport panel so the global
    border frame / portrait / nav of the SPA shell don't interfere. */
+
+.ml-full-poster-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.ml-full-poster-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+}
 
 .ml-root {
   position: fixed;
