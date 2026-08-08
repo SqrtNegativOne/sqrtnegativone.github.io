@@ -135,7 +135,7 @@
     "rating": 6,
     "status": "finished",
     "title": "The Last of Us Part II",
-    "subtitle": "",
+    "subtitle": "A tale of three graves",
     "description": "",
     "poster_image": "/media-posters/game_the_last_of_us_part_ii_remastered.jpg"
   },
@@ -185,7 +185,7 @@
     "rating": 6,
     "status": "finished",
     "title": "Half-Life 2",
-    "subtitle": "",
+    "subtitle": "Very fun. Should be mandatory for learning game design.",
     "description": "",
     "poster_image": "/media-posters/game_half-life_2.jpg"
   },
@@ -245,7 +245,7 @@
     "rating": 5,
     "status": "finished",
     "title": "Danganronpa: Trigger Happy Havoc",
-    "subtitle": "Ace Attorney, but if it had Pedophilia instead.",
+    "subtitle": "Ace Attorney, with added pedophilia",
     "description": "7/7 music, 7/7 premise, 4.5/7 cases, and 1.5/7 writing.",
     "poster_image": "/media-posters/game_danganronpa_trigger_happy_havoc.jpg"
   },
@@ -355,7 +355,7 @@
     "rating": 5.5,
     "status": "abandoned",
     "title": "The Fifth Science",
-    "subtitle": "",
+    "subtitle": "Hell isn't a fire pit but a museum of regrets.",
     "description": "Got Foundation and Dune vibes from this, might just be me. Might come around to finishing that last 30% of it.",
     "poster_image": "/media-posters/book_the_fifth_science.jpg"
   },
@@ -378,5 +378,25 @@
     "subtitle": "",
     "description": "I don't expect any combat from this, so should be worth checking out.",
     "poster_image": "/media-posters/game_omori_dreamer.png"
+  },
+  {
+    "id": "god_of_war",
+    "type": "game",
+    "rating": 5,
+    "status": "finished",
+    "title": "God of War",
+    "subtitle": "Fun",
+    "description": "Ending didn't hit hard though.",
+    "poster_image": "/media-posters/game_god_of_war.jpg"
+  },
+  {
+    "id": "test",
+    "type": "movie",
+    "rating": 5,
+    "status": "finished",
+    "title": "Test",
+    "subtitle": "",
+    "description": "",
+    "poster_image": "/media-posters/test.jpg"
   }
 ]

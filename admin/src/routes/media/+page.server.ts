@@ -75,18 +75,7 @@ export const actions: Actions = {
           
           let filename = `${type}_${safeId}.${ext}`;
           let filepath = path.join(postersDir, filename);
-          let counter = 2;
-          
-          while (true) {
-            try {
-              await fs.access(filepath);
-              filename = `${type}_${safeId}_${counter}.${ext}`;
-              filepath = path.join(postersDir, filename);
-              counter++;
-            } catch {
-              break;
-            }
-          }
+
           
           await fs.writeFile(filepath, buffer);
           poster_image = `/media-posters/${filename}`;
@@ -109,18 +98,6 @@ export const actions: Actions = {
           
           let filename = `${type}_${safeId}.${ext}`;
           let filepath = path.join(postersDir, filename);
-          let counter = 2;
-          
-          while (true) {
-            try {
-              await fs.access(filepath);
-              filename = `${type}_${safeId}_${counter}.${ext}`;
-              filepath = path.join(postersDir, filename);
-              counter++;
-            } catch {
-              break;
-            }
-          }
           
           await fs.writeFile(filepath, buffer);
           poster_image = `/media-posters/${filename}`;

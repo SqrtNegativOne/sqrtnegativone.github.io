@@ -51,24 +51,38 @@ async function searchSteamGame(query: string) {
   const searchData = await searchRes.json() as any;
   const matches = searchData.items?.slice(0, 5) || [];
   if (matches.length === 0) return null;
-  const ids = matches.map((m: any) => m.id).join(',');
-
-  const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${ids}`;
-  const detailsRes = await fetch(detailsUrl);
-  if (!detailsRes.ok) return null;
-  const detailsData = await detailsRes.json() as any;
 
   const results = [];
-  for (const m of matches) {
-    const d = detailsData[m.id]?.data;
-    if (!d) continue;
-    results.push({
-      title: d.name,
-      subtitle: (d.developers || []).slice(0, 1).join(", "),
-      description: d.short_description || "",
-      coverUrl: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${m.id}/library_600x900_2x.jpg`,
-    });
+  
+  // Fetch details for each match individually in parallel
+  const detailPromises = matches.map(async (m: any) => {
+    const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${m.id}`;
+    try {
+      const detailsRes = await fetch(detailsUrl);
+      if (!detailsRes.ok) return null;
+      const detailsData = await detailsRes.json() as any;
+      if (!detailsData || !detailsData[m.id]) return null;
+      
+      const d = detailsData[m.id].data;
+      if (!d) return null;
+
+      return {
+        title: d.name,
+        subtitle: (d.developers || []).slice(0, 1).join(", "),
+        description: d.short_description || "",
+        coverUrl: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${m.id}/library_600x900_2x.jpg`,
+      };
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const detailedResults = await Promise.all(detailPromises);
+  
+  for (const res of detailedResults) {
+    if (res) results.push(res);
   }
+  
   return results.length > 0 ? results : null;
 }
 
