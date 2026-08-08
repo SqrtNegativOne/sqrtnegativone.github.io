@@ -30,7 +30,7 @@
   <div class="flex justify-between items-center">
     <div>
       <h1 class="text-3xl font-bold text-white tracking-tight">Socials</h1>
-      <p class="text-[oklch(0.7107 0.0351 256.79)] mt-2">Manage your social media links and icons.</p>
+      <p class="text-[oklch(0.7107_0.0351_256.79)] mt-2">Manage your social media links and icons.</p>
     </div>
     <button onclick={openNew} class="btn-primary flex items-center">
       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
@@ -49,25 +49,25 @@
       <div class="card p-4 flex flex-col group relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div class="flex items-center space-x-4 mb-4 relative">
-          <div class="w-12 h-12 bg-[oklch(0.2077 0.0398 265.75)] rounded-lg border border-[oklch(0.3717 0.0392 257.29)] flex items-center justify-center text-white p-2">
+          <div class="w-12 h-12 bg-[oklch(0.2077_0.0398_265.75)] rounded-lg border border-[oklch(0.3717_0.0392_257.29)] flex items-center justify-center text-white p-2">
             {#if item.icon}
               {@html item.icon}
             {:else}
-              <span class="text-xl font-bold text-[oklch(0.7107 0.0351 256.79)]">{item.name.charAt(0)}</span>
+              <span class="text-xl font-bold text-[oklch(0.7107_0.0351_256.79)]">{item.name.charAt(0)}</span>
             {/if}
           </div>
           <div>
             <h3 class="font-medium text-white">{item.name}</h3>
-            <p class="text-xs text-[oklch(0.7107 0.0351 256.79)] truncate w-48">{item.url || 'No URL'}</p>
+            <p class="text-xs text-[oklch(0.7107_0.0351_256.79)] truncate w-48">{item.url || 'No URL'}</p>
           </div>
         </div>
-        <div class="mt-auto flex justify-between items-center border-t border-[oklch(0.3717 0.0392 257.29)] pt-3 relative">
+        <div class="mt-auto flex justify-between items-center border-t border-[oklch(0.3717_0.0392_257.29)] pt-3 relative">
           <form method="POST" action="?/move" use:enhance class="flex items-center space-x-1">
             <input type="hidden" name="id" value={item.id} />
-            <button type="submit" name="direction" value="up" class="text-[oklch(0.7107 0.0351 256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717 0.0392 257.29)]/50 transition-colors" title="Move Up">
+            <button type="submit" name="direction" value="up" class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Up">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
             </button>
-            <button type="submit" name="direction" value="down" class="text-[oklch(0.7107 0.0351 256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717 0.0392 257.29)]/50 transition-colors" title="Move Down">
+            <button type="submit" name="direction" value="down" class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Down">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
           </form>
@@ -83,16 +83,16 @@
     {/each}
   </div>
   {#if data.socials.length === 0}
-    <div class="card p-8 text-center text-[oklch(0.7107 0.0351 256.79)]">No socials found. Add some!</div>
+    <div class="card p-8 text-center text-[oklch(0.7107_0.0351_256.79)]">No socials found. Add some!</div>
   {/if}
 </div>
 
 {#if isModalOpen}
   <div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-    <div class="bg-[oklch(0.2795 0.0368 260.03)] border border-[oklch(0.3717 0.0392 257.29)] rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden">
-      <div class="p-6 border-b border-[oklch(0.3717 0.0392 257.29)] flex justify-between items-center">
+    <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="p-6 border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center">
         <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Social' : 'Add New Social'}</h2>
-        <button onclick={() => isModalOpen = false} class="text-[oklch(0.7107 0.0351 256.79)] hover:text-white" title="Close Modal">
+        <button onclick={() => isModalOpen = false} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white" title="Close Modal">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
@@ -108,26 +108,26 @@
         <input type="hidden" name="isNew" value={(!isEditing).toString()} />
         
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-[oklch(0.7107 0.0351 256.79)]" for="social-id">ID (Unique)</label>
+          <label class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]" for="social-id">ID (Unique)</label>
           <input type="text" id="social-id" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
         </div>
         
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-[oklch(0.7107 0.0351 256.79)]" for="social-name">Name</label>
+          <label class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]" for="social-name">Name</label>
           <input type="text" id="social-name" name="name" bind:value={currentItem.name} class="input-field" required />
         </div>
         
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-[oklch(0.7107 0.0351 256.79)]" for="social-url">URL</label>
+          <label class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]" for="social-url">URL</label>
           <input type="url" id="social-url" name="url" bind:value={currentItem.url} class="input-field" required />
         </div>
         
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-[oklch(0.7107 0.0351 256.79)]" for="social-icon">Icon (Raw SVG)</label>
+          <label class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]" for="social-icon">Icon (Raw SVG)</label>
           <textarea id="social-icon" name="icon" bind:value={currentItem.icon} rows="4" class="input-field resize-none font-mono text-xs"></textarea>
         </div>
         
-        <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717 0.0392 257.29)]">
+        <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">
           <button type="button" onclick={() => isModalOpen = false} class="btn-secondary">Cancel</button>
           <button type="submit" class="btn-primary">Save Social</button>
         </div>

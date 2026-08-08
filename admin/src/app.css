@@ -11,20 +11,20 @@
 }
 
 body {
-  @apply bg-[oklch(0.1408 0.0044 285.82)] text-[oklch(0.9842 0.0034 247.86)] antialiased;
+  @apply bg-[oklch(0.1408_0.0044_285.82)] text-[oklch(0.9842_0.0034_247.86)] antialiased;
   font-family: 'Inter', system-ui, sans-serif;
 }
 
 .input-field {
-  @apply w-full bg-[oklch(0.1408 0.0044 285.82)] border border-[oklch(0.2739 0.0055 286.03)] rounded-lg px-4 py-2 text-[oklch(0.9842 0.0034 247.86)] focus:outline-none focus:ring-2 focus:ring-[oklch(0.6231 0.188 259.81)] transition-all;
+  @apply w-full bg-[oklch(0.1408_0.0044_285.82)] border border-[oklch(0.2739_0.0055_286.03)] rounded-lg px-4 py-2 text-[oklch(0.9842_0.0034_247.86)] focus:outline-none focus:ring-2 focus:ring-[oklch(0.6231_0.188_259.81)] transition-all;
 }
 
 .btn-primary {
-  @apply bg-[oklch(0.6231 0.188 259.81)] hover:bg-[oklch(0.5461 0.2152 262.88)] text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20;
+  @apply bg-[oklch(0.6231_0.188_259.81)] hover:bg-[oklch(0.5461_0.2152_262.88)] text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20;
 }
 
 .btn-secondary {
-  @apply bg-[oklch(0.2103 0.0059 285.89)] hover:bg-[oklch(0.2739 0.0055 286.03)] border border-[oklch(0.2739 0.0055 286.03)] text-white px-4 py-2 rounded-lg font-medium transition-colors;
+  @apply bg-[oklch(0.2103_0.0059_285.89)] hover:bg-[oklch(0.2739_0.0055_286.03)] border border-[oklch(0.2739_0.0055_286.03)] text-white px-4 py-2 rounded-lg font-medium transition-colors;
 }
 
 .btn-danger {
@@ -32,5 +32,5 @@ body {
 }
 
 .card {
-  @apply bg-[oklch(0.2103 0.0059 285.89)] border border-[oklch(0.2739 0.0055 286.03)] rounded-xl overflow-hidden shadow-xl;
+  @apply bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded-xl overflow-hidden shadow-xl;
 }

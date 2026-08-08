@@ -128,7 +128,7 @@
     </button>
   </div>
 
-  <div class="bg-[oklch(0.2795 0.0368 260.03)] border border-[oklch(0.3717 0.0392 257.29)] rounded-xl shadow-lg mb-8 p-4 flex flex-col md:flex-row gap-4">
+  <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-lg mb-8 p-4 flex flex-col md:flex-row gap-4">
     <div class="flex-1">
       <input type="text" bind:value={searchQuery} placeholder="Search media by title or ID..." class="input-field w-full" />
     </div>

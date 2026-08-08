@@ -9,7 +9,7 @@
 <div class="space-y-6">
   <div>
     <h1 class="text-3xl font-bold text-white tracking-tight">Dashboard Overview</h1>
-    <p class="text-[oklch(0.7107 0.0351 256.79)] mt-2">Manage your static site content from one place.</p>
+    <p class="text-[oklch(0.7107_0.0351_256.79)] mt-2">Manage your static site content from one place.</p>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -20,7 +20,7 @@
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">{@html item.path}</svg>
         </div>
         <h2 class="text-xl font-semibold text-white mb-2">{item.label}</h2>
-        <p class="text-[oklch(0.7107 0.0351 256.79)] text-sm">{item.description}</p>
+        <p class="text-[oklch(0.7107_0.0351_256.79)] text-sm">{item.description}</p>
       </a>
     {/each}
   </div>

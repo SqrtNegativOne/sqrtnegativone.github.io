@@ -93,7 +93,7 @@
 <div class="card overflow-x-auto">
   <table class="w-full text-left border-collapse">
     <thead>
-      <tr class="bg-[oklch(0.2077 0.0398 265.75)] border-b border-[oklch(0.3717 0.0392 257.29)] text-[oklch(0.7107 0.0351 256.79)] text-sm uppercase tracking-wider">
+      <tr class="bg-[oklch(0.2077_0.0398_265.75)] border-b border-[oklch(0.3717_0.0392_257.29)] text-[oklch(0.7107_0.0351_256.79)] text-sm uppercase tracking-wider">
         <th class="p-4 font-medium w-16">Poster</th>
         <th class="p-4 font-medium">Title</th>
         <th class="p-4 font-medium w-24">Type</th>
@@ -101,16 +101,16 @@
         <th class="p-4 font-medium w-24">Rating</th>
       </tr>
     </thead>
-    <tbody class="divide-y divide-[oklch(0.3717 0.0392 257.29)]">
+    <tbody class="divide-y divide-[oklch(0.3717_0.0392_257.29)]">
       {#each filteredMedia as item}
         <tr 
-          class="hover:bg-[oklch(0.2795 0.0368 260.03)]/70 cursor-pointer transition-colors group"
+          class="hover:bg-[oklch(0.2795_0.0368_260.03)]/70 cursor-pointer transition-colors group"
           onclick={() => openEdit(item)}
           onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && openEdit(item)}
           tabindex="0"
         >
           <td class="p-4">
-            <div class="w-12 h-16 bg-[oklch(0.2795 0.0368 260.03)] rounded overflow-hidden flex items-center justify-center shrink-0 border border-[oklch(0.3717 0.0392 257.29)]">
+            <div class="w-12 h-16 bg-[oklch(0.2795_0.0368_260.03)] rounded overflow-hidden flex items-center justify-center shrink-0 border border-[oklch(0.3717_0.0392_257.29)]">
               <img 
                 src={item.poster_image || `/media-posters/${item.type}_${item.id}.jpg`} 
                 alt="Poster"
@@ -122,7 +122,7 @@
           <td class="p-4">
             <div class="font-medium text-white">{item.title || item.id}</div>
             {#if item.subtitle}
-              <div class="text-sm text-[oklch(0.7107 0.0351 256.79)]">{item.subtitle}</div>
+              <div class="text-sm text-[oklch(0.7107_0.0351_256.79)]">{item.subtitle}</div>
             {/if}
           </td>
           <td class="p-4">
@@ -138,7 +138,7 @@
       {/each}
       {#if filteredMedia.length === 0}
         <tr>
-          <td colspan="5" class="p-8 text-center text-[oklch(0.7107 0.0351 256.79)]">No media found matching your filters.</td>
+          <td colspan="5" class="p-8 text-center text-[oklch(0.7107_0.0351_256.79)]">No media found matching your filters.</td>
         </tr>
       {/if}
     </tbody>

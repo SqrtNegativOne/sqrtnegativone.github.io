@@ -32,7 +32,7 @@
   <div class="flex justify-between items-center">
     <div>
       <h1 class="text-3xl font-bold text-white tracking-tight">Quotes</h1>
-      <p class="text-[oklch(0.7107 0.0351 256.79)] mt-2">Manage your collection of quotes.</p>
+      <p class="text-[oklch(0.7107_0.0351_256.79)] mt-2">Manage your collection of quotes.</p>
     </div>
     <button onclick={openNew} class="btn-primary flex items-center">
       <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
@@ -64,16 +64,16 @@
   </div>
   
   {#if data.quotes.length === 0}
-    <div class="card p-8 text-center text-[oklch(0.7107 0.0351 256.79)]">No quotes found. Add some!</div>
+    <div class="card p-8 text-center text-[oklch(0.7107_0.0351_256.79)]">No quotes found. Add some!</div>
   {/if}
 </div>
 
 {#if isModalOpen}
   <div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-    <div class="bg-[oklch(0.2795 0.0368 260.03)] border border-[oklch(0.3717 0.0392 257.29)] rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
-      <div class="p-6 border-b border-[oklch(0.3717 0.0392 257.29)] flex justify-between items-center">
+    <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden">
+      <div class="p-6 border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center">
         <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Quote' : 'Add New Quote'}</h2>
-        <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[oklch(0.7107 0.0351 256.79)] hover:text-white">
+        <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
@@ -93,12 +93,12 @@
         
         <div class="space-y-4">
           <div class="space-y-2">
-            <label for="quote-content" class="block text-sm font-medium text-[oklch(0.7107 0.0351 256.79)]">Quote Content</label>
+            <label for="quote-content" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Quote Content</label>
             <textarea id="quote-content" name="quote" bind:value={currentQuote} rows="5" class="input-field resize-none w-full" required placeholder="Enter quote here..."></textarea>
           </div>
         </div>
         
-        <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717 0.0392 257.29)]">
+        <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">
           <button type="button" onclick={() => isModalOpen = false} class="btn-secondary">Cancel</button>
           <button type="submit" class="btn-primary">Save Quote</button>
         </div>
