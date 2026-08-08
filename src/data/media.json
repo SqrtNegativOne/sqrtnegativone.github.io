@@ -368,5 +368,15 @@
     "subtitle": "",
     "description": "",
     "poster_image": "/media-posters/book_worm_web_serial.jpg"
+  },
+  {
+    "id": "omori_dreamer",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "OMORI: The Dreamer",
+    "subtitle": "",
+    "description": "I don't expect any combat from this, so should be worth checking out.",
+    "poster_image": "/media-posters/game_omori_dreamer.png"
   }
 ]

@@ -19,13 +19,13 @@ async function searchBook(query: string) {
   const res = await fetch(url, { headers: { "User-Agent": "MyMediaApp/1.0" } });
   if (!res.ok) return null;
   const data = await res.json() as any;
-  const book = data.docs?.[0];
-  if (!book) return null;
-  return {
+  const books = data.docs?.slice(0, 5) || [];
+  if (books.length === 0) return null;
+  return books.map((book: any) => ({
     title: book.title,
     subtitle: (book.author_name || []).join(", "),
     coverUrl: book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg` : null,
-  };
+  }));
 }
 
 async function searchTmdb(kind: "movie" | "tv", query: string) {
@@ -34,14 +34,14 @@ async function searchTmdb(kind: "movie" | "tv", query: string) {
   const res = await fetch(url);
   if (!res.ok) return null;
   const data = await res.json() as any;
-  const d = data.results?.[0];
-  if (!d) return null;
-  return {
+  const results = data.results?.slice(0, 5) || [];
+  if (results.length === 0) return null;
+  return results.map((d: any) => ({
     title: d.title || d.name,
-    subtitle: "",
+    subtitle: d.release_date ? d.release_date.substring(0, 4) : d.first_air_date ? d.first_air_date.substring(0, 4) : "",
     description: d.overview || "",
     coverUrl: d.poster_path ? `https://image.tmdb.org/t/p/w500${d.poster_path}` : null,
-  };
+  }));
 }
 
 async function searchSteamGame(query: string) {
@@ -49,23 +49,27 @@ async function searchSteamGame(query: string) {
   const searchRes = await fetch(searchUrl);
   if (!searchRes.ok) return null;
   const searchData = await searchRes.json() as any;
-  const firstMatch = searchData.items?.[0];
-  if (!firstMatch) return null;
-  const id = firstMatch.id;
+  const matches = searchData.items?.slice(0, 5) || [];
+  if (matches.length === 0) return null;
+  const ids = matches.map((m: any) => m.id).join(',');
 
-  const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${id}`;
+  const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${ids}`;
   const detailsRes = await fetch(detailsUrl);
   if (!detailsRes.ok) return null;
   const detailsData = await detailsRes.json() as any;
-  const d = detailsData[id]?.data;
-  if (!d) return null;
 
-  return {
-    title: d.name,
-    subtitle: (d.developers || []).slice(0, 1).join(", "),
-    description: d.short_description || "",
-    coverUrl: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${id}/library_600x900_2x.jpg`,
-  };
+  const results = [];
+  for (const m of matches) {
+    const d = detailsData[m.id]?.data;
+    if (!d) continue;
+    results.push({
+      title: d.name,
+      subtitle: (d.developers || []).slice(0, 1).join(", "),
+      description: d.short_description || "",
+      coverUrl: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${m.id}/library_600x900_2x.jpg`,
+    });
+  }
+  return results.length > 0 ? results : null;
 }
 
 export const GET: RequestHandler = async ({ url }) => {
