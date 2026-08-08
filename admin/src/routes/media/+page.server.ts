@@ -11,8 +11,9 @@ interface MediaItem {
   rating: number;
   status: string;
   title: string;
-  subtitle: string;
+  tagline: string;
   description: string;
+  notes?: string;
   poster_image: string;
   private_notes?: string;
 }
@@ -49,8 +50,9 @@ export const actions: Actions = {
     const rating = Number(data.get('rating'));
     const status = data.get('status') as string;
     const title = data.get('title') as string;
-    const subtitle = (data.get('subtitle') as string) || '';
+    const tagline = (data.get('tagline') as string) || '';
     const description = (data.get('description') as string) || '';
+    const notes = (data.get('notes') as string) || '';
     const private_notes = (data.get('private_notes') as string) || '';
     let poster_image = (data.get('poster_image') as string) || '';
     const isNew = data.get('isNew') === 'true';
@@ -110,7 +112,7 @@ export const actions: Actions = {
 
     const items = await readData<MediaItem>('media.json');
     
-    const newItem: MediaItem = { id, type, rating, status, title, subtitle, description, poster_image };
+    const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, poster_image };
     
     if (isNew) {
       if (items.some(i => i.id === id)) {

@@ -5,9 +5,9 @@
     "rating": 7,
     "status": "finished",
     "title": "Deltarune",
-    "subtitle": "There's something more important than reaching the end.",
     "description": "",
-    "poster_image": "/media-posters/game_deltarune.png"
+    "poster_image": "/media-posters/game_deltarune.png",
+    "tagline": "There's something more important than reaching the end."
   },
   {
     "id": "undertale",
@@ -15,9 +15,10 @@
     "rating": 7,
     "status": "finished",
     "title": "UNDERTALE",
-    "subtitle": "The friendly RPG where no one has to die.",
-    "description": "“Have you ever played a game so great that you were sad and felt empty after beating it since there was nothing out there like it?”",
-    "poster_image": "/media-posters/game_undertale.png"
+    "description": "",
+    "poster_image": "/media-posters/game_undertale.png",
+    "notes": "“Have you ever played a game so great that you were sad and felt empty after beating it since there was nothing out there like it?”",
+    "tagline": "The friendly RPG where no one has to die."
   },
   {
     "id": "portal_2",
@@ -25,9 +26,10 @@
     "rating": 6,
     "status": "finished",
     "title": "Portal 2",
-    "subtitle": "You dangerous. Mute. Lunatic.",
-    "description": "Video game development gone right. Humour, action, puzzle and lore; this game has everything. It feels unfair to give this game anything less than a perfect rating... but it just didn't affect me in an emotional, life-changing way. Of course, it wasn't trying to...",
-    "poster_image": "/media-posters/game_portal_2.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_portal_2.jpg",
+    "notes": "Video game development gone right. Humour, action, puzzle and lore; this game has everything. It feels unfair to give this game anything less than a perfect rating... but it just didn't affect me in an emotional, life-changing way. Of course, it wasn't trying to...",
+    "tagline": "You dangerous. Mute. Lunatic."
   },
   {
     "id": "atomic_habits",
@@ -35,9 +37,10 @@
     "rating": 6,
     "status": "finished",
     "title": "Atomic Habits",
-    "subtitle": "",
-    "description": "Popular, yes, but hated unnecessarily.",
-    "poster_image": "/media-posters/book_atomic_habits.jpg"
+    "description": "",
+    "poster_image": "/media-posters/book_atomic_habits.jpg",
+    "notes": "Popular, yes, but hated unnecessarily.",
+    "tagline": ""
   },
   {
     "id": "hollow_knight",
@@ -45,9 +48,10 @@
     "rating": 4,
     "status": "dropped",
     "title": "Hollow Knight",
-    "subtitle": "A world you gave to bug and beast as they had never dreamed of.",
-    "description": "Didn't like how the save points were so far away from most bosses. Made the game less fun because you had to go through a boring walk of humiliation to defeat the boss again. As far as I have played, the lore was rather sparse, contrary to what I believed about the game.",
-    "poster_image": "/media-posters/game_hollow_knight.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_hollow_knight.jpg",
+    "notes": "Didn't like how the save points were so far away from most bosses. Made the game less fun because you had to go through a boring walk of humiliation to defeat the boss again. As far as I have played, the lore was rather sparse, contrary to what I believed about the game.",
+    "tagline": "A world you gave to bug and beast as they had never dreamed of."
   },
   {
     "id": "project_hail_mary",
@@ -55,9 +59,10 @@
     "rating": 5.5,
     "status": "finished",
     "title": "Project: Hail Mary",
-    "subtitle": "It's not a gene. You just need to find someone to be brave for.",
-    "description": "I NEED THE 8 HOUR CUT RIGHT NOW AMAZON",
-    "poster_image": "/media-posters/movie_project_hail_mary.jpg"
+    "description": "",
+    "poster_image": "/media-posters/movie_project_hail_mary.jpg",
+    "notes": "I NEED THE 8 HOUR CUT RIGHT NOW AMAZON",
+    "tagline": "It's not a gene. You just need to find someone to be brave for."
   },
   {
     "id": "project_hail_mary_book",
@@ -65,9 +70,9 @@
     "rating": 5.5,
     "status": "finished",
     "title": "Project: Hail Mary",
-    "subtitle": "I spend a lot of time un-suiciding this suicide mission.",
     "description": "",
-    "poster_image": "/media-posters/book_project_hail_mary_book.jpg"
+    "poster_image": "/media-posters/book_project_hail_mary_book.jpg",
+    "tagline": "I spend a lot of time un-suiciding this suicide mission."
   },
   {
     "id": "hot_fuzz",
@@ -75,9 +80,10 @@
     "rating": 6,
     "status": "finished",
     "title": "Hot Fuzz",
-    "subtitle": "How many payoffs does this movie have???",
-    "description": "Literally a perfect movie.",
-    "poster_image": "/media-posters/movie_hot_fuzz.jpg"
+    "description": "",
+    "poster_image": "/media-posters/movie_hot_fuzz.jpg",
+    "notes": "Literally a perfect movie.",
+    "tagline": "How many payoffs does this movie have???"
   },
   {
     "id": "fight_club",
@@ -85,9 +91,10 @@
     "rating": 6.5,
     "status": "finished",
     "title": "Fight Club",
-    "subtitle": "Self improvement is masturbation. Now self destruction...",
-    "description": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
-    "poster_image": "/media-posters/movie_fight_club.jpg"
+    "description": "",
+    "poster_image": "/media-posters/movie_fight_club.jpg",
+    "notes": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
+    "tagline": "Self improvement is masturbation. Now self destruction..."
   },
   {
     "id": "house_of_leaves",
@@ -95,9 +102,9 @@
     "rating": 6.5,
     "status": "finished",
     "title": "House of Leaves",
-    "subtitle": "This is not for you.",
     "description": "",
-    "poster_image": "/media-posters/book_house_of_leaves.jpg"
+    "poster_image": "/media-posters/book_house_of_leaves.jpg",
+    "tagline": "This is not for you."
   },
   {
     "id": "the_martian",
@@ -105,9 +112,10 @@
     "rating": 6,
     "status": "finished",
     "title": "The Martian",
-    "subtitle": "How come Aquaman can control whales? They're mammals! Makes no sense.",
-    "description": "Science Guy Solves Science Puzzles... In Space! also he's really funny\n\nMy favourite was when the main character had to hide out in his car away from his hub because of a chemical reaction gone awry, and when he rides through craters dust storm with no satellite.",
-    "poster_image": "/media-posters/book_the_martian.jpg"
+    "description": "",
+    "poster_image": "/media-posters/book_the_martian.jpg",
+    "notes": "Science Guy Solves Science Puzzles... In Space! also he's really funny\n\nMy favourite was when the main character had to hide out in his car away from his hub because of a chemical reaction gone awry, and when he rides through craters dust storm with no satellite.",
+    "tagline": "How come Aquaman can control whales? They're mammals! Makes no sense."
   },
   {
     "id": "the_myth_of_sisyphus_and_other_essays",
@@ -115,9 +123,9 @@
     "rating": 6,
     "status": "wishlist",
     "title": "The Myth of Sisyphus and Other Essays",
-    "subtitle": "Albert Camus",
     "description": "",
-    "poster_image": "/media-posters/book_the_myth_of_sisyphus_and_other_essays.jpg"
+    "poster_image": "/media-posters/book_the_myth_of_sisyphus_and_other_essays.jpg",
+    "tagline": "Albert Camus"
   },
   {
     "id": "the_last_of_us_s1",
@@ -125,9 +133,9 @@
     "rating": 6,
     "status": "finished",
     "title": "The Last of Us (S1)",
-    "subtitle": "Best zombie media I have consumed.",
     "description": "",
-    "poster_image": "/media-posters/show_the_last_of_us_s1.jpg"
+    "poster_image": "/media-posters/show_the_last_of_us_s1.jpg",
+    "tagline": "Best zombie media I have consumed."
   },
   {
     "id": "the_last_of_us_part_ii_remastered",
@@ -135,9 +143,9 @@
     "rating": 6,
     "status": "finished",
     "title": "The Last of Us Part II",
-    "subtitle": "A tale of three graves",
     "description": "",
-    "poster_image": "/media-posters/game_the_last_of_us_part_ii_remastered.jpg"
+    "poster_image": "/media-posters/game_the_last_of_us_part_ii_remastered.jpg",
+    "tagline": "A tale of three graves"
   },
   {
     "id": "the_handmaid_s_tale",
@@ -145,9 +153,10 @@
     "rating": 4,
     "status": "finished",
     "title": "The Handmaid's Tale",
-    "subtitle": "Nolite te bastardes carborundorum.",
-    "description": "Good writing but Atwood isn't nearly the clever poet she thinks she is. My expectations from the book were also a bit distorted; I had heard from someone who had seen the show about the titular character, in the finale, making her clever escape through some train... I was reading the novel in expectance of some strategem, but the protagonist is nothing but a mere ragdoll thrown around mostly by the schemes of those that surround her. Guess it makes more sense for the point of the novel for her to have no agency.",
-    "poster_image": "/media-posters/book_the_handmaid_s_tale.jpg"
+    "description": "",
+    "poster_image": "/media-posters/book_the_handmaid_s_tale.jpg",
+    "notes": "Good writing but Atwood isn't nearly the clever poet she thinks she is. My expectations from the book were also a bit distorted; I had heard from someone who had seen the show about the titular character, in the finale, making her clever escape through some train... I was reading the novel in expectance of some strategem, but the protagonist is nothing but a mere ragdoll thrown around mostly by the schemes of those that surround her. Guess it makes more sense for the point of the novel for her to have no agency.",
+    "tagline": "Nolite te bastardes carborundorum."
   },
   {
     "id": "outer_wilds",
@@ -155,9 +164,10 @@
     "rating": 6,
     "status": "finished",
     "title": "Outer Wilds",
-    "subtitle": "The Universe is, and we are.",
-    "description": "I would tell you about the premise of this game, but that'd be a spoiler.",
-    "poster_image": "/media-posters/game_outer_wilds.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_outer_wilds.jpg",
+    "notes": "I would tell you about the premise of this game, but that'd be a spoiler.",
+    "tagline": "The Universe is, and we are."
   },
   {
     "id": "of_the_devil",
@@ -165,9 +175,10 @@
     "rating": 6,
     "status": "finished",
     "title": "of the Devil",
-    "subtitle": "Do whatever it takes to win.",
-    "description": "see my steam comments or something\ndescribed by many as: \"Lesbian Death Note\"",
-    "poster_image": "/media-posters/game_of_the_devil.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_of_the_devil.jpg",
+    "notes": "see my steam comments or something\ndescribed by many as: \"Lesbian Death Note\"",
+    "tagline": "Do whatever it takes to win."
   },
   {
     "id": "ena_dream_bbq",
@@ -175,9 +186,9 @@
     "rating": 6,
     "status": "wishlist",
     "title": "ENA: Dream BBQ",
-    "subtitle": "",
     "description": "",
-    "poster_image": "/media-posters/game_ena_dream_bbq.jpg"
+    "poster_image": "/media-posters/game_ena_dream_bbq.jpg",
+    "tagline": ""
   },
   {
     "id": "half-life_2",
@@ -185,9 +196,9 @@
     "rating": 6,
     "status": "finished",
     "title": "Half-Life 2",
-    "subtitle": "Very fun. Should be mandatory for learning game design.",
     "description": "",
-    "poster_image": "/media-posters/game_half-life_2.jpg"
+    "poster_image": "/media-posters/game_half-life_2.jpg",
+    "tagline": "Very fun. Should be mandatory for learning game design."
   },
   {
     "id": "oneshot",
@@ -195,9 +206,9 @@
     "rating": 7,
     "status": "wishlist",
     "title": "OneShot",
-    "subtitle": "Deltarune if it was good?",
     "description": "",
-    "poster_image": "/media-posters/game_oneshot.jpg"
+    "poster_image": "/media-posters/game_oneshot.jpg",
+    "tagline": "Deltarune if it was good?"
   },
   {
     "id": "omori",
@@ -205,9 +216,10 @@
     "rating": 4,
     "status": "finished",
     "title": "OMORI",
-    "subtitle": "It's a long way down...",
-    "description": "I hated the RPG part of the game. The enemies, fight mechanics, environment, and the music was not that good. But I absolutely loved the true story that lied underneath it.",
-    "poster_image": "/media-posters/game_omori.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_omori.jpg",
+    "notes": "I hated the RPG part of the game. The enemies, fight mechanics, environment, and the music was not that good. But I absolutely loved the true story that lied underneath it.",
+    "tagline": "It's a long way down..."
   },
   {
     "id": "in_stars_and_time",
@@ -215,9 +227,10 @@
     "rating": 6.5,
     "status": "finished",
     "title": "In Stars And Time",
-    "subtitle": "Pray to the stars and free yourself from time.",
-    "description": "Live with the ever-present burden of being trapped in a time loop only you can know about in this turn-based RPG. Create a better future for you and your friends. Find hope where there is none left. Pray to the stars and free yourself from time.\n\nPretty sure the author just.... broke the encryption on my Veracrypt vault storing my old journal pages to write the main character.",
-    "poster_image": "/media-posters/game_in_stars_and_time.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_in_stars_and_time.jpg",
+    "notes": "Live with the ever-present burden of being trapped in a time loop only you can know about in this turn-based RPG. Create a better future for you and your friends. Find hope where there is none left. Pray to the stars and free yourself from time.\n\nPretty sure the author just.... broke the encryption on my Veracrypt vault storing my old journal pages to write the main character.",
+    "tagline": "Pray to the stars and free yourself from time."
   },
   {
     "id": "inscryption",
@@ -225,9 +238,10 @@
     "rating": 6,
     "status": "finished",
     "title": "Inscryption",
-    "subtitle": "Game-breaker's toolkit.",
-    "description": "Inscryption is an inky black card-based odyssey that blends the deckbuilding roguelike, escape-room style puzzles, and psychological horror into a blood-laced smoothie. Darker still are the secrets inscrybed upon the cards...",
-    "poster_image": "/media-posters/game_inscryption.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_inscryption.jpg",
+    "notes": "Inscryption is an inky black card-based odyssey that blends the deckbuilding roguelike, escape-room style puzzles, and psychological horror into a blood-laced smoothie. Darker still are the secrets inscrybed upon the cards...",
+    "tagline": "Game-breaker's toolkit."
   },
   {
     "id": "the_hollow_man",
@@ -235,9 +249,10 @@
     "rating": 5,
     "status": "finished",
     "title": "The Hollow Man",
-    "subtitle": "Carr's masterpiece",
-    "description": "Too unfair. But deserves a shelf in a murder mystery fan's basement for its excellent dissection of the locked room.",
-    "poster_image": "/media-posters/book_the_hollow_man.jpg"
+    "description": "",
+    "poster_image": "/media-posters/book_the_hollow_man.jpg",
+    "notes": "Too unfair. But deserves a shelf in a murder mystery fan's basement for its excellent dissection of the locked room.",
+    "tagline": "Carr's masterpiece"
   },
   {
     "id": "danganronpa_trigger_happy_havoc",
@@ -245,9 +260,10 @@
     "rating": 5,
     "status": "finished",
     "title": "Danganronpa: Trigger Happy Havoc",
-    "subtitle": "Ace Attorney, with added pedophilia",
-    "description": "7/7 music, 7/7 premise, 4.5/7 cases, and 1.5/7 writing.",
-    "poster_image": "/media-posters/game_danganronpa_trigger_happy_havoc.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_danganronpa_trigger_happy_havoc.jpg",
+    "notes": "7/7 music, 7/7 premise, 4.5/7 cases, and 1.5/7 writing.",
+    "tagline": "Ace Attorney, with added pedophilia"
   },
   {
     "id": "danganronpa_2_goodbye_despair",
@@ -255,9 +271,10 @@
     "rating": 6,
     "status": "finished",
     "title": "Danganronpa 2: Goodbye Despair",
-    "subtitle": "Live And Let The Languid World Live",
-    "description": "7/7 music, 6/7 premise, 6/7 cases, and tolerable writing.\nNagito Komaeda is the hottest character in any anime game, and has generously offered to be embroiled in, not one of, but *the* best case I have read in detective fiction.",
-    "poster_image": "/media-posters/game_danganronpa_2_goodbye_despair.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_danganronpa_2_goodbye_despair.jpg",
+    "notes": "7/7 music, 6/7 premise, 6/7 cases, and tolerable writing.\nNagito Komaeda is the hottest character in any anime game, and has generously offered to be embroiled in, not one of, but *the* best case I have read in detective fiction.",
+    "tagline": "Live And Let The Languid World Live"
   },
   {
     "id": "danganronpa_v3_killing_harmony",
@@ -265,9 +282,10 @@
     "rating": 6,
     "status": "finished",
     "title": "Danganronpa V3: Killing Harmony",
-    "subtitle": "",
-    "description": "The last case was just a middle finger to the fanbase, to be honest. Every Danganronpa had insane potential, but also something wrong with it. Danganronpa 1 with poor cases, poor characters, poor writing, and clunky ending. 2, also lacking in the ending department, unable to top-up its penultimate case.\n\nThe writer has not written enough of, anything, actually, to be making the point he seems to be trying to make. Leave good 4th wall breaking to Toby Fox, please.\n\nLoved the cases though. Glad they hired an actual mystery writer.",
-    "poster_image": "/media-posters/game_danganronpa_v3_killing_harmony.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_danganronpa_v3_killing_harmony.jpg",
+    "notes": "The last case was just a middle finger to the fanbase, to be honest. Every Danganronpa had insane potential, but also something wrong with it. Danganronpa 1 with poor cases, poor characters, poor writing, and clunky ending. 2, also lacking in the ending department, unable to top-up its penultimate case.\n\nThe writer has not written enough of, anything, actually, to be making the point he seems to be trying to make. Leave good 4th wall breaking to Toby Fox, please.\n\nLoved the cases though. Glad they hired an actual mystery writer.",
+    "tagline": ""
   },
   {
     "id": "dweller_s_empty_path",
@@ -275,9 +293,10 @@
     "rating": 5,
     "status": "finished",
     "title": "Dweller's Empty Path",
-    "subtitle": "A game by Temmie Chang.",
-    "description": "I feel kind of… guilty for liking this one. It wasn’t that good… but it felt really good. The ending was sudden, though, very lacklustre, and I hated the generic “heroes” quest, even if it was meant as satire. But there was something about it... the subtle hopelessness? Treated as... ordinary. I don't know. I felt it just helping me, a bit.",
-    "poster_image": "/media-posters/game_dweller_s_empty_path.png"
+    "description": "",
+    "poster_image": "/media-posters/game_dweller_s_empty_path.png",
+    "notes": "I feel kind of… guilty for liking this one. It wasn’t that good… but it felt really good. The ending was sudden, though, very lacklustre, and I hated the generic “heroes” quest, even if it was meant as satire. But there was something about it... the subtle hopelessness? Treated as... ordinary. I don't know. I felt it just helping me, a bit.",
+    "tagline": "A game by Temmie Chang."
   },
   {
     "id": "disco_elysium_-_the_final_cut",
@@ -285,9 +304,10 @@
     "rating": 7,
     "status": "finished",
     "title": "Disco Elysium — The Final Cut",
-    "subtitle": "A tragicomedy of hope and redemption.",
-    "description": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
-    "poster_image": "/media-posters/game_disco_elysium_-_the_final_cut.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_disco_elysium_-_the_final_cut.jpg",
+    "notes": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
+    "tagline": "A tragicomedy of hope and redemption."
   },
   {
     "id": "the_hunger_games",
@@ -295,18 +315,20 @@
     "rating": 4,
     "status": "wishlist",
     "title": "The Hunger Games",
-    "subtitle": "PUBG with romance, on a metaphorical and literal level.",
-    "description": "It has its moments, but I thought the ending, with the corny romance and all, was boring. I had also played Disco Elysium side-by-side so the drastic drop in writing quality was more apparent, I guess.",
-    "poster_image": "/media-posters/book_the_hunger_games.jpg"
+    "description": "",
+    "poster_image": "/media-posters/book_the_hunger_games.jpg",
+    "notes": "It has its moments, but I thought the ending, with the corny romance and all, was boring. I had also played Disco Elysium side-by-side so the drastic drop in writing quality was more apparent, I guess.",
+    "tagline": "PUBG with romance, on a metaphorical and literal level."
   },
   {
     "id": "mindhacker",
     "type": "book",
-    "rating": 5.5,
+    "rating": 6,
     "status": "finished",
     "title": "Mindhacker",
-    "subtitle": "Useless retro-tech advice, but makes you think.",
-    "description": "I get nostalgic for times that were stolen from me a lot. ...Remind me to add this feature soon, I want to add here an excerpt from my diary.",
+    "tagline": "Useless retro-tech advice, but makes you think.",
+    "description": "",
+    "notes": "I get nostalgic for times that were stolen from me a lot. ...Remind me to add this feature soon, I want to add here an excerpt from my diary.",
     "poster_image": "/media-posters/book_mindhacker.jpg"
   },
   {
@@ -315,9 +337,10 @@
     "rating": 5.5,
     "status": "finished",
     "title": "Harry Potter and the Methods of Rationality",
-    "subtitle": "The epic fanfic that set the AI Safety movement back by 10 years.",
-    "description": "I wouldn't recommend this to a Harry Potter fan; it takes everything good about Harry Potter, and makes it bad. Everything else, however...",
-    "poster_image": "/media-posters/book_harry_potter_and_the_methods_of_rationality.jpg"
+    "description": "",
+    "poster_image": "/media-posters/book_harry_potter_and_the_methods_of_rationality.jpg",
+    "notes": "I wouldn't recommend this to a Harry Potter fan; it takes everything good about Harry Potter, and makes it bad. Everything else, however...",
+    "tagline": "The epic fanfic that set the AI Safety movement back by 10 years."
   },
   {
     "id": "foundation",
@@ -325,9 +348,10 @@
     "rating": 3,
     "status": "finished",
     "title": "Foundation",
-    "subtitle": "Is it fair of me to just say, \"Dune was better.\" for any given sci-fi book?",
-    "description": "I have heard the show is better. Full disclaimer, I only read the first book, and I wouldn't recommend it. Every protagonist of each act is the same, hard, male, and every antagonist is tricked in some way, and these tricks are *not* consistent with each other. The book did have its moments with politics, however. Everything else was either bad (worldbuiling, characterization) or mid (writing).",
-    "poster_image": "/media-posters/book_foundation.jpg"
+    "description": "",
+    "poster_image": "/media-posters/book_foundation.jpg",
+    "notes": "I have heard the show is better. Full disclaimer, I only read the first book, and I wouldn't recommend it. Every protagonist of each act is the same, hard, male, and every antagonist is tricked in some way, and these tricks are *not* consistent with each other. The book did have its moments with politics, however. Everything else was either bad (worldbuiling, characterization) or mid (writing).",
+    "tagline": "Is it fair of me to just say, \"Dune was better.\" for any given sci-fi book?"
   },
   {
     "id": "a_mind_for_numbers",
@@ -335,9 +359,9 @@
     "rating": 2,
     "status": "finished",
     "title": "A Mind for Numbers",
-    "subtitle": "The first book written by ChatGPT, before ChatGPT.",
     "description": "",
-    "poster_image": "/media-posters/book_a_mind_for_numbers.jpg"
+    "poster_image": "/media-posters/book_a_mind_for_numbers.jpg",
+    "tagline": "The first book written by ChatGPT, before ChatGPT."
   },
   {
     "id": "the_quantum_thief",
@@ -345,8 +369,9 @@
     "rating": 6,
     "status": "wishlist",
     "title": "The Quantum Thief",
-    "subtitle": "",
-    "description": "Hard sci-fi recommended by Gwern.",
+    "tagline": "Apparently puts the Hard in Hard Sci-fi.",
+    "description": "",
+    "notes": "Highly recommended by Gwern.",
     "poster_image": "/media-posters/book_the_quantum_thief.jpg"
   },
   {
@@ -355,9 +380,10 @@
     "rating": 5.5,
     "status": "shelved",
     "title": "The Fifth Science",
-    "subtitle": "Hell isn't a fire pit but a museum of regrets.",
-    "description": "Got Foundation and Dune vibes from this, might just be me. Might come around to finishing that last 30% of it.",
-    "poster_image": "/media-posters/book_the_fifth_science.jpg"
+    "description": "",
+    "poster_image": "/media-posters/book_the_fifth_science.jpg",
+    "notes": "Got Foundation and Dune vibes from this, might just be me. Might come around to finishing that last 30% of it.",
+    "tagline": "Hell isn't a fire pit but a museum of regrets."
   },
   {
     "id": "worm_web_serial",
@@ -365,9 +391,9 @@
     "rating": 7,
     "status": "wishlist",
     "title": "WORM",
-    "subtitle": "",
     "description": "",
-    "poster_image": "/media-posters/book_worm_web_serial.jpg"
+    "poster_image": "/media-posters/book_worm_web_serial.jpg",
+    "tagline": ""
   },
   {
     "id": "omori_dreamer",
@@ -375,9 +401,10 @@
     "rating": 6,
     "status": "wishlist",
     "title": "OMORI: The Dreamer",
-    "subtitle": "",
-    "description": "I don't expect any combat from this, so should be worth checking out.",
-    "poster_image": "/media-posters/game_omori_dreamer.png"
+    "description": "",
+    "poster_image": "/media-posters/game_omori_dreamer.png",
+    "notes": "I don't expect any combat from this, so should be worth checking out.",
+    "tagline": ""
   },
   {
     "id": "god_of_war",
@@ -385,8 +412,119 @@
     "rating": 5,
     "status": "finished",
     "title": "God of War",
-    "subtitle": "Fun",
-    "description": "Ending didn't hit hard though.",
-    "poster_image": "/media-posters/game_god_of_war.jpg"
+    "description": "",
+    "poster_image": "/media-posters/game_god_of_war.jpg",
+    "notes": "Ending didn't hit hard though.",
+    "tagline": "Fun"
+  },
+  {
+    "id": "escape_from_alcatraz",
+    "type": "movie",
+    "rating": 6,
+    "status": "consuming",
+    "title": "Escape from Alcatraz",
+    "description": "",
+    "poster_image": "/media-posters/movie_escape_from_alcatraz.jpg",
+    "notes": "San Francisco Bay, January 18, 1960. Frank Lee Morris is transferred to Alcatraz, a maximum security prison located on a rocky island. Although no one has ever managed to escape from there, Frank and other inmates begin to carefully prepare an escape plan.",
+    "tagline": "1979"
+  },
+  {
+    "id": "pokemon_origin_of_species",
+    "type": "book",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Pokémon: The Origin of Species.",
+    "subtitle": "Maybe this ratfic will be better written...",
+    "description": "",
+    "notes": "",
+    "poster_image": ""
+  },
+  {
+    "id": "va-11_hall-a_cyberpunk_bartender_action",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "VA-11 Hall-A: Cyberpunk Bartender Action",
+    "tagline": "",
+    "description": "Sukeban Games\n\nVA-11 HALL-A: Cyberpunk Bartender Action is a booze em' up about waifus, technology, and post-dystopia life.",
+    "notes": "",
+    "poster_image": "/media-posters/game_va-11_hall-a_cyberpunk_bartender_action.jpg"
+  },
+  {
+    "id": "a_brief_history_of_time",
+    "type": "book",
+    "rating": 5,
+    "status": "shelved",
+    "title": "A Brief History of Time",
+    "tagline": "",
+    "description": "Stephen Hawking",
+    "notes": "",
+    "poster_image": "/media-posters/book_a_brief_history_of_time.jpg"
+  },
+  {
+    "id": "return_of_the_obra_dinn",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Return of the Obra Dinn",
+    "tagline": "Who doesn't like detective games?",
+    "description": "Lucas Pope\nLost at sea 1803 ~ The good ship Obra Dinn.",
+    "notes": "",
+    "poster_image": "/media-posters/game_return_of_the_obra_dinn.jpg"
+  },
+  {
+    "id": "watch_dogs_",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Watch_Dogs™ (with graphic mods)",
+    "tagline": "",
+    "description": "In today's hyper-connected world, Chicago operates under ctOS, the most advanced computer network in America.",
+    "notes": "",
+    "poster_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/243470/library_600x900_2x.jpg"
+  },
+  {
+    "id": "the_coffin_of_andy_and_leyley",
+    "type": "game",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "The Coffin of Andy and Leyley",
+    "tagline": "",
+    "description": "Kit9 Studio\nWalk-n-talk adventure with light puzzling. Brother and sister practice cannibalism after witnessing a botched satanic ritual.",
+    "notes": "",
+    "poster_image": "/media-posters/game_the_coffin_of_andy_and_leyley.jpg"
+  },
+  {
+    "id": "zero_escape_the_nonary_games",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Zero Escape: The Nonary Games",
+    "tagline": "",
+    "description": "Spike Chunsoft Co., Ltd.\n\nKidnapped and taken to an unfamiliar location, nine people find themselves forced to participate in a diabolical Nonary Game by an enigmatic mastermind called Zero. Why were they there? Why were they chosen to put their lives on the line? And more importantly, who can be trusted?",
+    "notes": "",
+    "poster_image": "/media-posters/game_zero_escape_the_nonary_games.jpg"
+  },
+  {
+    "id": "mouthwashing",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Mouthwashing",
+    "tagline": "",
+    "description": "Wrong Organ\nThe five crew members of the Tulpar are stranded in the empty reaches of space, shrouded in perpetual sunset. God is not watching.",
+    "notes": "",
+    "poster_image": "/media-posters/game_mouthwashing.jpg"
+  },
+  {
+    "id": "chants_of_sennaar",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Chants of Sennaar",
+    "tagline": "Linguistics? Linguistics.",
+    "description": "Rundisc\nIn this award-winning puzzle adventure game, play as the Traveler on a quest to reunite the Peoples of the Tower. Observe, listen, and decipher ancient languages in a fascinating universe inspired by the Myth of Babel.",
+    "notes": "",
+    "poster_image": "/media-posters/game_chants_of_sennaar.jpg"
   }
 ]

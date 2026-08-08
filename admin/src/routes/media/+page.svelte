@@ -8,8 +8,8 @@
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   let currentItem: any = $state({
-    id: '', type: 'movie', rating: 1, status: 'wishlist',
-    title: '', subtitle: '', description: '', poster_image: '', private_notes: ''
+    id: '', type: 'movie', rating: 4, status: 'wishlist',
+    title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: ''
   });
   let isSearching = $state(false);
   let isSearchModalOpen = $state(false);
@@ -38,8 +38,8 @@
   function openNew() {
     isEditing = false;
     currentItem = { 
-      id: '', type: 'movie', rating: 1, status: 'wishlist',
-      title: '', subtitle: '', description: '', poster_image: '', private_notes: ''
+      id: '', type: 'movie', rating: 4, status: 'wishlist',
+      title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: ''
     };
     isModalOpen = true;
   }
@@ -76,8 +76,10 @@
 
   function selectSearchResult(data: any) {
     if (data.title) currentItem.title = data.title;
-    if (data.subtitle) currentItem.subtitle = data.subtitle;
-    if (data.description) currentItem.description = data.description;
+    const descParts = [];
+    if (data.tagline) descParts.push(data.tagline);
+    if (data.description) descParts.push(data.description);
+    if (descParts.length > 0) currentItem.description = descParts.join('\n\n');
     if (data.coverUrl) currentItem.poster_image = data.coverUrl;
     
     if (!currentItem.id && data.title) {
@@ -107,10 +109,10 @@
   function handleRatingKeydown(e: KeyboardEvent) {
     if (e.key === 'ArrowUp') {
       e.preventDefault();
-      currentItem.rating = Math.min(7, Math.floor((currentItem.rating || 1) + 1));
+      currentItem.rating = Math.min(7, Math.floor((currentItem.rating || 4) + 1));
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
-      currentItem.rating = Math.max(1, Math.ceil((currentItem.rating || 1) - 1));
+      currentItem.rating = Math.max(1, Math.ceil((currentItem.rating || 4) - 1));
     }
   }
 </script>

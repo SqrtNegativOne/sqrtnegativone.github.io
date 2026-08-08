@@ -11,7 +11,7 @@
   let filteredBuckets = $derived((() => {
     const buckets: { consuming: any[], library: any[] } = { consuming: [], library: [] };
     for (const item of mediaData) {
-      if (searchQuery && !item.title?.toLowerCase().includes(searchQuery.toLowerCase()) && !item.subtitle?.toLowerCase().includes(searchQuery.toLowerCase())) continue;
+      if (searchQuery && !item.title?.toLowerCase().includes(searchQuery.toLowerCase()) && !item.tagline?.toLowerCase().includes(searchQuery.toLowerCase())) continue;
       if (typeFilter !== "all" && item.type !== typeFilter) continue;
 
       if (item.status === "consuming") {
@@ -25,6 +25,8 @@
       if (sortOrder === "title-desc") return (b.title || "").localeCompare(a.title || "");
       if (sortOrder === "rating-desc") return (b.rating || 0) - (a.rating || 0) || a.title.localeCompare(b.title);
       if (sortOrder === "rating-asc") return (a.rating || 0) - (b.rating || 0) || a.title.localeCompare(b.title);
+      if (sortOrder === "status-asc") return (a.status || "").localeCompare(b.status || "") || a.title.localeCompare(b.title);
+      if (sortOrder === "status-desc") return (b.status || "").localeCompare(a.status || "") || a.title.localeCompare(b.title);
       return 0;
     };
     buckets.consuming.sort(sortFn);
@@ -34,6 +36,14 @@
 
   let activeItem: any = $state(null);
   let fullPosterUrl: string | null = $state(null);
+
+  function toggleSort(column: string) {
+    if (sortOrder.startsWith(column)) {
+      sortOrder = sortOrder.endsWith('-asc') ? `${column}-desc` : `${column}-asc`;
+    } else {
+      sortOrder = column === 'rating' ? `${column}-desc` : `${column}-asc`;
+    }
+  }
 
   function openDetails(item: any) {
     activeItem = item;
@@ -81,6 +91,8 @@
         <option value="rating-asc">Lowest Rated</option>
         <option value="title-asc">Title (A-Z)</option>
         <option value="title-desc">Title (Z-A)</option>
+        <option value="status-asc">Status (A-Z)</option>
+        <option value="status-desc">Status (Z-A)</option>
       </select>
     </div>
   </header>
@@ -102,9 +114,15 @@
       <div class="ml-table" role="table">
         <div class="ml-table-head" role="row">
           <span role="columnheader" class="ml-col-poster"></span>
-          <span role="columnheader" class="ml-col-title">Title</span>
-          <span role="columnheader" class="ml-col-status">Status</span>
-          <span role="columnheader" class="ml-col-rating">Rating</span>
+          <button role="columnheader" class="ml-col-title ml-sortable" onclick={() => toggleSort('title')}>
+            Title {#if sortOrder.startsWith('title')}{sortOrder.endsWith('asc') ? '▲' : '▼'}{/if}
+          </button>
+          <button role="columnheader" class="ml-col-status ml-sortable" onclick={() => toggleSort('status')}>
+            Status {#if sortOrder.startsWith('status')}{sortOrder.endsWith('asc') ? '▲' : '▼'}{/if}
+          </button>
+          <button role="columnheader" class="ml-col-rating ml-sortable" onclick={() => toggleSort('rating')}>
+            Rating {#if sortOrder.startsWith('rating')}{sortOrder.endsWith('asc') ? '▲' : '▼'}{/if}
+          </button>
         </div>
         {#each filteredBuckets.library as item (item.type + '-' + item.id)}
           <LibraryRow {item} {openDetails} {openFullPoster} />
@@ -282,6 +300,26 @@
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+.ml-sortable {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  outline: none;
+  text-transform: inherit;
+  letter-spacing: inherit;
+}
+
+.ml-sortable:hover {
+  color: oklch(0.9707 0.0027 286.35);
 }
 
 .ml-empty {

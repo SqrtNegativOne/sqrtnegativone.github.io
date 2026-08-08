@@ -34,8 +34,8 @@
       </div>
       <div class="ml-modal-info">
         <h2 class="ml-modal-title">{item.title}</h2>
-        {#if item.subtitle}
-          <p class="ml-modal-subtitle">{item.subtitle}</p>
+        {#if item.tagline}
+          <p class="ml-modal-tagline">{item.tagline}</p>
         {/if}
         <div class="ml-modal-meta">
           <span class={`ml-badge ml-badge--${item.type} static inline-block !relative !top-0 !left-0`}>{TYPE_LABEL[item.type] || item.type}</span>
@@ -43,8 +43,14 @@
           <RatingChart rating={item.rating} />
         </div>
         {#if item.description}
-          <div class="ml-modal-desc">
+          <div class="ml-modal-description">
             {item.description}
+          </div>
+        {/if}
+        {#if item.notes}
+          <div class="ml-modal-desc">
+            <strong class="text-white">Notes</strong><br/>
+            {item.notes}
           </div>
         {/if}
       </div>
@@ -149,7 +155,7 @@
     font-family: "Instrument Serif", serif;
   }
 
-  .ml-modal-subtitle {
+  .ml-modal-tagline {
     margin: 8px 0 0;
     color: oklch(0.6891 0.013 286.05);
     font-size: 18px;
@@ -161,6 +167,14 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .ml-modal-description {
+    color: oklch(0.5416 0.0154 285.87);
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    margin-bottom: 16px;
   }
 
   .ml-modal-desc {

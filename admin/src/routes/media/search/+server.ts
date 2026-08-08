@@ -15,22 +15,31 @@ try {
 } catch (e) {}
 
 async function searchBook(query: string) {
-  const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=1`;
+  const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=20`;
   const res = await fetch(url, { headers: { "User-Agent": "MyMediaApp/1.0" } });
   if (!res.ok) return null;
   const data = await res.json() as any;
-  const books = data.docs?.slice(0, 5) || [];
+  let books = data.docs?.slice(0, 20) || [];
   if (books.length === 0) return null;
-  return books.map((book: any) => ({
+  
+  books.sort((a: any, b: any) => {
+    const aExact = a.title?.toLowerCase() === query.toLowerCase();
+    const bExact = b.title?.toLowerCase() === query.toLowerCase();
+    if (aExact && !bExact) return -1;
+    if (!aExact && bExact) return 1;
+    return 0;
+  });
+
+  return books.slice(0, 10).map((book: any) => ({
     title: book.title,
-    subtitle: (book.author_name || []).join(", "),
+    tagline: (book.author_name || []).join(", "),
     coverUrl: book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg` : null,
   }));
 }
 
 async function searchTmdb(kind: "movie" | "tv", query: string) {
   if (!TMDB_KEY) return { error: "TMDB_API_KEY environment variable is missing." };
-  const url = `https://api.themoviedb.org/3/search/${kind}?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&page=1`;
+  const url = `https://api.tmdb.org/3/search/${kind}?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&page=1`;
   const res = await fetch(url);
   if (!res.ok) return null;
   const data = await res.json() as any;
@@ -38,7 +47,7 @@ async function searchTmdb(kind: "movie" | "tv", query: string) {
   if (results.length === 0) return null;
   return results.map((d: any) => ({
     title: d.title || d.name,
-    subtitle: d.release_date ? d.release_date.substring(0, 4) : d.first_air_date ? d.first_air_date.substring(0, 4) : "",
+    tagline: d.release_date ? d.release_date.substring(0, 4) : d.first_air_date ? d.first_air_date.substring(0, 4) : "",
     description: d.overview || "",
     coverUrl: d.poster_path ? `https://image.tmdb.org/t/p/w500${d.poster_path}` : null,
   }));
@@ -68,7 +77,7 @@ async function searchSteamGame(query: string) {
 
       return {
         title: d.name,
-        subtitle: (d.developers || []).slice(0, 1).join(", "),
+        tagline: (d.developers || []).slice(0, 1).join(", "),
         description: d.short_description || "",
         coverUrl: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${m.id}/library_600x900_2x.jpg`,
       };

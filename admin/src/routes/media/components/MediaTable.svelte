@@ -121,8 +121,8 @@
           </td>
           <td class="p-4">
             <div class="font-medium text-white">{item.title || item.id}</div>
-            {#if item.subtitle}
-              <div class="text-sm text-[oklch(0.7107_0.0351_256.79)]">{item.subtitle}</div>
+            {#if item.tagline}
+              <div class="text-sm text-[oklch(0.7107_0.0351_256.79)]">{item.tagline}</div>
             {/if}
           </td>
           <td class="p-4">

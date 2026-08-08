@@ -38,8 +38,8 @@
         {@html icons[`type-${item.type}`] || icons['type-default']}
       </span>
     </span>
-    {#if item.subtitle}
-      <span class="ml-row-sub">{item.subtitle}</span>
+    {#if item.tagline}
+      <span class="ml-row-sub">{item.tagline}</span>
     {/if}
   </span>
   <span role="cell" class="ml-col-status">

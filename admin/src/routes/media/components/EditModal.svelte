@@ -52,13 +52,18 @@
           </div>
           
           <div class="space-y-2 md:col-span-2">
-            <label for="media-subtitle" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Subtitle (Optional)</label>
-            <input id="media-subtitle" type="text" name="subtitle" bind:value={currentItem.subtitle} class="input-field" placeholder="e.g. Director, Author, or Tagline" />
+            <label for="media-tagline" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tagline (Optional)</label>
+            <input id="media-tagline" type="text" name="tagline" bind:value={currentItem.tagline} class="input-field" placeholder="e.g. Director, Author, or Tagline" />
+          </div>
+
+          <div class="space-y-2 md:col-span-2">
+            <label for="media-notes" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Notes</label>
+            <textarea id="media-notes" name="notes" bind:value={currentItem.notes} class="input-field min-h-[100px] resize-y" placeholder="Extended notes..."></textarea>
           </div>
 
           <div class="space-y-2 md:col-span-2">
             <label for="media-desc" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Description</label>
-            <textarea id="media-desc" name="description" bind:value={currentItem.description} class="input-field min-h-[100px] resize-y" placeholder="Extended description..."></textarea>
+            <textarea id="media-desc" name="description" bind:value={currentItem.description} class="input-field min-h-[100px] resize-y" placeholder="Synopsis or overview..."></textarea>
           </div>
 
           <div class="space-y-2 md:col-span-2">

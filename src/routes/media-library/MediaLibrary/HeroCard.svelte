@@ -24,8 +24,8 @@
       <h3 class="ml-hero-title">{item.title}</h3>
       <RatingChart rating={item.rating} />
     </div>
-    {#if item.subtitle}
-      <p class="ml-hero-sub">{item.subtitle}</p>
+    {#if item.tagline}
+      <p class="ml-hero-sub">{item.tagline}</p>
     {/if}
     <p class="ml-hero-line">
       {TYPE_LABEL[item.type] || item.type}
