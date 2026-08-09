@@ -391,9 +391,10 @@
     "rating": 7,
     "status": "wishlist",
     "title": "WORM",
+    "tagline": "I am a sucker for this sort of thing",
     "description": "",
-    "poster_image": "/media-posters/book_worm_web_serial.jpg",
-    "tagline": ""
+    "notes": "",
+    "poster_image": "/media-posters/book_worm_web_serial.jpg"
   },
   {
     "id": "omori_dreamer",
@@ -423,10 +424,10 @@
     "rating": 6,
     "status": "consuming",
     "title": "Escape from Alcatraz",
-    "description": "",
-    "poster_image": "/media-posters/movie_escape_from_alcatraz.jpg",
-    "notes": "San Francisco Bay, January 18, 1960. Frank Lee Morris is transferred to Alcatraz, a maximum security prison located on a rocky island. Although no one has ever managed to escape from there, Frank and other inmates begin to carefully prepare an escape plan.",
-    "tagline": "1979"
+    "tagline": "",
+    "description": "San Francisco Bay, January 18, 1960. Frank Lee Morris is transferred to Alcatraz, a maximum security prison located on a rocky island. Although no one has ever managed to escape from there, Frank and other inmates begin to carefully prepare an escape plan.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_escape_from_alcatraz.jpg"
   },
   {
     "id": "pokemon_origin_of_species",
@@ -526,5 +527,247 @@
     "description": "Rundisc\nIn this award-winning puzzle adventure game, play as the Traveler on a quest to reunite the Peoples of the Tower. Observe, listen, and decipher ancient languages in a fascinating universe inspired by the Myth of Babel.",
     "notes": "",
     "poster_image": "/media-posters/game_chants_of_sennaar.jpg"
+  },
+  {
+    "id": "children_of_time",
+    "type": "book",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "Children of Time",
+    "tagline": "",
+    "description": "Adrian Tchaikovsky",
+    "notes": "",
+    "poster_image": "/media-posters/book_children_of_time.jpg"
+  },
+  {
+    "id": "geometry_for_ocelots",
+    "type": "book",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Geometry for Ocelots",
+    "tagline": "",
+    "description": "Exurb1a",
+    "notes": "",
+    "poster_image": "/media-posters/book_geometry_for_ocelots.jpg"
+  },
+  {
+    "id": "lacuna_a_sci-fi_noir_adventure",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "Lacuna – A Sci-Fi Noir Adventure",
+    "tagline": "GEM",
+    "description": "DigiTales Interactive\nA murder. A hack. A bombing. All it takes to plunge the solar system into war – unless you do something about it. Help CDI agent Neil Conrad make a string of increasingly difficult decisions in this modern dialog-driven adventure set in a gorgeous 2D sci-fi noir universe.",
+    "notes": "",
+    "poster_image": "/media-posters/game_lacuna_a_sci-fi_noir_adventure.jpg"
+  },
+  {
+    "id": "frostpunk",
+    "type": "game",
+    "rating": 5,
+    "status": "finished",
+    "title": "Frostpunk",
+    "tagline": "A very high bar for any new city-builder.",
+    "description": "11 bit studios\nFrostpunk is the first society survival game. As the ruler of the last city on Earth, it is your duty to manage both its citizens and infrastructure. What decisions will you make to ensure your society's survival? What will you do when pushed to breaking point? Who will you become in the process?",
+    "notes": "Steampunk city-builder with soul-stirring soundtrack and challenging gameplay.  Also very addictive.",
+    "poster_image": "/media-posters/game_frostpunk.jpg"
+  },
+  {
+    "id": "dune_book",
+    "type": "book",
+    "rating": 6,
+    "status": "finished",
+    "title": "Dune",
+    "tagline": "",
+    "description": "",
+    "notes": "I disagree with the author's thesis every step of the way, but it's an enjoying read. Not as thought-provoking though. I like how the author doesn't hand-hold you at the start and throws you into politics immediately, but after you figure the world-building out the book does get a bit boring near the end.",
+    "poster_image": "/media-posters/book_dune_book.png"
+  },
+  {
+    "id": "titanfall_2",
+    "type": "game",
+    "rating": 6.5,
+    "status": "wishlist",
+    "title": "Titanfall® 2",
+    "tagline": "What the game lacks in length, it makes up for with... everything else.",
+    "description": "Respawn Entertainment\n\nRespawn Entertainment gives you the most advanced titan technology in its new, single player campaign &amp; multiplayer experience. Combine &amp; conquer with new titans &amp; pilots, deadlier weapons, &amp; customization and progression systems that help you and your titan flow as one unstoppable killing force.",
+    "notes": "WHY IS THERE NO TITANFALL 3. WE ARE GETTING GTAVI BEFORE TITANFALL3 WHAT",
+    "poster_image": "/media-posters/game_titanfall_2.jpg"
+  },
+  {
+    "id": "dune_movie",
+    "type": "movie",
+    "rating": 5,
+    "status": "finished",
+    "title": "Dune: It Begins",
+    "tagline": "Fear is the mind-killer.",
+    "description": "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence - a commodity capable of unlocking humanity's greatest potential — only those who can conquer their fear will survive.",
+    "notes": "It always hurts to see beloved context and scenes from a book being cut for the movie, but it's also inevitable.\nthis movie was... okay I guess. part 2 was pretty good",
+    "poster_image": "/media-posters/movie_dune_movie.jpg"
+  },
+  {
+    "id": "steins_gate_1_game",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "STEINS;GATE",
+    "tagline": "",
+    "description": "MAGES. Inc.\nDeveloped by 5pb. and Nitroplus, STEINS;GATE was awarded Famitsu magazine's coveted annual Game of Excellence award and was voted one of the most emotionally charged “tear-inducing games” ever made, in a Famitsu poll.　It is a gripping and moving Visual Novel, which has already spawned manga and anime adaptations.",
+    "notes": "",
+    "poster_image": "/media-posters/game_steins_gate_1_game.jpg"
+  },
+  {
+    "id": "knives_out",
+    "type": "movie",
+    "rating": 5.5,
+    "status": "wishlist",
+    "title": "Knives Out",
+    "tagline": "The mystery movie that tricks you into thinking it isn't.",
+    "description": "When renowned crime novelist Harlan Thrombey is found dead at his estate just after his 85th birthday, the inquisitive and debonair Detective Benoit Blanc is mysteriously enlisted to investigate. From Harlan's dysfunctional family to his devoted staff, Blanc sifts through a web of red herrings and self-serving lies to uncover the truth behind Harlan's untimely death.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_knives_out.jpg"
+  },
+  {
+    "id": "glass_onion_a_knives_out_mystery",
+    "type": "movie",
+    "rating": 4.5,
+    "status": "finished",
+    "title": "Glass Onion: A Knives Out Mystery",
+    "tagline": "",
+    "description": "World-famous detective Benoit Blanc heads to Greece to peel back the layers of a mystery surrounding a tech billionaire and his eclectic crew of friends.",
+    "notes": "The weakest in the trilogy right now IMO. For one: all the evil characters don't meet their comeuppance!",
+    "poster_image": "/media-posters/movie_glass_onion_a_knives_out_mystery.jpg"
+  },
+  {
+    "id": "wall_e",
+    "type": "movie",
+    "rating": 7,
+    "status": "finished",
+    "title": "WALL⋅E",
+    "tagline": "I don't usually like romance, but...",
+    "description": "",
+    "notes": "",
+    "poster_image": "/media-posters/movie_wall_e.jpg"
+  },
+  {
+    "id": "lagaan_once_upon_a_time_in_india",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "finished",
+    "title": "Lagaan: Once Upon a Time in India",
+    "tagline": "Unexpectedly good. Better than any other sports drama nonesense we invent today",
+    "description": "The year is 1893 and India is under British occupation. In a small village, the tyrannical Captain Russell has imposed an unprecedented land tax on its citizens. Outraged, Bhuvan, a rebellious farmer, rallies the villagers to publicly oppose the tax. Russell offers a novel way to settle the dispute: he challenges Bhuvan and his men to a game of cricket, a sport completely foreign to India. If Bhuvan and his men can defeat Russell's team, the tax will be repealed.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_lagaan_once_upon_a_time_in_india.jpg"
+  },
+  {
+    "id": "puss_in_boots_the_last_wish",
+    "type": "movie",
+    "rating": 2,
+    "status": "finished",
+    "title": "Puss in Boots: The Last Wish",
+    "tagline": "I had high expectations from the ratings and all, but it's just cliche.",
+    "description": "2022\n\nPuss in Boots discovers that his passion for adventure has taken its toll: He has burned through eight of his nine lives, leaving him with only one life left. Puss sets out on an epic journey to find the mythical Last Wish and restore his nine lives.",
+    "notes": "Exurb1a saw the movie thrice and cried. Guess I had too high expectations?",
+    "poster_image": "/media-posters/movie_puss_in_boots_the_last_wish.jpg"
+  },
+  {
+    "id": "Inception",
+    "type": "movie",
+    "rating": 7,
+    "status": "finished",
+    "title": "Inception",
+    "tagline": "Inception",
+    "description": "Inception",
+    "notes": "Inception",
+    "poster_image": "/media-posters/movie_Inception.jpg"
+  },
+  {
+    "id": "tenet",
+    "type": "movie",
+    "rating": 6,
+    "status": "finished",
+    "title": "Tenet",
+    "tagline": "If you don't like this movie, then kill yourself. You don't deserve good movies.",
+    "description": "Armed with only one word - Tenet - and fighting for the survival of the entire world, the Protagonist journeys through a twilight world of international espionage on a mission that will unfold in something beyond real time.",
+    "notes": "God forbid you have to actually pay attention.",
+    "poster_image": "/media-posters/movie_tenet.jpg"
+  },
+  {
+    "id": "prison_break",
+    "type": "show",
+    "rating": 6,
+    "status": "finished",
+    "title": "Prison Break",
+    "tagline": "",
+    "description": "Due to a political conspiracy, an innocent man is sent to death row and his only hope is his brother, who makes it his mission to deliberately get himself sent to the same prison in order to break the both of them out, from the inside out.",
+    "notes": "",
+    "poster_image": "/media-posters/show_prison_break.jpg"
+  },
+  {
+    "id": "death_note",
+    "type": "show",
+    "rating": 6.5,
+    "status": "finished",
+    "title": "Death Note (S1)",
+    "tagline": "",
+    "description": "Light Yagami is an ace student with great prospects—and he’s bored out of his mind. But all that changes when he finds the Death Note, a notebook dropped by a rogue Shinigami death god. Any human whose name is written in the notebook dies, and Light has vowed to use the power of the Death Note to rid the world of evil. But will Light succeed in his noble goal, or will the Death Note turn him into the very thing he fights against?",
+    "notes": "Fell off after L died. I loved trying to solve things before the characters on the screen did. Really smart show. S2 I gave up",
+    "poster_image": "/media-posters/show_death_note.jpg"
+  },
+  {
+    "id": "house",
+    "type": "show",
+    "rating": 6.5,
+    "status": "finished",
+    "title": "House MD",
+    "tagline": "Would you believe me if I said this was philosophical?",
+    "description": "Dr. Gregory House, a drug-addicted, unconventional, misanthropic medical genius, leads a team of diagnosticians at the fictional Princeton–Plainsboro Teaching Hospital in New Jersey.",
+    "notes": "Some of the episodes are.... literally the best stories I have seen in my life. Guess they hit harder once you expect the same formula every episode.",
+    "poster_image": "/media-posters/show_house.jpg"
+  },
+  {
+    "id": "the_godfather",
+    "type": "movie",
+    "rating": 4,
+    "status": "finished",
+    "title": "The Godfather",
+    "tagline": "",
+    "description": "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.",
+    "notes": "Look, I like to believe that I can watch \"boring\" movies, but... this movie was just boring. I get some scenes are pretty well done, sure, but is it ok for me to complain about the overall... tactics? Or lack thereof?",
+    "poster_image": "/media-posters/movie_the_godfather.jpg"
+  },
+  {
+    "id": "baba_is_you",
+    "type": "game",
+    "rating": 6,
+    "status": "shelved",
+    "title": "Baba Is You",
+    "tagline": "",
+    "description": "Hempuli Oy\nBaba Is You is a puzzle game where the rules you have to follow are present as blocks you can interact with. By manipulating them, you can change how the game works, repurpose things you find in the levels and cause surprising interactions!",
+    "notes": "Honestly? Not that hard. It's just a well designed puzzle game.",
+    "poster_image": "/media-posters/game_baba_is_you.jpg"
+  },
+  {
+    "id": "persona_5_royal",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Persona 5 Royal",
+    "tagline": "",
+    "description": "ATLUS\nLead the Phantom Thieves of Hearts in this award winning, stylish turn-based RPG filled with dungeon crawling, party customization, strategic combat, and Persona fusion. Explore Tokyo, build relationships, battle Shadows, and infiltrate the minds of the corrupt to make them change their ways!",
+    "notes": "",
+    "poster_image": "/media-posters/game_persona_5_royal.jpg"
+  },
+  {
+    "id": "papers_please",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "Papers, Please",
+    "tagline": "Who knew repetitive gameplay isn't actually a bad thing?",
+    "description": "Lucas Pope\nCongratulations. The October labor lottery is complete. Your name was pulled. For immediate placement, report to the Ministry of Admission at Grestin Border Checkpoint. An apartment will be provided for you and your family in East Grestin. Expect a Class-8 dwelling.",
+    "notes": "",
+    "poster_image": "/media-posters/game_papers_please.jpg"
   }
 ]
