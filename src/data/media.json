@@ -421,12 +421,12 @@
   {
     "id": "escape_from_alcatraz",
     "type": "movie",
-    "rating": 6,
-    "status": "consuming",
+    "rating": 4,
+    "status": "finished",
     "title": "Escape from Alcatraz",
     "tagline": "",
     "description": "San Francisco Bay, January 18, 1960. Frank Lee Morris is transferred to Alcatraz, a maximum security prison located on a rocky island. Although no one has ever managed to escape from there, Frank and other inmates begin to carefully prepare an escape plan.",
-    "notes": "",
+    "notes": "Watch Prison Break instead lmao",
     "poster_image": "/media-posters/movie_escape_from_alcatraz.jpg"
   },
   {
@@ -457,7 +457,7 @@
     "rating": 5,
     "status": "shelved",
     "title": "A Brief History of Time",
-    "tagline": "",
+    "tagline": "Only time (whatever that may be) will tell.",
     "description": "Stephen Hawking",
     "notes": "",
     "poster_image": "/media-posters/book_a_brief_history_of_time.jpg"
@@ -769,5 +769,181 @@
     "description": "Lucas Pope\nCongratulations. The October labor lottery is complete. Your name was pulled. For immediate placement, report to the Ministry of Admission at Grestin Border Checkpoint. An apartment will be provided for you and your family in East Grestin. Expect a Class-8 dwelling.",
     "notes": "",
     "poster_image": "/media-posters/game_papers_please.jpg"
+  },
+  {
+    "id": "the_truman_show",
+    "type": "movie",
+    "rating": 6,
+    "status": "finished",
+    "title": "The Truman Show",
+    "tagline": "And in case I don't see ya, good afternoon, good evening, and good night!",
+    "description": "1998\nIn a picture-perfect seaside town, an insurance salesman begins to realize that his entire existence may be staged and observed by a vast unseen audience as part of a long-running real-time reality TV show.",
+    "notes": "Still good if you know spoilers. Timeless. ...but would have probably hit harder if I hadn't seen all the major scenes before.",
+    "poster_image": "/media-posters/movie_the_truman_show.jpg"
+  },
+  {
+    "id": "the_subtle_art_of_not_giving_a_f_ck",
+    "type": "book",
+    "rating": 1.5,
+    "status": "dropped",
+    "title": "The Subtle Art of Not Giving a F*ck",
+    "tagline": "Bought it, read 10 pages, and stopped giving a fuck about this book.",
+    "description": "Mark Manson",
+    "notes": "Unbelievably confused, unorganized, insipid literature. I can sympathize with self-help book haters. I hate \"If Books Could Kill\" too but I agree with them on books I myself hate as well.",
+    "poster_image": "/media-posters/book_the_subtle_art_of_not_giving_a_f_ck.jpg"
+  },
+  {
+    "id": "undertale_yellow",
+    "type": "game",
+    "rating": 4,
+    "status": "finished",
+    "title": "Undertale Yellow",
+    "tagline": "",
+    "description": "",
+    "notes": "I guess I got too hyped about it. It perfects everything about Undertale, except the parts that made Undertale good and which it excelled at. Can't exactly expect anyone to do that for free.",
+    "poster_image": "/media-posters/game_undertale_yellow.jpg"
+  },
+  {
+    "id": "dexter_show_1_4",
+    "type": "show",
+    "rating": 6,
+    "status": "finished",
+    "title": "Dexter (S1-S4)",
+    "tagline": "I'm a very neat monster.",
+    "description": "",
+    "notes": "",
+    "poster_image": "/media-posters/show_dexter_show_1_4.jpg"
+  },
+  {
+    "id": "crying_suns_demo",
+    "type": "game",
+    "rating": 4.5,
+    "status": "finished",
+    "title": "Crying Suns",
+    "tagline": "",
+    "description": "Alt Shift\nCrying Suns is a tactical rogue-lite that puts you in the role of a space fleet commander as you explore a mysteriously fallen empire. In this story-driven experience inspired by Dune and Foundation, each successful run will uncover the truth about the Empire... and yourself as well.",
+    "notes": "Hard mode was too hard, and easy mode too easy. Also repetitive gameplay and a bit too generic at times.",
+    "poster_image": "/media-posters/game_crying_suns_demo.jpg"
+  },
+  {
+    "id": "24",
+    "type": "show",
+    "rating": 4,
+    "status": "dropped",
+    "title": "24 (S1)",
+    "tagline": "Generic, deus ex machina machine that just doesn't work today.",
+    "description": "Counterterrorism agent Jack Bauer fights the bad guys of the world, a day at a time. With each week's episode unfolding in real-time, \"24\" covers a single day in the life of Bauer each season.",
+    "notes": "",
+    "poster_image": "/media-posters/show_24.jpg"
+  },
+  {
+    "id": "argo",
+    "type": "movie",
+    "rating": 5,
+    "status": "finished",
+    "title": "Argo",
+    "tagline": "I think my story's the only thing between you and a gun to your head.",
+    "description": "As the Iranian revolution reaches a boiling point, a CIA 'exfiltration' specialist concocts a risky plan to free six Americans who have found shelter at the home of the Canadian ambassador.",
+    "notes": "A bit boring at times, but good for keeping it realistic. Good dialogue and tension. Like a lot of movies it suffers from a good start and an, eh, ending.",
+    "poster_image": "/media-posters/movie_argo.jpg"
+  },
+  {
+    "id": "celeste",
+    "type": "game",
+    "rating": 5,
+    "status": "finished",
+    "title": "Celeste",
+    "tagline": "Trans People Can Double Jump",
+    "description": "Maddy Makes Games Inc.\n\nHelp Madeline survive her inner demons on her journey to the top of Celeste Mountain, in this super-tight platformer from the creators of TowerFall. Brave hundreds of hand-crafted challenges, uncover devious secrets, and piece together the mystery of the mountain.",
+    "notes": "",
+    "poster_image": "/media-posters/game_celeste.jpg"
+  },
+  {
+    "id": "cyberpunk_edgerunners",
+    "type": "show",
+    "rating": 7,
+    "status": "wishlist",
+    "title": "Cyberpunk: Edgerunners",
+    "tagline": "",
+    "description": "2022\nIn a dystopia riddled with corruption and cybernetic implants, a talented but reckless street kid strives to become a mercenary outlaw — an edgerunner.",
+    "notes": "",
+    "poster_image": "/media-posters/show_cyberpunk_edgerunners.jpg"
+  },
+  {
+    "id": "death_note_relight_1_visions_of_a_god",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Death Note Relight 1: Visions of a God",
+    "tagline": "",
+    "description": "2007\nWhen rogue shinigami Ryuk leaves his Death Note in the human world, he has no idea how far the one who finds it will take his new-found power. With the Death Note in hand, brilliant high school student Light Yagami vows to rid the world of evil. A recap of Death Note episodes 1–26, with alternate footage.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_death_note_relight_1_visions_of_a_god.jpg"
+  },
+  {
+    "id": "into_the_breach",
+    "type": "game",
+    "rating": 5,
+    "status": "finished",
+    "title": "Into the Breach",
+    "tagline": "For All Father Time",
+    "description": "Subset Games\nControl powerful mechs from the future to defeat an alien threat. Each attempt to save the world presents a new randomly generated challenge in this turn-based strategy game.",
+    "notes": "I got addicted to it way back, but I suspect only due to a lack of options. Gets better, then gets worse. And worse. Less replayability you'd expect.",
+    "poster_image": "/media-posters/game_into_the_breach.jpg"
+  },
+  {
+    "id": "la_la_land",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "La La Land",
+    "tagline": "",
+    "description": "Mia, an aspiring actress, serves lattes to movie stars in between auditions and Sebastian, a jazz musician, scrapes by playing cocktail party gigs in dingy bars, but as success mounts they are faced with decisions that begin to fray the fragile fabric of their love affair, and the dreams they worked so hard to maintain in each other threaten to rip them apart.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_la_la_land.jpg"
+  },
+  {
+    "id": "loki_show",
+    "type": "show",
+    "rating": 6.5,
+    "status": "finished",
+    "title": "Loki",
+    "tagline": "",
+    "description": "After stealing the Tesseract during the events of “Avengers: Endgame,” an alternate version of Loki is brought to the mysterious Time Variance Authority, a bureaucratic organization that exists outside of time and space and monitors the timeline. They give Loki a choice: face being erased from existence due to being a “time variant” or help fix the timeline and stop a greater threat.",
+    "notes": "Giving 6.5 for the second season's finale only. ...rest of the show is like, 5.5 I guess. (Still better than Moon Knight but there was nothing wrong with that either) But I really love the aesthetics and trench-wearing Loki.",
+    "poster_image": "/media-posters/show_loki_show.jpg"
+  },
+  {
+    "id": "the_white_tiger",
+    "type": "movie",
+    "rating": 5,
+    "status": "finished",
+    "title": "The White Tiger",
+    "tagline": "Ethics in the chicken coop",
+    "description": "An ambitious Indian driver uses his wit and cunning to escape from poverty and rise to the top. An epic journey based on the New York Times bestseller.",
+    "notes": "I have talked about movies which suffer from great, hype start, but end badly. This movie's really good start kept on being good until a very long time, until it suddenly hit an end? They skipped over the part where he actually uses any cunning to become a businessman? He was... pouring his heart out in this autobiography he was writing to a Chinese politician?",
+    "poster_image": "/media-posters/movie_the_white_tiger.jpg"
+  },
+  {
+    "id": "the_social_network",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "wishlist",
+    "title": "the social network",
+    "tagline": "",
+    "description": "In 2003, Harvard undergrad and computer programmer Mark Zuckerberg begins work on a new concept that eventually turns into the global social network known as Facebook. Six years later, Mark is one of the youngest billionaires ever, but his unprecedented success leads to both personal and legal complications when he ends up on the receiving end of two lawsuits, one involving his former friend.",
+    "notes": "I like the actor.",
+    "poster_image": "/media-posters/movie_the_social_network.jpg"
+  },
+  {
+    "id": "28_days_later",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "28 Days Later",
+    "tagline": "",
+    "description": "Twenty-eight days after a killer virus was accidentally unleashed from a British research facility, a small group of London survivors are caught in a desperate struggle to protect themselves from the infected. Carried by animals and humans, the virus turns those it infects into homicidal maniacs -- and it's absolutely impossible to contain.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_28_days_later.jpg"
   }
 ]
