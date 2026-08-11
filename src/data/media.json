@@ -734,7 +734,7 @@
     "title": "The Godfather",
     "tagline": "",
     "description": "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.",
-    "notes": "Look, I like to believe that I can watch \"boring\" movies, but... this movie was just boring. I get some scenes are pretty well done, sure, but is it ok for me to complain about the overall... tactics? Or lack thereof?",
+    "notes": "Look, I like to believe that I can watch \"boring\" movies, but... this movie was just boring. I get some scenes are pretty well done, sure, but is it ok for me to complain about the overall... tactics? Or lack thereof?\nThe genius political mastermind just seems to make good decisions, naturally. He just knows stuff. No reasoning given. Doesn't make you feel smarter after getting to see him work.",
     "poster_image": "/media-posters/movie_the_godfather.jpg"
   },
   {
@@ -828,7 +828,7 @@
   {
     "id": "24",
     "type": "show",
-    "rating": 4,
+    "rating": 3,
     "status": "dropped",
     "title": "24 (S1)",
     "tagline": "Generic, deus ex machina machine that just doesn't work today.",
@@ -945,5 +945,236 @@
     "description": "Twenty-eight days after a killer virus was accidentally unleashed from a British research facility, a small group of London survivors are caught in a desperate struggle to protect themselves from the infected. Carried by animals and humans, the virus turns those it infects into homicidal maniacs -- and it's absolutely impossible to contain.",
     "notes": "",
     "poster_image": "/media-posters/movie_28_days_later.jpg"
+  },
+  {
+    "id": "akira",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Akira",
+    "tagline": "",
+    "description": "1988\nA secret military project endangers Neo-Tokyo when it turns a biker gang member into a rampaging psychic psychopath that only two teenagers and a group of psychics can stop.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_akira.jpg"
+  },
+  {
+    "id": "andhadhun",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Andhadhun",
+    "tagline": "",
+    "description": "A series of mysterious events changes the life of a blind pianist who now must report a crime that was actually never witnessed by him.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_andhadhun.jpg"
+  },
+  {
+    "id": "arrival",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Arrival",
+    "tagline": "Linguistics!",
+    "description": "Taking place after alien crafts land around the world, an expert linguist is recruited by the military to determine whether they come in peace or are a threat.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_arrival.jpg"
+  },
+  {
+    "id": "b_hubali_2_the_conclusion",
+    "type": "movie",
+    "rating": 4,
+    "status": "finished",
+    "title": "Bāhubali 2: The Conclusion",
+    "tagline": "",
+    "description": "When Mahendra, the son of Bāhubali, learns about his heritage, he begins to look for answers. His story is juxtaposed with past events that unfolded in the Mahishmati Kingdom.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_b_hubali_2_the_conclusion.jpg"
+  },
+  {
+    "id": "b_hubali_the_beginning",
+    "type": "movie",
+    "rating": 4,
+    "status": "finished",
+    "title": "Bāhubali: The Beginning",
+    "tagline": "",
+    "description": "The young Shivudu is left as a foundling in a small village by his mother. By the time he’s grown up, it has become apparent that he possesses exceptional gifts. He meets the beautiful warrior princess Avanthika and learns that her queen has been held captive for the last 25 years. Shividu sets off to rescue her, discovering his own origins in the process.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_b_hubali_the_beginning.jpg"
+  },
+  {
+    "id": "chorus",
+    "type": "game",
+    "rating": 4,
+    "status": "dropped",
+    "title": "Chorus",
+    "tagline": "The V is pronounced as U.",
+    "description": "Deep Silver Fishlabs\nTake control of Nara on a quest to destroy the dark cult that created her. Unlock devastating weapons &amp; mind-bending abilities in an evolution of the space-combat shooter. Along with Forsaken, her sentient starfighter, explore ancient temples, engage in zero-g combat &amp; venture beyond waking reality.",
+    "notes": "Repetitive gameplay was disappointing. Concept sounds good but the only way to survive is by playing it safe and when there's very few enemies left it gets tedious to track them down and chase. Also unfair because I literally have a better ship than them. I like games which are more equal lol",
+    "poster_image": "/media-posters/game_chorus.jpg"
+  },
+  {
+    "id": "rage_2",
+    "type": "game",
+    "rating": 2.5,
+    "status": "finished",
+    "title": "RAGE 2",
+    "tagline": "Repetitive gameplay, uninspiring story, and game-breaking bugs. Everything else mediocre at best.",
+    "description": "id Software\nRAGE 2 brings together two studio powerhouses – Avalanche Studios, masters of open world insanity, and id Software, creators of the first-person shooter – to deliver a carnival of carnage where you can go anywhere, shoot anything, and explode everything.",
+    "notes": "",
+    "poster_image": "/media-posters/game_rage_2.jpg"
+  },
+  {
+    "id": "playtime",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "wishlist",
+    "title": "PlayTime",
+    "tagline": "",
+    "description": "1967\nClumsy Monsieur Hulot finds himself perplexed by the intimidating complexity of a gadget-filled Paris. He attempts to meet with a business contact but soon becomes lost. His roundabout journey parallels that of an American tourist, and as they weave through the inventive urban environment, they intermittently meet, developing an interest in one another. They eventually get together at a chaotic restaurant, along with several other quirky characters.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_playtime.jpg"
+  },
+  {
+    "id": "journey",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Journey",
+    "tagline": "",
+    "description": "thatgamecompany\nExplore the ancient, mysterious world of Journey as you soar above ruins and glide across sands to discover its secrets.",
+    "notes": "",
+    "poster_image": "/media-posters/game_journey.jpg"
+  },
+  {
+    "id": "kill_bill_vol_1",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Kill Bill: Vol. 1",
+    "tagline": "",
+    "description": "An assassin is shot by her ruthless employer, Bill, and other members of their assassination circle – but she lives to plot her vengeance.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_kill_bill_vol_1.jpg"
+  },
+  {
+    "id": "petscop",
+    "type": "show",
+    "rating": 6,
+    "status": "finished",
+    "title": "Petscop",
+    "tagline": "What the FUCK?",
+    "description": "Petscop is a YouTube horror web series by Tony Domenico, made to resemble a YouTube Let's Play series. The videos follow Paul Leskowitz, the protagonist, exploring and documenting a supposedly \"long-lost PlayStation video game\" titled Petscop.",
+    "notes": "Analog horror at its best.\nIt's not for you.\n\nIf you have any theories, feel free to contact me.",
+    "poster_image": "/media-posters/show_petscop.webp"
+  },
+  {
+    "id": "dude",
+    "type": "show",
+    "rating": 2,
+    "status": "finished",
+    "title": "Dude",
+    "tagline": "",
+    "description": "Dude depicts the life of a detective, scrambling to hunt down the answers behind a baffling case. It reels him into twisted relationships filled with perplexing events.",
+    "notes": "",
+    "poster_image": "/media-posters/show_dude.jpg"
+  },
+  {
+    "id": "el_camino_a_breaking_bad_movie",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "El Camino: A Breaking Bad Movie",
+    "tagline": "",
+    "description": "In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_el_camino_a_breaking_bad_movie.jpg"
+  },
+  {
+    "id": "esc_lena_raine",
+    "type": "game",
+    "rating": 6,
+    "status": "finished",
+    "title": "ESC",
+    "tagline": "by Lena Raine",
+    "description": "",
+    "notes": "Some of the plot twists.... didn't really make sense. But I really want to see more stories in this weird format.",
+    "poster_image": "/media-posters/game_esc_lena_raine.jpg"
+  },
+  {
+    "id": "escaped_chasm",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Escaped Chasm",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "poster_image": "/media-posters/game_escaped_chasm.jpg"
+  },
+  {
+    "id": "hyouka",
+    "type": "show",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Hyouka",
+    "tagline": "",
+    "description": "Oreki Houtarou is a minimalistic high school boy. One day, he joins the Classic Literature Club at his elder sister's request. There he meets Chitanda Eru, Fukube Satoshi, and Ibara Mayaka. Chitanda is a calm beautiful girl but she turns into an embodiment of curiosity once she says, \"I'm curious.\" Fukube is a smiling boy with a fantastic memory who calls himself a database. Ibara is a short girl and is strict with others and herself. They begin to investigate a case that occurred 45 years ago. Hints of the mystery are buried in an old collection of works of the former members of Classics Club. The collection is titled \"Hyouka.\"",
+    "notes": "",
+    "poster_image": "/media-posters/show_hyouka.jpg"
+  },
+  {
+    "id": "kentucky_route_zero_pc_edition",
+    "type": "game",
+    "rating": 5,
+    "status": "dropped",
+    "title": "Kentucky Route Zero",
+    "tagline": "",
+    "description": "Cardboard Computer\nKENTUCKY ROUTE ZERO is a magical realist adventure game about a secret highway running through the caves beneath Kentucky, and the mysterious folks who travel it.",
+    "notes": "I love the short stories that are shorter than 3 pages, but they do get tiring after a while, and I just wanted to get on with the adventure! Which the game had forgotten about, strangely.",
+    "poster_image": "/media-posters/game_kentucky_route_zero_pc_edition.jpg"
+  },
+  {
+    "id": "clair_obscur_expedition_33",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Clair Obscur: Expedition 33",
+    "tagline": "",
+    "description": "Sandfall Interactive\nLead the members of Expedition 33 on their quest to destroy the Paintress so that she can never paint death again. Explore a world of wonders inspired by Belle Époque France and battle unique enemies in this turn-based RPG with real-time mechanics.",
+    "notes": "",
+    "poster_image": "/media-posters/game_clair_obscur_expedition_33.jpg"
+  },
+  {
+    "id": "mad_max_fury_road",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "finished",
+    "title": "Mad Max: Fury Road",
+    "tagline": "A chase sequence that just never ends.",
+    "description": "An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order.",
+    "notes": "Unbelievably creative action",
+    "poster_image": "/media-posters/movie_mad_max_fury_road.jpg"
+  },
+  {
+    "id": "minority_report",
+    "type": "movie",
+    "rating": 7,
+    "status": "finished",
+    "title": "Minority Report",
+    "tagline": "",
+    "description": "John Anderton is a top 'Precrime' cop in the late-21st century, when technology can predict crimes before they're committed. But Anderton becomes the quarry when another investigator targets him for a murder charge.",
+    "notes": "Can't believe I sat on this one for so long...",
+    "poster_image": "/media-posters/movie_minority_report.jpg"
+  },
+  {
+    "id": "mission_impossible_-_fallout",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "finished",
+    "title": "Mission: Impossible - Fallout",
+    "tagline": "",
+    "description": "When an IMF mission ends badly, the world is faced with dire consequences. As Ethan Hunt takes it upon himself to fulfill his original briefing, the CIA begin to question his loyalty and his motives. The IMF team find themselves in a race against time, hunted by assassins while trying to prevent a global catastrophe.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_mission_impossible_-_fallout.jpg"
   }
 ]
