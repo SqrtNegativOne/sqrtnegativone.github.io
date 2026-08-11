@@ -21,7 +21,32 @@ export default defineConfig({
 	server: {
 		fs: {
 			allow: ['..']
+		},
+		// Pre-transform the layout and all route entry files immediately on startup
+		// so the first page open doesn't trigger a cold compile cascade.
+		warmup: {
+			clientFiles: [
+				'./src/routes/+layout.svelte',
+				'./src/routes/+page.svelte',
+				'./src/routes/media/+page.svelte',
+				'./src/routes/projects/+page.svelte',
+				'./src/routes/quotes/+page.svelte',
+				'./src/routes/skills/+page.svelte',
+				'./src/routes/socials/+page.svelte',
+				'./src/app.css',
+				'./src/lib/nav.ts',
+			]
 		}
+	},
+	// Eagerly pre-bundle dependencies so Vite doesn't discover and re-bundle them
+	// mid-request, which causes a page reload waterfall on first open.
+	optimizeDeps: {
+		include: [
+			'svelte',
+			'svelte/internal',
+			'svelte/store',
+			'@sveltejs/kit',
+		]
 	},
 	envDir: '..'
 });
