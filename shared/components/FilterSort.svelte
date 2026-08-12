@@ -45,7 +45,7 @@
     </button>
 
     {#if showFilterMenu}
-      <div class="absolute top-full right-0 sm:left-0 sm:right-auto mt-2 w-80 bg-zinc-900 border border-white/10 rounded-lg shadow-xl p-3 z-50 text-white flex flex-col gap-3">
+      <div class="absolute top-full right-0 mt-2 w-80 bg-zinc-900 border border-white/10 rounded-lg shadow-xl p-3 z-50 text-white flex flex-col gap-3">
         <div class="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1">Filters</div>
         {#if filters.length === 0}
           <div class="text-sm text-zinc-500 pb-2">No filters applied</div>
@@ -106,7 +106,7 @@
     </button>
 
     {#if showSortMenu}
-      <div class="absolute top-full right-0 sm:left-0 sm:right-auto mt-2 w-72 bg-zinc-900 border border-white/10 rounded-lg shadow-xl p-3 z-50 text-white flex flex-col gap-3">
+      <div class="absolute top-full right-0 mt-2 w-72 bg-zinc-900 border border-white/10 rounded-lg shadow-xl p-3 z-50 text-white flex flex-col gap-3">
         <div class="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-1">Sorts</div>
         {#if sorts.length === 0}
           <div class="text-sm text-zinc-500 pb-2">No sorts applied</div>

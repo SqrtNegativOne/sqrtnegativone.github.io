@@ -4,6 +4,7 @@
   import HeroCard from "./HeroCard.svelte";
   import LibraryRow from "./LibraryRow.svelte";
   import MediaModal from "./MediaModal.svelte";
+  import { tick } from "svelte";
   import FilterSort from "../../../../shared/components/FilterSort.svelte";
   import { applyFilters, applySorts } from "../../../../shared/utils/mediaFilters";
   
@@ -45,9 +46,10 @@
 
   function openDetails(item: any) {
     if (document.startViewTransition) {
-      document.startViewTransition(() => {
+      document.startViewTransition(async () => {
         activeItem = item;
         document.body.style.overflow = 'hidden';
+        await tick();
       });
     } else {
       activeItem = item;
@@ -57,11 +59,12 @@
 
   function closeDetails() {
     if (document.startViewTransition) {
-      document.startViewTransition(() => {
+      document.startViewTransition(async () => {
         activeItem = null;
         if (!fullPosterUrl) {
           document.body.style.overflow = '';
         }
+        await tick();
       });
     } else {
       activeItem = null;
