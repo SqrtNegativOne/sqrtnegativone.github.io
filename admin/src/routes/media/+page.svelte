@@ -2,7 +2,9 @@
   import MediaTable from './components/MediaTable.svelte';
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
-  import mediaProperties from '../../../../static/media-properties.json';
+  import FilterSort from '../../../../../shared/components/FilterSort.svelte';
+  import { applyFilters, applySorts } from '../../../../../shared/utils/mediaFilters';
+  import mediaProperties from '../../../../../static/media-properties.json';
 
   let { data, form } = $props();
 
@@ -17,23 +19,11 @@
   let searchResults: any[] = $state([]);
 
   let searchQuery = $state("");
-  let typeFilter = $state("all");
-  let statusFilter = $state("all");
-  let sortOrder = $state("title-asc");
+  let filters = $state([]);
+  let sorts = $state([{ property: 'title', direction: 'asc' }]);
 
   let filteredMedia = $derived(
-    data.media.filter((item: any) => {
-      if (searchQuery && !item.title?.toLowerCase().includes(searchQuery.toLowerCase()) && !item.id?.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-      if (typeFilter !== "all" && item.type !== typeFilter) return false;
-      if (statusFilter !== "all" && item.status !== statusFilter) return false;
-      return true;
-    }).sort((a: any, b: any) => {
-      if (sortOrder === "title-asc") return (a.title || "").localeCompare(b.title || "");
-      if (sortOrder === "title-desc") return (b.title || "").localeCompare(a.title || "");
-      if (sortOrder === "rating-desc") return (b.rating || 0) - (a.rating || 0);
-      if (sortOrder === "rating-asc") return (a.rating || 0) - (b.rating || 0);
-      return 0;
-    })
+    applySorts(applyFilters(data.media, filters, searchQuery), sorts)
   );
 
   function openNew() {
@@ -132,28 +122,11 @@
   </div>
 
   <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-lg mb-8 p-4 flex flex-col md:flex-row gap-4">
-    <div class="flex-1">
+    <div class="flex-1 flex gap-4">
       <input type="text" bind:value={searchQuery} placeholder="Search media by title or ID..." class="input-field w-full" />
-    </div>
-    <div class="flex gap-4">
-      <select bind:value={typeFilter} class="input-field">
-        <option value="all">All Types</option>
-        {#each mediaProperties.types as type}
-          <option value={type.value}>{type.label}s</option>
-        {/each}
-      </select>
-      <select bind:value={statusFilter} class="input-field">
-        <option value="all">All Statuses</option>
-        {#each mediaProperties.statuses as status}
-          <option value={status.value}>{status.label}</option>
-        {/each}
-      </select>
-      <select bind:value={sortOrder} class="input-field">
-        <option value="title-asc">Title (A-Z)</option>
-        <option value="title-desc">Title (Z-A)</option>
-        <option value="rating-desc">Rating (High to Low)</option>
-        <option value="rating-asc">Rating (Low to High)</option>
-      </select>
+      <div class="h-10">
+        <FilterSort bind:filters bind:sorts />
+      </div>
     </div>
   </div>
 

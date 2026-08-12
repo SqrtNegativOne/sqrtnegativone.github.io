@@ -4,34 +4,25 @@
   import HeroCard from "./HeroCard.svelte";
   import LibraryRow from "./LibraryRow.svelte";
   import MediaModal from "./MediaModal.svelte";
+  import FilterSort from "../../../../shared/components/FilterSort.svelte";
+  import { applyFilters, applySorts } from "../../../../shared/utils/mediaFilters";
   
   let searchQuery = $state("");
-  let typeFilter = $state("all");
-  let sortOrder = $state("rating-desc");
+  let filters = $state([]);
+  let sorts = $state([{ property: 'rating', direction: 'desc' }]);
 
   let filteredBuckets = $derived((() => {
+    const filtered = applyFilters(mediaData, filters, searchQuery);
+    const sorted = applySorts(filtered, sorts);
+    
     const buckets: { consuming: any[], library: any[] } = { consuming: [], library: [] };
-    for (const item of mediaData) {
-      if (searchQuery && !item.title?.toLowerCase().includes(searchQuery.toLowerCase()) && !item.tagline?.toLowerCase().includes(searchQuery.toLowerCase())) continue;
-      if (typeFilter !== "all" && item.type !== typeFilter) continue;
-
+    for (const item of sorted) {
       if (item.status === "consuming") {
         buckets.consuming.push(item);
       } else {
         buckets.library.push(item);
       }
     }
-    const sortFn = (a: any, b: any) => {
-      if (sortOrder === "title-asc") return (a.title || "").localeCompare(b.title || "");
-      if (sortOrder === "title-desc") return (b.title || "").localeCompare(a.title || "");
-      if (sortOrder === "rating-desc") return (b.rating || 0) - (a.rating || 0) || a.title.localeCompare(b.title);
-      if (sortOrder === "rating-asc") return (a.rating || 0) - (b.rating || 0) || a.title.localeCompare(b.title);
-      if (sortOrder === "status-asc") return (a.status || "").localeCompare(b.status || "") || a.title.localeCompare(b.title);
-      if (sortOrder === "status-desc") return (b.status || "").localeCompare(a.status || "") || a.title.localeCompare(b.title);
-      return 0;
-    };
-    buckets.consuming.sort(sortFn);
-    buckets.library.sort(sortFn);
     return buckets;
   })());
 
@@ -39,11 +30,17 @@
   let fullPosterUrl: string | null = $state(null);
 
   function toggleSort(column: string) {
-    if (sortOrder.startsWith(column)) {
-      sortOrder = sortOrder.endsWith('-asc') ? `${column}-desc` : `${column}-asc`;
+    const existingIndex = sorts.findIndex(s => s.property === column);
+    if (existingIndex >= 0) {
+      if (sorts[existingIndex].direction === 'desc') {
+        sorts[existingIndex].direction = 'asc';
+      } else {
+        sorts[existingIndex].direction = 'desc';
+      }
     } else {
-      sortOrder = column === 'rating' ? `${column}-desc` : `${column}-asc`;
+      sorts.push({ property: column, direction: column === 'title' || column === 'status' ? 'asc' : 'desc' });
     }
+    sorts = [...sorts];
   }
 
   function openDetails(item: any) {
@@ -96,20 +93,7 @@
     
     <div class="ml-filters">
       <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
-      <select bind:value={typeFilter} class="ml-select">
-        <option value="all">All Types</option>
-        {#each mediaProperties.types as type}
-          <option value={type.value}>{type.label}s</option>
-        {/each}
-      </select>
-      <select bind:value={sortOrder} class="ml-select">
-        <option value="rating-desc">Highest Rated</option>
-        <option value="rating-asc">Lowest Rated</option>
-        <option value="title-asc">Title (A-Z)</option>
-        <option value="title-desc">Title (Z-A)</option>
-        <option value="status-asc">Status (A-Z)</option>
-        <option value="status-desc">Status (Z-A)</option>
-      </select>
+      <FilterSort bind:filters bind:sorts />
     </div>
   </header>
 
@@ -131,13 +115,13 @@
         <div class="ml-table-head" role="row">
           <span role="columnheader" class="ml-col-poster"></span>
           <button role="columnheader" class="ml-col-title ml-sortable" onclick={() => toggleSort('title')}>
-            Title {#if sortOrder.startsWith('title')}{sortOrder.endsWith('asc') ? '▲' : '▼'}{/if}
+            Title {#if sorts.find(s => s.property === 'title')}{sorts.find(s => s.property === 'title')?.direction === 'asc' ? '▲' : '▼'}{/if}
           </button>
           <button role="columnheader" class="ml-col-status ml-sortable" onclick={() => toggleSort('status')}>
-            Status {#if sortOrder.startsWith('status')}{sortOrder.endsWith('asc') ? '▲' : '▼'}{/if}
+            Status {#if sorts.find(s => s.property === 'status')}{sorts.find(s => s.property === 'status')?.direction === 'asc' ? '▲' : '▼'}{/if}
           </button>
           <button role="columnheader" class="ml-col-rating ml-sortable" onclick={() => toggleSort('rating')}>
-            Rating {#if sortOrder.startsWith('rating')}{sortOrder.endsWith('asc') ? '▲' : '▼'}{/if}
+            Rating {#if sorts.find(s => s.property === 'rating')}{sorts.find(s => s.property === 'rating')?.direction === 'asc' ? '▲' : '▼'}{/if}
           </button>
         </div>
         {#each filteredBuckets.library as item (item.type + '-' + item.id)}
