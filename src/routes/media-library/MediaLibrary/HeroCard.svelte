@@ -1,6 +1,6 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
-  import RatingChart from "./RatingChart.svelte";
+  import RatingChart from "../../../../shared/components/RatingChart.svelte";
   
   let { item, activeItem, openDetails, openFullPoster } = $props<{ item: any; activeItem?: any; openDetails: (item: any) => void; openFullPoster?: (url: string) => void }>();
 </script>

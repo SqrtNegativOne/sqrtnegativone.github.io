@@ -190,21 +190,7 @@
 
 
 
-  .ml-rating {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px;
-    color: oklch(0.9707 0.0027 286.35);
-    white-space: nowrap;
-  }
 
-  .ml-rating-num {
-    font-weight: 600;
-  }
-
-  .ml-rating-sep,
-  .ml-rating-max {
-    color: oklch(0.5416 0.0154 285.87);
-  }
 
   @media (max-width: 640px) {
     .ml-modal-grid {

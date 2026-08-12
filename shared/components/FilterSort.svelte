@@ -80,7 +80,7 @@
                   <input type="number" bind:value={filter.value} class="bg-black/30 border border-white/10 rounded px-2 py-0.5 w-16 text-zinc-200 outline-none" min="1" max="7" />
                 {/if}
 
-                <button onclick={() => removeFilter(i)} class="text-zinc-500 hover:text-white ml-auto">
+                <button onclick={() => removeFilter(i)} class="text-zinc-500 hover:text-white ml-auto" aria-label="Remove filter">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
               </div>
@@ -125,7 +125,7 @@
                   <option value="desc" class="bg-zinc-800">Descending</option>
                 </select>
 
-                <button onclick={() => removeSort(i)} class="text-zinc-500 hover:text-white ml-auto">
+                <button onclick={() => removeSort(i)} class="text-zinc-500 hover:text-white ml-auto" aria-label="Remove sort">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
               </div>
