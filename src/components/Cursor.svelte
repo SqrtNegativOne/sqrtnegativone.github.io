@@ -7,8 +7,8 @@
   let cursor;
 
   onMount(() => {
-    // Disable on mobile/touch devices
-    if (window.matchMedia('(max-width: 768px)').matches || ('ontouchstart' in window) || navigator.maxTouchPoints > 0) {
+    // Disable on touch devices
+    if (('ontouchstart' in window) || navigator.maxTouchPoints > 0) {
       return;
     }
 
@@ -37,11 +37,6 @@
     z-index: 99999 !important;
   }
 
-  @media (max-width: 768px) {
-    :global(.mf-cursor) {
-      display: none !important;
-    }
-  }
 
   /* Bulletproof CSS override: If a modal or menu is open ANYWHERE on the page, 
      disable the expensive blend mode on the cursor to prevent stutter. */
