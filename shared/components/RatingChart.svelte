@@ -7,9 +7,11 @@
 
 <div class="flex items-center gap-2">
   <div class="relative w-[22px] h-[22px] flex items-center justify-center shrink-0">
-    <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
-      <path class="{bgClass}" stroke-width="4" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-      <path class="{colorClass}" stroke-width="4" stroke-dasharray="{percent}, 100" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+    <svg class="w-full h-full" viewBox="0 0 36 36">
+      <g transform="rotate(-90 18 18)">
+        <path class="{bgClass}" stroke-width="4" stroke="currentColor" fill="none" stroke-linecap="round" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+        <path class="{colorClass}" stroke-width="4" stroke-dasharray="{percent}, 100" stroke="currentColor" fill="none" stroke-linecap="round" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+      </g>
     </svg>
   </div>
   <span class="font-medium font-mono text-[15px] {colorClass}">{rating}</span>

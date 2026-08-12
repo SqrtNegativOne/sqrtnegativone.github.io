@@ -30,15 +30,17 @@
         {/if}
       </div>
       <div class="ml-modal-info">
-        <h2 class="ml-modal-title flex items-center gap-3">
+        <h2 class="ml-modal-title">
           {item.title}
-          <StatusBadge status={item.status} />
         </h2>
         {#if item.tagline}
           <p class="ml-modal-tagline">{item.tagline}</p>
         {/if}
         <div class="ml-modal-meta">
-          <TypeBadge type={item.type} variant="badge" />
+          <div class="flex items-center gap-2">
+            <TypeBadge type={item.type} variant="icon" sizeClass="w-[18px] h-[18px]" />
+            <StatusBadge status={item.status} />
+          </div>
           <RatingChart rating={item.rating} />
         </div>
         {#if item.description}
@@ -108,7 +110,7 @@
   }
 
   .ml-modal-poster {
-    border-radius: 8px;
+    border-radius: 4px;
     overflow: hidden;
     background: oklch(0.2329 0.0095 285.64);
     aspect-ratio: 2/3;

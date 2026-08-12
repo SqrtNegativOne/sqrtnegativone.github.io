@@ -29,7 +29,7 @@
   <span role="cell" class="ml-col-title">
     <span class="ml-row-title-container">
       <span class="ml-row-title">{item.title}</span>
-      <TypeBadge type={item.type} variant="icon" />
+      <TypeBadge type={item.type} variant="icon" sizeClass="w-5 h-5" />
       <StatusBadge status={item.status} />
     </span>
     {#if item.tagline}
@@ -44,7 +44,7 @@
 <style>
   .ml-row {
     display: grid;
-    grid-template-columns: 76px 1fr 100px;
+    grid-template-columns: 60px 1fr 70px;
     align-items: center;
     gap: 16px;
     padding: 12px 8px;
@@ -58,7 +58,8 @@
 
   .ml-row-title {
     display: block;
-    font-size: 18px;
+    font-family: "Manrope", system-ui, sans-serif;
+    font-size: 20px;
     font-weight: 500;
     letter-spacing: -0.005em;
   }
@@ -81,6 +82,13 @@
     position: relative;
     background: oklch(0.2329 0.0095 285.64);
     overflow: hidden;
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .ml-poster:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px oklch(0 0 0 / 0.5);
+    z-index: 10;
   }
 
   .ml-poster img {
@@ -88,17 +96,12 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 300ms ease;
-  }
-
-  .ml-poster:hover img {
-    transform: scale(1.05);
   }
 
   .ml-poster--xs {
     aspect-ratio: 2 / 3;
     width: 60px;
-    border-radius: 6px;
+    border-radius: 3px;
     flex-shrink: 0;
   }
 
@@ -141,7 +144,7 @@
 
   @media (max-width: 640px) {
     .ml-row {
-      grid-template-columns: 44px 1fr auto;
+      grid-template-columns: 60px 1fr auto;
       grid-template-areas:
         "poster title rating"
         "poster tagline tagline";

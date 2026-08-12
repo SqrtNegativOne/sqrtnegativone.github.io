@@ -1,6 +1,7 @@
 <script>
   import { onMount, onDestroy } from "svelte";
   import { goto } from "$app/navigation";
+  import { browser } from "$app/environment";
 
   let { view = "", hideHint = false } = $props();
 
@@ -17,143 +18,75 @@
     { key: "colophon",     label: "Colophon",     path: "/colophon",      importance: 1 },
   ];
 
-  const EXIT_MS = 420;
-
-  function getMenuGeometry() {
-    if (typeof window === 'undefined') return { top:0, right:0, bottom:0, left:0, rows:0, cols:0, cell:0, mobile:false };
-    const W = window.innerWidth;
-    const H = window.innerHeight;
-    const mobile = W <= 640;
-    const tablet = W <= 1024 && !mobile;
-    const cols   = mobile ? 2 : tablet ? 4 : 6;
-    const h      = mobile ? 16 : 40;
-    const cell   = (W - 2 * h) / cols;
-    const rows   = Math.floor((H - 2 * h) / cell);
-    const v      = (H - rows * cell) / 2;
-    return { top: v, right: h, bottom: v, left: h, rows, cols, cell, mobile };
-  }
-
-  function cellDims(item, mobile) {
-    if (mobile)                  return { w: 1, h: 1 };
-    if (item.importance === 3)   return { w: 2, h: 2 };
-    if (item.importance === 2)   return { w: 2, h: 1 };
-    return { w: 1, h: 1 };
-  }
-
-  function packGrid(items, cols) {
-    const occ = [];
-    const fits = (r, c, w, h) => {
-      if (c + w > cols) return false;
-      for (let dr = 0; dr < h; dr++)
-        for (let dc = 0; dc < w; dc++)
-          if (occ[r + dr]?.[c + dc]) return false;
-      return true;
-    };
-    const set = (r, c, w, h) => {
-      for (let dr = 0; dr < h; dr++) {
-        if (!occ[r + dr]) occ[r + dr] = [];
-        for (let dc = 0; dc < w; dc++) occ[r + dr][c + dc] = true;
-      }
-    };
-    return items.map(({ w, h }) => {
-      for (let r = 0; ; r++) {
-        for (let c = 0; c < cols; c++) {
-          if (fits(r, c, w, h)) { set(r, c, w, h); return { row: r, col: c, w, h }; }
-        }
-      }
-    });
-  }
-
-  function edgeMotion(p, rows, cols, cellPx) {
-    const dT = p.row;
-    const dB = rows - p.row - p.h;
-    const dL = p.col;
-    const dR = cols - p.col - p.w;
-    const m = Math.min(dT, dB, dL, dR);
-    if (m === dT) return { x: 0,                          y: -(p.row + p.h) * cellPx, dist: dT };
-    if (m === dB) return { x: 0,                          y:  (rows - p.row) * cellPx, dist: dB };
-    if (m === dL) return { x: -(p.col + p.w) * cellPx,    y: 0,                        dist: dL };
-    return          { x:  (cols - p.col) * cellPx,    y: 0,                        dist: dR };
-  }
-
   let open = $state(false);
-  let closing = $state(false);
-  let overlayStyle = $state({});
-  let layout = $state({ nav: [], deco: [], maxDist: 0 });
-  let closeTimer;
+
+  let query = $state("");
+  let selectedIndex = $state(0);
+  let searchInput = $state();
+  
+  let filteredItems = $derived(
+    NAV_ITEMS.filter(
+      (item) => item.key !== view && item.label.toLowerCase().includes(query.toLowerCase())
+    )
+  );
+
+  $effect(() => {
+    // Reset selection when query changes
+    if (query !== undefined) {
+      selectedIndex = 0;
+    }
+  });
+
+  $effect(() => {
+    if (open && searchInput) {
+      if (window.innerWidth > 640) {
+        searchInput.focus();
+      }
+    }
+  });
 
   function closeMenu() {
-    if (closing) return;
-    closing = true;
-    document.documentElement.style.removeProperty("--frame-v");
+    open = false;
     document.body.classList.remove("menu-is-open");
-    closeTimer = setTimeout(() => {
-      open = false;
-      closing = false;
-    }, EXIT_MS);
+    // Clear query slightly after transition ends
+    setTimeout(() => { query = ""; }, 150);
   }
 
   function handleOpen() {
-    const geo = getMenuGeometry();
-    document.documentElement.style.setProperty("--frame-v", `${geo.top}px`);
     document.body.classList.add("menu-is-open");
-
-    const sortedNav = NAV_ITEMS
-      .filter((item) => item.key !== view)
-      .slice()
-      .sort((a, b) => b.importance - a.importance)
-      .map((item) => ({ ...item, ...cellDims(item, geo.mobile) }));
-
-    const totalSlots = geo.rows * geo.cols;
-    const used = sortedNav.reduce((s, it) => s + it.w * it.h, 0);
-    const decoCount = Math.max(0, totalSlots - used);
-    const decoItems = Array.from({ length: decoCount }, () => ({ w: 1, h: 1 }));
-
-    const placements = packGrid([...sortedNav, ...decoItems], geo.cols);
-    const navPlacements  = placements.slice(0, sortedNav.length);
-    const decoPlacements = placements.slice(sortedNav.length);
-
-    const nav = sortedNav.map((it, i) => ({
-      item: it,
-      motion: edgeMotion(navPlacements[i], geo.rows, geo.cols, geo.cell),
-    }));
-    const deco = decoPlacements.map((p) => ({
-      motion: edgeMotion(p, geo.rows, geo.cols, geo.cell),
-    }));
-
-    const maxDist = Math.max(
-      0,
-      ...nav.map((c) => c.motion.dist),
-      ...deco.map((c) => c.motion.dist),
-    );
-
-    layout = { nav, deco, maxDist };
-    overlayStyle = { top: geo.top, right: geo.right, bottom: geo.bottom, left: geo.left };
     open = true;
   }
 
   function handleNav(item) {
+    if (!item) return;
     closeMenu();
     setTimeout(() => {
       if (item.external) window.open(item.path, '_blank', 'noopener,noreferrer');
       else goto(item.path);
-    }, EXIT_MS);
+    }, 150);
   }
 
-  const inDelay  = (dist) => `${dist * 60}ms`;
-  const outDelay = (dist) => `${(layout.maxDist - dist) * 35}ms`;
-
-  function onKeydown(e) {
-    if (open && e.key === "Escape") {
+  function onGlobalKeydown(e) {
+    if (open && (e.key === "Escape" || e.code === "Escape")) {
+      e.preventDefault();
       closeMenu();
+      return;
     }
-    if (open && e.key >= "0" && e.key <= "9") {
-      let index = parseInt(e.key, 10) - 1;
-      if (index === -1) index = 9; // '0' maps to 10th item (index 9)
-      if (layout.nav[index]) {
-        handleNav(layout.nav[index].item);
+    
+    // Command Palette navigation
+    if (open) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        selectedIndex = (selectedIndex + 1) % filteredItems.length;
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        selectedIndex = (selectedIndex - 1 + filteredItems.length) % filteredItems.length;
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        handleNav(filteredItems[selectedIndex]);
       }
     }
+
     if (!open && (e.code === "Space" || e.key === " ")) {
       if (window.innerWidth <= 640) return;
       const t = e.target;
@@ -165,14 +98,21 @@
 
   onMount(() => {
     return () => {
-      clearTimeout(closeTimer);
-      document.documentElement.style.removeProperty("--frame-v");
       document.body.classList.remove("menu-is-open");
     };
   });
 </script>
 
-<svelte:window on:keydown={onKeydown} />
+<svelte:window 
+  onkeydown={onGlobalKeydown} 
+  onkeyup={(e) => {
+    // Catch escape on keyup in case keydown was swallowed by the browser
+    if (open && (e.key === "Escape" || e.code === "Escape")) {
+      e.preventDefault();
+      closeMenu();
+    }
+  }} 
+/>
 
 <button
   class="nav-burger {open ? 'nav-burger--open' : ''}"
@@ -188,69 +128,65 @@
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="menu-hint" aria-hidden="true" onclick={() => { if (!open) handleOpen(); }} style="cursor: pointer;">
-    {#if open}
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
-        <span>press esc to escape</span>
-        <span>press the tile's number to open that tile</span>
-      </div>
-    {:else}
+    <div class="hint-text {open ? '' : 'is-visible'}">
       press space to activate menu
-    {/if}
-  </div>
-{/if}
-
-{#if open}
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div
-    class="menu-scrim {closing ? 'menu-scrim--closing' : ''}"
-    style="top: {overlayStyle.top}px; right: {overlayStyle.right}px; bottom: {overlayStyle.bottom}px; left: {overlayStyle.left}px;"
-    onclick={closeMenu}
-  ></div>
-
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div
-    class="menu-overlay {closing ? 'menu-overlay--closing' : ''}"
-    style="top: {overlayStyle.top}px; right: {overlayStyle.right}px; bottom: {overlayStyle.bottom}px; left: {overlayStyle.left}px;"
-    onclick={closeMenu}
-  >
-    <div class="menu-grid" onclick={(e) => e.stopPropagation()}>
-      {#each layout.nav as { item, motion }, i (item.key)}
-        <button
-          class="menu-cell menu-cell--imp{item.importance} {closing ? 'menu-cell--out' : ''}"
-          style="
-            --from-x: {motion.x}px;
-            --from-y: {motion.y}px;
-            --delay: {inDelay(motion.dist)};
-            --out-delay: {outDelay(motion.dist)};
-          "
-          onclick={() => handleNav(item)}
-        >
-          <span class="menu-cell__num">0{i + 1}</span>
-          <span class="menu-cell__label">{item.label}</span>
-        </button>
-      {/each}
-
-      {#each layout.deco as { motion }, i}
-        <div
-          class="menu-cell menu-cell--deco {closing ? 'menu-cell--out' : ''}"
-          style="
-            --from-x: {motion.x}px;
-            --from-y: {motion.y}px;
-            --delay: {inDelay(motion.dist)};
-            --out-delay: {outDelay(motion.dist)};
-          "
-        ></div>
-      {/each}
+    </div>
+    <div class="hint-text {open ? 'is-visible' : ''}">
+      <span>type to search • ↑↓ to navigate • enter to select • esc to close</span>
     </div>
   </div>
 {/if}
 
+<!-- We keep the menu in the DOM permanently to prevent layout thrashing and stutter -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="menu-scrim {open ? 'is-open' : ''}" onclick={closeMenu}></div>
+
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<div class="menu-overlay {open ? 'is-open' : ''}" onclick={closeMenu}>
+  <div class="command-palette-wrapper {open ? 'is-open' : ''}">
+    <div class="command-palette" onclick={(e) => e.stopPropagation()}>
+      <div class="search-header">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input 
+          bind:this={searchInput}
+          bind:value={query} 
+          placeholder="Where to?" 
+          class="search-input"
+          spellcheck="false"
+          autocomplete="off"
+          tabindex={open ? 0 : -1}
+          onkeydown={(e) => {
+            if (e.key === "Escape" || e.code === "Escape") {
+              e.preventDefault();
+              closeMenu();
+            }
+          }}
+        />
+      </div>
+      <div class="results">
+        {#each filteredItems as item, i (item.key)}
+          <button 
+            class="result-item {i === selectedIndex ? 'selected' : ''}" 
+            onclick={() => handleNav(item)}
+            onpointerenter={() => selectedIndex = i}
+            tabindex={open ? 0 : -1}
+          >
+            <span class="result-label">{item.label}</span>
+            <span class="result-path">{item.path}</span>
+          </button>
+        {/each}
+        {#if filteredItems.length === 0}
+          <div class="no-results">No results found for "{query}"</div>
+        {/if}
+      </div>
+    </div>
+  </div>
+</div>
+
 <style>
-/* ══════════════════════════════════════════════
-   Hamburger / X button — mobile only (desktop uses Space key)
-   ══════════════════════════════════════════════ */
+/* Hamburger / X button */
 .nav-burger {
   display: none;
   position: fixed;
@@ -266,7 +202,7 @@
   background: oklch(1 0 0 / 0.08);
   border: 1px solid oklch(1 0 0 / 0.14);
   border-radius: 999px;
-  transition: background 0.25s, border-color 0.25s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .nav-burger:hover {
@@ -280,26 +216,21 @@
   width: 100%;
   background: var(--text);
   transform-origin: center;
-  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity  0.2s ease;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.1s ease;
 }
 
-/* Morph lines → X */
 .nav-burger--open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .nav-burger--open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .nav-burger--open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-/* ══════════════════════════════════════════════
-   Menu hint — "press space to activate menu"
-   Sits centered in the bottom margin space, outside the border frame.
-   ══════════════════════════════════════════════ */
+/* Menu hint */
 .menu-hint {
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  height: var(--frame-v);
-  display: flex;
+  height: var(--frame-v, 40px);
+  display: grid;
   align-items: center;
   justify-content: center;
   z-index: 10001;
@@ -311,271 +242,223 @@
   color: rgba(var(--text-secondary-rgb), 0.7);
   pointer-events: none;
   user-select: none;
-  transition: opacity 0.28s ease;
 }
-
-
-
-/* ══════════════════════════════════════════════
-   Overlay — flush against the viewport border frame
-   ══════════════════════════════════════════════ */
-.menu-overlay {
-  position: fixed;
-  /* top/right/bottom/left set via inline style (JS-computed for pixel-perfect fit) */
-  z-index: 500;
-  overflow: hidden;
-  background: transparent;
-}
-
-.menu-overlay--closing {
-  pointer-events: none;
-}
-
-/* ══════════════════════════════════════════════
-   Full-viewport scrim — separate from overlay so it isn't
-   clipped by overflow:hidden and backdrop-filter works on
-   all mobile browsers without pseudo-element quirks.
-   ══════════════════════════════════════════════ */
-.menu-scrim {
-  position: fixed;
-  z-index: 499;
-  background: oklch(0 0 0 / 0.95);
-  animation: overlay-bg-in 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  will-change: transform, opacity;
-}
-
-@supports (-moz-appearance:none) {
-  .nav-burger, .menu-scrim {
-    backdrop-filter: none;
-  }
-  .menu-scrim {
-    background: oklch(0 0 0 / 0.95);
-  }
-  .nav-burger {
-    background: oklch(0.2768 0 0 / 0.9);
-  }
-}
-
-.menu-scrim--closing {
-  pointer-events: none;
-  animation: overlay-bg-out 0.42s ease forwards;
-}
-
-@keyframes overlay-bg-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes overlay-bg-out {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-/* ══════════════════════════════════════════════
-   Bento grid — desktop: 6 equal columns
-   ══════════════════════════════════════════════ */
-.menu-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: calc((100vw - 80px) / 6);
-  grid-auto-flow: row dense;
-  gap: 1px;
-  width: 100%;
-}
-
-/* ══════════════════════════════════════════════
-   Importance tiers
-   ══════════════════════════════════════════════ */
-.menu-cell--imp3 {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-.menu-cell--imp3 .menu-cell__label {
-  font-size: clamp(2rem, 5.5vw, 6rem);
-}
-
-.menu-cell--imp2 {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-.menu-cell--imp2 .menu-cell__label {
-  font-size: clamp(1.2rem, 2.8vw, 3rem);
-}
-
-.menu-cell--imp1 .menu-cell__label {
-  font-size: clamp(0.85rem, 1.6vw, 1.8rem);
-  color: oklch(1 0 0 / 0.35);
-}
-.menu-cell--imp1:hover .menu-cell__label {
-  color: oklch(1 0 0 / 0.85);
-}
-
-/* ══════════════════════════════════════════════
-   Cells — frosted glass panels
-   Plain backdrop-blur over the page content, faint
-   diagonal highlight, inset bevel for thickness.
-   ══════════════════════════════════════════════ */
-.menu-cell {
-  position: relative;
+.hint-text {
+  grid-area: 1 / 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-end;
-  padding: clamp(0.5rem, 1.5vw, 1.25rem);
-  background:
-    linear-gradient(135deg, oklch(1 0 0 / 0.06) 0%, oklch(1 0 0 / 0) 55%),
-    oklch(0.1638 0 0 / 0.82);
-  box-shadow:
-    inset  1px  1px 0 oklch(1 0 0 / 0.07),
-    inset -1px -1px 0 oklch(0 0 0 / 0.22);
-  border: none;
-  overflow: hidden;
-  transition: background 0.25s ease;
-  text-align: left;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+.hint-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.menu-cell:not(.menu-cell--deco):hover {
-  background:
-    linear-gradient(135deg, oklch(1 0 0 / 0.12) 0%, oklch(1 0 0 / 0) 55%),
-    oklch(0.2264 0 0 / 0.88);
-}
-
-.menu-cell--active {
-  background:
-    linear-gradient(135deg, oklch(1 0 0 / 0.1) 0%, oklch(1 0 0 / 0) 55%),
-    oklch(0.2264 0 0 / 0.85);
-}
-
-.menu-cell--deco {
+/* Scrim */
+.menu-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 499;
+  background: oklch(0 0 0 / 0.85);
+  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  background:
-    linear-gradient(135deg, oklch(1 0 0 / 0.04) 0%, oklch(1 0 0 / 0) 55%),
-    oklch(0.1638 0 0 / 0.78);
+  transition: opacity 0.15s ease-out, visibility 0.15s ease-out;
+  will-change: opacity;
+}
+.menu-scrim.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-/* Index label — top-left */
-.menu-cell__num {
-  position: absolute;
-  top: clamp(0.4rem, 1vw, 0.85rem);
-  left: clamp(0.4rem, 1vw, 0.85rem);
-  font-family: "IBM Plex Mono", monospace;
-  font-size: clamp(0.45rem, 0.6vw, 0.6rem);
-  letter-spacing: 0.15em;
-  color: oklch(1 0 0 / 0.18);
-  text-transform: uppercase;
-  transition: color 0.2s;
+/* Overlay & Wrapper */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 15vh 2rem 2rem;
+  pointer-events: none;
+}
+.menu-overlay.is-open {
+  pointer-events: auto;
 }
 
-.menu-cell:hover .menu-cell__num,
-.menu-cell--active .menu-cell__num {
+.command-palette-wrapper {
+  width: 100%;
+  max-width: 640px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.15s;
+  will-change: transform, opacity;
+}
+.command-palette-wrapper.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Command Palette */
+.command-palette {
+  display: flex;
+  flex-direction: column;
+  background: oklch(0.15 0 0 / 0.95);
+  border: 1px solid oklch(1 0 0 / 0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px oklch(0 0 0 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.1);
+}
+
+.search-header {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid oklch(1 0 0 / 0.15);
+  gap: 1rem;
+}
+
+.search-icon {
   color: oklch(1 0 0 / 0.4);
 }
 
-/* Page label — bottom-left */
-.menu-cell__label {
-  font-family: "Instrument Serif", serif;
-  font-size: clamp(1.2rem, 3vw, 3rem);
-  color: oklch(1 0 0 / 0.55);
-  letter-spacing: -0.02em;
-  font-weight: 400;
-  line-height: 1;
-  transition: color 0.2s;
-  user-select: none;
-}
-
-.menu-cell:hover .menu-cell__label {
-  color: oklch(1 0 0 / 0.98);
-}
-
-.menu-cell--active .menu-cell__label {
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
   color: oklch(1 0 0 / 0.9);
+  font-family: inherit;
+  font-size: 1.25rem;
+  outline: none;
+}
+.search-input::placeholder {
+  color: oklch(1 0 0 / 0.3);
 }
 
-/* ══════════════════════════════════════════════
-   Edge-aware slide animation
-   Each cell receives per-instance --from-x / --from-y from JS, computed
-   so the cell starts parked just outside the overlay edge nearest to it.
-   --delay staggers the in-wave from border inward;
-   --out-delay reverses it on close.
-   ══════════════════════════════════════════════ */
-/* No opacity transition — cells start fully outside the overlay edge (JS sets
-   --from-x/--from-y to the full offset to outside) and overflow:hidden on
-   .menu-overlay clips them until they slide into view, so they appear as a
-   clean push from the edge rather than fading in mid-grid. */
-@keyframes cell-from-edge {
-  from { transform: translate(var(--from-x, 0), var(--from-y, 0)); }
-  to   { transform: translate(0, 0); }
+.results {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 50vh;
+  padding: 0.5rem;
 }
 
-@keyframes cell-to-edge {
-  from { transform: translate(0, 0); }
-  to   { transform: translate(var(--from-x, 0), var(--from-y, 0)); }
+.result-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+  color: oklch(1 0 0 / 0.6);
 }
 
-.menu-cell {
-  animation: cell-from-edge 0.52s cubic-bezier(0.22, 0.7, 0.2, 1) var(--delay, 0ms) both;
-  will-change: transform, opacity;
+.result-item.selected {
+  background: oklch(1 0 0 / 0.1);
+  color: oklch(1 0 0 / 0.95);
 }
 
-.menu-cell--out {
-  animation: cell-to-edge 0.4s cubic-bezier(0.55, 0.05, 0.75, 0.4) var(--out-delay, 0ms) both;
+.result-label {
+  font-family: inherit;
+  font-size: 1.5rem;
+  line-height: 1.2;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .menu-cell,
-  .menu-cell--out {
-    animation-duration: 0.001s;
-  }
+.result-path {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.75rem;
+  opacity: 0.5;
 }
 
-/* ══════════════════════════════════════════════
-   Responsive — tablet (641px – 1024px)
-   ══════════════════════════════════════════════ */
-@media (max-width: 1024px) and (min-width: 641px) {
-  .nav-burger {
-    display: flex;
-  }
-
-  .menu-hint {
-    display: none;
-  }
-
-  .menu-grid {
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: calc((100vw - 80px) / 4);
-  }
-
-  .menu-cell--imp3 .menu-cell__label { font-size: clamp(2rem, 8vw, 5rem); }
-  .menu-cell--imp2 .menu-cell__label { font-size: clamp(1.2rem, 4vw, 2.5rem); }
-  .menu-cell--imp1 .menu-cell__label { font-size: clamp(0.85rem, 3vw, 1.8rem); }
+.no-results {
+  padding: 2rem;
+  text-align: center;
+  color: oklch(1 0 0 / 0.4);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.9rem;
 }
 
-/* ══════════════════════════════════════════════
-   Responsive — mobile (≤640px, inset 16px)
-   ══════════════════════════════════════════════ */
+/* Scrollbar styling */
+.results::-webkit-scrollbar {
+  width: 8px;
+}
+.results::-webkit-scrollbar-track {
+  background: transparent;
+}
+.results::-webkit-scrollbar-thumb {
+  background: oklch(1 0 0 / 0.15);
+  border-radius: 4px;
+}
+
+/* Responsive — Mobile */
 @media (max-width: 640px) {
   .nav-burger {
     display: flex;
   }
-
   .menu-hint {
     display: none;
   }
-
-  .menu-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: calc((100vw - 32px) / 2);
+  
+  .menu-overlay {
+    padding: 0;
+    align-items: flex-start;
+  }
+  
+  .command-palette-wrapper {
+    max-width: 100%;
+    max-height: 100vh;
+    height: 100vh;
+  }
+  
+  .command-palette {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    height: 100%;
+    padding-top: 6rem;
   }
 
-  .menu-cell--imp3,
-  .menu-cell--imp2 {
-    grid-column: span 1;
-    grid-row: span 1;
+  .search-header {
+    display: none;
   }
 
-  .menu-cell--imp3 .menu-cell__label { font-size: clamp(1.5rem, 9vw, 2.8rem); }
-  .menu-cell--imp2 .menu-cell__label { font-size: clamp(1.1rem, 7vw, 2rem); }
-  .menu-cell--imp1 .menu-cell__label { font-size: clamp(0.85rem, 5vw, 1.5rem); }
+  .results {
+    max-height: none;
+    flex: 1;
+    padding: 1rem 2rem;
+    gap: 0.5rem;
+  }
+  
+  .result-item {
+    padding: 1rem 0;
+    border-radius: 0;
+  }
+
+  .result-item.selected {
+    background: transparent;
+    color: oklch(1 0 0 / 0.95);
+  }
+  
+  .result-label {
+    font-size: 3rem;
+  }
+  
+  .result-path {
+    display: none;
+  }
 }
-
 </style>

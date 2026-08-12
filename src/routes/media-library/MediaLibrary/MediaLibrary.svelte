@@ -6,6 +6,8 @@
   import MediaModal from "./MediaModal.svelte";
   import FilterSort from "../../../../shared/components/FilterSort.svelte";
   import { applyFilters, applySorts } from "../../../../shared/utils/mediaFilters";
+  import { fade, scale } from "svelte/transition";
+  import { cubicOut } from "svelte/easing";
   
   let searchQuery = $state("");
   let filters = $state([]);
@@ -72,8 +74,10 @@
 
 <div class="ml-root">
   <header class="ml-header">
-    <h1 class="ml-title">Media Library</h1>
-    <p class="ml-tagline">Things I'm watching, reading, playing.</p>
+    <div class="ml-header-text">
+      <h1 class="ml-title">Media Library</h1>
+      <p class="ml-tagline">Things I'm watching, reading, playing.</p>
+    </div>
     
     <div class="ml-filters">
       <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
@@ -123,11 +127,11 @@
   {#if fullPosterUrl}
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class="ml-full-poster-backdrop" onclick={closeFullPoster}>
+    <div class="ml-full-poster-backdrop" onclick={closeFullPoster} transition:fade={{ duration: 150 }}>
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-      <img src={fullPosterUrl} alt="Full view" class="ml-full-poster-img" onclick={(e) => e.stopPropagation()} />
-      <button class="ml-modal-close" onclick={closeFullPoster} aria-label="Close poster">
+      <img src={fullPosterUrl} alt="Full view" class="ml-full-poster-img" onclick={(e) => e.stopPropagation()} transition:scale={{ start: 0.95, duration: 150, easing: cubicOut }} />
+      <button class="fixed top-4 right-4 sm:hidden text-[oklch(0.6363_0.0133_286.02)] hover:text-white bg-black/20 hover:bg-black/40 p-2 rounded-full transition-colors" onclick={closeFullPoster} aria-label="Close poster">
         <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
     </div>
@@ -172,6 +176,9 @@
 
 .ml-header {
   margin-bottom: 40px;
+}
+
+.ml-header-text {
   padding-right: 60px; /* leave room for the hamburger */
 }
 
@@ -253,7 +260,7 @@
 
 .ml-table-head {
   display: grid;
-  grid-template-columns: 60px 1fr 90px;
+  grid-template-columns: 60px 1fr 70px;
   align-items: center;
   gap: 16px;
   padding: 12px 8px;

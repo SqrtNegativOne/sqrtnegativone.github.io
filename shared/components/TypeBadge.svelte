@@ -1,7 +1,7 @@
 <script lang="ts">
   import { icons } from '../../src/lib/icons';
   
-  let { type, variant = 'badge' } = $props<{ type: string, variant?: 'badge' | 'icon' }>();
+  let { type, variant = 'badge', sizeClass = 'w-[14px] h-[14px]' } = $props<{ type: string, variant?: 'badge' | 'icon', sizeClass?: string }>();
 
   let iconHex = $derived(
     type === 'movie' ? 'oklch(0.7137 0.1434 254.62)' :
@@ -25,7 +25,7 @@
     {type}
   </span>
 {:else}
-  <span class="w-[14px] h-[14px] shrink-0 opacity-80 inline-flex [&>svg]:w-full [&>svg]:h-full" style="color: {iconHex}">
+  <span class="{sizeClass} shrink-0 opacity-80 inline-flex [&>svg]:w-full [&>svg]:h-full" style="color: {iconHex}">
     {@html icons[`type-${type}`] || icons['type-default']}
   </span>
 {/if}
