@@ -21,7 +21,7 @@
   <span role="cell" class="ml-col-poster">
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class={`ml-poster ml-poster--xs`} onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }}>
+    <div class={`ml-poster ml-poster--xs`} onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }} style="view-transition-name: poster-{item.id}">
       {#if item.poster_image}
         <img src={item.poster_image} alt="" loading="lazy" />
       {:else}
@@ -109,6 +109,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 300ms ease;
+  }
+
+  .ml-poster:hover img {
+    transform: scale(1.05);
   }
 
   .ml-poster--xs {
@@ -167,6 +172,7 @@
   .ml-status--next-up    { background: oklch(0.7148 0.1257 215.22 / 0.15); color: oklch(0.7971 0.1339 211.53); }
   .ml-status--dropped    { background: oklch(0.5866 0.2061 26.36 / 0.15); color: oklch(0.6047 0.1648 23.41); }
   .ml-status--shelved    { background: oklch(0.7137 0.0192 261.32 / 0.15); color: oklch(0.7137 0.0192 261.32); }
+  .ml-status--waiting-for{ background: oklch(0.75 0.15 45 / 0.15); color: oklch(0.75 0.15 45); }
 
   .ml-rating {
     font-family: "IBM Plex Mono", ui-monospace, monospace;

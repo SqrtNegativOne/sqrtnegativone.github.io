@@ -10,7 +10,7 @@
 <article class="ml-hero-card" onclick={() => openDetails(item)}>
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="ml-poster ml-poster--lg" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }}>
+  <div class="ml-poster ml-poster--lg" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }} style="view-transition-name: poster-{item.id}">
     {#if item.poster_image}
       <img src={item.poster_image} alt="" loading="lazy" />
     {:else}
@@ -92,6 +92,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 300ms ease;
+  }
+
+  .ml-poster:hover img {
+    transform: scale(1.05);
   }
 
   .ml-poster--lg {

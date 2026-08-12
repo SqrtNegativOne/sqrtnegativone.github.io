@@ -1,5 +1,6 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import mediaProperties from '../../../../../static/media-properties.json';
 
   let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, handleSearch, handlePaste, handleRatingKeydown } = $props();
 </script>
@@ -34,10 +35,9 @@
           <div class="space-y-2">
             <label for="media-type" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Type</label>
             <select id="media-type" name="type" bind:value={currentItem.type} class="input-field">
-              <option value="book">Book</option>
-              <option value="movie">Movie</option>
-              <option value="show">Show</option>
-              <option value="game">Game</option>
+              {#each mediaProperties.types as type}
+                <option value={type.value}>{type.label}</option>
+              {/each}
             </select>
           </div>
           
@@ -76,13 +76,9 @@
           <div class="space-y-2">
             <label for="media-status" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Status</label>
             <select id="media-status" name="status" bind:value={currentItem.status} class="input-field">
-              <option value="finished">Finished</option>
-              <option value="dropped">Dropped</option>
-              <option value="shelved">Shelved</option>
-              <option value="wishlist">Wishlist</option>
-              <option value="rewishlist">Rewishlist</option>
-              <option value="next up">Next Up</option>
-              <option value="consuming">Consuming</option>
+              {#each mediaProperties.statuses as status}
+                <option value={status.value}>{status.label}</option>
+              {/each}
             </select>
           </div>
           

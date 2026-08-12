@@ -3,7 +3,7 @@ import type { PageServerLoad, Actions } from './$types';
 import fs from 'fs/promises';
 import path from 'path';
 
-const QUOTES_FILE = path.resolve(process.cwd(), '../static/quotes.txt');
+const QUOTES_FILE = path.resolve(process.cwd(), '../static/quotes/quotes.txt');
 
 export const load: PageServerLoad = async () => {
   try {

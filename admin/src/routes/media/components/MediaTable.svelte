@@ -67,6 +67,11 @@
       <span class="w-3.5 h-3.5 mr-1 inline-flex [&>svg]:w-full [&>svg]:h-full">{@html icons['status-consuming']}</span>
       {status}
     </span>
+  {:else if status === 'waiting for'}
+    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-500/10 text-orange-400 border border-orange-500/20 capitalize">
+      <span class="w-3.5 h-3.5 mr-1 inline-flex [&>svg]:w-full [&>svg]:h-full">{@html icons['status-waiting-for']}</span>
+      {status}
+    </span>
   {:else}
     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-500/10 text-slate-400 border border-slate-500/20 capitalize">
       {status}

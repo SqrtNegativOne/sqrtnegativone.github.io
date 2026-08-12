@@ -4,7 +4,7 @@
   let questions = [];
 
   onMount(() => {
-    fetch('/questions.json')
+    fetch('/questions/questions.json')
       .then(res => res.json())
       .then(data => {
         questions = data.filter(q => !q.solved);
@@ -30,9 +30,12 @@
   background-color: oklch(0 0 0);
   color: oklch(1 0 0);
   min-height: 100vh;
+  height: 100vh;
   width: 100vw;
   padding: 4rem 2rem;
   box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .questions-page,

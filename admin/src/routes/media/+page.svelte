@@ -2,6 +2,7 @@
   import MediaTable from './components/MediaTable.svelte';
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
+  import mediaProperties from '../../../../static/media-properties.json';
 
   let { data, form } = $props();
 
@@ -137,20 +138,15 @@
     <div class="flex gap-4">
       <select bind:value={typeFilter} class="input-field">
         <option value="all">All Types</option>
-        <option value="book">Books</option>
-        <option value="movie">Movies</option>
-        <option value="show">Shows</option>
-        <option value="game">Games</option>
+        {#each mediaProperties.types as type}
+          <option value={type.value}>{type.label}s</option>
+        {/each}
       </select>
       <select bind:value={statusFilter} class="input-field">
         <option value="all">All Statuses</option>
-        <option value="finished">Finished</option>
-        <option value="dropped">Dropped</option>
-        <option value="shelved">Shelved</option>
-        <option value="wishlist">Wishlist</option>
-        <option value="rewishlist">Rewishlist</option>
-        <option value="next up">Next Up</option>
-        <option value="consuming">Consuming</option>
+        {#each mediaProperties.statuses as status}
+          <option value={status.value}>{status.label}</option>
+        {/each}
       </select>
       <select bind:value={sortOrder} class="input-field">
         <option value="title-asc">Title (A-Z)</option>

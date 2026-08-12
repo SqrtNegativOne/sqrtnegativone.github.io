@@ -53,16 +53,40 @@
       animId = requestAnimationFrame(render);
     }
 
+    let hasGyro = false;
+
     function onMouseMove(e) {
+      if (hasGyro) return;
       targetAz = ((e.clientX / W) - 0.5) * Math.PI * 2;
       targetEl = ((e.clientY / H) - 0.5) * Math.PI * 0.8;
     }
 
     function onTouchMove(e) {
       e.preventDefault();
+      if (hasGyro) return;
       const t = e.touches[0];
       targetAz = ((t.clientX / W) - 0.5) * Math.PI * 2;
       targetEl = ((t.clientY / H) - 0.5) * Math.PI * 0.8;
+    }
+
+    function onDeviceOrientation(e) {
+      if (e.gamma === null || e.beta === null) return;
+      hasGyro = true;
+      let g = Math.max(-45, Math.min(45, e.gamma));
+      let b = Math.max(0, Math.min(90, e.beta)) - 45;
+      targetAz = (g / 45) * Math.PI;
+      targetEl = (b / 45) * Math.PI * 0.8;
+    }
+
+    function requestGyroPermission() {
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        DeviceOrientationEvent.requestPermission()
+          .then(state => {
+            if (state === 'granted') {
+              window.addEventListener('deviceorientation', onDeviceOrientation);
+            }
+          }).catch(console.error);
+      }
     }
 
     function onResize() {
@@ -71,6 +95,8 @@
 
     window.addEventListener("mousemove", onMouseMove);
     canvas.addEventListener("touchmove", onTouchMove, { passive: false });
+    canvas.addEventListener("touchstart", requestGyroPermission, { once: true });
+    window.addEventListener("deviceorientation", onDeviceOrientation);
     window.addEventListener("resize", onResize);
 
     resize();
@@ -82,12 +108,14 @@
       viz.destroy();
       window.removeEventListener("mousemove", onMouseMove);
       canvas.removeEventListener("touchmove", onTouchMove);
+      canvas.removeEventListener("touchstart", requestGyroPermission);
+      window.removeEventListener("deviceorientation", onDeviceOrientation);
       window.removeEventListener("resize", onResize);
     };
   });
 </script>
 
-<div style="position: fixed; inset: 0;">
+<div style="position: fixed; inset: 0; z-index: -1;">
   <canvas
     bind:this={canvasRef}
     style="display: block; width: 100vw; height: 100vh;"

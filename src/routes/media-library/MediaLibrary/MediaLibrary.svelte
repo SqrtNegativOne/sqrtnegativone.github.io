@@ -1,5 +1,6 @@
 <script lang="ts">
   import mediaData from "../../../data/media.json";
+  import mediaProperties from "../../../../static/media-properties.json";
   import HeroCard from "./HeroCard.svelte";
   import LibraryRow from "./LibraryRow.svelte";
   import MediaModal from "./MediaModal.svelte";
@@ -46,14 +47,30 @@
   }
 
   function openDetails(item: any) {
-    activeItem = item;
-    document.body.style.overflow = 'hidden';
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        activeItem = item;
+        document.body.style.overflow = 'hidden';
+      });
+    } else {
+      activeItem = item;
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   function closeDetails() {
-    activeItem = null;
-    if (!fullPosterUrl) {
-      document.body.style.overflow = '';
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        activeItem = null;
+        if (!fullPosterUrl) {
+          document.body.style.overflow = '';
+        }
+      });
+    } else {
+      activeItem = null;
+      if (!fullPosterUrl) {
+        document.body.style.overflow = '';
+      }
     }
   }
 
@@ -81,10 +98,9 @@
       <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
       <select bind:value={typeFilter} class="ml-select">
         <option value="all">All Types</option>
-        <option value="movie">Movies</option>
-        <option value="show">Shows</option>
-        <option value="game">Games</option>
-        <option value="book">Books</option>
+        {#each mediaProperties.types as type}
+          <option value={type.value}>{type.label}s</option>
+        {/each}
       </select>
       <select bind:value={sortOrder} class="ml-select">
         <option value="rating-desc">Highest Rated</option>

@@ -1,0 +1,18 @@
+{
+  "types": [
+    { "value": "book", "label": "Book" },
+    { "value": "movie", "label": "Movie" },
+    { "value": "show", "label": "Show" },
+    { "value": "game", "label": "Game" }
+  ],
+  "statuses": [
+    { "value": "finished", "label": "Finished" },
+    { "value": "dropped", "label": "Dropped" },
+    { "value": "shelved", "label": "Shelved" },
+    { "value": "wishlist", "label": "Wishlist" },
+    { "value": "rewishlist", "label": "Rewishlist" },
+    { "value": "next up", "label": "Next Up" },
+    { "value": "consuming", "label": "Consuming" },
+    { "value": "waiting for", "label": "Waiting For" }
+  ]
+}

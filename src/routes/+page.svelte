@@ -1,7 +1,7 @@
 <script>
-  import Home from './Home.svelte';
+  import ThomasAttractor from '../components/ThomasAttractor.svelte';
   import SocialIcons from './SocialIcons.svelte';
 </script>
 
-<Home />
+<ThomasAttractor />
 <SocialIcons />

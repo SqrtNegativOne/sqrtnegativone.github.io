@@ -10,6 +10,7 @@ import statusWishlist from '../../static/icons/status-wishlist.svg?raw';
 import statusRewishlist from '../../static/icons/status-rewishlist.svg?raw';
 import statusNextUp from '../../static/icons/status-next-up.svg?raw';
 import statusConsuming from '../../static/icons/status-consuming.svg?raw';
+import statusWaitingFor from '../../static/icons/status-waiting-for.svg?raw';
 
 export const icons: Record<string, string> = {
   'type-movie': typeMovie.trim(),
@@ -24,4 +25,5 @@ export const icons: Record<string, string> = {
   'status-rewishlist': statusRewishlist.trim(),
   'status-next-up': statusNextUp.trim(),
   'status-consuming': statusConsuming.trim(),
+  'status-waiting-for': statusWaitingFor.trim(),
 };
