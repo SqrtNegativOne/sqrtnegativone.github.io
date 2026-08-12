@@ -3,6 +3,7 @@ import { encrypt, decrypt } from '$lib/server/crypto';
 import { fail } from '@sveltejs/kit';
 import fs from 'fs/promises';
 import path from 'path';
+import sharp from 'sharp';
 import type { PageServerLoad, Actions } from './$types';
 
 interface MediaItem {
@@ -75,11 +76,10 @@ export const actions: Actions = {
           const postersDir = path.resolve(process.cwd(), '../static/media-posters');
           await fs.mkdir(postersDir, { recursive: true });
           
-          let filename = `${type}_${safeId}.${ext}`;
+          let filename = `${type}_${safeId}.avif`;
           let filepath = path.join(postersDir, filename);
 
-          
-          await fs.writeFile(filepath, buffer);
+          await sharp(buffer).toFormat('avif').toFile(filepath);
           poster_image = `/media-posters/${filename}`;
           didSavePoster = true;
         }
@@ -92,16 +92,15 @@ export const actions: Actions = {
         if (res.ok) {
           const buffer = Buffer.from(await res.arrayBuffer());
           const ct = res.headers.get("content-type") || "";
-          const ext = ct.includes("png") ? "png" : ct.includes("webp") ? "webp" : "jpg";
           
           const safeId = id.replace(/[^A-Za-z0-9_-]/g, "_");
           const postersDir = path.resolve(process.cwd(), '../static/media-posters');
           await fs.mkdir(postersDir, { recursive: true });
           
-          let filename = `${type}_${safeId}.${ext}`;
+          let filename = `${type}_${safeId}.avif`;
           let filepath = path.join(postersDir, filename);
           
-          await fs.writeFile(filepath, buffer);
+          await sharp(buffer).toFormat('avif').toFile(filepath);
           poster_image = `/media-posters/${filename}`;
           didSavePoster = true;
         }

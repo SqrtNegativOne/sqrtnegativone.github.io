@@ -8,33 +8,57 @@ import dns from 'node:dns';
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
 let TMDB_KEY = "";
+let GOOGLE_BOOKS_KEY = "";
 try {
   const envContent = fs.readFileSync(path.resolve('../.env'), 'utf-8');
-  const match = envContent.match(/TMDB_API_KEY=(.*)/);
-  if (match) TMDB_KEY = match[1].trim();
+  const tmdbMatch = envContent.match(/TMDB_API_KEY=(.*)/);
+  if (tmdbMatch) TMDB_KEY = tmdbMatch[1].trim();
+  const googleMatch = envContent.match(/GOOGLE_BOOKS_API_KEY=(.*)/);
+  if (googleMatch) GOOGLE_BOOKS_KEY = googleMatch[1].trim();
 } catch (e) {}
 
 async function searchBook(query: string) {
-  const url = `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}&limit=20`;
-  const res = await fetch(url, { headers: { "User-Agent": "MyMediaApp/1.0" } });
-  if (!res.ok) return null;
+  let url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=20`;
+  if (GOOGLE_BOOKS_KEY) {
+    url += `&key=${GOOGLE_BOOKS_KEY}`;
+  }
+  const res = await fetch(url);
+  if (!res.ok) {
+    if (res.status === 429) return { error: "Google Books API rate limit exceeded. Consider adding GOOGLE_BOOKS_API_KEY to .env." };
+    return null;
+  }
   const data = await res.json() as any;
-  let books = data.docs?.slice(0, 20) || [];
+  let books = data.items || [];
   if (books.length === 0) return null;
   
   books.sort((a: any, b: any) => {
-    const aExact = a.title?.toLowerCase() === query.toLowerCase();
-    const bExact = b.title?.toLowerCase() === query.toLowerCase();
+    const aTitle = a.volumeInfo?.title || "";
+    const bTitle = b.volumeInfo?.title || "";
+    const aExact = aTitle.toLowerCase() === query.toLowerCase();
+    const bExact = bTitle.toLowerCase() === query.toLowerCase();
     if (aExact && !bExact) return -1;
     if (!aExact && bExact) return 1;
     return 0;
   });
 
-  return books.slice(0, 10).map((book: any) => ({
-    title: book.title,
-    tagline: (book.author_name || []).join(", "),
-    coverUrl: book.cover_i ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg` : null,
-  }));
+  return books.slice(0, 10).map((book: any) => {
+    const vi = book.volumeInfo || {};
+    let coverUrl = vi.imageLinks?.thumbnail || vi.imageLinks?.smallThumbnail || null;
+    
+    // Improve Google Books image quality by removing zoom limitations and curl edges
+    if (coverUrl) {
+      coverUrl = coverUrl.replace(/^http:/, 'https:')
+                         .replace(/[?&]edge=curl/g, '')
+                         .replace(/[?&]zoom=\d/g, '');
+    }
+
+    return {
+      title: vi.title || "Unknown Title",
+      tagline: (vi.authors || []).join(", "),
+      description: vi.description || "",
+      coverUrl: coverUrl,
+    };
+  });
 }
 
 async function searchTmdb(kind: "movie" | "tv", query: string) {

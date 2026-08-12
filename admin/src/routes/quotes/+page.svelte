@@ -15,11 +15,40 @@
   });
   
   let tagsInput = $state('');
+  let importUrl = $state('');
+  let isFetching = $state(false);
+
+  async function fetchQuote() {
+    if (!importUrl) return;
+    isFetching = true;
+    try {
+      const res = await fetch('/api/parse-quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: importUrl })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.quote) currentQuote.quote = data.quote;
+        if (data.source) currentQuote.source = data.source;
+        if (data.link) currentQuote.link = data.link;
+        importUrl = '';
+      } else {
+        alert('Failed to parse quote from URL');
+      }
+    } catch (err) {
+      alert('Error parsing quote URL');
+    } finally {
+      isFetching = false;
+    }
+  }
 
   function openNew() {
     isEditing = false;
     currentQuote = { id: '', quote: '', source: '', link: '', tags: [] };
     tagsInput = '';
+    importUrl = '';
+    isFetching = false;
     isModalOpen = true;
   }
 
@@ -27,6 +56,8 @@
     isEditing = true;
     currentQuote = { ...q };
     tagsInput = q.tags.join(', ');
+    importUrl = '';
+    isFetching = false;
     isModalOpen = true;
   }
 </script>
@@ -92,6 +123,8 @@
 
         <!-- Hover Actions -->
         <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <form method="POST" action="?/delete" use:enhance class="inline" onclick={(e) => e.stopPropagation()}>
             <input type="hidden" name="id" value={q.id} />
             <button 
@@ -138,6 +171,29 @@
         {/if}
         
         <div class="p-6 space-y-4">
+          <div class="flex gap-2 pb-2 border-b border-[oklch(0.3717_0.0392_257.29)]">
+            <input 
+              type="url" 
+              bind:value={importUrl} 
+              placeholder="Paste a link to import (Twitter, Bluesky, Goodreads...)" 
+              class="input-field flex-1 text-sm bg-black/20" 
+              onkeydown={(e) => e.key === 'Enter' && (e.preventDefault(), fetchQuote())}
+            />
+            <button 
+              type="button" 
+              onclick={fetchQuote} 
+              disabled={isFetching || !importUrl} 
+              class="px-4 py-2 text-sm font-medium bg-[oklch(0.2_0.03_260)] hover:bg-[oklch(0.3_0.03_260)] border border-[oklch(0.3717_0.0392_257.29)] rounded-lg transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {#if isFetching}
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                Fetching...
+              {:else}
+                Import
+              {/if}
+            </button>
+          </div>
+
           <div>
             <textarea 
               name="quote" 

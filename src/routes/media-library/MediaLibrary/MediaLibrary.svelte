@@ -105,7 +105,7 @@
       <h2 class="ml-section-title">Currently</h2>
       <div class="ml-hero-row">
         {#each filteredBuckets.consuming as item (item.type + '-' + item.id)}
-          <HeroCard {item} {openDetails} {openFullPoster} />
+          <HeroCard {item} {activeItem} {openDetails} {openFullPoster} />
         {/each}
       </div>
     </section>
@@ -128,7 +128,7 @@
           </button>
         </div>
         {#each filteredBuckets.library as item (item.type + '-' + item.id)}
-          <LibraryRow {item} {openDetails} {openFullPoster} />
+          <LibraryRow {item} {activeItem} {openDetails} {openFullPoster} />
         {/each}
       </div>
     </section>

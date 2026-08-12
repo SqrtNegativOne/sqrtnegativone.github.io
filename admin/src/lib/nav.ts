@@ -77,5 +77,18 @@ export const navItems: NavItem[] = [
     navActiveBg: 'bg-pink-500/10',
     navActiveText: 'text-pink-400',
     navActiveBorder: 'border-pink-500/20'
+  },
+  {
+    href: '/blogs',
+    label: 'Blogs',
+    description: 'Manage your blog posts and markdown files.',
+    path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14"></path>',
+    bgGradient: 'from-orange-500/5',
+    iconBg: 'bg-orange-500/10',
+    iconColor: 'text-orange-400',
+    borderHover: 'hover:border-orange-500/50',
+    navActiveBg: 'bg-orange-500/10',
+    navActiveText: 'text-orange-400',
+    navActiveBorder: 'border-orange-500/20'
   }
 ];

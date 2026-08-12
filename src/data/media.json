@@ -6,7 +6,7 @@
     "status": "finished",
     "title": "Deltarune",
     "description": "",
-    "poster_image": "/media-posters/game_deltarune.png",
+    "poster_image": "/media-posters/game_deltarune.avif",
     "tagline": "There's something more important than reaching the end."
   },
   {
@@ -16,7 +16,7 @@
     "status": "finished",
     "title": "UNDERTALE",
     "description": "",
-    "poster_image": "/media-posters/game_undertale.png",
+    "poster_image": "/media-posters/game_undertale.avif",
     "notes": "“Have you ever played a game so great that you were sad and felt empty after beating it since there was nothing out there like it?”",
     "tagline": "The friendly RPG where no one has to die."
   },
@@ -27,7 +27,7 @@
     "status": "finished",
     "title": "Portal 2",
     "description": "",
-    "poster_image": "/media-posters/game_portal_2.jpg",
+    "poster_image": "/media-posters/game_portal_2.avif",
     "notes": "Video game development gone right. Humour, action, puzzle and lore; this game has everything. It feels unfair to give this game anything less than a perfect rating... but it just didn't affect me in an emotional, life-changing way. Of course, it wasn't trying to...",
     "tagline": "You dangerous. Mute. Lunatic."
   },
@@ -38,7 +38,7 @@
     "status": "finished",
     "title": "Atomic Habits",
     "description": "",
-    "poster_image": "/media-posters/book_atomic_habits.jpg",
+    "poster_image": "/media-posters/book_atomic_habits.avif",
     "notes": "Popular, yes, but hated unnecessarily.",
     "tagline": ""
   },
@@ -49,7 +49,7 @@
     "status": "dropped",
     "title": "Hollow Knight",
     "description": "",
-    "poster_image": "/media-posters/game_hollow_knight.jpg",
+    "poster_image": "/media-posters/game_hollow_knight.avif",
     "notes": "Didn't like how the save points were so far away from most bosses. Made the game less fun because you had to go through a boring walk of humiliation to defeat the boss again. As far as I have played, the lore was rather sparse, contrary to what I believed about the game.",
     "tagline": "A world you gave to bug and beast as they had never dreamed of."
   },
@@ -60,7 +60,7 @@
     "status": "finished",
     "title": "Project: Hail Mary",
     "description": "",
-    "poster_image": "/media-posters/movie_project_hail_mary.jpg",
+    "poster_image": "/media-posters/movie_project_hail_mary.avif",
     "notes": "I NEED THE 8 HOUR CUT RIGHT NOW AMAZON",
     "tagline": "It's not a gene. You just need to find someone to be brave for."
   },
@@ -71,7 +71,7 @@
     "status": "finished",
     "title": "Project: Hail Mary",
     "description": "",
-    "poster_image": "/media-posters/book_project_hail_mary_book.jpg",
+    "poster_image": "/media-posters/book_project_hail_mary_book.avif",
     "tagline": "I spend a lot of time un-suiciding this suicide mission."
   },
   {
@@ -81,7 +81,7 @@
     "status": "finished",
     "title": "Hot Fuzz",
     "description": "",
-    "poster_image": "/media-posters/movie_hot_fuzz.jpg",
+    "poster_image": "/media-posters/movie_hot_fuzz.avif",
     "notes": "Literally a perfect movie.",
     "tagline": "How many payoffs does this movie have???"
   },
@@ -92,7 +92,7 @@
     "status": "finished",
     "title": "Fight Club",
     "description": "",
-    "poster_image": "/media-posters/movie_fight_club.jpg",
+    "poster_image": "/media-posters/movie_fight_club.avif",
     "notes": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
     "tagline": "Self improvement is masturbation. Now self destruction..."
   },
@@ -103,7 +103,7 @@
     "status": "finished",
     "title": "House of Leaves",
     "description": "",
-    "poster_image": "/media-posters/book_house_of_leaves.jpg",
+    "poster_image": "/media-posters/book_house_of_leaves.avif",
     "tagline": "This is not for you."
   },
   {
@@ -113,7 +113,7 @@
     "status": "finished",
     "title": "The Martian",
     "description": "",
-    "poster_image": "/media-posters/book_the_martian.jpg",
+    "poster_image": "/media-posters/book_the_martian.avif",
     "notes": "Science Guy Solves Science Puzzles... In Space! also he's really funny\n\nMy favourite was when the main character had to hide out in his car away from his hub because of a chemical reaction gone awry, and when he rides through craters dust storm with no satellite.",
     "tagline": "How come Aquaman can control whales? They're mammals! Makes no sense."
   },
@@ -124,7 +124,7 @@
     "status": "wishlist",
     "title": "The Myth of Sisyphus and Other Essays",
     "description": "",
-    "poster_image": "/media-posters/book_the_myth_of_sisyphus_and_other_essays.jpg",
+    "poster_image": "/media-posters/book_the_myth_of_sisyphus_and_other_essays.avif",
     "tagline": "Albert Camus"
   },
   {
@@ -134,7 +134,7 @@
     "status": "finished",
     "title": "The Last of Us (S1)",
     "description": "",
-    "poster_image": "/media-posters/show_the_last_of_us_s1.jpg",
+    "poster_image": "/media-posters/show_the_last_of_us_s1.avif",
     "tagline": "Best zombie media I have consumed."
   },
   {
@@ -144,7 +144,7 @@
     "status": "finished",
     "title": "The Last of Us Part II",
     "description": "",
-    "poster_image": "/media-posters/game_the_last_of_us_part_ii_remastered.jpg",
+    "poster_image": "/media-posters/game_the_last_of_us_part_ii_remastered.avif",
     "tagline": "A tale of three graves"
   },
   {
@@ -154,7 +154,7 @@
     "status": "finished",
     "title": "The Handmaid's Tale",
     "description": "",
-    "poster_image": "/media-posters/book_the_handmaid_s_tale.jpg",
+    "poster_image": "/media-posters/book_the_handmaid_s_tale.avif",
     "notes": "Good writing but Atwood isn't nearly the clever poet she thinks she is. My expectations from the book were also a bit distorted; I had heard from someone who had seen the show about the titular character, in the finale, making her clever escape through some train... I was reading the novel in expectance of some strategem, but the protagonist is nothing but a mere ragdoll thrown around mostly by the schemes of those that surround her. Guess it makes more sense for the point of the novel for her to have no agency.",
     "tagline": "Nolite te bastardes carborundorum."
   },
@@ -165,7 +165,7 @@
     "status": "finished",
     "title": "Outer Wilds",
     "description": "",
-    "poster_image": "/media-posters/game_outer_wilds.jpg",
+    "poster_image": "/media-posters/game_outer_wilds.avif",
     "notes": "I would tell you about the premise of this game, but that'd be a spoiler.",
     "tagline": "The Universe is, and we are."
   },
@@ -176,7 +176,7 @@
     "status": "finished",
     "title": "of the Devil",
     "description": "",
-    "poster_image": "/media-posters/game_of_the_devil.jpg",
+    "poster_image": "/media-posters/game_of_the_devil.avif",
     "notes": "see my steam comments or something\ndescribed by many as: \"Lesbian Death Note\"",
     "tagline": "Do whatever it takes to win."
   },
@@ -187,7 +187,7 @@
     "status": "wishlist",
     "title": "ENA: Dream BBQ",
     "description": "",
-    "poster_image": "/media-posters/game_ena_dream_bbq.jpg",
+    "poster_image": "/media-posters/game_ena_dream_bbq.avif",
     "tagline": ""
   },
   {
@@ -197,7 +197,7 @@
     "status": "finished",
     "title": "Half-Life 2",
     "description": "",
-    "poster_image": "/media-posters/game_half-life_2.jpg",
+    "poster_image": "/media-posters/game_half-life_2.avif",
     "tagline": "Very fun. Should be mandatory for learning game design."
   },
   {
@@ -207,7 +207,7 @@
     "status": "wishlist",
     "title": "OneShot",
     "description": "",
-    "poster_image": "/media-posters/game_oneshot.jpg",
+    "poster_image": "/media-posters/game_oneshot.avif",
     "tagline": "Deltarune if it was good?"
   },
   {
@@ -217,7 +217,7 @@
     "status": "finished",
     "title": "OMORI",
     "description": "",
-    "poster_image": "/media-posters/game_omori.jpg",
+    "poster_image": "/media-posters/game_omori.avif",
     "notes": "I hated the RPG part of the game. The enemies, fight mechanics, environment, and the music was not that good. But I absolutely loved the true story that lied underneath it.",
     "tagline": "It's a long way down..."
   },
@@ -228,7 +228,7 @@
     "status": "finished",
     "title": "In Stars And Time",
     "description": "",
-    "poster_image": "/media-posters/game_in_stars_and_time.jpg",
+    "poster_image": "/media-posters/game_in_stars_and_time.avif",
     "notes": "Live with the ever-present burden of being trapped in a time loop only you can know about in this turn-based RPG. Create a better future for you and your friends. Find hope where there is none left. Pray to the stars and free yourself from time.\n\nPretty sure the author just.... broke the encryption on my Veracrypt vault storing my old journal pages to write the main character.",
     "tagline": "Pray to the stars and free yourself from time."
   },
@@ -239,7 +239,7 @@
     "status": "finished",
     "title": "Inscryption",
     "description": "",
-    "poster_image": "/media-posters/game_inscryption.jpg",
+    "poster_image": "/media-posters/game_inscryption.avif",
     "notes": "Inscryption is an inky black card-based odyssey that blends the deckbuilding roguelike, escape-room style puzzles, and psychological horror into a blood-laced smoothie. Darker still are the secrets inscrybed upon the cards...",
     "tagline": "Game-breaker's toolkit."
   },
@@ -250,7 +250,7 @@
     "status": "finished",
     "title": "The Hollow Man",
     "description": "",
-    "poster_image": "/media-posters/book_the_hollow_man.jpg",
+    "poster_image": "/media-posters/book_the_hollow_man.avif",
     "notes": "Too unfair. But deserves a shelf in a murder mystery fan's basement for its excellent dissection of the locked room.",
     "tagline": "Carr's masterpiece"
   },
@@ -261,7 +261,7 @@
     "status": "finished",
     "title": "Danganronpa: Trigger Happy Havoc",
     "description": "",
-    "poster_image": "/media-posters/game_danganronpa_trigger_happy_havoc.jpg",
+    "poster_image": "/media-posters/game_danganronpa_trigger_happy_havoc.avif",
     "notes": "7/7 music, 7/7 premise, 4.5/7 cases, and 1.5/7 writing.",
     "tagline": "Ace Attorney, with added pedophilia"
   },
@@ -272,7 +272,7 @@
     "status": "finished",
     "title": "Danganronpa 2: Goodbye Despair",
     "description": "",
-    "poster_image": "/media-posters/game_danganronpa_2_goodbye_despair.jpg",
+    "poster_image": "/media-posters/game_danganronpa_2_goodbye_despair.avif",
     "notes": "7/7 music, 6/7 premise, 6/7 cases, and tolerable writing.\nNagito Komaeda is the hottest character in any anime game, and has generously offered to be embroiled in, not one of, but *the* best case I have read in detective fiction.",
     "tagline": "Live And Let The Languid World Live"
   },
@@ -283,7 +283,7 @@
     "status": "finished",
     "title": "Danganronpa V3: Killing Harmony",
     "description": "",
-    "poster_image": "/media-posters/game_danganronpa_v3_killing_harmony.jpg",
+    "poster_image": "/media-posters/game_danganronpa_v3_killing_harmony.avif",
     "notes": "The last case was just a middle finger to the fanbase, to be honest. Every Danganronpa had insane potential, but also something wrong with it. Danganronpa 1 with poor cases, poor characters, poor writing, and clunky ending. 2, also lacking in the ending department, unable to top-up its penultimate case.\n\nThe writer has not written enough of, anything, actually, to be making the point he seems to be trying to make. Leave good 4th wall breaking to Toby Fox, please.\n\nLoved the cases though. Glad they hired an actual mystery writer.",
     "tagline": ""
   },
@@ -294,7 +294,7 @@
     "status": "finished",
     "title": "Dweller's Empty Path",
     "description": "",
-    "poster_image": "/media-posters/game_dweller_s_empty_path.png",
+    "poster_image": "/media-posters/game_dweller_s_empty_path.avif",
     "notes": "I feel kind of… guilty for liking this one. It wasn’t that good… but it felt really good. The ending was sudden, though, very lacklustre, and I hated the generic “heroes” quest, even if it was meant as satire. But there was something about it... the subtle hopelessness? Treated as... ordinary. I don't know. I felt it just helping me, a bit.",
     "tagline": "A game by Temmie Chang."
   },
@@ -305,7 +305,7 @@
     "status": "finished",
     "title": "Disco Elysium — The Final Cut",
     "description": "",
-    "poster_image": "/media-posters/game_disco_elysium_-_the_final_cut.jpg",
+    "poster_image": "/media-posters/game_disco_elysium_-_the_final_cut.avif",
     "notes": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
     "tagline": "A tragicomedy of hope and redemption."
   },
@@ -316,7 +316,7 @@
     "status": "wishlist",
     "title": "The Hunger Games",
     "description": "",
-    "poster_image": "/media-posters/book_the_hunger_games.jpg",
+    "poster_image": "/media-posters/book_the_hunger_games.avif",
     "notes": "It has its moments, but I thought the ending, with the corny romance and all, was boring. I had also played Disco Elysium side-by-side so the drastic drop in writing quality was more apparent, I guess.",
     "tagline": "PUBG with romance, on a metaphorical and literal level."
   },
@@ -329,7 +329,7 @@
     "tagline": "Useless retro-tech advice, but makes you think.",
     "description": "",
     "notes": "I get nostalgic for times that were stolen from me a lot. ...Remind me to add this feature soon, I want to add here an excerpt from my diary.",
-    "poster_image": "/media-posters/book_mindhacker.jpg"
+    "poster_image": "/media-posters/book_mindhacker.avif"
   },
   {
     "id": "harry_potter_and_the_methods_of_rationality",
@@ -338,7 +338,7 @@
     "status": "finished",
     "title": "Harry Potter and the Methods of Rationality",
     "description": "",
-    "poster_image": "/media-posters/book_harry_potter_and_the_methods_of_rationality.jpg",
+    "poster_image": "/media-posters/book_harry_potter_and_the_methods_of_rationality.avif",
     "notes": "I wouldn't recommend this to a Harry Potter fan; it takes everything good about Harry Potter, and makes it bad. Everything else, however...",
     "tagline": "The epic fanfic that set the AI Safety movement back by 10 years."
   },
@@ -349,7 +349,7 @@
     "status": "finished",
     "title": "Foundation",
     "description": "",
-    "poster_image": "/media-posters/book_foundation.jpg",
+    "poster_image": "/media-posters/book_foundation.avif",
     "notes": "I have heard the show is better. Full disclaimer, I only read the first book, and I wouldn't recommend it. Every protagonist of each act is the same, hard, male, and every antagonist is tricked in some way, and these tricks are *not* consistent with each other. The book did have its moments with politics, however. Everything else was either bad (worldbuiling, characterization) or mid (writing).",
     "tagline": "Is it fair of me to just say, \"Dune was better.\" for any given sci-fi book?"
   },
@@ -360,7 +360,7 @@
     "status": "finished",
     "title": "A Mind for Numbers",
     "description": "",
-    "poster_image": "/media-posters/book_a_mind_for_numbers.jpg",
+    "poster_image": "/media-posters/book_a_mind_for_numbers.avif",
     "tagline": "The first book written by ChatGPT, before ChatGPT."
   },
   {
@@ -372,7 +372,7 @@
     "tagline": "Apparently puts the Hard in Hard Sci-fi.",
     "description": "",
     "notes": "Highly recommended by Gwern.",
-    "poster_image": "/media-posters/book_the_quantum_thief.jpg"
+    "poster_image": "/media-posters/book_the_quantum_thief.avif"
   },
   {
     "id": "the_fifth_science",
@@ -381,7 +381,7 @@
     "status": "shelved",
     "title": "The Fifth Science",
     "description": "",
-    "poster_image": "/media-posters/book_the_fifth_science.jpg",
+    "poster_image": "/media-posters/book_the_fifth_science.avif",
     "notes": "Got Foundation and Dune vibes from this, might just be me. Might come around to finishing that last 30% of it.",
     "tagline": "Hell isn't a fire pit but a museum of regrets."
   },
@@ -394,7 +394,7 @@
     "tagline": "I am a sucker for this sort of thing",
     "description": "",
     "notes": "",
-    "poster_image": "/media-posters/book_worm_web_serial.jpg"
+    "poster_image": "/media-posters/book_worm_web_serial.avif"
   },
   {
     "id": "omori_dreamer",
@@ -403,7 +403,7 @@
     "status": "wishlist",
     "title": "OMORI: The Dreamer",
     "description": "",
-    "poster_image": "/media-posters/game_omori_dreamer.png",
+    "poster_image": "/media-posters/game_omori_dreamer.avif",
     "notes": "I don't expect any combat from this, so should be worth checking out.",
     "tagline": ""
   },
@@ -414,7 +414,7 @@
     "status": "finished",
     "title": "God of War",
     "description": "",
-    "poster_image": "/media-posters/game_god_of_war.jpg",
+    "poster_image": "/media-posters/game_god_of_war.avif",
     "notes": "Ending didn't hit hard though.",
     "tagline": "Fun"
   },
@@ -427,7 +427,7 @@
     "tagline": "",
     "description": "San Francisco Bay, January 18, 1960. Frank Lee Morris is transferred to Alcatraz, a maximum security prison located on a rocky island. Although no one has ever managed to escape from there, Frank and other inmates begin to carefully prepare an escape plan.",
     "notes": "Watch Prison Break instead lmao",
-    "poster_image": "/media-posters/movie_escape_from_alcatraz.jpg"
+    "poster_image": "/media-posters/movie_escape_from_alcatraz.avif"
   },
   {
     "id": "pokemon_origin_of_species",
@@ -449,7 +449,7 @@
     "tagline": "",
     "description": "Sukeban Games\n\nVA-11 HALL-A: Cyberpunk Bartender Action is a booze em' up about waifus, technology, and post-dystopia life.",
     "notes": "",
-    "poster_image": "/media-posters/game_va-11_hall-a_cyberpunk_bartender_action.jpg"
+    "poster_image": "/media-posters/game_va-11_hall-a_cyberpunk_bartender_action.avif"
   },
   {
     "id": "a_brief_history_of_time",
@@ -460,7 +460,7 @@
     "tagline": "Only time (whatever that may be) will tell.",
     "description": "Stephen Hawking",
     "notes": "",
-    "poster_image": "/media-posters/book_a_brief_history_of_time.jpg"
+    "poster_image": "/media-posters/book_a_brief_history_of_time.avif"
   },
   {
     "id": "return_of_the_obra_dinn",
@@ -471,7 +471,7 @@
     "tagline": "Who doesn't like detective games?",
     "description": "Lucas Pope\nLost at sea 1803 ~ The good ship Obra Dinn.",
     "notes": "",
-    "poster_image": "/media-posters/game_return_of_the_obra_dinn.jpg"
+    "poster_image": "/media-posters/game_return_of_the_obra_dinn.avif"
   },
   {
     "id": "watch_dogs_",
@@ -493,7 +493,7 @@
     "tagline": "",
     "description": "Kit9 Studio\nWalk-n-talk adventure with light puzzling. Brother and sister practice cannibalism after witnessing a botched satanic ritual.",
     "notes": "",
-    "poster_image": "/media-posters/game_the_coffin_of_andy_and_leyley.jpg"
+    "poster_image": "/media-posters/game_the_coffin_of_andy_and_leyley.avif"
   },
   {
     "id": "zero_escape_the_nonary_games",
@@ -504,7 +504,7 @@
     "tagline": "",
     "description": "Spike Chunsoft Co., Ltd.\n\nKidnapped and taken to an unfamiliar location, nine people find themselves forced to participate in a diabolical Nonary Game by an enigmatic mastermind called Zero. Why were they there? Why were they chosen to put their lives on the line? And more importantly, who can be trusted?",
     "notes": "",
-    "poster_image": "/media-posters/game_zero_escape_the_nonary_games.jpg"
+    "poster_image": "/media-posters/game_zero_escape_the_nonary_games.avif"
   },
   {
     "id": "mouthwashing",
@@ -515,7 +515,7 @@
     "tagline": "",
     "description": "Wrong Organ\nThe five crew members of the Tulpar are stranded in the empty reaches of space, shrouded in perpetual sunset. God is not watching.",
     "notes": "",
-    "poster_image": "/media-posters/game_mouthwashing.jpg"
+    "poster_image": "/media-posters/game_mouthwashing.avif"
   },
   {
     "id": "chants_of_sennaar",
@@ -526,7 +526,7 @@
     "tagline": "Linguistics? Linguistics.",
     "description": "Rundisc\nIn this award-winning puzzle adventure game, play as the Traveler on a quest to reunite the Peoples of the Tower. Observe, listen, and decipher ancient languages in a fascinating universe inspired by the Myth of Babel.",
     "notes": "",
-    "poster_image": "/media-posters/game_chants_of_sennaar.jpg"
+    "poster_image": "/media-posters/game_chants_of_sennaar.avif"
   },
   {
     "id": "children_of_time",
@@ -537,7 +537,7 @@
     "tagline": "",
     "description": "Adrian Tchaikovsky",
     "notes": "",
-    "poster_image": "/media-posters/book_children_of_time.jpg"
+    "poster_image": "/media-posters/book_children_of_time.avif"
   },
   {
     "id": "geometry_for_ocelots",
@@ -548,7 +548,7 @@
     "tagline": "",
     "description": "Exurb1a",
     "notes": "",
-    "poster_image": "/media-posters/book_geometry_for_ocelots.jpg"
+    "poster_image": "/media-posters/book_geometry_for_ocelots.avif"
   },
   {
     "id": "lacuna_a_sci-fi_noir_adventure",
@@ -559,7 +559,7 @@
     "tagline": "GEM",
     "description": "DigiTales Interactive\nA murder. A hack. A bombing. All it takes to plunge the solar system into war – unless you do something about it. Help CDI agent Neil Conrad make a string of increasingly difficult decisions in this modern dialog-driven adventure set in a gorgeous 2D sci-fi noir universe.",
     "notes": "",
-    "poster_image": "/media-posters/game_lacuna_a_sci-fi_noir_adventure.jpg"
+    "poster_image": "/media-posters/game_lacuna_a_sci-fi_noir_adventure.avif"
   },
   {
     "id": "frostpunk",
@@ -570,7 +570,7 @@
     "tagline": "A very high bar for any new city-builder.",
     "description": "11 bit studios\nFrostpunk is the first society survival game. As the ruler of the last city on Earth, it is your duty to manage both its citizens and infrastructure. What decisions will you make to ensure your society's survival? What will you do when pushed to breaking point? Who will you become in the process?",
     "notes": "Steampunk city-builder with soul-stirring soundtrack and challenging gameplay.  Also very addictive.",
-    "poster_image": "/media-posters/game_frostpunk.jpg"
+    "poster_image": "/media-posters/game_frostpunk.avif"
   },
   {
     "id": "dune_book",
@@ -581,7 +581,7 @@
     "tagline": "",
     "description": "",
     "notes": "I disagree with the author's thesis every step of the way, but it's an enjoying read. Not as thought-provoking though. I like how the author doesn't hand-hold you at the start and throws you into politics immediately, but after you figure the world-building out the book does get a bit boring near the end.",
-    "poster_image": "/media-posters/book_dune_book.png"
+    "poster_image": "/media-posters/book_dune_book.avif"
   },
   {
     "id": "titanfall_2",
@@ -592,7 +592,7 @@
     "tagline": "What the game lacks in length, it makes up for with... everything else.",
     "description": "Respawn Entertainment\n\nRespawn Entertainment gives you the most advanced titan technology in its new, single player campaign &amp; multiplayer experience. Combine &amp; conquer with new titans &amp; pilots, deadlier weapons, &amp; customization and progression systems that help you and your titan flow as one unstoppable killing force.",
     "notes": "WHY IS THERE NO TITANFALL 3. WE ARE GETTING GTAVI BEFORE TITANFALL3 WHAT",
-    "poster_image": "/media-posters/game_titanfall_2.jpg"
+    "poster_image": "/media-posters/game_titanfall_2.avif"
   },
   {
     "id": "dune_movie",
@@ -603,7 +603,7 @@
     "tagline": "Fear is the mind-killer.",
     "description": "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence - a commodity capable of unlocking humanity's greatest potential — only those who can conquer their fear will survive.",
     "notes": "It always hurts to see beloved context and scenes from a book being cut for the movie, but it's also inevitable.\nthis movie was... okay I guess. part 2 was pretty good",
-    "poster_image": "/media-posters/movie_dune_movie.jpg"
+    "poster_image": "/media-posters/movie_dune_movie.avif"
   },
   {
     "id": "steins_gate_1_game",
@@ -614,7 +614,7 @@
     "tagline": "",
     "description": "MAGES. Inc.\nDeveloped by 5pb. and Nitroplus, STEINS;GATE was awarded Famitsu magazine's coveted annual Game of Excellence award and was voted one of the most emotionally charged “tear-inducing games” ever made, in a Famitsu poll.　It is a gripping and moving Visual Novel, which has already spawned manga and anime adaptations.",
     "notes": "",
-    "poster_image": "/media-posters/game_steins_gate_1_game.jpg"
+    "poster_image": "/media-posters/game_steins_gate_1_game.avif"
   },
   {
     "id": "knives_out",
@@ -625,7 +625,7 @@
     "tagline": "The mystery movie that tricks you into thinking it isn't.",
     "description": "When renowned crime novelist Harlan Thrombey is found dead at his estate just after his 85th birthday, the inquisitive and debonair Detective Benoit Blanc is mysteriously enlisted to investigate. From Harlan's dysfunctional family to his devoted staff, Blanc sifts through a web of red herrings and self-serving lies to uncover the truth behind Harlan's untimely death.",
     "notes": "",
-    "poster_image": "/media-posters/movie_knives_out.jpg"
+    "poster_image": "/media-posters/movie_knives_out.avif"
   },
   {
     "id": "glass_onion_a_knives_out_mystery",
@@ -636,7 +636,7 @@
     "tagline": "",
     "description": "World-famous detective Benoit Blanc heads to Greece to peel back the layers of a mystery surrounding a tech billionaire and his eclectic crew of friends.",
     "notes": "The weakest in the trilogy right now IMO. For one: all the evil characters don't meet their comeuppance!",
-    "poster_image": "/media-posters/movie_glass_onion_a_knives_out_mystery.jpg"
+    "poster_image": "/media-posters/movie_glass_onion_a_knives_out_mystery.avif"
   },
   {
     "id": "wall_e",
@@ -647,7 +647,7 @@
     "tagline": "I don't usually like romance, but...",
     "description": "",
     "notes": "",
-    "poster_image": "/media-posters/movie_wall_e.jpg"
+    "poster_image": "/media-posters/movie_wall_e.avif"
   },
   {
     "id": "lagaan_once_upon_a_time_in_india",
@@ -658,7 +658,7 @@
     "tagline": "Unexpectedly good. Better than any other sports drama nonesense we invent today",
     "description": "The year is 1893 and India is under British occupation. In a small village, the tyrannical Captain Russell has imposed an unprecedented land tax on its citizens. Outraged, Bhuvan, a rebellious farmer, rallies the villagers to publicly oppose the tax. Russell offers a novel way to settle the dispute: he challenges Bhuvan and his men to a game of cricket, a sport completely foreign to India. If Bhuvan and his men can defeat Russell's team, the tax will be repealed.",
     "notes": "",
-    "poster_image": "/media-posters/movie_lagaan_once_upon_a_time_in_india.jpg"
+    "poster_image": "/media-posters/movie_lagaan_once_upon_a_time_in_india.avif"
   },
   {
     "id": "puss_in_boots_the_last_wish",
@@ -669,7 +669,7 @@
     "tagline": "I had high expectations from the ratings and all, but it's just cliche.",
     "description": "2022\n\nPuss in Boots discovers that his passion for adventure has taken its toll: He has burned through eight of his nine lives, leaving him with only one life left. Puss sets out on an epic journey to find the mythical Last Wish and restore his nine lives.",
     "notes": "Exurb1a saw the movie thrice and cried. Guess I had too high expectations?",
-    "poster_image": "/media-posters/movie_puss_in_boots_the_last_wish.jpg"
+    "poster_image": "/media-posters/movie_puss_in_boots_the_last_wish.avif"
   },
   {
     "id": "Inception",
@@ -680,7 +680,7 @@
     "tagline": "Inception",
     "description": "Inception",
     "notes": "Inception",
-    "poster_image": "/media-posters/movie_Inception.jpg"
+    "poster_image": "/media-posters/movie_Inception.avif"
   },
   {
     "id": "tenet",
@@ -691,7 +691,7 @@
     "tagline": "If you don't like this movie, then kill yourself. You don't deserve good movies.",
     "description": "Armed with only one word - Tenet - and fighting for the survival of the entire world, the Protagonist journeys through a twilight world of international espionage on a mission that will unfold in something beyond real time.",
     "notes": "God forbid you have to actually pay attention.",
-    "poster_image": "/media-posters/movie_tenet.jpg"
+    "poster_image": "/media-posters/movie_tenet.avif"
   },
   {
     "id": "prison_break",
@@ -702,7 +702,7 @@
     "tagline": "",
     "description": "Due to a political conspiracy, an innocent man is sent to death row and his only hope is his brother, who makes it his mission to deliberately get himself sent to the same prison in order to break the both of them out, from the inside out.",
     "notes": "",
-    "poster_image": "/media-posters/show_prison_break.jpg"
+    "poster_image": "/media-posters/show_prison_break.avif"
   },
   {
     "id": "death_note",
@@ -713,7 +713,7 @@
     "tagline": "",
     "description": "Light Yagami is an ace student with great prospects—and he’s bored out of his mind. But all that changes when he finds the Death Note, a notebook dropped by a rogue Shinigami death god. Any human whose name is written in the notebook dies, and Light has vowed to use the power of the Death Note to rid the world of evil. But will Light succeed in his noble goal, or will the Death Note turn him into the very thing he fights against?",
     "notes": "Fell off after L died. I loved trying to solve things before the characters on the screen did. Really smart show. S2 I gave up",
-    "poster_image": "/media-posters/show_death_note.jpg"
+    "poster_image": "/media-posters/show_death_note.avif"
   },
   {
     "id": "house",
@@ -724,7 +724,7 @@
     "tagline": "Would you believe me if I said this was philosophical?",
     "description": "Dr. Gregory House, a drug-addicted, unconventional, misanthropic medical genius, leads a team of diagnosticians at the fictional Princeton–Plainsboro Teaching Hospital in New Jersey.",
     "notes": "Some of the episodes are.... literally the best stories I have seen in my life. Guess they hit harder once you expect the same formula every episode.",
-    "poster_image": "/media-posters/show_house.jpg"
+    "poster_image": "/media-posters/show_house.avif"
   },
   {
     "id": "the_godfather",
@@ -735,7 +735,7 @@
     "tagline": "",
     "description": "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge.",
     "notes": "Look, I like to believe that I can watch \"boring\" movies, but... this movie was just boring. I get some scenes are pretty well done, sure, but is it ok for me to complain about the overall... tactics? Or lack thereof?\nThe genius political mastermind just seems to make good decisions, naturally. He just knows stuff. No reasoning given. Doesn't make you feel smarter after getting to see him work.",
-    "poster_image": "/media-posters/movie_the_godfather.jpg"
+    "poster_image": "/media-posters/movie_the_godfather.avif"
   },
   {
     "id": "baba_is_you",
@@ -746,7 +746,7 @@
     "tagline": "",
     "description": "Hempuli Oy\nBaba Is You is a puzzle game where the rules you have to follow are present as blocks you can interact with. By manipulating them, you can change how the game works, repurpose things you find in the levels and cause surprising interactions!",
     "notes": "Honestly? Not that hard. It's just a well designed puzzle game.",
-    "poster_image": "/media-posters/game_baba_is_you.jpg"
+    "poster_image": "/media-posters/game_baba_is_you.avif"
   },
   {
     "id": "persona_5_royal",
@@ -757,7 +757,7 @@
     "tagline": "",
     "description": "ATLUS\nLead the Phantom Thieves of Hearts in this award winning, stylish turn-based RPG filled with dungeon crawling, party customization, strategic combat, and Persona fusion. Explore Tokyo, build relationships, battle Shadows, and infiltrate the minds of the corrupt to make them change their ways!",
     "notes": "",
-    "poster_image": "/media-posters/game_persona_5_royal.jpg"
+    "poster_image": "/media-posters/game_persona_5_royal.avif"
   },
   {
     "id": "papers_please",
@@ -768,7 +768,7 @@
     "tagline": "Who knew repetitive gameplay isn't actually a bad thing?",
     "description": "Lucas Pope\nCongratulations. The October labor lottery is complete. Your name was pulled. For immediate placement, report to the Ministry of Admission at Grestin Border Checkpoint. An apartment will be provided for you and your family in East Grestin. Expect a Class-8 dwelling.",
     "notes": "",
-    "poster_image": "/media-posters/game_papers_please.jpg"
+    "poster_image": "/media-posters/game_papers_please.avif"
   },
   {
     "id": "the_truman_show",
@@ -779,7 +779,7 @@
     "tagline": "And in case I don't see ya, good afternoon, good evening, and good night!",
     "description": "1998\nIn a picture-perfect seaside town, an insurance salesman begins to realize that his entire existence may be staged and observed by a vast unseen audience as part of a long-running real-time reality TV show.",
     "notes": "Still good if you know spoilers. Timeless. ...but would have probably hit harder if I hadn't seen all the major scenes before.",
-    "poster_image": "/media-posters/movie_the_truman_show.jpg"
+    "poster_image": "/media-posters/movie_the_truman_show.avif"
   },
   {
     "id": "the_subtle_art_of_not_giving_a_f_ck",
@@ -790,7 +790,7 @@
     "tagline": "Bought it, read 10 pages, and stopped giving a fuck about this book.",
     "description": "Mark Manson",
     "notes": "Unbelievably confused, unorganized, insipid literature. I can sympathize with self-help book haters. I hate \"If Books Could Kill\" too but I agree with them on books I myself hate as well.",
-    "poster_image": "/media-posters/book_the_subtle_art_of_not_giving_a_f_ck.jpg"
+    "poster_image": "/media-posters/book_the_subtle_art_of_not_giving_a_f_ck.avif"
   },
   {
     "id": "undertale_yellow",
@@ -801,7 +801,7 @@
     "tagline": "",
     "description": "",
     "notes": "I guess I got too hyped about it. It perfects everything about Undertale, except the parts that made Undertale good and which it excelled at. Can't exactly expect anyone to do that for free.",
-    "poster_image": "/media-posters/game_undertale_yellow.jpg"
+    "poster_image": "/media-posters/game_undertale_yellow.avif"
   },
   {
     "id": "dexter_show_1_4",
@@ -812,7 +812,7 @@
     "tagline": "I'm a very neat monster.",
     "description": "",
     "notes": "",
-    "poster_image": "/media-posters/show_dexter_show_1_4.jpg"
+    "poster_image": "/media-posters/show_dexter_show_1_4.avif"
   },
   {
     "id": "crying_suns_demo",
@@ -823,7 +823,7 @@
     "tagline": "",
     "description": "Alt Shift\nCrying Suns is a tactical rogue-lite that puts you in the role of a space fleet commander as you explore a mysteriously fallen empire. In this story-driven experience inspired by Dune and Foundation, each successful run will uncover the truth about the Empire... and yourself as well.",
     "notes": "Hard mode was too hard, and easy mode too easy. Also repetitive gameplay and a bit too generic at times.",
-    "poster_image": "/media-posters/game_crying_suns_demo.jpg"
+    "poster_image": "/media-posters/game_crying_suns_demo.avif"
   },
   {
     "id": "24",
@@ -834,7 +834,7 @@
     "tagline": "Generic, deus ex machina machine that just doesn't work today.",
     "description": "Counterterrorism agent Jack Bauer fights the bad guys of the world, a day at a time. With each week's episode unfolding in real-time, \"24\" covers a single day in the life of Bauer each season.",
     "notes": "",
-    "poster_image": "/media-posters/show_24.jpg"
+    "poster_image": "/media-posters/show_24.avif"
   },
   {
     "id": "argo",
@@ -845,7 +845,7 @@
     "tagline": "I think my story's the only thing between you and a gun to your head.",
     "description": "As the Iranian revolution reaches a boiling point, a CIA 'exfiltration' specialist concocts a risky plan to free six Americans who have found shelter at the home of the Canadian ambassador.",
     "notes": "A bit boring at times, but good for keeping it realistic. Good dialogue and tension. Like a lot of movies it suffers from a good start and an, eh, ending.",
-    "poster_image": "/media-posters/movie_argo.jpg"
+    "poster_image": "/media-posters/movie_argo.avif"
   },
   {
     "id": "celeste",
@@ -856,7 +856,7 @@
     "tagline": "Trans People Can Double Jump",
     "description": "Maddy Makes Games Inc.\n\nHelp Madeline survive her inner demons on her journey to the top of Celeste Mountain, in this super-tight platformer from the creators of TowerFall. Brave hundreds of hand-crafted challenges, uncover devious secrets, and piece together the mystery of the mountain.",
     "notes": "",
-    "poster_image": "/media-posters/game_celeste.jpg"
+    "poster_image": "/media-posters/game_celeste.avif"
   },
   {
     "id": "cyberpunk_edgerunners",
@@ -867,7 +867,7 @@
     "tagline": "",
     "description": "2022\nIn a dystopia riddled with corruption and cybernetic implants, a talented but reckless street kid strives to become a mercenary outlaw — an edgerunner.",
     "notes": "",
-    "poster_image": "/media-posters/show_cyberpunk_edgerunners.jpg"
+    "poster_image": "/media-posters/show_cyberpunk_edgerunners.avif"
   },
   {
     "id": "death_note_relight_1_visions_of_a_god",
@@ -878,7 +878,7 @@
     "tagline": "",
     "description": "2007\nWhen rogue shinigami Ryuk leaves his Death Note in the human world, he has no idea how far the one who finds it will take his new-found power. With the Death Note in hand, brilliant high school student Light Yagami vows to rid the world of evil. A recap of Death Note episodes 1–26, with alternate footage.",
     "notes": "",
-    "poster_image": "/media-posters/movie_death_note_relight_1_visions_of_a_god.jpg"
+    "poster_image": "/media-posters/movie_death_note_relight_1_visions_of_a_god.avif"
   },
   {
     "id": "into_the_breach",
@@ -889,7 +889,7 @@
     "tagline": "For All Father Time",
     "description": "Subset Games\nControl powerful mechs from the future to defeat an alien threat. Each attempt to save the world presents a new randomly generated challenge in this turn-based strategy game.",
     "notes": "I got addicted to it way back, but I suspect only due to a lack of options. Gets better, then gets worse. And worse. Less replayability you'd expect.",
-    "poster_image": "/media-posters/game_into_the_breach.jpg"
+    "poster_image": "/media-posters/game_into_the_breach.avif"
   },
   {
     "id": "la_la_land",
@@ -900,7 +900,7 @@
     "tagline": "",
     "description": "Mia, an aspiring actress, serves lattes to movie stars in between auditions and Sebastian, a jazz musician, scrapes by playing cocktail party gigs in dingy bars, but as success mounts they are faced with decisions that begin to fray the fragile fabric of their love affair, and the dreams they worked so hard to maintain in each other threaten to rip them apart.",
     "notes": "",
-    "poster_image": "/media-posters/movie_la_la_land.jpg"
+    "poster_image": "/media-posters/movie_la_la_land.avif"
   },
   {
     "id": "loki_show",
@@ -911,7 +911,7 @@
     "tagline": "",
     "description": "After stealing the Tesseract during the events of “Avengers: Endgame,” an alternate version of Loki is brought to the mysterious Time Variance Authority, a bureaucratic organization that exists outside of time and space and monitors the timeline. They give Loki a choice: face being erased from existence due to being a “time variant” or help fix the timeline and stop a greater threat.",
     "notes": "Giving 6.5 for the second season's finale only. ...rest of the show is like, 5.5 I guess. (Still better than Moon Knight but there was nothing wrong with that either) But I really love the aesthetics and trench-wearing Loki.",
-    "poster_image": "/media-posters/show_loki_show.jpg"
+    "poster_image": "/media-posters/show_loki_show.avif"
   },
   {
     "id": "the_white_tiger",
@@ -922,7 +922,7 @@
     "tagline": "Ethics in the chicken coop",
     "description": "An ambitious Indian driver uses his wit and cunning to escape from poverty and rise to the top. An epic journey based on the New York Times bestseller.",
     "notes": "I have talked about movies which suffer from great, hype start, but end badly. This movie's really good start kept on being good until a very long time, until it suddenly hit an end? They skipped over the part where he actually uses any cunning to become a businessman? He was... pouring his heart out in this autobiography he was writing to a Chinese politician?",
-    "poster_image": "/media-posters/movie_the_white_tiger.jpg"
+    "poster_image": "/media-posters/movie_the_white_tiger.avif"
   },
   {
     "id": "the_social_network",
@@ -933,7 +933,7 @@
     "tagline": "",
     "description": "In 2003, Harvard undergrad and computer programmer Mark Zuckerberg begins work on a new concept that eventually turns into the global social network known as Facebook. Six years later, Mark is one of the youngest billionaires ever, but his unprecedented success leads to both personal and legal complications when he ends up on the receiving end of two lawsuits, one involving his former friend.",
     "notes": "I like the actor.",
-    "poster_image": "/media-posters/movie_the_social_network.jpg"
+    "poster_image": "/media-posters/movie_the_social_network.avif"
   },
   {
     "id": "28_days_later",
@@ -944,7 +944,7 @@
     "tagline": "",
     "description": "Twenty-eight days after a killer virus was accidentally unleashed from a British research facility, a small group of London survivors are caught in a desperate struggle to protect themselves from the infected. Carried by animals and humans, the virus turns those it infects into homicidal maniacs -- and it's absolutely impossible to contain.",
     "notes": "",
-    "poster_image": "/media-posters/movie_28_days_later.jpg"
+    "poster_image": "/media-posters/movie_28_days_later.avif"
   },
   {
     "id": "akira",
@@ -955,7 +955,7 @@
     "tagline": "",
     "description": "1988\nA secret military project endangers Neo-Tokyo when it turns a biker gang member into a rampaging psychic psychopath that only two teenagers and a group of psychics can stop.",
     "notes": "",
-    "poster_image": "/media-posters/movie_akira.jpg"
+    "poster_image": "/media-posters/movie_akira.avif"
   },
   {
     "id": "andhadhun",
@@ -966,7 +966,7 @@
     "tagline": "",
     "description": "A series of mysterious events changes the life of a blind pianist who now must report a crime that was actually never witnessed by him.",
     "notes": "",
-    "poster_image": "/media-posters/movie_andhadhun.jpg"
+    "poster_image": "/media-posters/movie_andhadhun.avif"
   },
   {
     "id": "arrival",
@@ -977,7 +977,7 @@
     "tagline": "Linguistics!",
     "description": "Taking place after alien crafts land around the world, an expert linguist is recruited by the military to determine whether they come in peace or are a threat.",
     "notes": "",
-    "poster_image": "/media-posters/movie_arrival.jpg"
+    "poster_image": "/media-posters/movie_arrival.avif"
   },
   {
     "id": "b_hubali_2_the_conclusion",
@@ -988,7 +988,7 @@
     "tagline": "",
     "description": "When Mahendra, the son of Bāhubali, learns about his heritage, he begins to look for answers. His story is juxtaposed with past events that unfolded in the Mahishmati Kingdom.",
     "notes": "",
-    "poster_image": "/media-posters/movie_b_hubali_2_the_conclusion.jpg"
+    "poster_image": "/media-posters/movie_b_hubali_2_the_conclusion.avif"
   },
   {
     "id": "b_hubali_the_beginning",
@@ -999,7 +999,7 @@
     "tagline": "",
     "description": "The young Shivudu is left as a foundling in a small village by his mother. By the time he’s grown up, it has become apparent that he possesses exceptional gifts. He meets the beautiful warrior princess Avanthika and learns that her queen has been held captive for the last 25 years. Shividu sets off to rescue her, discovering his own origins in the process.",
     "notes": "",
-    "poster_image": "/media-posters/movie_b_hubali_the_beginning.jpg"
+    "poster_image": "/media-posters/movie_b_hubali_the_beginning.avif"
   },
   {
     "id": "chorus",
@@ -1010,7 +1010,7 @@
     "tagline": "The V is pronounced as U.",
     "description": "Deep Silver Fishlabs\nTake control of Nara on a quest to destroy the dark cult that created her. Unlock devastating weapons &amp; mind-bending abilities in an evolution of the space-combat shooter. Along with Forsaken, her sentient starfighter, explore ancient temples, engage in zero-g combat &amp; venture beyond waking reality.",
     "notes": "Repetitive gameplay was disappointing. Concept sounds good but the only way to survive is by playing it safe and when there's very few enemies left it gets tedious to track them down and chase. Also unfair because I literally have a better ship than them. I like games which are more equal lol",
-    "poster_image": "/media-posters/game_chorus.jpg"
+    "poster_image": "/media-posters/game_chorus.avif"
   },
   {
     "id": "rage_2",
@@ -1021,7 +1021,7 @@
     "tagline": "Repetitive gameplay, uninspiring story, and game-breaking bugs. Everything else mediocre at best.",
     "description": "id Software\nRAGE 2 brings together two studio powerhouses – Avalanche Studios, masters of open world insanity, and id Software, creators of the first-person shooter – to deliver a carnival of carnage where you can go anywhere, shoot anything, and explode everything.",
     "notes": "",
-    "poster_image": "/media-posters/game_rage_2.jpg"
+    "poster_image": "/media-posters/game_rage_2.avif"
   },
   {
     "id": "playtime",
@@ -1032,7 +1032,7 @@
     "tagline": "",
     "description": "1967\nClumsy Monsieur Hulot finds himself perplexed by the intimidating complexity of a gadget-filled Paris. He attempts to meet with a business contact but soon becomes lost. His roundabout journey parallels that of an American tourist, and as they weave through the inventive urban environment, they intermittently meet, developing an interest in one another. They eventually get together at a chaotic restaurant, along with several other quirky characters.",
     "notes": "",
-    "poster_image": "/media-posters/movie_playtime.jpg"
+    "poster_image": "/media-posters/movie_playtime.avif"
   },
   {
     "id": "journey",
@@ -1043,7 +1043,7 @@
     "tagline": "",
     "description": "thatgamecompany\nExplore the ancient, mysterious world of Journey as you soar above ruins and glide across sands to discover its secrets.",
     "notes": "",
-    "poster_image": "/media-posters/game_journey.jpg"
+    "poster_image": "/media-posters/game_journey.avif"
   },
   {
     "id": "kill_bill_vol_1",
@@ -1054,7 +1054,7 @@
     "tagline": "",
     "description": "An assassin is shot by her ruthless employer, Bill, and other members of their assassination circle – but she lives to plot her vengeance.",
     "notes": "",
-    "poster_image": "/media-posters/movie_kill_bill_vol_1.jpg"
+    "poster_image": "/media-posters/movie_kill_bill_vol_1.avif"
   },
   {
     "id": "petscop",
@@ -1065,7 +1065,7 @@
     "tagline": "What the FUCK?",
     "description": "Petscop is a YouTube horror web series by Tony Domenico, made to resemble a YouTube Let's Play series. The videos follow Paul Leskowitz, the protagonist, exploring and documenting a supposedly \"long-lost PlayStation video game\" titled Petscop.",
     "notes": "Analog horror at its best.\nIt's not for you.\n\nIf you have any theories, feel free to contact me.",
-    "poster_image": "/media-posters/show_petscop.webp"
+    "poster_image": "/media-posters/show_petscop.avif"
   },
   {
     "id": "dude",
@@ -1076,7 +1076,7 @@
     "tagline": "",
     "description": "Dude depicts the life of a detective, scrambling to hunt down the answers behind a baffling case. It reels him into twisted relationships filled with perplexing events.",
     "notes": "",
-    "poster_image": "/media-posters/show_dude.jpg"
+    "poster_image": "/media-posters/show_dude.avif"
   },
   {
     "id": "el_camino_a_breaking_bad_movie",
@@ -1087,7 +1087,7 @@
     "tagline": "",
     "description": "In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.",
     "notes": "",
-    "poster_image": "/media-posters/movie_el_camino_a_breaking_bad_movie.jpg"
+    "poster_image": "/media-posters/movie_el_camino_a_breaking_bad_movie.avif"
   },
   {
     "id": "esc_lena_raine",
@@ -1098,7 +1098,7 @@
     "tagline": "by Lena Raine",
     "description": "",
     "notes": "Some of the plot twists.... didn't really make sense. But I really want to see more stories in this weird format.",
-    "poster_image": "/media-posters/game_esc_lena_raine.jpg"
+    "poster_image": "/media-posters/game_esc_lena_raine.avif"
   },
   {
     "id": "escaped_chasm",
@@ -1109,7 +1109,7 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "poster_image": "/media-posters/game_escaped_chasm.jpg"
+    "poster_image": "/media-posters/game_escaped_chasm.avif"
   },
   {
     "id": "hyouka",
@@ -1120,7 +1120,7 @@
     "tagline": "",
     "description": "Oreki Houtarou is a minimalistic high school boy. One day, he joins the Classic Literature Club at his elder sister's request. There he meets Chitanda Eru, Fukube Satoshi, and Ibara Mayaka. Chitanda is a calm beautiful girl but she turns into an embodiment of curiosity once she says, \"I'm curious.\" Fukube is a smiling boy with a fantastic memory who calls himself a database. Ibara is a short girl and is strict with others and herself. They begin to investigate a case that occurred 45 years ago. Hints of the mystery are buried in an old collection of works of the former members of Classics Club. The collection is titled \"Hyouka.\"",
     "notes": "",
-    "poster_image": "/media-posters/show_hyouka.jpg"
+    "poster_image": "/media-posters/show_hyouka.avif"
   },
   {
     "id": "kentucky_route_zero_pc_edition",
@@ -1131,7 +1131,7 @@
     "tagline": "",
     "description": "Cardboard Computer\nKENTUCKY ROUTE ZERO is a magical realist adventure game about a secret highway running through the caves beneath Kentucky, and the mysterious folks who travel it.",
     "notes": "I love the short stories that are shorter than 3 pages, but they do get tiring after a while, and I just wanted to get on with the adventure! Which the game had forgotten about, strangely.",
-    "poster_image": "/media-posters/game_kentucky_route_zero_pc_edition.jpg"
+    "poster_image": "/media-posters/game_kentucky_route_zero_pc_edition.avif"
   },
   {
     "id": "clair_obscur_expedition_33",
@@ -1142,7 +1142,7 @@
     "tagline": "",
     "description": "Sandfall Interactive\nLead the members of Expedition 33 on their quest to destroy the Paintress so that she can never paint death again. Explore a world of wonders inspired by Belle Époque France and battle unique enemies in this turn-based RPG with real-time mechanics.",
     "notes": "",
-    "poster_image": "/media-posters/game_clair_obscur_expedition_33.jpg"
+    "poster_image": "/media-posters/game_clair_obscur_expedition_33.avif"
   },
   {
     "id": "mad_max_fury_road",
@@ -1153,7 +1153,7 @@
     "tagline": "A chase sequence that just never ends.",
     "description": "An apocalyptic story set in the furthest reaches of our planet, in a stark desert landscape where humanity is broken, and most everyone is crazed fighting for the necessities of life. Within this world exist two rebels on the run who just might be able to restore order.",
     "notes": "Unbelievably creative action",
-    "poster_image": "/media-posters/movie_mad_max_fury_road.jpg"
+    "poster_image": "/media-posters/movie_mad_max_fury_road.avif"
   },
   {
     "id": "minority_report",
@@ -1164,7 +1164,7 @@
     "tagline": "",
     "description": "John Anderton is a top 'Precrime' cop in the late-21st century, when technology can predict crimes before they're committed. But Anderton becomes the quarry when another investigator targets him for a murder charge.",
     "notes": "Can't believe I sat on this one for so long...",
-    "poster_image": "/media-posters/movie_minority_report.jpg"
+    "poster_image": "/media-posters/movie_minority_report.avif"
   },
   {
     "id": "mission_impossible_-_fallout",
@@ -1175,6 +1175,6 @@
     "tagline": "",
     "description": "When an IMF mission ends badly, the world is faced with dire consequences. As Ethan Hunt takes it upon himself to fulfill his original briefing, the CIA begin to question his loyalty and his motives. The IMF team find themselves in a race against time, hunted by assassins while trying to prevent a global catastrophe.",
     "notes": "",
-    "poster_image": "/media-posters/movie_mission_impossible_-_fallout.jpg"
+    "poster_image": "/media-posters/movie_mission_impossible_-_fallout.avif"
   }
 ]

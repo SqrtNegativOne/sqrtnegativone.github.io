@@ -2,7 +2,7 @@
   import { TYPE_LABEL } from "./constants";
   import RatingChart from "./RatingChart.svelte";
   
-  let { item, openDetails, openFullPoster } = $props<{ item: any; openDetails: (item: any) => void; openFullPoster?: (url: string) => void }>();
+  let { item, activeItem, openDetails, openFullPoster } = $props<{ item: any; activeItem?: any; openDetails: (item: any) => void; openFullPoster?: (url: string) => void }>();
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -10,7 +10,7 @@
 <article class="ml-hero-card" onclick={() => openDetails(item)}>
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="ml-poster ml-poster--lg" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }} style="view-transition-name: poster-{item.id}">
+  <div class="ml-poster ml-poster--lg" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }} style="view-transition-name: {activeItem?.id === item.id ? 'none' : 'poster-' + item.id}">
     {#if item.poster_image}
       <img src={item.poster_image} alt="" loading="lazy" />
     {:else}
