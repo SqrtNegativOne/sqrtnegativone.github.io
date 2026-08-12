@@ -4,7 +4,6 @@
   import HeroCard from "./HeroCard.svelte";
   import LibraryRow from "./LibraryRow.svelte";
   import MediaModal from "./MediaModal.svelte";
-  import { tick } from "svelte";
   import FilterSort from "../../../../shared/components/FilterSort.svelte";
   import { applyFilters, applySorts } from "../../../../shared/utils/mediaFilters";
   
@@ -45,32 +44,14 @@
   }
 
   function openDetails(item: any) {
-    if (document.startViewTransition) {
-      document.startViewTransition(async () => {
-        activeItem = item;
-        document.body.style.overflow = 'hidden';
-        await tick();
-      });
-    } else {
-      activeItem = item;
-      document.body.style.overflow = 'hidden';
-    }
+    activeItem = item;
+    document.body.style.overflow = 'hidden';
   }
 
   function closeDetails() {
-    if (document.startViewTransition) {
-      document.startViewTransition(async () => {
-        activeItem = null;
-        if (!fullPosterUrl) {
-          document.body.style.overflow = '';
-        }
-        await tick();
-      });
-    } else {
-      activeItem = null;
-      if (!fullPosterUrl) {
-        document.body.style.overflow = '';
-      }
+    activeItem = null;
+    if (!fullPosterUrl) {
+      document.body.style.overflow = '';
     }
   }
 
@@ -105,7 +86,7 @@
       <h2 class="ml-section-title">Currently</h2>
       <div class="ml-hero-row">
         {#each filteredBuckets.consuming as item (item.type + '-' + item.id)}
-          <HeroCard {item} {activeItem} {openDetails} {openFullPoster} />
+          <HeroCard {item} {openDetails} {openFullPoster} />
         {/each}
       </div>
     </section>
@@ -125,7 +106,7 @@
           </button>
         </div>
         {#each filteredBuckets.library as item (item.type + '-' + item.id)}
-          <LibraryRow {item} {activeItem} {openDetails} {openFullPoster} />
+          <LibraryRow {item} {openDetails} {openFullPoster} />
         {/each}
       </div>
     </section>

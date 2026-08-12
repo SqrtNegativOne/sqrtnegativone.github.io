@@ -4,6 +4,8 @@
   import { icons } from "$lib/icons";
   import StatusBadge from "../../../../shared/components/StatusBadge.svelte";
   import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
+  import { fade, scale } from "svelte/transition";
+  import { cubicOut } from "svelte/easing";
   
   let { item, closeDetails, openFullPoster } = $props<{ item: any; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
 </script>
@@ -12,15 +14,15 @@
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="ml-modal-backdrop" onclick={closeDetails}>
-  <div class="ml-modal-content" onclick={(e) => e.stopPropagation()}>
+<div class="ml-modal-backdrop" onclick={closeDetails} transition:fade={{ duration: 200 }}>
+  <div class="ml-modal-content" onclick={(e) => e.stopPropagation()} transition:scale={{ start: 0.95, duration: 300, easing: cubicOut }}>
     <button class="ml-modal-close" onclick={closeDetails} aria-label="Close details">
       <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
     <div class="ml-modal-grid">
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div class="ml-modal-poster {openFullPoster && item.poster_image ? 'is-interactive' : ''}" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }} style="view-transition-name: poster-{item.id}; {openFullPoster && item.poster_image ? 'cursor: pointer;' : ''}">
+      <div class="ml-modal-poster {openFullPoster && item.poster_image ? 'is-interactive' : ''}" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }} style={openFullPoster && item.poster_image ? 'cursor: pointer;' : ''}>
         {#if item.poster_image}
           <img src={item.poster_image} alt="" />
         {:else}
