@@ -1,19 +1,14 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
-  import RatingChart from "./RatingChart.svelte";
+  import RatingChart from "../../../../shared/components/RatingChart.svelte";
   import { icons } from "$lib/icons";
+  import StatusBadge from "../../../../shared/components/StatusBadge.svelte";
+  import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   
   let { item, activeItem, openDetails, openFullPoster } = $props<{ item: any; activeItem?: any; openDetails: (item: any) => void; openFullPoster?: (url: string) => void }>();
 </script>
 
-{#snippet statusBadge(status: string)}
-  <span class={`ml-status ml-status--${status.replace(' ', '-')}`}>
-    <span class="ml-status-icon">
-      {@html icons[`status-${status.replace(' ', '-')}`] || icons['type-default']}
-    </span>
-    {status}
-  </span>
-{/snippet}
+
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_interactive_supports_focus -->
@@ -34,16 +29,12 @@
   <span role="cell" class="ml-col-title">
     <span class="ml-row-title-container">
       <span class="ml-row-title">{item.title}</span>
-      <span class="ml-type-icon" style="color: {item.type === 'movie' ? 'oklch(0.7137 0.1434 254.62)' : item.type === 'show' ? 'oklch(0.7217 0.1767 305.5)' : item.type === 'game' ? 'oklch(0.8003 0.1821 151.71)' : item.type === 'book' ? 'oklch(0.8606 0.1731 91.94)' : 'oklch(0.7107 0.0351 256.79)'}">
-        {@html icons[`type-${item.type}`] || icons['type-default']}
-      </span>
+      <TypeBadge type={item.type} variant="icon" />
+      <StatusBadge status={item.status} />
     </span>
     {#if item.tagline}
       <span class="ml-row-sub">{item.tagline}</span>
     {/if}
-  </span>
-  <span role="cell" class="ml-col-status">
-    {@render statusBadge(item.status)}
   </span>
   <span role="cell" class="ml-col-rating">
     <RatingChart rating={item.rating} />
@@ -53,7 +44,7 @@
 <style>
   .ml-row {
     display: grid;
-    grid-template-columns: 76px 1fr 130px 100px;
+    grid-template-columns: 76px 1fr 100px;
     align-items: center;
     gap: 16px;
     padding: 12px 8px;
@@ -85,18 +76,6 @@
     gap: 8px;
   }
 
-  .ml-type-icon {
-    width: 14px;
-    height: 14px;
-    flex-shrink: 0;
-    opacity: 0.8;
-    display: inline-flex;
-  }
-
-  .ml-type-icon :global(svg) {
-    width: 100%;
-    height: 100%;
-  }
 
   .ml-poster {
     position: relative;
@@ -142,37 +121,7 @@
     text-transform: uppercase;
   }
 
-  .ml-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 6px 10px;
-    border-radius: 4px;
-  }
 
-  .ml-status-icon {
-    width: 14px;
-    height: 14px;
-    display: inline-flex;
-  }
-
-  .ml-status-icon :global(svg) {
-    width: 100%;
-    height: 100%;
-  }
-
-  .ml-status--consuming  { background: oklch(0.8594 0.1588 85.88 / 0.15);  color: oklch(0.869 0.1453 85.42); }
-  .ml-status--finished   { background: oklch(0.7451 0.1577 151.54 / 0.15);  color: oklch(0.7815 0.1344 160.05); }
-  .ml-status--wishlist   { background: oklch(0.5854 0.2041 277.12 / 0.15); color: oklch(0.6801 0.1583 276.93); }
-  .ml-status--rewishlist { background: oklch(0.6056 0.2189 292.72 / 0.15); color: oklch(0.709 0.1592 293.54); }
-  .ml-status--next-up    { background: oklch(0.7148 0.1257 215.22 / 0.15); color: oklch(0.7971 0.1339 211.53); }
-  .ml-status--dropped    { background: oklch(0.5866 0.2061 26.36 / 0.15); color: oklch(0.6047 0.1648 23.41); }
-  .ml-status--shelved    { background: oklch(0.7137 0.0192 261.32 / 0.15); color: oklch(0.7137 0.0192 261.32); }
-  .ml-status--waiting-for{ background: oklch(0.75 0.15 45 / 0.15); color: oklch(0.75 0.15 45); }
 
   .ml-rating {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
@@ -195,16 +144,13 @@
       grid-template-columns: 44px 1fr auto;
       grid-template-areas:
         "poster title rating"
-        "poster meta  meta";
+        "poster tagline tagline";
       row-gap: 4px;
     }
 
     .ml-row .ml-col-poster { grid-area: poster; }
-    .ml-row .ml-col-title  { grid-area: title;  }
+    .ml-row .ml-col-title  { grid-area: title; display: flex; flex-direction: column; }
     .ml-row .ml-col-rating { grid-area: rating; }
-    .ml-row .ml-col-status {
-      grid-area: meta;
-      display: inline-block;
-    }
+    .ml-row-sub { grid-area: tagline; }
   }
 </style>

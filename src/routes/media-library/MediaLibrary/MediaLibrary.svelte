@@ -120,9 +120,6 @@
           <button role="columnheader" class="ml-col-title ml-sortable" onclick={() => toggleSort('title')}>
             Title {#if sorts.find(s => s.property === 'title')}{sorts.find(s => s.property === 'title')?.direction === 'asc' ? '▲' : '▼'}{/if}
           </button>
-          <button role="columnheader" class="ml-col-status ml-sortable" onclick={() => toggleSort('status')}>
-            Status {#if sorts.find(s => s.property === 'status')}{sorts.find(s => s.property === 'status')?.direction === 'asc' ? '▲' : '▼'}{/if}
-          </button>
           <button role="columnheader" class="ml-col-rating ml-sortable" onclick={() => toggleSort('rating')}>
             Rating {#if sorts.find(s => s.property === 'rating')}{sorts.find(s => s.property === 'rating')?.direction === 'asc' ? '▲' : '▼'}{/if}
           </button>
@@ -291,7 +288,7 @@
 
 .ml-table-head {
   display: grid;
-  grid-template-columns: 60px 1fr 110px 90px;
+  grid-template-columns: 60px 1fr 90px;
   align-items: center;
   gap: 16px;
   padding: 12px 8px;

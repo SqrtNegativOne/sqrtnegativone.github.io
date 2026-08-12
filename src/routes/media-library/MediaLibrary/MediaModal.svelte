@@ -1,19 +1,14 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
-  import RatingChart from "./RatingChart.svelte";
+  import RatingChart from "../../../../shared/components/RatingChart.svelte";
   import { icons } from "$lib/icons";
+  import StatusBadge from "../../../../shared/components/StatusBadge.svelte";
+  import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   
   let { item, closeDetails, openFullPoster } = $props<{ item: any; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
 </script>
 
-{#snippet statusBadge(status: string)}
-  <span class={`ml-status ml-status--${status.replace(' ', '-')} ml-2`}>
-    <span class="ml-status-icon">
-      {@html icons[`status-${status.replace(' ', '-')}`] || icons['type-default']}
-    </span>
-    {status}
-  </span>
-{/snippet}
+
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -33,13 +28,15 @@
         {/if}
       </div>
       <div class="ml-modal-info">
-        <h2 class="ml-modal-title">{item.title}</h2>
+        <h2 class="ml-modal-title flex items-center gap-3">
+          {item.title}
+          <StatusBadge status={item.status} />
+        </h2>
         {#if item.tagline}
           <p class="ml-modal-tagline">{item.tagline}</p>
         {/if}
         <div class="ml-modal-meta">
-          <span class={`ml-badge ml-badge--${item.type} static inline-block !relative !top-0 !left-0`}>{TYPE_LABEL[item.type] || item.type}</span>
-          {@render statusBadge(item.status)}
+          <TypeBadge type={item.type} variant="badge" />
           <RatingChart rating={item.rating} />
         </div>
         {#if item.description}
@@ -190,54 +187,8 @@
     white-space: pre-wrap;
   }
 
-  .ml-badge {
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 7px;
-    border-radius: 3px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    background: oklch(0 0 0 / 0.65);
-    color: oklch(0.9707 0.0027 286.35);
-    backdrop-filter: blur(4px);
-  }
 
-  .ml-badge--game  { background: oklch(0.5611 0.2236 295.48 / 0.85); }
-  .ml-badge--movie { background: oklch(0.5814 0.2349 27.99 / 0.85); }
-  .ml-badge--show  { background: oklch(0.5645 0.1497 247.37 / 0.85); }
-  .ml-badge--book  { background: oklch(0.6521 0.1322 81.57 / 0.85); }
 
-  .ml-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 6px 10px;
-    border-radius: 4px;
-  }
-
-  .ml-status-icon {
-    width: 14px;
-    height: 14px;
-    display: inline-flex;
-  }
-
-  .ml-status-icon :global(svg) {
-    width: 100%;
-    height: 100%;
-  }
-
-  .ml-status--consuming  { background: oklch(0.8594 0.1588 85.88 / 0.15);  color: oklch(0.869 0.1453 85.42); }
-  .ml-status--finished   { background: oklch(0.7451 0.1577 151.54 / 0.15);  color: oklch(0.7815 0.1344 160.05); }
-  .ml-status--wishlist   { background: oklch(0.5854 0.2041 277.12 / 0.15); color: oklch(0.6801 0.1583 276.93); }
-  .ml-status--rewishlist { background: oklch(0.6056 0.2189 292.72 / 0.15); color: oklch(0.709 0.1592 293.54); }
-  .ml-status--next-up    { background: oklch(0.7148 0.1257 215.22 / 0.15); color: oklch(0.7971 0.1339 211.53); }
-  .ml-status--dropped    { background: oklch(0.5866 0.2061 26.36 / 0.15); color: oklch(0.6047 0.1648 23.41); }
-  .ml-status--shelved    { background: oklch(0.7137 0.0192 261.32 / 0.15); color: oklch(0.7137 0.0192 261.32); }
-  .ml-status--waiting-for{ background: oklch(0.75 0.15 45 / 0.15); color: oklch(0.75 0.15 45); }
 
   .ml-rating {
     font-family: "IBM Plex Mono", ui-monospace, monospace;
