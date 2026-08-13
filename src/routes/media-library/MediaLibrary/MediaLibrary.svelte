@@ -1,5 +1,5 @@
 <script lang="ts">
-  import mediaData from "../../../data/media.json";
+  import mediaData from "../../../../static/media/media.json";
 
   import HeroCard from "./HeroCard.svelte";
   import LibraryRow from "./LibraryRow.svelte";

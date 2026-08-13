@@ -1,5 +1,5 @@
 <script lang="ts">
-  import mediaProperties from '../../../../../static/media-properties.json';
+  import mediaProperties from '../../../../../static/media/media-properties.json';
 
   let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, searchError, handleSearch, handlePaste, handleRatingKeydown, handleSave, handleDelete } = $props();
 </script>

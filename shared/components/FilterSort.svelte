@@ -1,6 +1,6 @@
 <script lang="ts">
   import { clickOutside } from '../utils/clickOutside';
-  import mediaProperties from '../../static/media-properties.json';
+  import mediaProperties from '../../static/media/media-properties.json';
 
   let { filters = $bindable([]), sorts = $bindable([]), properties = [
     { value: 'type', label: 'Type', type: 'select', options: mediaProperties.types },

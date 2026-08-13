@@ -193,7 +193,7 @@ export class MediaState {
     }
     const root = rootRes.value;
     const safeId = id.replace(/[^A-Za-z0-9_-]/g, "_");
-    const postersDir = `${root}/static/media-posters`;
+    const postersDir = `${root}/static/media/media-posters`;
     const isNew = !this.isEditing;
 
     await ResultAsync.fromPromise(invoke('mkdir', { path: postersDir, recursive: true }), () => {});
@@ -258,7 +258,7 @@ export class MediaState {
       }
     }
 
-    let items = (await readData<MediaItem>('media.json')).unwrapOr([] as any[]);
+    let items = (await readData<MediaItem>('../../static/media/media.json')).unwrapOr([] as any[]);
     const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image };
     
     if (isNew) {
@@ -273,13 +273,13 @@ export class MediaState {
       else items.push(newItem);
     }
     
-    const saveRes = await writeData('media.json', items);
+    const saveRes = await writeData('../../static/media/media.json', items);
     if (saveRes.isErr()) {
       this.errorMsg = saveRes.error.message;
       return;
     }
 
-    let pNotes = (await readData<{id: string, notes: string}>('media-private.json')).unwrapOr([] as any[]);
+    let pNotes = (await readData<{id: string, notes: string}>('../../static/media/media-private.json')).unwrapOr([] as any[]);
     if (!Array.isArray(pNotes)) pNotes = [];
 
     if (private_notes && private_notes.trim()) {
@@ -289,7 +289,7 @@ export class MediaState {
     } else {
       pNotes = pNotes.filter(n => n.id !== id);
     }
-    const savePrivateRes = await writeData('media-private.json', pNotes);
+    const savePrivateRes = await writeData('../../static/media/media-private.json', pNotes);
     if (savePrivateRes.isErr()) {
       this.errorMsg = savePrivateRes.error.message;
       return;
@@ -303,18 +303,18 @@ export class MediaState {
     if (!confirm('Are you sure you want to delete this media item?')) return;
     this.errorMsg = '';
     
-    let items = (await readData<MediaItem>('media.json')).unwrapOr([] as any[]);
+    let items = (await readData<MediaItem>('../../static/media/media.json')).unwrapOr([] as any[]);
     items = items.filter(i => i.id !== id);
-    const writeRes = await writeData('media.json', items);
+    const writeRes = await writeData('../../static/media/media.json', items);
     if (writeRes.isErr()) {
       this.errorMsg = writeRes.error.message;
       return;
     }
 
-    let pNotes = (await readData<{id: string, notes: string}>('media-private.json')).unwrapOr([] as any[]);
+    let pNotes = (await readData<{id: string, notes: string}>('../../static/media/media-private.json')).unwrapOr([] as any[]);
     if (Array.isArray(pNotes)) {
         pNotes = pNotes.filter(n => n.id !== id);
-        const writePrivateRes = await writeData('media-private.json', pNotes);
+        const writePrivateRes = await writeData('../../static/media/media-private.json', pNotes);
         if (writePrivateRes.isErr()) {
           this.errorMsg = writePrivateRes.error.message;
           return;
