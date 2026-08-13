@@ -62,6 +62,36 @@ fn get_repo_root() -> Result<String, String> {
     Err("Could not find repo root".to_string())
 }
 
+#[tauri::command]
+fn convert_image_to_avif(path: String) -> Result<String, String> {
+    let output_path = if path.ends_with(".jpg") {
+        path.replace(".jpg", ".avif")
+    } else if path.ends_with(".png") {
+        path.replace(".png", ".avif")
+    } else if path.ends_with(".webp") {
+        path.replace(".webp", ".avif")
+    } else {
+        path.clone()
+    };
+    
+    if path == output_path {
+        return Ok(path);
+    }
+    
+    let status = std::process::Command::new("ffmpeg")
+        .args(["-y", "-i", &path, &output_path])
+        .status()
+        .map_err(|e| e.to_string())?;
+        
+    if !status.success() {
+        return Err("ffmpeg conversion failed".to_string());
+    }
+    
+    let _ = std::fs::remove_file(&path);
+    
+    Ok(output_path)
+}
+
 /// # Panics
 /// Panics if the tauri application fails to build or run.
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -75,7 +105,8 @@ pub fn run() {
         unlink,
         access,
         write_file_binary,
-        get_repo_root
+        get_repo_root,
+        convert_image_to_avif
     ])
     .setup(|app| {
       if cfg!(debug_assertions) {

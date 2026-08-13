@@ -6,6 +6,7 @@
   import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
+  import { getPosterUrl } from "$lib/utils";
   
   let { item, closeDetails, openFullPoster } = $props<{ item: Record<string, unknown>; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
 </script>
@@ -22,9 +23,9 @@
     <div class="ml-modal-grid">
       <!-- svelte-ignore a11y_click_events_have_key_events -->
       <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div class="ml-modal-poster {openFullPoster && item.poster_image ? 'is-interactive' : ''}" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }} style={openFullPoster && item.poster_image ? 'cursor: pointer;' : ''}>
+      <div class="ml-modal-poster {openFullPoster && item.poster_image ? 'is-interactive' : ''}" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(getPosterUrl(item.poster_image as string)); } }} style={openFullPoster && item.poster_image ? 'cursor: pointer;' : ''}>
         {#if item.poster_image}
-          <img src={item.poster_image} alt="" />
+          <img src={getPosterUrl(item.poster_image as string)} alt="" />
         {:else}
           <div class="ml-poster-fallback"><span>{TYPE_LABEL[item.type] || item.type}</span></div>
         {/if}

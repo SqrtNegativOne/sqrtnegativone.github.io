@@ -11,7 +11,7 @@
   
   let searchQuery = $state("");
   let filters = $state([]);
-  let sorts = $state([{ property: 'rating', direction: 'desc' }]);
+  let sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'rating', direction: 'desc' }]);
 
   let filteredBuckets = $derived((() => {
     const filtered = applyFilters(mediaData, filters, searchQuery);
