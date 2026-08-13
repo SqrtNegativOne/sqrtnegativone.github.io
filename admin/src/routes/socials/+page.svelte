@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
+  import { invalidateAll } from '$app/navigation';
+  import { readData, writeData } from '$lib/db';
+  import type { SocialItem } from './+page';
 
-  interface SocialItem {
-    id: string; name: string; url: string; icon: string;
-  }
-
-  let { data, form } = $props();
+  let { data } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
@@ -23,6 +21,67 @@
     isEditing = true;
     currentItem = { ...item };
     isModalOpen = true;
+  }
+
+  async function handleSave(e: SubmitEvent) {
+    e.preventDefault();
+    if (!currentItem.id || !currentItem.name) {
+      alert('ID and Name are required');
+      return;
+    }
+
+    const items = (await readData<SocialItem>('socials.json')).unwrapOr([] as SocialItem[]);
+    const newItem = { ...currentItem };
+    
+    if (!isEditing) {
+      if (items.some(i => i.id === newItem.id)) {
+        alert('Social ID already exists');
+        return;
+      }
+      items.push(newItem);
+    } else {
+      const idx = items.findIndex(i => i.id === newItem.id);
+      if (idx !== -1) {
+        items[idx] = newItem;
+      } else {
+        items.push(newItem);
+      }
+    }
+    
+    const res = await writeData('socials.json', items);
+    if (res.isErr()) {
+      alert('Failed to save social data');
+      return;
+    }
+    isModalOpen = false;
+    await invalidateAll();
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('Are you sure?')) return;
+    let items = (await readData<SocialItem>('socials.json')).unwrapOr([] as SocialItem[]);
+    items = items.filter(i => i.id !== id);
+    await writeData('socials.json', items);
+    await invalidateAll();
+  }
+
+  async function handleMove(id: string, direction: 'up' | 'down') {
+    const items = (await readData<SocialItem>('socials.json')).unwrapOr([] as SocialItem[]);
+    const idx = items.findIndex(i => i.id === id);
+    if (idx === -1) return;
+    
+    if (direction === 'up' && idx > 0) {
+      const temp = items[idx - 1];
+      items[idx - 1] = items[idx];
+      items[idx] = temp;
+    } else if (direction === 'down' && idx < items.length - 1) {
+      const temp = items[idx + 1];
+      items[idx + 1] = items[idx];
+      items[idx] = temp;
+    }
+    
+    await writeData('socials.json', items);
+    await invalidateAll();
   }
 </script>
 
@@ -42,12 +101,6 @@
     </button>
   </div>
 
-  {#if form?.error}
-    <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">
-      {form.error}
-    </div>
-  {/if}
-
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {#each data.socials as item (item.id)}
       <div class="card p-4 flex flex-col group relative overflow-hidden">
@@ -66,21 +119,17 @@
           </div>
         </div>
         <div class="mt-auto flex justify-between items-center border-t border-[oklch(0.3717_0.0392_257.29)] pt-3 relative">
-          <form method="POST" action="?/move" use:enhance class="flex items-center space-x-1">
-            <input type="hidden" name="id" value={item.id} />
-            <button type="submit" name="direction" value="up" class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Up">
+          <div class="flex items-center space-x-1">
+            <button onclick={() => handleMove(item.id, 'up')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Up">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
             </button>
-            <button type="submit" name="direction" value="down" class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Down">
+            <button onclick={() => handleMove(item.id, 'down')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Down">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-          </form>
+          </div>
           <div class="flex space-x-2">
             <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-2 py-1 rounded bg-blue-500/10">Edit</button>
-            <form method="POST" action="?/delete" use:enhance class="inline">
-              <input type="hidden" name="id" value={item.id} />
-              <button type="submit" class="text-red-400 hover:text-red-300 text-sm px-2 py-1 rounded bg-red-500/10" onclick={(e) => !confirm('Are you sure?') && e.preventDefault()}>Delete</button>
-            </form>
+            <button onclick={() => handleDelete(item.id)} class="text-red-400 hover:text-red-300 text-sm px-2 py-1 rounded bg-red-500/10">Delete</button>
           </div>
         </div>
       </div>
@@ -101,34 +150,25 @@
         </button>
       </div>
       
-      <form method="POST" action="?/save" use:enhance={() => {
-        return async ({ result, update }) => {
-          if (result.type === 'success') {
-            isModalOpen = false;
-          }
-          update();
-        };
-      }} class="flex-1 overflow-y-auto p-6 space-y-4">
-        <input type="hidden" name="isNew" value={(!isEditing).toString()} />
-        
+      <form onsubmit={handleSave} class="flex-1 overflow-y-auto p-6 space-y-4">
         <div class="space-y-2">
           <label class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]" for="social-id">ID (Unique)</label>
-          <input type="text" id="social-id" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
+          <input type="text" id="social-id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
         </div>
         
         <div class="space-y-2">
           <label class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]" for="social-name">Name</label>
-          <input type="text" id="social-name" name="name" bind:value={currentItem.name} class="input-field" required />
+          <input type="text" id="social-name" bind:value={currentItem.name} class="input-field" required />
         </div>
         
         <div class="space-y-2">
           <label class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]" for="social-url">URL</label>
-          <input type="url" id="social-url" name="url" bind:value={currentItem.url} class="input-field" required />
+          <input type="url" id="social-url" bind:value={currentItem.url} class="input-field" required />
         </div>
         
         <div class="space-y-2">
           <label class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]" for="social-icon">Icon (Raw SVG)</label>
-          <textarea id="social-icon" name="icon" bind:value={currentItem.icon} rows="4" class="input-field resize-none font-mono text-xs"></textarea>
+          <textarea id="social-icon" bind:value={currentItem.icon} rows="4" class="input-field resize-none font-mono text-xs"></textarea>
         </div>
         
         <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">

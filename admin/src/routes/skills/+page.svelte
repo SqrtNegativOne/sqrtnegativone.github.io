@@ -1,15 +1,13 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
+  import { invalidateAll } from '$app/navigation';
+  import { readData, writeData } from '$lib/db';
+  import type { SkillItem } from './+page';
 
-  interface SkillItem {
-    name: string; icon: string; logo: string; mono: string;
-  }
-  
   interface SkillFormItem extends SkillItem {
     originalName: string;
   }
 
-  let { data, form } = $props();
+  let { data } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
@@ -28,6 +26,52 @@
     currentItem = { ...item, originalName: item.name };
     isModalOpen = true;
   }
+
+  async function handleSave(e: SubmitEvent) {
+    e.preventDefault();
+    if (!currentItem.name) {
+      alert('Name is required');
+      return;
+    }
+    const items = (await readData<SkillItem>('skills.json')).unwrapOr([] as SkillItem[]);
+    const newItem = {
+      name: currentItem.name,
+      icon: currentItem.icon || '',
+      logo: currentItem.logo || '',
+      mono: currentItem.mono || ''
+    };
+    
+    if (!isEditing) {
+      if (items.some(i => i.name === newItem.name)) {
+        alert('Skill name already exists');
+        return;
+      }
+      items.push(newItem);
+    } else {
+      const idx = items.findIndex(i => i.name === currentItem.originalName);
+      if (idx !== -1) {
+        items[idx] = newItem;
+      } else {
+        items.push(newItem);
+      }
+    }
+    
+    const res = await writeData('skills.json', items);
+    if (res.isErr()) {
+      alert('Failed to save skill');
+      return;
+    }
+    isModalOpen = false;
+    await invalidateAll();
+  }
+
+  async function handleDelete(name: string) {
+    if (!confirm('Are you sure?')) return;
+    let items = (await readData<SkillItem>('skills.json')).unwrapOr([] as SkillItem[]);
+    items = items.filter(i => i.name !== name);
+    await writeData('skills.json', items);
+    await invalidateAll();
+  }
 </script>
 
 <svelte:head>
@@ -45,12 +89,6 @@
       Add Skill
     </button>
   </div>
-
-  {#if form?.error}
-    <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">
-      {form.error}
-    </div>
-  {/if}
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
     {#each data.skills as item (item.name)}
@@ -71,10 +109,7 @@
         </div>
         <div class="mt-auto flex justify-end space-x-2 border-t border-[oklch(0.3717_0.0392_257.29)] pt-3 relative">
           <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-2 py-1 rounded bg-blue-500/10">Edit</button>
-          <form method="POST" action="?/delete" use:enhance class="inline">
-            <input type="hidden" name="name" value={item.name} />
-            <button type="submit" class="text-red-400 hover:text-red-300 text-sm px-2 py-1 rounded bg-red-500/10" onclick={(e) => !confirm('Are you sure?') && e.preventDefault()}>Delete</button>
-          </form>
+          <button onclick={() => handleDelete(item.name)} class="text-red-400 hover:text-red-300 text-sm px-2 py-1 rounded bg-red-500/10">Delete</button>
         </div>
       </div>
     {/each}
@@ -94,35 +129,26 @@
         </button>
       </div>
       
-      <form method="POST" action="?/save" use:enhance={() => {
-        return async ({ result, update }) => {
-          if (result.type === 'success') {
-            isModalOpen = false;
-          }
-          update();
-        };
-      }} class="flex-1 overflow-y-auto p-6 space-y-4">
-        <input type="hidden" name="isNew" value={(!isEditing).toString()} />
-        <input type="hidden" name="originalName" value={currentItem.originalName} />
+      <form onsubmit={handleSave} class="flex-1 overflow-y-auto p-6 space-y-4">
         
         <div class="space-y-2">
           <label for="skill-name" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Name</label>
-          <input id="skill-name" type="text" name="name" bind:value={currentItem.name} class="input-field" required />
+          <input id="skill-name" type="text" bind:value={currentItem.name} class="input-field" required />
         </div>
         
         <div class="space-y-2">
           <label for="skill-icon" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Icon (e.g. devicon class)</label>
-          <input id="skill-icon" type="text" name="icon" bind:value={currentItem.icon} class="input-field" />
+          <input id="skill-icon" type="text" bind:value={currentItem.icon} class="input-field" />
         </div>
         
         <div class="space-y-2">
           <label for="skill-logo" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Logo Path</label>
-          <input id="skill-logo" type="text" name="logo" bind:value={currentItem.logo} class="input-field" />
+          <input id="skill-logo" type="text" bind:value={currentItem.logo} class="input-field" />
         </div>
         
         <div class="space-y-2">
           <label for="skill-mono" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Mono Logo Path</label>
-          <input id="skill-mono" type="text" name="mono" bind:value={currentItem.mono} class="input-field" />
+          <input id="skill-mono" type="text" bind:value={currentItem.mono} class="input-field" />
         </div>
         
         <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">

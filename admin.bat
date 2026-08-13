@@ -1,3 +1,3 @@
 @echo off
 cd admin
-bun run dev --open
+bun run tauri dev

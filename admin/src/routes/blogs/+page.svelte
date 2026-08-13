@@ -1,14 +1,17 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
+  import { invalidateAll } from '$app/navigation';
+  import { invoke } from '@tauri-apps/api/core';
+  import { getRepoRoot } from '$lib/db';
 
   interface BlogItem {
     id: string; title: string; date: string; description: string; content: string;
   }
 
-  let { data, form } = $props();
+  let { data } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
+  let errorMsg = $state('');
   
   let currentItem: BlogItem = $state({
     id: '', title: '', date: '', description: '', content: ''
@@ -28,6 +31,69 @@
     currentItem = { ...item };
     isModalOpen = true;
   }
+
+  function createMarkdown(title: string, date: string, description: string, content: string) {
+    return `---
+title: "${title}"
+date: ${date}
+description: "${description}"
+---
+
+${content}
+`;
+  }
+
+  async function handleSave(e: Event) {
+    e.preventDefault();
+    errorMsg = '';
+    
+    let { id, title, date, description, content } = currentItem;
+    const isNew = !isEditing;
+    
+    if (!id || !title || !date) {
+      errorMsg = 'ID, Title, and Date are required';
+      return;
+    }
+    
+    if (!id.endsWith('.md')) id += '.md';
+    
+    try {
+      const root = await getRepoRoot();
+      const filepath = `${root}/blog/posts/${id}`;
+      
+      if (isNew) {
+        try {
+          await invoke('access', { path: filepath });
+          errorMsg = 'Blog post ID already exists';
+          return;
+        } catch {
+          // File does not exist, good to proceed
+        }
+      }
+      
+      const fileContent = createMarkdown(title, date, description, content);
+      await invoke('write_file', { path: filepath, content: fileContent });
+      
+      isModalOpen = false;
+      await invalidateAll();
+    } catch (err: any) {
+      errorMsg = err.message || 'Failed to save blog post';
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('Are you sure you want to delete this post?')) return;
+    errorMsg = '';
+    
+    try {
+      const root = await getRepoRoot();
+      const filepath = `${root}/blog/posts/${id}`;
+      await invoke('unlink', { path: filepath });
+      await invalidateAll();
+    } catch (err: any) {
+      errorMsg = err.message || 'Could not delete file';
+    }
+  }
 </script>
 
 <svelte:head>
@@ -46,9 +112,9 @@
     </button>
   </div>
 
-  {#if form?.error}
+  {#if errorMsg}
     <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">
-      {form.error}
+      {errorMsg}
     </div>
   {/if}
 
@@ -65,10 +131,7 @@
         <div class="flex justify-end items-center pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]/50 mt-auto">
           <div class="flex space-x-2 items-center">
             <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-3 py-1 rounded bg-blue-500/10 font-medium">Edit</button>
-            <form method="POST" action="?/delete" use:enhance class="inline">
-              <input type="hidden" name="id" value={item.id} />
-              <button type="submit" class="text-red-400 hover:text-red-300 text-sm px-3 py-1 rounded bg-red-500/10 font-medium" onclick={(e) => !confirm('Are you sure you want to delete this post?') && e.preventDefault()}>Delete</button>
-            </form>
+            <button class="text-red-400 hover:text-red-300 text-sm px-3 py-1 rounded bg-red-500/10 font-medium" onclick={() => handleDelete(item.id)}>Delete</button>
           </div>
         </div>
       </div>
@@ -89,16 +152,7 @@
         </button>
       </div>
       
-      <form method="POST" action="?/save" use:enhance={() => {
-        return async ({ result, update }) => {
-          if (result.type === 'success') {
-            isModalOpen = false;
-          }
-          update();
-        };
-      }} class="flex-1 overflow-y-auto p-6 flex flex-col">
-        <input type="hidden" name="isNew" value={(!isEditing).toString()} />
-        
+      <form onsubmit={handleSave} class="flex-1 overflow-y-auto p-6 flex flex-col">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div class="space-y-2">
             <label for="post-id" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Filename (.md)</label>

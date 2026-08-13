@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
   import mediaProperties from '../../../../../static/media-properties.json';
 
-  let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, searchError, handleSearch, handlePaste, handleRatingKeydown } = $props();
+  let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, searchError, handleSearch, handlePaste, handleRatingKeydown, handleSave, handleDelete } = $props();
 </script>
 
 {#if isModalOpen}
@@ -16,16 +15,7 @@
       </div>
       
       <div class="flex-1 overflow-y-auto p-6 flex flex-col">
-        <form id="save-media-form" method="POST" action="?/save" use:enhance={() => {
-          return async ({ result, update }) => {
-            if (result.type === 'success') {
-              isModalOpen = false;
-            }
-            update();
-          };
-        }}>
-          <input type="hidden" name="isNew" value={(!isEditing).toString()} />
-          
+        <form id="save-media-form" onsubmit={handleSave}>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="space-y-2">
             <label for="media-id" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">ID (Unique)</label>
@@ -100,13 +90,9 @@
         <div class="mt-8 flex justify-between items-center pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">
           <div>
             {#if isEditing}
-              <!-- For action="?/delete", it will target the current route action which is +page.server.ts ?/delete -->
-              <form method="POST" action="?/delete" use:enhance class="m-0">
-                <input type="hidden" name="id" value={currentItem.id} />
-                <button type="submit" class="px-4 py-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded transition-all" onclick={(e) => !confirm('Are you sure you want to delete this media item?') && e.preventDefault()}>
-                  Delete
-                </button>
-              </form>
+              <button type="button" class="px-4 py-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded transition-all" onclick={() => handleDelete(currentItem.id)}>
+                Delete
+              </button>
             {/if}
           </div>
           <div class="flex space-x-4">

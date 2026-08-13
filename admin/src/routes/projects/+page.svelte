@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
+  import { invalidateAll } from '$app/navigation';
+  import { readData, writeData, getRepoRoot } from '$lib/db';
+  import { invoke } from '@tauri-apps/api/core';
 
   interface ProjectItem {
     id: string; name: string; description: string; tags: string[]; github?: string | null; url?: string | null; image?: string | null; private?: boolean;
@@ -9,7 +11,7 @@
     id: string; name: string; description: string; tags: string; github: string; url: string; image: string; private: boolean;
   }
 
-  let { data, form } = $props();
+  let { data } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
@@ -58,6 +60,138 @@
       }
     }
   }
+
+  async function handleSave(e: Event) {
+    e.preventDefault();
+    const id = currentItem.id;
+    const name = currentItem.name;
+    const description = currentItem.description;
+    const tagsStr = currentItem.tags;
+    const github = currentItem.github;
+    const url = currentItem.url;
+    let image = currentItem.image;
+    const isPrivate = currentItem.private;
+    const isNew = !isEditing;
+    
+    if (!id || !name) {
+      alert('ID and Name are required');
+      return;
+    }
+
+    try {
+      if (fileInput && fileInput.files && fileInput.files.length > 0) {
+        const imageFile = fileInput.files[0];
+        const buffer = await imageFile.arrayBuffer();
+        
+        let ext = imageFile.name.split('.').pop();
+        if (!ext || ext === 'blob' || ext === 'image') {
+           if (imageFile.type === 'image/jpeg') ext = 'jpg';
+           else if (imageFile.type === 'image/webp') ext = 'webp';
+           else ext = 'png';
+        }
+        
+        const safeId = id.replace(/[^a-zA-Z0-9.-]/g, '_');
+        const fileName = `${safeId}-${Date.now()}.${ext}`;
+        
+        const repoRoot = await getRepoRoot();
+        const filepath = `${repoRoot}/static/projects/${fileName}`;
+        
+        await invoke('write_file_binary', { path: filepath, content: Array.from(new Uint8Array(buffer)) });
+        image = `/projects/${fileName}`;
+      }
+
+      const itemsRes = await readData<ProjectItem>('projects.json');
+      const items = itemsRes.unwrapOr([] as any[]);
+      
+      const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : [];
+      
+      const newItem: ProjectItem = { 
+        id, 
+        name, 
+        description, 
+        tags, 
+        github: github || null, 
+        url: url || null, 
+        image: image !== '(Auto-named on save)' ? image : '',
+        private: isPrivate
+      };
+      
+      if (!isPrivate) {
+        delete newItem.private;
+      }
+      
+      if (isNew) {
+        if (items.some(i => i.id === id)) {
+          alert('Project ID already exists');
+          return;
+        }
+        items.push(newItem);
+      } else {
+        const idx = items.findIndex(i => i.id === id);
+        if (idx !== -1) {
+          items[idx] = newItem;
+        } else {
+          items.push(newItem);
+        }
+      }
+      
+      const writeRes = await writeData('projects.json', items);
+      if (writeRes.isErr()) {
+        alert('Failed to write project data');
+        return;
+      }
+      
+      isModalOpen = false;
+      await invalidateAll();
+    } catch (err) {
+      console.error(err);
+      alert('Error saving project');
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('Are you sure you want to delete this project?')) return;
+    
+    const itemsRes = await readData<ProjectItem>('projects.json');
+    let items = itemsRes.unwrapOr([] as any[]);
+    items = items.filter(i => i.id !== id);
+    
+    const writeRes = await writeData('projects.json', items);
+    if (writeRes.isErr()) {
+      alert('Failed to delete project data');
+      return;
+    }
+    
+    await invalidateAll();
+  }
+
+  async function handleMove(id: string, direction: 'up' | 'down') {
+    const itemsRes = await readData<ProjectItem>('projects.json');
+    const items = itemsRes.unwrapOr([] as any[]);
+    const idx = items.findIndex(i => i.id === id);
+    if (idx === -1) {
+      alert('Project not found');
+      return;
+    }
+    
+    if (direction === 'up' && idx > 0) {
+      const temp = items[idx - 1];
+      items[idx - 1] = items[idx];
+      items[idx] = temp;
+    } else if (direction === 'down' && idx < items.length - 1) {
+      const temp = items[idx + 1];
+      items[idx + 1] = items[idx];
+      items[idx] = temp;
+    }
+    
+    const writeRes = await writeData('projects.json', items);
+    if (writeRes.isErr()) {
+      alert('Failed to update project data');
+      return;
+    }
+    
+    await invalidateAll();
+  }
 </script>
 
 <svelte:window onpaste={handlePaste} />
@@ -78,11 +212,6 @@
     </button>
   </div>
 
-  {#if form?.error}
-    <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">
-      {form.error}
-    </div>
-  {/if}
 
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
     {#each data.projects as item (item.name)}
@@ -123,20 +252,16 @@
               {/if}
             </div>
             <div class="flex space-x-2 items-center">
-              <form method="POST" action="?/move" use:enhance class="flex items-center space-x-1 mr-2 border-r border-[oklch(0.3717_0.0392_257.29)] pr-3">
-                <input type="hidden" name="id" value={item.id} />
-                <button type="submit" name="direction" value="up" class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Up">
+              <div class="flex items-center space-x-1 mr-2 border-r border-[oklch(0.3717_0.0392_257.29)] pr-3">
+                <button type="button" onclick={() => handleMove(item.id, 'up')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Up">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
                 </button>
-                <button type="submit" name="direction" value="down" class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Down">
+                <button type="button" onclick={() => handleMove(item.id, 'down')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Down">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-              </form>
+              </div>
               <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-3 py-1 rounded bg-blue-500/10 font-medium">Edit</button>
-              <form method="POST" action="?/delete" use:enhance class="inline">
-                <input type="hidden" name="id" value={item.id} />
-                <button type="submit" class="text-red-400 hover:text-red-300 text-sm px-3 py-1 rounded bg-red-500/10 font-medium" onclick={(e) => !confirm('Are you sure you want to delete this project?') && e.preventDefault()}>Delete</button>
-              </form>
+              <button type="button" class="text-red-400 hover:text-red-300 text-sm px-3 py-1 rounded bg-red-500/10 font-medium" onclick={() => handleDelete(item.id)}>Delete</button>
             </div>
           </div>
         </div>
@@ -158,14 +283,7 @@
         </button>
       </div>
       
-      <form method="POST" action="?/save" enctype="multipart/form-data" use:enhance={() => {
-        return async ({ result, update }) => {
-          if (result.type === 'success') {
-            isModalOpen = false;
-          }
-          update();
-        };
-      }} class="flex-1 overflow-y-auto p-6">
+      <form onsubmit={handleSave} class="flex-1 overflow-y-auto p-6">
         <input type="hidden" name="isNew" value={(!isEditing).toString()} />
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

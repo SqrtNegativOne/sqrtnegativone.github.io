@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
+  import { invalidateAll } from '$app/navigation';
+  import { getRepoRoot } from '$lib/db';
+  import { invoke } from '@tauri-apps/api/core';
 
   interface QuoteItem {
     id: string; quote: string; source: string; link: string; tags: string[];
   }
 
-  let { data, form } = $props();
+  let { data } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
@@ -65,6 +67,74 @@
     isFetching = false;
     isModalOpen = true;
   }
+
+  async function readQuotes() {
+    try {
+      const root = await getRepoRoot();
+      const content = await invoke<string>('read_file', { path: `${root}/static/quotes/quotes.json` });
+      return JSON.parse(content);
+    } catch (e) {
+      return [];
+    }
+  }
+
+  async function writeQuotes(quotes: any[]) {
+    const root = await getRepoRoot();
+    await invoke('write_file', { path: `${root}/static/quotes/quotes.json`, content: JSON.stringify(quotes, null, 2) });
+  }
+
+  async function handleSave(e: Event) {
+    e.preventDefault();
+    const isNew = !isEditing;
+    const id = currentQuote.id;
+    const quote = (currentQuote.quote || '').trim();
+    const source = (currentQuote.source || '').trim();
+    const link = (currentQuote.link || '').trim();
+    const tagsStr = tagsInput || '';
+    
+    const tags = Array.from(new Set(tagsStr.split(',').map(t => t.trim()).filter(t => t)));
+
+    if (!quote) {
+      alert('Quote cannot be empty');
+      return;
+    }
+
+    try {
+      const quotes = await readQuotes();
+      
+      if (isNew) {
+        quotes.push({ id: crypto.randomUUID(), quote, source, link, tags });
+      } else {
+        const index = quotes.findIndex((q: any) => q.id === id);
+        if (index !== -1) {
+          quotes[index] = { id, quote, source, link, tags };
+        } else {
+          alert('Original quote not found');
+          return;
+        }
+      }
+      
+      await writeQuotes(quotes);
+      isModalOpen = false;
+      await invalidateAll();
+    } catch (e) {
+      console.error(e);
+      alert('Failed to save quote');
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('Are you sure you want to delete this quote?')) return;
+    try {
+      let quotes = await readQuotes();
+      quotes = quotes.filter((q: any) => q.id !== id);
+      await writeQuotes(quotes);
+      await invalidateAll();
+    } catch (e) {
+      console.error(e);
+      alert('Failed to delete quote');
+    }
+  }
 </script>
 
 <svelte:head>
@@ -83,11 +153,6 @@
     </button>
   </div>
 
-  {#if form?.error}
-    <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">
-      {form.error}
-    </div>
-  {/if}
 
   <!-- Google Keep Masonry Layout -->
   <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
@@ -131,17 +196,18 @@
         <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
           <!-- svelte-ignore a11y_click_events_have_key_events -->
-          <form method="POST" action="?/delete" use:enhance class="inline" onclick={(e) => e.stopPropagation()}>
-            <input type="hidden" name="id" value={q.id} />
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <div class="inline" onclick={(e) => e.stopPropagation()}>
             <button 
-              type="submit" 
+              type="button" 
               class="p-1.5 rounded-full bg-red-500/80 text-white hover:bg-red-500 transition-colors shadow-sm" 
-              onclick={(e) => !confirm('Are you sure you want to delete this quote?') && e.preventDefault()}
+              onclick={() => handleDelete(q.id)}
               aria-label="Delete quote"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
             </button>
-          </form>
+          </div>
         </div>
       </div>
     {/each}
@@ -163,14 +229,7 @@
       class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-2xl w-full max-w-2xl flex flex-col overflow-hidden" 
       onclick={(e) => e.stopPropagation()}
     >
-      <form method="POST" action="?/save" use:enhance={() => {
-        return async ({ result, update }) => {
-          if (result.type === 'success') {
-            isModalOpen = false;
-          }
-          update();
-        };
-      }} class="flex flex-col">
+      <form onsubmit={handleSave} class="flex flex-col">
         <input type="hidden" name="isNew" value={(!isEditing).toString()} />
         {#if isEditing}
           <input type="hidden" name="id" value={currentQuote.id} />
