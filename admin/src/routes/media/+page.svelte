@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { ResultAsync, err, ok } from 'neverthrow';
   import MediaTable from './components/MediaTable.svelte';
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
@@ -7,21 +8,28 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
   import mediaProperties from '../../../../static/media-properties.json';
 
+  interface MediaItem {
+    id: string; type: string; rating: number; status: string;
+    title: string; tagline: string; description: string; notes: string; poster_image: string; private_notes: string;
+  }
+  
+  interface SearchResult { title?: string; tagline?: string; description?: string; coverUrl?: string; }
+
   let { data, form } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
-  let currentItem: unknown = $state({
+  let currentItem: MediaItem = $state({
     id: '', type: 'movie', rating: 4, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: ''
   });
   let isSearching = $state(false);
   let isSearchModalOpen = $state(false);
-  let searchResults: unknown[] = $state([]);
+  let searchResults: SearchResult[] = $state([]);
 
   let searchQuery = $state("");
-  let filters = $state([]);
-  let sorts = $state([{ property: 'title', direction: 'asc' }]);
+  let filters: { property: string, operator: string, value: any }[] = $state([]);
+  let sorts: { property: string, direction: 'asc' | 'desc' }[] = $state([{ property: 'title', direction: 'asc' }]);
 
   let filteredMedia = $derived(
     applySorts(applyFilters(data.media, filters, searchQuery), sorts)
@@ -36,7 +44,7 @@
     isModalOpen = true;
   }
 
-  function openEdit(item: unknown) {
+  function openEdit(item: MediaItem) {
     isEditing = true;
     currentItem = { ...item };
     isModalOpen = true;
@@ -45,29 +53,46 @@
   async function handleSearch() {
     if (!currentItem.title || !currentItem.type) return;
     isSearching = true;
-    try {
-      const res = await fetch(`/media/search?type=${currentItem.type}&query=${encodeURIComponent(currentItem.title)}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          searchResults = data;
-          isSearchModalOpen = true;
-        } else {
-          alert('No results found.');
-        }
-      } else {
-        const err = await res.json();
-        alert(`Search failed: ${err.error || 'Not found'}`);
+    
+    const searchResult = await ResultAsync.fromPromise(
+      fetch(`/media/search?type=${currentItem.type}&query=${encodeURIComponent(currentItem.title)}`, {
+        signal: AbortSignal.timeout(10000)
+      }),
+      (e) => {
+        const error = e as Error;
+        return (error.name === 'TimeoutError' || error.name === 'AbortError') 
+          ? new Error("Search timed out. Please try again.") 
+          : new Error("Error searching metadata");
       }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      alert("Error searching metadata");
-    } finally {
-      isSearching = false;
-    }
+    ).andThen((res) => {
+      return ResultAsync.fromPromise(
+        res.json(),
+        () => new Error("Failed to parse response")
+      ).andThen((data: any) => {
+        if (!res.ok) {
+          return err(new Error(`Search failed: ${data.error || 'Not found'}`));
+        }
+        if (Array.isArray(data) && data.length > 0) {
+          return ok(data as SearchResult[]);
+        }
+        return err(new Error('No results found.'));
+      });
+    });
+
+    searchResult.match(
+      (data) => {
+        searchResults = data;
+        isSearchModalOpen = true;
+      },
+      (error) => {
+        alert(error.message);
+      }
+    );
+
+    isSearching = false;
   }
 
-  function selectSearchResult(data: unknown) {
+  function selectSearchResult(data: SearchResult) {
     if (data.title) currentItem.title = data.title;
     const descParts = [];
     if (data.tagline) descParts.push(data.tagline);

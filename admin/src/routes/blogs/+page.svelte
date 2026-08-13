@@ -1,12 +1,16 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
 
+  interface BlogItem {
+    id: string; title: string; date: string; description: string; content: string;
+  }
+
   let { data, form } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   
-  let currentItem = $state({
+  let currentItem: BlogItem = $state({
     id: '', title: '', date: '', description: '', content: ''
   });
 
@@ -19,7 +23,7 @@
     isModalOpen = true;
   }
 
-  function openEdit(item: unknown) {
+  function openEdit(item: BlogItem) {
     isEditing = true;
     currentItem = { ...item };
     isModalOpen = true;
@@ -49,7 +53,7 @@
   {/if}
 
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-    {#each data.posts as item (item.slug)}
+    {#each data.posts as item (item.id)}
       <div class="card flex flex-col group relative overflow-hidden p-6">
         <div class="flex justify-between items-start mb-2">
           <h3 class="text-xl font-semibold text-white">{item.title}</h3>

@@ -1,11 +1,15 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
 
+  interface SocialItem {
+    id: string; name: string; url: string; icon: string;
+  }
+
   let { data, form } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
-  let currentItem = $state({
+  let currentItem: SocialItem = $state({
     id: '', name: '', url: '', icon: ''
   });
 
@@ -15,7 +19,7 @@
     isModalOpen = true;
   }
 
-  function openEdit(item: Record<string, unknown>) {
+  function openEdit(item: SocialItem) {
     isEditing = true;
     currentItem = { ...item };
     isModalOpen = true;

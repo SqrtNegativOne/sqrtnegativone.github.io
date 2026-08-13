@@ -1,12 +1,20 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
 
+  interface ProjectItem {
+    id: string; name: string; description: string; tags: string[]; github?: string | null; url?: string | null; image?: string | null; private?: boolean;
+  }
+  
+  interface ProjectFormItem {
+    id: string; name: string; description: string; tags: string; github: string; url: string; image: string; private: boolean;
+  }
+
   let { data, form } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   
-  let currentItem = $state({
+  let currentItem: ProjectFormItem = $state({
     id: '', name: '', description: '', tags: '', github: '', url: '', image: '', private: false
   });
 
@@ -18,13 +26,14 @@
     isModalOpen = true;
   }
 
-  function openEdit(item: unknown) {
+  function openEdit(item: ProjectItem) {
     isEditing = true;
     currentItem = { 
       ...item, 
       tags: item.tags ? item.tags.join(', ') : '',
       github: item.github || '',
       url: item.url || '',
+      image: item.image || '',
       private: !!item.private
     };
     isModalOpen = true;

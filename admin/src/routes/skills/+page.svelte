@@ -1,11 +1,19 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
 
+  interface SkillItem {
+    name: string; icon: string; logo: string; mono: string;
+  }
+  
+  interface SkillFormItem extends SkillItem {
+    originalName: string;
+  }
+
   let { data, form } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
-  let currentItem = $state({
+  let currentItem: SkillFormItem = $state({
     name: '', icon: '', logo: '', mono: '', originalName: ''
   });
 
@@ -15,7 +23,7 @@
     isModalOpen = true;
   }
 
-  function openEdit(item: Record<string, unknown>) {
+  function openEdit(item: SkillItem) {
     isEditing = true;
     currentItem = { ...item, originalName: item.name };
     isModalOpen = true;

@@ -1,12 +1,16 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
 
+  interface QuoteItem {
+    id: string; quote: string; source: string; link: string; tags: string[];
+  }
+
   let { data, form } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   
-  let currentQuote = $state({
+  let currentQuote: QuoteItem = $state({
     id: '',
     quote: '',
     source: '',
@@ -53,7 +57,7 @@
     isModalOpen = true;
   }
 
-  function openEdit(q: unknown) {
+  function openEdit(q: QuoteItem) {
     isEditing = true;
     currentQuote = { ...q };
     tagsInput = q.tags.join(', ');

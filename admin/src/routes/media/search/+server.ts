@@ -4,6 +4,11 @@ import fs from 'fs';
 import path from 'path';
 import dns from 'node:dns';
 
+interface GoogleBook { volumeInfo?: { title?: string; authors?: string[]; description?: string; imageLinks?: { thumbnail?: string; smallThumbnail?: string; } } }
+interface TmdbResult { title?: string; name?: string; release_date?: string; first_air_date?: string; overview?: string; poster_path?: string; }
+interface SteamSearchItem { id: string; }
+interface SteamDetails { name: string; developers?: string[]; short_description?: string; }
+
 // Bypass TMDB DNS block in India for requests made by this Node process
 dns.setServers(['1.1.1.1', '8.8.8.8']);
 
@@ -23,16 +28,16 @@ async function searchBook(query: string) {
   if (GOOGLE_BOOKS_KEY) {
     url += `&key=${GOOGLE_BOOKS_KEY}`;
   }
-  const res = await fetch(url);
+  const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
   if (!res.ok) {
     if (res.status === 429) return { error: "Google Books API rate limit exceeded. Consider adding GOOGLE_BOOKS_API_KEY to .env." };
     return null;
   }
-  const data = await res.json() as unknown;
+  const data = await res.json() as { items?: GoogleBook[] };
   const books = data.items || [];
   if (books.length === 0) return null;
   
-  books.sort((a: unknown, b: unknown) => {
+  books.sort((a: GoogleBook, b: GoogleBook) => {
     const aTitle = a.volumeInfo?.title || "";
     const bTitle = b.volumeInfo?.title || "";
     const aExact = aTitle.toLowerCase() === query.toLowerCase();
@@ -42,7 +47,7 @@ async function searchBook(query: string) {
     return 0;
   });
 
-  return books.slice(0, 10).map((book: unknown) => {
+  return books.slice(0, 10).map((book: GoogleBook) => {
     const vi = book.volumeInfo || {};
     let coverUrl = vi.imageLinks?.thumbnail || vi.imageLinks?.smallThumbnail || null;
     
@@ -65,12 +70,12 @@ async function searchBook(query: string) {
 async function searchTmdb(kind: "movie" | "tv", query: string) {
   if (!TMDB_KEY) return { error: "TMDB_API_KEY environment variable is missing." };
   const url = `https://api.tmdb.org/3/search/${kind}?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&page=1`;
-  const res = await fetch(url);
+  const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
   if (!res.ok) return null;
-  const data = await res.json() as unknown;
+  const data = await res.json() as { results?: TmdbResult[] };
   const results = data.results?.slice(0, 5) || [];
   if (results.length === 0) return null;
-  return results.map((d: unknown) => ({
+  return results.map((d: TmdbResult) => ({
     title: d.title || d.name,
     tagline: d.release_date ? d.release_date.substring(0, 4) : d.first_air_date ? d.first_air_date.substring(0, 4) : "",
     description: d.overview || "",
@@ -80,21 +85,21 @@ async function searchTmdb(kind: "movie" | "tv", query: string) {
 
 async function searchSteamGame(query: string) {
   const searchUrl = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(query)}&l=english&cc=US`;
-  const searchRes = await fetch(searchUrl);
+  const searchRes = await fetch(searchUrl, { signal: AbortSignal.timeout(8000) });
   if (!searchRes.ok) return null;
-  const searchData = await searchRes.json() as unknown;
+  const searchData = await searchRes.json() as { items?: SteamSearchItem[] };
   const matches = searchData.items?.slice(0, 5) || [];
   if (matches.length === 0) return null;
 
   const results = [];
   
   // Fetch details for each match individually in parallel
-  const detailPromises = matches.map(async (m: unknown) => {
+  const detailPromises = matches.map(async (m: SteamSearchItem) => {
     const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${m.id}`;
     try {
-      const detailsRes = await fetch(detailsUrl);
+      const detailsRes = await fetch(detailsUrl, { signal: AbortSignal.timeout(5000) });
       if (!detailsRes.ok) return null;
-      const detailsData = await detailsRes.json() as unknown;
+      const detailsData = await detailsRes.json() as Record<string, { data?: SteamDetails }>;
       if (!detailsData || !detailsData[m.id]) return null;
       
       const d = detailsData[m.id].data;
@@ -147,9 +152,10 @@ export const GET: RequestHandler = async ({ url }) => {
       return json({ error: 'No results found for your query.' }, { status: 404 });
     }
   } catch (err: unknown) {
-    let msg = err.message;
-    if (err.cause) {
-      msg += ` (Cause: ${err.cause.message || err.cause})`;
+    const error = err as Error;
+    let msg = error.message;
+    if (error.cause) {
+      msg += ` (Cause: ${error.cause})`;
     }
     return json({ error: msg }, { status: 500 });
   }
