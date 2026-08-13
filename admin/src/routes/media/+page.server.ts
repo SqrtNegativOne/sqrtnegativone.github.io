@@ -25,14 +25,15 @@ interface PrivateNoteItem {
 }
 
 export const load: PageServerLoad = async () => {
-  const media = await readData<MediaItem>('media.json');
-  let privateNotes = await readData<PrivateNoteItem>('media-private.json');
+  const media = (await readData<MediaItem>('media.json')).unwrapOr([] as any[]);
+  let privateNotes = (await readData<PrivateNoteItem>('media-private.json')).unwrapOr([] as any[]);
   
   if (!Array.isArray(privateNotes)) privateNotes = [];
 
   const notesMap = new Map<string, string>();
   for (const item of privateNotes) {
-     notesMap.set(item.id, decrypt(item.notes));
+     const decrypted = decrypt(item.notes);
+     notesMap.set(item.id, decrypted.isOk() ? decrypted.value : '--- decryption failed ---');
   }
 
   const mergedMedia = media.map(item => ({
@@ -112,7 +113,7 @@ export const actions: Actions = {
       }
     }
 
-    const items = await readData<MediaItem>('media.json');
+    const items = (await readData<MediaItem>('media.json')).unwrapOr([] as any[]);
     
     const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, poster_image };
     
@@ -130,19 +131,25 @@ export const actions: Actions = {
       }
     }
     
-    await writeData('media.json', items);
+    const writeRes = await writeData('media.json', items);
+    if (writeRes.isErr()) {
+      return fail(500, { error: 'Failed to write media data' });
+    }
 
     // Save private notes
-    let privateNotes = await readData<PrivateNoteItem>('media-private.json');
+    let privateNotes = (await readData<PrivateNoteItem>('media-private.json')).unwrapOr([] as any[]);
     if (!Array.isArray(privateNotes)) privateNotes = [];
 
     if (private_notes.trim()) {
-        const encrypted = encrypt(private_notes);
-        const pIdx = privateNotes.findIndex(n => n.id === id);
-        if (pIdx !== -1) {
-             privateNotes[pIdx].notes = encrypted;
-        } else {
-             privateNotes.push({ id, notes: encrypted });
+        const encryptedRes = encrypt(private_notes);
+        if (encryptedRes.isOk()) {
+            const encrypted = encryptedRes.value;
+            const pIdx = privateNotes.findIndex(n => n.id === id);
+            if (pIdx !== -1) {
+                 privateNotes[pIdx].notes = encrypted;
+            } else {
+                 privateNotes.push({ id, notes: encrypted });
+            }
         }
     } else {
         privateNotes = privateNotes.filter(n => n.id !== id);
@@ -156,11 +163,11 @@ export const actions: Actions = {
     const data = await request.formData();
     const id = data.get('id') as string;
     
-    let items = await readData<MediaItem>('media.json');
+    let items = (await readData<MediaItem>('media.json')).unwrapOr([] as any[]);
     items = items.filter(i => i.id !== id);
     await writeData('media.json', items);
 
-    let privateNotes = await readData<PrivateNoteItem>('media-private.json');
+    let privateNotes = (await readData<PrivateNoteItem>('media-private.json')).unwrapOr([] as any[]);
     if (Array.isArray(privateNotes)) {
         privateNotes = privateNotes.filter(n => n.id !== id);
         await writeData('media-private.json', privateNotes);

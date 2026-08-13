@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fail } from '@sveltejs/kit';
+import { ResultAsync } from 'neverthrow';
 import type { PageServerLoad, Actions } from './$types';
 
 interface BlogItem {
@@ -41,19 +42,16 @@ ${content}
 }
 
 export const load: PageServerLoad = async () => {
-  let files: string[] = [];
-  try {
-    files = await fs.readdir(blogDir);
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (e) {
-    // Dir might not exist or error
-  }
+  const filesRes = await ResultAsync.fromPromise(fs.readdir(blogDir), e => e as Error);
+  const files = filesRes.unwrapOr([] as string[]);
   
   const posts: BlogItem[] = [];
   for (const file of files) {
     if (file.endsWith('.md')) {
-      const content = await fs.readFile(path.join(blogDir, file), 'utf-8');
-      posts.push(parseMarkdown(content, file));
+      const contentRes = await ResultAsync.fromPromise(fs.readFile(path.join(blogDir, file), 'utf-8'), e => e);
+      if (contentRes.isOk()) {
+        posts.push(parseMarkdown(contentRes.value, file));
+      }
     }
   }
   
@@ -82,17 +80,17 @@ export const actions: Actions = {
     const filepath = path.join(blogDir, id);
     
     if (isNew) {
-      try {
-        await fs.access(filepath);
+      const existsRes = await ResultAsync.fromPromise(fs.access(filepath), e => e);
+      if (existsRes.isOk()) {
         return fail(400, { error: 'Blog post ID already exists' });
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (e) {
-        // file does not exist, good
       }
     }
     
     const fileContent = createMarkdown(title, date, description, content);
-    await fs.writeFile(filepath, fileContent, 'utf-8');
+    const writeRes = await ResultAsync.fromPromise(fs.writeFile(filepath, fileContent, 'utf-8'), e => e);
+    if (writeRes.isErr()) {
+      return fail(500, { error: 'Failed to save blog post' });
+    }
     
     return { success: true };
   },
@@ -104,10 +102,8 @@ export const actions: Actions = {
     if (!id) return fail(400, { error: 'ID is required' });
     
     const filepath = path.join(blogDir, id);
-    try {
-      await fs.unlink(filepath);
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
+    const deleteRes = await ResultAsync.fromPromise(fs.unlink(filepath), e => e);
+    if (deleteRes.isErr()) {
       return fail(400, { error: 'Could not delete file' });
     }
     

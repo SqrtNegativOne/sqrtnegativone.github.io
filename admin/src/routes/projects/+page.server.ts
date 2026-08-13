@@ -16,7 +16,7 @@ interface ProjectItem {
 }
 
 export const load: PageServerLoad = async () => {
-  const projects = await readData<ProjectItem>('projects.json');
+  const projects = (await readData<ProjectItem>('projects.json')).unwrapOr([] as any[]);
   return { projects };
 };
 
@@ -56,7 +56,7 @@ export const actions: Actions = {
       image = `/projects/${fileName}`;
     }
 
-    const items = await readData<ProjectItem>('projects.json');
+    const items = (await readData<ProjectItem>('projects.json')).unwrapOr([] as any[]);
     
     const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : [];
     
@@ -90,7 +90,8 @@ export const actions: Actions = {
       }
     }
     
-    await writeData('projects.json', items);
+    const writeRes = await writeData('projects.json', items);
+    if (writeRes.isErr()) return fail(500, { error: 'Failed to write project data' });
     return { success: true };
   },
   
@@ -98,10 +99,11 @@ export const actions: Actions = {
     const data = await request.formData();
     const id = data.get('id') as string;
     
-    let items = await readData<ProjectItem>('projects.json');
+    let items = (await readData<ProjectItem>('projects.json')).unwrapOr([] as any[]);
     items = items.filter(i => i.id !== id);
     
-    await writeData('projects.json', items);
+    const writeRes = await writeData('projects.json', items);
+    if (writeRes.isErr()) return fail(500, { error: 'Failed to delete project data' });
     return { success: true };
   },
   
@@ -110,7 +112,7 @@ export const actions: Actions = {
     const id = data.get('id') as string;
     const direction = data.get('direction') as string;
     
-    const items = await readData<ProjectItem>('projects.json');
+    const items = (await readData<ProjectItem>('projects.json')).unwrapOr([] as any[]);
     const idx = items.findIndex(i => i.id === id);
     if (idx === -1) return fail(400, { error: 'Project not found' });
     
@@ -124,7 +126,8 @@ export const actions: Actions = {
       items[idx] = temp;
     }
     
-    await writeData('projects.json', items);
+    const writeRes = await writeData('projects.json', items);
+    if (writeRes.isErr()) return fail(500, { error: 'Failed to update project data' });
     return { success: true };
   }
 };

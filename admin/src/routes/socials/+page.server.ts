@@ -10,7 +10,7 @@ interface SocialItem {
 }
 
 export const load: PageServerLoad = async () => {
-  const socials = await readData<SocialItem>('socials.json');
+  const socials = (await readData<SocialItem>('socials.json')).unwrapOr([] as any[]);
   return { socials };
 };
 
@@ -27,7 +27,7 @@ export const actions: Actions = {
       return fail(400, { error: 'ID and Name are required' });
     }
 
-    const items = await readData<SocialItem>('socials.json');
+    const items = (await readData<SocialItem>('socials.json')).unwrapOr([] as any[]);
     const newItem: SocialItem = { id, name, url, icon };
     
     if (isNew) {
@@ -44,7 +44,8 @@ export const actions: Actions = {
       }
     }
     
-    await writeData('socials.json', items);
+    const writeRes = await writeData('socials.json', items);
+    if (writeRes.isErr()) return fail(500, { error: 'Failed to write social data' });
     return { success: true };
   },
   
@@ -52,10 +53,11 @@ export const actions: Actions = {
     const data = await request.formData();
     const id = data.get('id') as string;
     
-    let items = await readData<SocialItem>('socials.json');
+    let items = (await readData<SocialItem>('socials.json')).unwrapOr([] as any[]);
     items = items.filter(i => i.id !== id);
     
-    await writeData('socials.json', items);
+    const writeRes = await writeData('socials.json', items);
+    if (writeRes.isErr()) return fail(500, { error: 'Failed to delete social data' });
     return { success: true };
   },
 
@@ -64,7 +66,7 @@ export const actions: Actions = {
     const id = data.get('id') as string;
     const direction = data.get('direction') as string;
     
-    const items = await readData<SocialItem>('socials.json');
+    const items = (await readData<SocialItem>('socials.json')).unwrapOr([] as any[]);
     const idx = items.findIndex(i => i.id === id);
     if (idx === -1) return fail(400, { error: 'Social not found' });
     
@@ -78,7 +80,8 @@ export const actions: Actions = {
       items[idx] = temp;
     }
     
-    await writeData('socials.json', items);
+    const writeRes = await writeData('socials.json', items);
+    if (writeRes.isErr()) return fail(500, { error: 'Failed to update social data' });
     return { success: true };
   }
 };

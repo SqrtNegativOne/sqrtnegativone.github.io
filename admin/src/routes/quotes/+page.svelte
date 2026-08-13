@@ -91,15 +91,15 @@
 
   <!-- Google Keep Masonry Layout -->
   <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-    {#each data.quotes as q (q.quote)}
+    {#each data.quotes as q (q.id)}
       <div 
-        class="card p-5 group relative break-inside-avoid border border-[oklch(0.3717_0.0392_257.29)] hover:border-[oklch(0.7107_0.0351_256.79)] transition-colors cursor-pointer flex flex-col gap-3"
+        class="card !rounded-lg p-5 group relative break-inside-avoid border border-[oklch(0.3717_0.0392_257.29)] hover:border-[oklch(0.7107_0.0351_256.79)] transition-colors cursor-pointer flex flex-col gap-3"
         onclick={() => openEdit(q)}
         onkeydown={(e) => e.key === 'Enter' && openEdit(q)}
         role="button"
         tabindex="0"
       >
-        <p class="text-white text-lg whitespace-pre-wrap leading-relaxed">{q.quote}</p>
+        <p class="text-white text-base whitespace-pre-wrap leading-relaxed">{q.quote}</p>
         
         {#if q.source || q.link}
           <div class="text-sm text-[oklch(0.7107_0.0351_256.79)] border-t border-[oklch(0.3717_0.0392_257.29)] pt-2 mt-2">

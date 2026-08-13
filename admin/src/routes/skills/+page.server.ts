@@ -10,7 +10,7 @@ interface SkillItem {
 }
 
 export const load: PageServerLoad = async () => {
-  const skills = await readData<SkillItem>('skills.json');
+  const skills = (await readData<SkillItem>('skills.json')).unwrapOr([] as any[]);
   return { skills };
 };
 
@@ -28,7 +28,7 @@ export const actions: Actions = {
       return fail(400, { error: 'Name is required' });
     }
 
-    const items = await readData<SkillItem>('skills.json');
+    const items = (await readData<SkillItem>('skills.json')).unwrapOr([] as any[]);
     const newItem: SkillItem = { name, icon, logo, mono };
     
     if (isNew) {
@@ -45,7 +45,8 @@ export const actions: Actions = {
       }
     }
     
-    await writeData('skills.json', items);
+    const writeRes = await writeData('skills.json', items);
+    if (writeRes.isErr()) return fail(500, { error: 'Failed to write skill data' });
     return { success: true };
   },
   
@@ -53,10 +54,11 @@ export const actions: Actions = {
     const data = await request.formData();
     const name = data.get('name') as string;
     
-    let items = await readData<SkillItem>('skills.json');
+    let items = (await readData<SkillItem>('skills.json')).unwrapOr([] as any[]);
     items = items.filter(i => i.name !== name);
     
-    await writeData('skills.json', items);
+    const writeRes = await writeData('skills.json', items);
+    if (writeRes.isErr()) return fail(500, { error: 'Failed to delete skill data' });
     return { success: true };
   }
 };
