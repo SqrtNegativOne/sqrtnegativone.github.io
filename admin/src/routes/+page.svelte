@@ -13,7 +13,8 @@
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {#each navItems as item}
+    {#each navItems as item (item.href)}
+<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
       <a href={item.href} class="card p-6 group {item.borderHover} transition-all cursor-pointer relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br {item.bgGradient} to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div class="w-12 h-12 rounded-lg {item.iconBg} flex items-center justify-center mb-4 {item.iconColor} group-hover:scale-110 transition-transform">

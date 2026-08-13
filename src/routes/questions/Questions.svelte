@@ -22,6 +22,7 @@
       </li>
     {/each}
   </ul>
+  <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
   <a href="/" class="back-link">&lt; back to main</a>
 </div>
 

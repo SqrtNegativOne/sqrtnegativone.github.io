@@ -1,11 +1,11 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
   import RatingChart from "../../../../shared/components/RatingChart.svelte";
-  import { icons } from "$lib/icons";
+
   import StatusBadge from "../../../../shared/components/StatusBadge.svelte";
   import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   
-  let { item, openDetails, openFullPoster } = $props<{ item: any; openDetails: (item: any) => void; openFullPoster?: (url: string) => void }>();
+  let { item, openDetails, openFullPoster } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; openFullPoster?: (url: string) => void }>();
 </script>
 
 
@@ -16,7 +16,7 @@
   <span role="cell" class="ml-col-poster">
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class={`ml-poster ml-poster--xs`} onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }}>
+    <div class="ml-poster ml-poster--xs" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(item.poster_image); } }}>
       {#if item.poster_image}
         <img src={item.poster_image} alt="" loading="lazy" />
       {:else}

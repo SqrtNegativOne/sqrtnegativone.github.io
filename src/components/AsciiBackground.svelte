@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import { Camera, Mesh, Plane, Program, Renderer, RenderTarget } from 'ogl';
 
   // ── Shared fullscreen vertex shader ─────────────────────────────────────────
@@ -215,7 +215,7 @@
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', handleResize);
-      try { wrapper.removeChild(gl.canvas); } catch (_) {}
+      if (wrapper.contains(gl.canvas)) { wrapper.removeChild(gl.canvas); }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   });

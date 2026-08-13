@@ -9,8 +9,8 @@ export async function readData<T>(filename: string): Promise<T[]> {
     const filePath = path.join(DATA_DIR, filename);
     const content = await fs.readFile(filePath, 'utf-8');
     return JSON.parse(content) as T[];
-  } catch (error: any) {
-    if (error.code !== 'ENOENT') {
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') {
       console.error(`Error reading ${filename}:`, error);
     }
     return [];

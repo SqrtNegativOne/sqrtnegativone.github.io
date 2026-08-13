@@ -35,7 +35,7 @@
           <div class="space-y-2">
             <label for="media-type" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Type</label>
             <select id="media-type" name="type" bind:value={currentItem.type} class="input-field">
-              {#each mediaProperties.types as type}
+              {#each mediaProperties.types as type (type)}
                 <option value={type.value}>{type.label}</option>
               {/each}
             </select>
@@ -76,7 +76,7 @@
           <div class="space-y-2">
             <label for="media-status" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Status</label>
             <select id="media-status" name="status" bind:value={currentItem.status} class="input-field">
-              {#each mediaProperties.statuses as status}
+              {#each mediaProperties.statuses as status (status)}
                 <option value={status.value}>{status.label}</option>
               {/each}
             </select>

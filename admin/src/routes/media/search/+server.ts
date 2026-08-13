@@ -15,7 +15,8 @@ try {
   if (tmdbMatch) TMDB_KEY = tmdbMatch[1].trim();
   const googleMatch = envContent.match(/GOOGLE_BOOKS_API_KEY=(.*)/);
   if (googleMatch) GOOGLE_BOOKS_KEY = googleMatch[1].trim();
-} catch (e) {}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) { /* ignore */ }
 
 async function searchBook(query: string) {
   let url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=20`;
@@ -27,11 +28,11 @@ async function searchBook(query: string) {
     if (res.status === 429) return { error: "Google Books API rate limit exceeded. Consider adding GOOGLE_BOOKS_API_KEY to .env." };
     return null;
   }
-  const data = await res.json() as any;
-  let books = data.items || [];
+  const data = await res.json() as unknown;
+  const books = data.items || [];
   if (books.length === 0) return null;
   
-  books.sort((a: any, b: any) => {
+  books.sort((a: unknown, b: unknown) => {
     const aTitle = a.volumeInfo?.title || "";
     const bTitle = b.volumeInfo?.title || "";
     const aExact = aTitle.toLowerCase() === query.toLowerCase();
@@ -41,7 +42,7 @@ async function searchBook(query: string) {
     return 0;
   });
 
-  return books.slice(0, 10).map((book: any) => {
+  return books.slice(0, 10).map((book: unknown) => {
     const vi = book.volumeInfo || {};
     let coverUrl = vi.imageLinks?.thumbnail || vi.imageLinks?.smallThumbnail || null;
     
@@ -66,10 +67,10 @@ async function searchTmdb(kind: "movie" | "tv", query: string) {
   const url = `https://api.tmdb.org/3/search/${kind}?api_key=${TMDB_KEY}&query=${encodeURIComponent(query)}&page=1`;
   const res = await fetch(url);
   if (!res.ok) return null;
-  const data = await res.json() as any;
+  const data = await res.json() as unknown;
   const results = data.results?.slice(0, 5) || [];
   if (results.length === 0) return null;
-  return results.map((d: any) => ({
+  return results.map((d: unknown) => ({
     title: d.title || d.name,
     tagline: d.release_date ? d.release_date.substring(0, 4) : d.first_air_date ? d.first_air_date.substring(0, 4) : "",
     description: d.overview || "",
@@ -81,19 +82,19 @@ async function searchSteamGame(query: string) {
   const searchUrl = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(query)}&l=english&cc=US`;
   const searchRes = await fetch(searchUrl);
   if (!searchRes.ok) return null;
-  const searchData = await searchRes.json() as any;
+  const searchData = await searchRes.json() as unknown;
   const matches = searchData.items?.slice(0, 5) || [];
   if (matches.length === 0) return null;
 
   const results = [];
   
   // Fetch details for each match individually in parallel
-  const detailPromises = matches.map(async (m: any) => {
+  const detailPromises = matches.map(async (m: unknown) => {
     const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${m.id}`;
     try {
       const detailsRes = await fetch(detailsUrl);
       if (!detailsRes.ok) return null;
-      const detailsData = await detailsRes.json() as any;
+      const detailsData = await detailsRes.json() as unknown;
       if (!detailsData || !detailsData[m.id]) return null;
       
       const d = detailsData[m.id].data;
@@ -105,6 +106,7 @@ async function searchSteamGame(query: string) {
         description: d.short_description || "",
         coverUrl: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${m.id}/library_600x900_2x.jpg`,
       };
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       return null;
     }
@@ -144,7 +146,7 @@ export const GET: RequestHandler = async ({ url }) => {
     } else {
       return json({ error: 'No results found for your query.' }, { status: 404 });
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     let msg = err.message;
     if (err.cause) {
       msg += ` (Cause: ${err.cause.message || err.cause})`;

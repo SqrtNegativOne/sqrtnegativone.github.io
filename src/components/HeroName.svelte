@@ -7,7 +7,7 @@
 <div class="name-wrapper">
   <h1 class="name">
     <span class="name-full">
-      {#each FULL.split("") as char, i}
+      {#each FULL.split("") as char, i (i)}
         <span
           class={phase !== "idle" ? `char char-${phase}` : "char"}
           style="--i: {i}"
@@ -17,7 +17,7 @@
       {/each}
     </span>
     <span class="name-short">
-      {#each SHORT.split("") as char, i}
+      {#each SHORT.split("") as char, i (i)}
         <span
           class={phase !== "idle" ? `char char-${phase}` : "char"}
           style="--i: {i}"

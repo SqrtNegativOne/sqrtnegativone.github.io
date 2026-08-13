@@ -1,4 +1,5 @@
 <script lang="ts">
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
   import { icons } from '../../../../../src/lib/icons';
   import StatusBadge from '../../../../../shared/components/StatusBadge.svelte';
   import RatingChart from '../../../../../shared/components/RatingChart.svelte';
@@ -21,7 +22,7 @@
       </tr>
     </thead>
     <tbody class="divide-y divide-[oklch(0.3717_0.0392_257.29)]">
-      {#each filteredMedia as item}
+      {#each filteredMedia as item (item.id)}
         <tr 
           class="hover:bg-[oklch(0.2795_0.0368_260.03)]/70 cursor-pointer transition-colors group"
           onclick={() => openEdit(item)}

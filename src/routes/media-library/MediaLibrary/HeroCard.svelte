@@ -2,7 +2,7 @@
   import { TYPE_LABEL } from "./constants";
   import RatingChart from "../../../../shared/components/RatingChart.svelte";
   
-  let { item, openDetails, openFullPoster } = $props<{ item: any; openDetails: (item: any) => void; openFullPoster?: (url: string) => void }>();
+  let { item, openDetails, openFullPoster } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; openFullPoster?: (url: string) => void }>();
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->

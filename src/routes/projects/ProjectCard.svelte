@@ -81,12 +81,14 @@
           {#if project.github || project.url}
             <div class="flex gap-3 flex-shrink-0 mt-1">
               {#if project.github}
+                <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
                 <a href={project.github} target="_blank" rel="noopener noreferrer"
                   class="font-['IBM_Plex_Mono'] text-[0.6rem] text-[var(--text-secondary)] hover:text-[var(--text)] flex items-center gap-1.5 border-b border-dotted border-[var(--text-secondary)] pb-px transition-colors">
                   {@html GithubIcon} src
                 </a>
               {/if}
               {#if project.url}
+                <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
                 <a href={project.url} target="_blank" rel="noopener noreferrer"
                   class="font-['IBM_Plex_Mono'] text-[0.6rem] text-[var(--text-secondary)] hover:text-[var(--text)] flex items-center gap-1.5 border-b border-dotted border-[var(--text-secondary)] pb-px transition-colors">
                   {@html ExternalIcon} live
@@ -105,7 +107,7 @@
 
         {#if project.tags.length > 0}
           <div class="flex flex-wrap gap-x-3 gap-y-1">
-            {#each project.tags as tag}
+            {#each project.tags as tag (tag)}
               <span class="font-['IBM_Plex_Mono'] text-[0.5rem] tracking-wide text-[var(--text-secondary)] opacity-55">
                 {tag}
               </span>
@@ -177,7 +179,7 @@
     <div class="mt-4 flex flex-col gap-1.5">
       {#if project.tags.length > 0}
         <div class="flex flex-wrap gap-x-2 gap-y-1">
-          {#each project.tags as tag}
+          {#each project.tags as tag (tag)}
             <span class="font-['IBM_Plex_Mono'] text-[0.45rem] tracking-wide text-[var(--text-secondary)] opacity-55">
               {tag}
             </span>
@@ -187,6 +189,7 @@
       {#if project.github || project.url}
         <div class="flex gap-3 mt-1">
           {#if project.github}
+            <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
             <a href={project.github} target="_blank" rel="noopener noreferrer"
               onclick={(e) => e.stopPropagation()}
               class="font-['IBM_Plex_Mono'] text-[0.5rem] text-[var(--text-secondary)] hover:text-[var(--text)] flex items-center gap-1 border-b border-dotted border-[var(--text-secondary)] pb-px transition-colors">
@@ -194,6 +197,7 @@
             </a>
           {/if}
           {#if project.url}
+            <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
             <a href={project.url} target="_blank" rel="noopener noreferrer"
               onclick={(e) => e.stopPropagation()}
               class="font-['IBM_Plex_Mono'] text-[0.5rem] text-[var(--text-secondary)] hover:text-[var(--text)] flex items-center gap-1 border-b border-dotted border-[var(--text-secondary)] pb-px transition-colors">

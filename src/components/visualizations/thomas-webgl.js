@@ -147,10 +147,8 @@ export function createThomasWebGL() {
   let timeAccumulator = 0;
   const SIM_STEP_MS = 1000 / 60;
   
-  let fpsDiv = null;
-  let secFrames = 0;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
   let secStart = 0;
-  let lastSimSteps = 0;
 
   function tryGetContext(canvas) {
     const ctx = canvas.getContext("webgl2", {
@@ -282,33 +280,7 @@ export function createThomasWebGL() {
     gl.bindVertexArray(null);
   }
 
-  function rebuildForN() {
-    gl.deleteTexture(posTex[0]); gl.deleteTexture(posTex[1]);
-    gl.deleteFramebuffer(fbo[0]); gl.deleteFramebuffer(fbo[1]);
-    gl.deleteTexture(hueTex);
 
-    posTex[0] = makePosTex(null);
-    posTex[1] = makePosTex(null);
-    fbo[0]    = makeFBO(posTex[0]);
-    fbo[1]    = makeFBO(posTex[1]);
-
-    hueTex = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, hueTex);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-
-    gl.bindVertexArray(drawVAO);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxEBO);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, buildIndices(), gl.STATIC_DRAW);
-    gl.bindVertexArray(null);
-
-    ping = 0;
-    seedAndUpload(100);
-    simulate(600);
-    colorDirty = true;
-  }
 
   return {
     init(canvas) {
@@ -326,7 +298,6 @@ export function createThomasWebGL() {
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
         colorDirty = true;
         lastFrameTime = performance.now();
-        secStart = lastFrameTime;
         return true;
       } catch (e) {
         console.warn("WebGL init failed, falling back:", e);
@@ -362,7 +333,6 @@ export function createThomasWebGL() {
         simulate(simSteps);
       }
       lastFrameTime = now;
-      lastSimSteps = simSteps;
 
       // --- Draw pass ---
       gl.bindFramebuffer(gl.FRAMEBUFFER, null);

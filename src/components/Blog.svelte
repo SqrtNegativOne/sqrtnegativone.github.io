@@ -129,7 +129,7 @@
       acceptable.
     </p>
     <div class="blog-list">
-      {#each posts as post, i}
+      {#each posts as post, i (i)}
         <!-- svelte-ignore a11y_click_events_have_key_events -->
         <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
         <article

@@ -13,6 +13,9 @@ export default ts.config(
 				...globals.browser,
 				...globals.node
 			}
+		},
+		rules: {
+			'svelte/no-at-html-tags': 'off'
 		}
 	},
 	{
@@ -25,13 +28,16 @@ export default ts.config(
 	},
 	{
 		ignores: [
-			'build/',
-			'.svelte-kit/',
-			'dist/',
-			'public/',
-			'docs/',
-			'blog/',
-			'node_modules/'
+			'**/build/',
+			'**/.svelte-kit/',
+			'**/dist/',
+			'**/public/',
+			'**/docs/',
+			'**/blog/',
+			'**/node_modules/',
+            'eslint-report.json',
+            'find_unused.js',
+            'summarize_lint.js'
 		]
 	}
 );

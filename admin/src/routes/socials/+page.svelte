@@ -15,7 +15,7 @@
     isModalOpen = true;
   }
 
-  function openEdit(item: any) {
+  function openEdit(item: Record<string, unknown>) {
     isEditing = true;
     currentItem = { ...item };
     isModalOpen = true;
@@ -45,7 +45,7 @@
   {/if}
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {#each data.socials as item}
+    {#each data.socials as item (item.id)}
       <div class="card p-4 flex flex-col group relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div class="flex items-center space-x-4 mb-4 relative">

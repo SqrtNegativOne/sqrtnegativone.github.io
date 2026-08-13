@@ -68,6 +68,7 @@ export const actions: Actions = {
       try {
         const matches = poster_image.match(/^data:image\/([a-zA-Z0-9]+);base64,(.+)$/);
         if (matches && matches.length === 3) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
           const ext = matches[1] === 'jpeg' ? 'jpg' : matches[1];
           const base64Data = matches[2].replace(/ /g, '+');
           const buffer = Buffer.from(base64Data, 'base64');
@@ -76,8 +77,8 @@ export const actions: Actions = {
           const postersDir = path.resolve(process.cwd(), '../static/media-posters');
           await fs.mkdir(postersDir, { recursive: true });
           
-          let filename = `${type}_${safeId}.avif`;
-          let filepath = path.join(postersDir, filename);
+          const filename = `${type}_${safeId}.avif`;
+          const filepath = path.join(postersDir, filename);
 
           await sharp(buffer).toFormat('avif').toFile(filepath);
           poster_image = `/media-posters/${filename}`;
@@ -91,17 +92,19 @@ export const actions: Actions = {
         const res = await fetch(poster_image);
         if (res.ok) {
           const buffer = Buffer.from(await res.arrayBuffer());
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
           const ct = res.headers.get("content-type") || "";
           
           const safeId = id.replace(/[^A-Za-z0-9_-]/g, "_");
           const postersDir = path.resolve(process.cwd(), '../static/media-posters');
           await fs.mkdir(postersDir, { recursive: true });
           
-          let filename = `${type}_${safeId}.avif`;
-          let filepath = path.join(postersDir, filename);
+          const filename = `${type}_${safeId}.avif`;
+          const filepath = path.join(postersDir, filename);
           
           await sharp(buffer).toFormat('avif').toFile(filepath);
           poster_image = `/media-posters/${filename}`;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
           didSavePoster = true;
         }
       } catch (err) {

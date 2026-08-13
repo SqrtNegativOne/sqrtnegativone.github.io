@@ -1,13 +1,13 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
   import RatingChart from "../../../../shared/components/RatingChart.svelte";
-  import { icons } from "$lib/icons";
+
   import StatusBadge from "../../../../shared/components/StatusBadge.svelte";
   import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   
-  let { item, closeDetails, openFullPoster } = $props<{ item: any; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
+  let { item, closeDetails, openFullPoster } = $props<{ item: Record<string, unknown>; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
 </script>
 
 

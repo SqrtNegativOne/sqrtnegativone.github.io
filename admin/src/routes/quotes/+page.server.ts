@@ -33,13 +33,13 @@ export const actions: Actions = {
     }
 
     try {
-      let content = await fs.readFile(QUOTES_FILE, 'utf-8');
-      let quotes = JSON.parse(content);
+      const content = await fs.readFile(QUOTES_FILE, 'utf-8');
+      const quotes = JSON.parse(content);
       
       if (isNew) {
         quotes.push({ id: crypto.randomUUID(), quote, source, link, tags });
       } else {
-        const index = quotes.findIndex((q: any) => q.id === id);
+        const index = quotes.findIndex((q: unknown) => q.id === id);
         if (index !== -1) {
           quotes[index] = { id, quote, source, link, tags };
         } else {
@@ -64,10 +64,10 @@ export const actions: Actions = {
     }
 
     try {
-      let content = await fs.readFile(QUOTES_FILE, 'utf-8');
+      const content = await fs.readFile(QUOTES_FILE, 'utf-8');
       let quotes = JSON.parse(content);
       
-      quotes = quotes.filter((q: any) => q.id !== id);
+      quotes = quotes.filter((q: unknown) => q.id !== id);
       
       await fs.writeFile(QUOTES_FILE, JSON.stringify(quotes, null, 2), 'utf-8');
       return { success: true };

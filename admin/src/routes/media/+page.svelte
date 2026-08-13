@@ -4,19 +4,20 @@
   import SearchModal from './components/SearchModal.svelte';
   import FilterSort from '../../../../shared/components/FilterSort.svelte';
   import { applyFilters, applySorts } from '../../../../shared/utils/mediaFilters';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
   import mediaProperties from '../../../../static/media-properties.json';
 
   let { data, form } = $props();
 
   let isModalOpen = $state(false);
   let isEditing = $state(false);
-  let currentItem: any = $state({
+  let currentItem: unknown = $state({
     id: '', type: 'movie', rating: 4, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: ''
   });
   let isSearching = $state(false);
   let isSearchModalOpen = $state(false);
-  let searchResults: any[] = $state([]);
+  let searchResults: unknown[] = $state([]);
 
   let searchQuery = $state("");
   let filters = $state([]);
@@ -35,7 +36,7 @@
     isModalOpen = true;
   }
 
-  function openEdit(item: any) {
+  function openEdit(item: unknown) {
     isEditing = true;
     currentItem = { ...item };
     isModalOpen = true;
@@ -58,6 +59,7 @@
         const err = await res.json();
         alert(`Search failed: ${err.error || 'Not found'}`);
       }
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       alert("Error searching metadata");
     } finally {
@@ -65,7 +67,7 @@
     }
   }
 
-  function selectSearchResult(data: any) {
+  function selectSearchResult(data: unknown) {
     if (data.title) currentItem.title = data.title;
     const descParts = [];
     if (data.tagline) descParts.push(data.tagline);

@@ -29,7 +29,7 @@
   }
   
   function getPropDef(val: string) {
-    return properties.find((p: any) => p.value === val);
+    return properties.find((p: Record<string, unknown>) => p.value === val);
   }
 </script>
 
@@ -51,10 +51,10 @@
           <div class="text-sm text-zinc-500 pb-2">No filters applied</div>
         {:else}
           <div class="flex flex-col gap-2">
-            {#each filters as filter, i}
+            {#each filters as filter, i (i)}
               <div class="flex items-center gap-2 text-sm bg-black/20 p-2 rounded-md border border-white/5">
                 <select bind:value={filter.property} class="bg-transparent border-none text-zinc-200 outline-none cursor-pointer">
-                  {#each properties as prop}
+                  {#each properties as prop (prop.value)}
                     {#if prop.type !== 'text'}
                       <option value={prop.value} class="bg-zinc-800">{prop.label}</option>
                     {/if}
@@ -72,7 +72,7 @@
 
                 {#if getPropDef(filter.property)?.type === 'select'}
                   <select bind:value={filter.value} class="bg-transparent border-none text-zinc-200 outline-none cursor-pointer flex-1 w-0">
-                    {#each getPropDef(filter.property)?.options || [] as opt}
+                    {#each getPropDef(filter.property)?.options || [] as opt (opt.value)}
                       <option value={opt.value} class="bg-zinc-800">{opt.label}</option>
                     {/each}
                   </select>
@@ -112,10 +112,10 @@
           <div class="text-sm text-zinc-500 pb-2">No sorts applied</div>
         {:else}
           <div class="flex flex-col gap-2">
-            {#each sorts as sort, i}
+            {#each sorts as sort, i (i)}
               <div class="flex items-center gap-2 text-sm bg-black/20 p-2 rounded-md border border-white/5">
                 <select bind:value={sort.property} class="bg-transparent border-none text-zinc-200 outline-none cursor-pointer flex-1 w-0">
-                  {#each properties as prop}
+                  {#each properties as prop (prop.value)}
                     <option value={prop.value} class="bg-zinc-800">{prop.label}</option>
                   {/each}
                 </select>

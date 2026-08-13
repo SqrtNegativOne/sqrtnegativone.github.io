@@ -12,7 +12,7 @@
         </button>
       </div>
       <div class="flex-1 overflow-y-auto p-6 space-y-4">
-        {#each searchResults as result}
+        {#each searchResults as result (result.id || result.title || result.name)}
           <div 
             class="flex gap-4 p-4 rounded-lg border border-[oklch(0.3717_0.0392_257.29)] bg-[oklch(0.2077_0.0398_265.75)]/50 hover:bg-[oklch(0.2795_0.0368_260.03)] cursor-pointer transition-colors"
             onclick={() => selectSearchResult(result)}

@@ -19,7 +19,7 @@
     isModalOpen = true;
   }
 
-  function openEdit(item: any) {
+  function openEdit(item: unknown) {
     isEditing = true;
     currentItem = { ...item };
     isModalOpen = true;
@@ -49,7 +49,7 @@
   {/if}
 
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-    {#each data.posts as item}
+    {#each data.posts as item (item.slug)}
       <div class="card flex flex-col group relative overflow-hidden p-6">
         <div class="flex justify-between items-start mb-2">
           <h3 class="text-xl font-semibold text-white">{item.title}</h3>

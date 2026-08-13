@@ -1,7 +1,6 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  import { browser } from "$app/environment";
 
   let { view = "", hideHint = false } = $props();
 
@@ -62,7 +61,10 @@
     closeMenu();
     setTimeout(() => {
       if (item.external) window.open(item.path, '_blank', 'noopener,noreferrer');
-      else goto(item.path);
+      else {
+// eslint-disable-next-line svelte/no-navigation-without-resolve
+        goto(item.path);
+      }
     }, 150);
   }
 
@@ -125,8 +127,6 @@
 </button>
 
 {#if !hideHint}
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="menu-hint" aria-hidden="true" onclick={() => { if (!open) handleOpen(); }} style="cursor: pointer;">
     <div class="hint-text {open ? '' : 'is-visible'}">
       press space to activate menu

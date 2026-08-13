@@ -1,4 +1,4 @@
-export function applyFilters(items: any[], filters: any[], searchQuery: string) {
+export function applyFilters(items: Record<string, unknown>[], filters: Record<string, unknown>[], searchQuery: string) {
   return items.filter(item => {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
@@ -24,7 +24,7 @@ export function applyFilters(items: any[], filters: any[], searchQuery: string) 
   });
 }
 
-export function applySorts(items: any[], sorts: any[]) {
+export function applySorts(items: Record<string, unknown>[], sorts: Record<string, unknown>[]) {
   if (sorts.length === 0) return items; // no sorts applied
 
   return [...items].sort((a, b) => {

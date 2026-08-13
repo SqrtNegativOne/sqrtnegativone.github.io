@@ -4,7 +4,7 @@
 
 <div class="skills-page">
   <div class="skills-grid">
-    {#each skills as skill, i}
+    {#each skills as skill, i (skill.name)}
       <div
         class="skill-item {skill.mono ? 'skill-item--mono' : ''}"
         tabindex="-1"

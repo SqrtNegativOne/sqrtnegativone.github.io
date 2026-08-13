@@ -2,7 +2,7 @@
   import MenuOverlay from "../components/MenuOverlay.svelte";
   import Cursor from "../components/Cursor.svelte";
   import AsciiBackground from "../components/AsciiBackground.svelte";
-  import NotFound from "../components/NotFound.svelte";
+
 
   import Quote from "../components/Quote.svelte";
   import HeroName from "../components/HeroName.svelte";

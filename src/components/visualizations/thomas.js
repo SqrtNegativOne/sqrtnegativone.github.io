@@ -85,7 +85,7 @@ export function createThomas() {
 
   return {
     /** Called once after the canvas is sized. */
-    init(_ctx, _W, _H) {
+    init() {
       allocAndSeedParticles(100); // short sync warm-up so particles are near attractor
       warmUpAsync();              // finish convergence without blocking
     },
@@ -176,7 +176,7 @@ export function createThomas() {
 
     /** Called whenever the canvas is resized. State arrays stay valid — only
      *  the projection math changes via W/H passed into frame(). */
-    resize(_W, _H) {},
+    resize() {},
 
     /** Cancel any pending async warm-up timers. */
     destroy() {

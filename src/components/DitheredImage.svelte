@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+
 
   let { src = "", alt = "", class: className = "" } = $props();
   let canvasRef = $state(null); // oxlint-disable-line no-unassigned-vars - false positive: assigned in template via bind:this

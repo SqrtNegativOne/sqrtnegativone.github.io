@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { rating } = $props<{ rating: number }>();
+  let { rating }: { rating: number } = $props();
   let percent = $derived((rating / 7) * 100);
   let colorClass = $derived(rating >= 6 ? 'text-emerald-400' : rating >= 4 ? 'text-blue-400' : rating >= 2 ? 'text-amber-400' : 'text-red-400');
   let bgClass = $derived(rating >= 6 ? 'text-emerald-500/20' : rating >= 4 ? 'text-blue-500/20' : rating >= 2 ? 'text-amber-500/20' : 'text-red-500/20');

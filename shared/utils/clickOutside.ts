@@ -1,4 +1,3 @@
-import { onMount } from 'svelte';
 // Helper to click outside
 export function clickOutside(node, cb) {
   const handle = (e) => {

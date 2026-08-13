@@ -17,6 +17,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (url.includes('twitter.com/') || url.includes('x.com/')) {
 			const match = url.match(/(?:twitter\.com|x\.com)\/([^/]+)\/status\/(\d+)/);
 			if (match) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const [_, handle, id] = match;
 				const res = await fetch(`https://api.fxtwitter.com/${handle}/status/${id}`);
 				if (res.ok) {
@@ -32,6 +33,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		else if (url.includes('bsky.app/profile/')) {
 			const match = url.match(/bsky\.app\/profile\/([^/]+)\/post\/([^/?#]+)/);
 			if (match) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				const [_, handle, id] = match;
 				const profileRes = await fetch(`https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=${handle}`);
 				if (profileRes.ok) {
@@ -60,7 +62,7 @@ export const POST: RequestHandler = async ({ request }) => {
 				const $ = cheerio.load(html);
 				
 				quote = $('meta[property="og:description"]').attr('content') || $('meta[name="description"]').attr('content') || '';
-				let title = $('meta[property="og:title"]').attr('content') || $('title').text() || '';
+				const title = $('meta[property="og:title"]').attr('content') || $('title').text() || '';
 
 				// Clean up Goodreads specific formatting
 				if (url.includes('goodreads.com')) {

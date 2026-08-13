@@ -1,6 +1,6 @@
 <script lang="ts">
   import mediaData from "../../../data/media.json";
-  import mediaProperties from "../../../../static/media-properties.json";
+
   import HeroCard from "./HeroCard.svelte";
   import LibraryRow from "./LibraryRow.svelte";
   import MediaModal from "./MediaModal.svelte";
@@ -17,7 +17,7 @@
     const filtered = applyFilters(mediaData, filters, searchQuery);
     const sorted = applySorts(filtered, sorts);
     
-    const buckets: { consuming: any[], library: any[] } = { consuming: [], library: [] };
+    const buckets: { consuming: Record<string, unknown>[], library: Record<string, unknown>[] } = { consuming: [], library: [] };
     for (const item of sorted) {
       if (item.status === "consuming") {
         buckets.consuming.push(item);
@@ -28,7 +28,7 @@
     return buckets;
   })());
 
-  let activeItem: any = $state(null);
+  let activeItem: Record<string, unknown> | null = $state(null);
   let fullPosterUrl: string | null = $state(null);
 
   function toggleSort(column: string) {
@@ -45,7 +45,7 @@
     sorts = [...sorts];
   }
 
-  function openDetails(item: any) {
+  function openDetails(item: Record<string, unknown>) {
     activeItem = item;
     document.body.style.overflow = 'hidden';
   }

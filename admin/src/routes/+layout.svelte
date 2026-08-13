@@ -31,11 +31,13 @@
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <nav class="flex-1 px-4 space-y-2 mt-4" onclick={() => mobileMenuOpen = false}>
+<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
       <a href="/" class="flex items-center px-4 py-3 rounded-lg transition-colors {page.url.pathname === '/' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'text-[oklch(0.7107_0.0351_256.79)] hover:bg-[oklch(0.2739_0.0055_286.03)] hover:text-white'}">
         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
         Dashboard
       </a>
-      {#each navItems as item}
+      {#each navItems as item (item.href)}
+<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
         <a href={item.href} class="flex items-center px-4 py-3 rounded-lg transition-colors {page.url.pathname.startsWith(item.href) ? `${item.navActiveBg} ${item.navActiveText} border ${item.navActiveBorder}` : 'text-[oklch(0.7107_0.0351_256.79)] hover:bg-[oklch(0.2739_0.0055_286.03)] hover:text-white'}">
           <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">{@html item.path}</svg>
           {item.label}

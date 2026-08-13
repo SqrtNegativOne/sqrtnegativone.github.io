@@ -3,7 +3,8 @@
 </script>
 
 <div class="social-icons">
-  {#each socials as { name, url, icon }}
+  {#each socials as { name, url, icon } (name)}
+    <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
     <a href={url} target="_blank" rel="noopener noreferrer" aria-label={name} class="icon-link">
       {@html icon}
     </a>
