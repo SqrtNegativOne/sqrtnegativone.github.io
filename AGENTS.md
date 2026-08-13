@@ -29,3 +29,4 @@ All commands should be run using `bun`.
 - **Tailwind v4**: We use TailwindCSS v4. Stick to utility classes and utilize `@theme` in your CSS if necessary instead of relying on a `tailwind.config.js` file.
 - **Accessibility (a11y)**: Svelte's a11y checks are enforced. Ensure `<button>` elements have text or `aria-label`s, `<label>` elements correctly wrap or point to inputs (`for="..."`/`id="..."`), and interactive elements have appropriate keyboard event handlers or roles.
 - **Component Scoped Styling**: For dynamically injected HTML (like the eleventy blog posts via `{@html ...}`), use `:global(.class)` in Svelte `<style>` blocks to avoid unused CSS warnings and properly style the injected markup.
+- Use neverthrow over try and catch statements.
