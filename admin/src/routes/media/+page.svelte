@@ -2,9 +2,9 @@
   import MediaTable from './components/MediaTable.svelte';
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
-  import FilterSort from '../../../../../shared/components/FilterSort.svelte';
-  import { applyFilters, applySorts } from '../../../../../shared/utils/mediaFilters';
-  import mediaProperties from '../../../../../static/media-properties.json';
+  import FilterSort from '../../../../shared/components/FilterSort.svelte';
+  import { applyFilters, applySorts } from '../../../../shared/utils/mediaFilters';
+  import mediaProperties from '../../../../static/media-properties.json';
 
   let { data, form } = $props();
 
