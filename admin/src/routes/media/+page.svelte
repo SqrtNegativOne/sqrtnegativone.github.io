@@ -24,6 +24,7 @@
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: ''
   });
   let isSearching = $state(false);
+  let searchError = $state('');
   let isSearchModalOpen = $state(false);
   let searchResults: SearchResult[] = $state([]);
 
@@ -53,6 +54,7 @@
   async function handleSearch() {
     if (!currentItem.title || !currentItem.type) return;
     isSearching = true;
+    searchError = '';
     
     const searchResult = await ResultAsync.fromPromise(
       fetch(`/media/search?type=${currentItem.type}&query=${encodeURIComponent(currentItem.title)}`, {
@@ -85,7 +87,7 @@
         isSearchModalOpen = true;
       },
       (error) => {
-        alert(error.message);
+        searchError = error.message;
       }
     );
 
@@ -171,6 +173,7 @@
   {isEditing} 
   bind:currentItem 
   {isSearching} 
+  {searchError}
   {handleSearch} 
   {handlePaste} 
   {handleRatingKeydown} 

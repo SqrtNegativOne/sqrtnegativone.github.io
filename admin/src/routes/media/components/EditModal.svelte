@@ -2,7 +2,7 @@
   import { enhance } from '$app/forms';
   import mediaProperties from '../../../../../static/media-properties.json';
 
-  let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, handleSearch, handlePaste, handleRatingKeydown } = $props();
+  let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, searchError, handleSearch, handlePaste, handleRatingKeydown } = $props();
 </script>
 
 {#if isModalOpen}
@@ -49,6 +49,9 @@
               </button>
             </label>
             <input id="media-title" type="text" name="title" bind:value={currentItem.title} class="input-field" required />
+            {#if searchError}
+              <div class="text-xs text-red-400 mt-1">{searchError}</div>
+            {/if}
           </div>
           
           <div class="space-y-2 md:col-span-2">

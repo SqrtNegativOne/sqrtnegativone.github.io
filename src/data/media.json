@@ -1176,5 +1176,27 @@
     "description": "When an IMF mission ends badly, the world is faced with dire consequences. As Ethan Hunt takes it upon himself to fulfill his original briefing, the CIA begin to question his loyalty and his motives. The IMF team find themselves in a race against time, hunted by assassins while trying to prevent a global catastrophe.",
     "notes": "",
     "poster_image": "/media-posters/movie_mission_impossible_-_fallout.avif"
+  },
+  {
+    "id": "radio_the_universe",
+    "type": "game",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "radio the universe",
+    "tagline": "",
+    "description": "6E6E6E\nAwakened from dreams of sunlight, a wanderer descends into the ruins.",
+    "notes": "",
+    "poster_image": "/media-posters/game_radio_the_universe.avif"
+  },
+  {
+    "id": "spider-man_brand_new_day",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "wishlist",
+    "title": "Spider-Man: Brand New Day",
+    "tagline": "",
+    "description": "Fighting crime full-time as Spider-Man in a world that doesn't remember him—and the pressure of seeing his old friends move on without him—sparks a change in Peter Parker he may not have the power to control. But that transformation might also be the only thing that can stop a shocking new threat to the city and those he loves - a powerful villain no one can even see.",
+    "notes": "",
+    "poster_image": "/media-posters/movie_spider-man_brand_new_day.avif"
   }
 ]
