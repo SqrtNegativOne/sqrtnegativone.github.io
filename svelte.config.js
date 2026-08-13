@@ -9,7 +9,11 @@ export default {
 			fallback: '404.html',
 			precompress: false,
 			strict: true
-		})
+		}),
+		prerender: {
+			entries: ['*', '/sitemap.xml'],
+			handleUnseenRoutes: 'ignore'
+		}
 	},
 	preprocess: vitePreprocess()
 };
