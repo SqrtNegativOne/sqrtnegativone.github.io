@@ -8,6 +8,7 @@ interface BlogItem {
   date: string;
   description: string;
   content: string;
+  tags?: string[];
 }
 
 function parseMarkdown(rawContent: string, filename: string): BlogItem {
@@ -22,34 +23,52 @@ function parseMarkdown(rawContent: string, filename: string): BlogItem {
     if (dateMatch) date = dateMatch[1];
     const descMatch = frontmatter.match(/description:\s*"(.*?)"/);
     if (descMatch) description = descMatch[1];
+    const tagsMatch = frontmatter.match(/tags:\s*\[?(.*?)\]?(?:\r?\n|$)/);
+    let tags: string[] = [];
+    if (tagsMatch) {
+       tags = tagsMatch[1].split(',').map(t => t.replace(/"/g, '').trim()).filter(Boolean);
+    }
+    return { id: filename, title, date, description, content: body.trim(), tags };
   }
-  return { id: filename, title, date, description, content: body.trim() };
+  return { id: filename, title, date, description, content: body.trim(), tags: [] };
 }
 
+import { ResultAsync } from 'neverthrow';
+
 export const load: PageLoad = async () => {
-  try {
-    const root = await getRepoRoot();
-    const blogDir = `${root}/blog/posts`;
-    const files = await invoke<any[]>('read_dir', { path: blogDir });
-    
-    const posts: BlogItem[] = [];
-    for (const fileObj of files) {
-      if (fileObj.name && fileObj.name.endsWith('.md')) {
-        const filePath = `${blogDir}/${fileObj.name}`;
-        try {
-          const content = await invoke<string>('read_file', { path: filePath });
-          posts.push(parseMarkdown(content, fileObj.name));
-        } catch (e) {
-          console.error(`Failed to read ${fileObj.name}:`, e);
-        }
-      }
-    }
-    
-    posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    
-    return { posts };
-  } catch (e) {
-    console.error('Failed to load blog posts:', e);
+  const rootRes = await ResultAsync.fromPromise(getRepoRoot(), e => e);
+  if (rootRes.isErr()) {
+    console.error('Failed to get repo root:', rootRes.error);
     return { posts: [] };
   }
+  
+  const root = rootRes.value;
+  const blogDir = `${root}/blog/posts`;
+  
+  const filesRes = await ResultAsync.fromPromise(invoke<string[]>('read_dir', { path: blogDir }), e => e);
+  if (filesRes.isErr()) {
+    console.error('Failed to read posts dir:', filesRes.error);
+    return { posts: [] };
+  }
+  
+  const files = filesRes.value;
+  const posts: BlogItem[] = [];
+  
+  for (const filename of files) {
+    if (typeof filename === 'string' && filename.endsWith('.md')) {
+      const filePath = `${blogDir}/${filename}`;
+      const contentRes = await ResultAsync.fromPromise(invoke<string>('read_file', { path: filePath }), e => e);
+      if (contentRes.isOk()) {
+        let parsed = parseMarkdown(contentRes.value, filename);
+        if (!parsed.tags || parsed.tags.length === 0) parsed.tags = ['post'];
+        posts.push(parsed);
+      } else {
+        console.error(`Failed to read ${filename}:`, contentRes.error);
+      }
+    }
+  }
+  
+  posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  
+  return { posts };
 };

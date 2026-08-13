@@ -5,12 +5,6 @@
   let { children } = $props();
   let mobileMenuOpen = $state(false);
 
-  async function shutdown() {
-    if (confirm("Are you sure you want to shut down the admin server?")) {
-      await fetch('/shutdown', { method: 'POST' });
-      document.body.innerHTML = '<div class="h-screen w-screen flex flex-col items-center justify-center bg-[oklch(0.1408_0.0044_285.82)]"><h1 class="text-3xl font-bold text-white mb-2">Server Offline</h1><p class="text-[oklch(0.7107_0.0351_256.79)]">You can safely close this tab.</p></div>';
-    }
-  }
 </script>
 
 <div class="flex h-screen bg-[oklch(0.1408_0.0044_285.82)]">
@@ -44,12 +38,6 @@
         </a>
       {/each}
       
-      <div class="pt-6 mt-6 border-t border-[oklch(0.2739_0.0055_286.03)]">
-        <button onclick={shutdown} class="w-full flex items-center px-4 py-3 rounded-lg transition-colors text-rose-400 hover:bg-rose-500/10 border border-transparent hover:border-rose-500/20">
-          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-          Shutdown Server
-        </button>
-      </div>
     </nav>
   </aside>
 

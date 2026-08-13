@@ -14,6 +14,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("posts", (collectionApi) =>
     collectionApi
       .getFilteredByTag("post")
+      .filter((p) => !p.data.tags.includes("afterdark"))
       .filter((p) => !p.data.draft)
       .sort((a, b) => b.date - a.date)
   );

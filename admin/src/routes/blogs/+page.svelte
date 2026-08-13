@@ -2,9 +2,14 @@
   import { invalidateAll } from '$app/navigation';
   import { invoke } from '@tauri-apps/api/core';
   import { getRepoRoot } from '$lib/db';
+  import { ResultAsync, ok, err, type Result } from 'neverthrow';
 
   interface BlogItem {
-    id: string; title: string; date: string; description: string; content: string;
+    id: string; title: string; date: string; description: string; content: string; tags?: string[];
+  }
+
+  interface BlogFormItem {
+    id: string; title: string; date: string; description: string; content: string; tags: string;
   }
 
   let { data } = $props();
@@ -13,30 +18,130 @@
   let isEditing = $state(false);
   let errorMsg = $state('');
   
-  let currentItem: BlogItem = $state({
-    id: '', title: '', date: '', description: '', content: ''
+  let currentItem: BlogFormItem = $state({
+    id: '', title: '', date: '', description: '', content: '', tags: ''
   });
+
+  let fileInput: HTMLInputElement | undefined = $state();
+  let uploadStatus = $state('');
+
+  async function uploadImage(file: File): Promise<Result<string, string>> {
+    const bufferRes = await ResultAsync.fromPromise(file.arrayBuffer(), e => String(e));
+    if (bufferRes.isErr()) return err(bufferRes.error);
+    const buffer = bufferRes.value;
+    
+    let ext = file.name.split('.').pop();
+    if (!ext || ext === 'blob' || ext === 'image') {
+       if (file.type === 'image/jpeg') ext = 'jpg';
+       else if (file.type === 'image/webp') ext = 'webp';
+       else ext = 'png';
+    }
+    
+    const fileName = `blog-${Date.now()}.${ext}`;
+    
+    const rootRes = await ResultAsync.fromPromise(getRepoRoot(), e => String(e));
+    if (rootRes.isErr()) return err(rootRes.error);
+    const root = rootRes.value;
+    
+    const imagesDir = `${root}/static/blog-images`;
+    const filepath = `${imagesDir}/${fileName}`;
+    
+    await ResultAsync.fromPromise(invoke('mkdir', { path: imagesDir, recursive: true }), e => String(e));
+    
+    const writeRes = await ResultAsync.fromPromise(invoke('write_file_binary', { path: filepath, content: Array.from(new Uint8Array(buffer)) }), e => String(e));
+    if (writeRes.isErr()) return err(writeRes.error);
+    
+    return ok(`/blog-images/${fileName}`);
+  }
+
+  function insertTextAtCursor(text: string) {
+    const textarea = document.getElementById('post-content') as HTMLTextAreaElement;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    currentItem.content = 
+      currentItem.content.substring(0, start) + 
+      text + 
+      currentItem.content.substring(end);
+      
+    setTimeout(() => {
+      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+      textarea.focus();
+    }, 10);
+  }
+
+  async function handlePaste(e: ClipboardEvent) {
+    if (!isModalOpen) return;
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    
+    for (const item of items) {
+      if (item.type.indexOf('image') === 0) {
+        const file = item.getAsFile();
+        if (file) {
+          e.preventDefault();
+          uploadStatus = 'Uploading image...';
+          const uploadRes = await uploadImage(file);
+          if (uploadRes.isOk()) {
+            insertTextAtCursor(`![image](${uploadRes.value})`);
+            uploadStatus = '';
+          } else {
+            uploadStatus = uploadRes.error || 'Image upload failed';
+          }
+        }
+      }
+    }
+  }
+
+  async function handleFileSelect(e: Event) {
+    const target = e.target as HTMLInputElement;
+    if (!target.files || target.files.length === 0) return;
+    
+    uploadStatus = 'Uploading image...';
+    for (let i = 0; i < target.files.length; i++) {
+      const file = target.files[i];
+      const uploadRes = await uploadImage(file);
+      if (uploadRes.isOk()) {
+        insertTextAtCursor(`![image](${uploadRes.value})\n`);
+        uploadStatus = '';
+      } else {
+        uploadStatus = uploadRes.error || 'Image upload failed';
+        break;
+      }
+    }
+    
+    if (fileInput) fileInput.value = '';
+  }
 
   function openNew() {
     isEditing = false;
     const today = new Date().toISOString().split('T')[0];
     currentItem = {
-      id: '', title: '', date: today, description: '', content: ''
+      id: '', title: '', date: today, description: '', content: '', tags: 'post'
     };
     isModalOpen = true;
   }
 
   function openEdit(item: BlogItem) {
     isEditing = true;
-    currentItem = { ...item };
+    currentItem = { ...item, tags: item.tags ? item.tags.join(', ') : '' };
     isModalOpen = true;
   }
 
-  function createMarkdown(title: string, date: string, description: string, content: string) {
+  function createMarkdown(title: string, date: string, description: string, tags: string, content: string) {
+    let tagsFrontmatter = '';
+    if (tags.trim()) {
+      const tagsArray = tags.split(',').map(t => `"${t.trim()}"`).filter(t => t !== '""');
+      if (tagsArray.length > 0) {
+        tagsFrontmatter = `\ntags: [${tagsArray.join(', ')}]`;
+      }
+    }
     return `---
 title: "${title}"
 date: ${date}
-description: "${description}"
+description: "${description}"${tagsFrontmatter}
 ---
 
 ${content}
@@ -47,8 +152,9 @@ ${content}
     e.preventDefault();
     errorMsg = '';
     
-    let { id, title, date, description, content } = currentItem;
+    let { id, title, date, description, tags, content } = currentItem;
     const isNew = !isEditing;
+
     
     if (!id || !title || !date) {
       errorMsg = 'ID, Title, and Date are required';
@@ -57,42 +163,56 @@ ${content}
     
     if (!id.endsWith('.md')) id += '.md';
     
-    try {
-      const root = await getRepoRoot();
-      const filepath = `${root}/blog/posts/${id}`;
-      
-      if (isNew) {
-        try {
-          await invoke('access', { path: filepath });
-          errorMsg = 'Blog post ID already exists';
-          return;
-        } catch {
-          // File does not exist, good to proceed
-        }
-      }
-      
-      const fileContent = createMarkdown(title, date, description, content);
-      await invoke('write_file', { path: filepath, content: fileContent });
-      
-      isModalOpen = false;
-      await invalidateAll();
-    } catch (err: any) {
-      errorMsg = err.message || 'Failed to save blog post';
+    const rootRes = await ResultAsync.fromPromise(getRepoRoot(), e => String(e));
+    if (rootRes.isErr()) {
+      errorMsg = rootRes.error;
+      return;
     }
+    const root = rootRes.value;
+    const filepath = `${root}/blog/posts/${id}`;
+    
+    if (isNew) {
+      const accessRes = await ResultAsync.fromPromise(invoke<boolean>('access', { path: filepath }), e => String(e));
+      if (accessRes.isErr()) {
+        errorMsg = accessRes.error;
+        return;
+      }
+      if (accessRes.value) {
+        errorMsg = 'Blog post ID already exists';
+        return;
+      }
+    }
+    
+    const fileContent = createMarkdown(title, date, description, tags, content);
+    const writeRes = await ResultAsync.fromPromise(invoke('write_file', { path: filepath, content: fileContent }), e => String(e));
+    if (writeRes.isErr()) {
+      errorMsg = writeRes.error || 'Failed to save blog post';
+      return;
+    }
+    
+    isModalOpen = false;
+    await invalidateAll();
   }
 
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this post?')) return;
     errorMsg = '';
     
-    try {
-      const root = await getRepoRoot();
-      const filepath = `${root}/blog/posts/${id}`;
-      await invoke('unlink', { path: filepath });
-      await invalidateAll();
-    } catch (err: any) {
-      errorMsg = err.message || 'Could not delete file';
+    const rootRes = await ResultAsync.fromPromise(getRepoRoot(), e => String(e));
+    if (rootRes.isErr()) {
+      errorMsg = rootRes.error;
+      return;
     }
+    
+    const root = rootRes.value;
+    const filepath = `${root}/blog/posts/${id}`;
+    const unlinkRes = await ResultAsync.fromPromise(invoke('unlink', { path: filepath }), e => String(e));
+    if (unlinkRes.isErr()) {
+      errorMsg = unlinkRes.error || 'Could not delete file';
+      return;
+    }
+    
+    await invalidateAll();
   }
 </script>
 
@@ -126,6 +246,15 @@ ${content}
           <span class="text-xs text-[oklch(0.7107_0.0351_256.79)] whitespace-nowrap ml-4 mt-1">{item.date}</span>
         </div>
         <p class="text-[oklch(0.7107_0.0351_256.79)] text-sm mb-4 line-clamp-2">{item.description}</p>
+        <div class="flex flex-wrap gap-2 mb-4">
+          {#if item.tags && item.tags.length > 0}
+            {#each item.tags as tag (tag)}
+              <span class="px-2 py-0.5 bg-[oklch(0.3717_0.0392_257.29)]/50 text-[oklch(0.9842_0.0034_247.86)] text-[10px] rounded border border-[oklch(0.3717_0.0392_257.29)]">{tag}</span>
+            {/each}
+          {:else}
+            <span class="px-2 py-0.5 bg-[oklch(0.3717_0.0392_257.29)]/20 text-[oklch(0.7107_0.0351_256.79)] text-[10px] rounded border border-[oklch(0.3717_0.0392_257.29)]/30">untagged</span>
+          {/if}
+        </div>
         <div class="text-xs font-mono text-[oklch(0.3717_0.0392_257.29)] mb-4">{item.id}</div>
         
         <div class="flex justify-end items-center pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]/50 mt-auto">
@@ -173,11 +302,27 @@ ${content}
             <label for="post-desc" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Description</label>
             <textarea id="post-desc" name="description" bind:value={currentItem.description} rows="2" class="input-field resize-none"></textarea>
           </div>
+          
+          <div class="space-y-2 md:col-span-2">
+            <label for="post-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags (comma separated)</label>
+            <input id="post-tags" type="text" name="tags" bind:value={currentItem.tags} class="input-field" placeholder="post, afterdark" />
+          </div>
         </div>
         
         <div class="space-y-2 flex-1 flex flex-col">
-          <label for="post-content" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Markdown Content</label>
-          <textarea id="post-content" name="content" bind:value={currentItem.content} class="input-field flex-1 min-h-[300px] font-mono text-sm" required></textarea>
+          <div class="flex justify-between items-end">
+            <label for="post-content" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Markdown Content</label>
+            {#if uploadStatus}
+              <span class="text-xs text-blue-400 font-medium animate-pulse">{uploadStatus}</span>
+            {/if}
+          </div>
+          <div class="flex flex-col flex-1 relative border border-[oklch(0.3717_0.0392_257.29)] rounded-lg focus-within:ring-2 focus-within:ring-blue-500/50 focus-within:border-blue-500 transition-all bg-black/20">
+            <textarea id="post-content" name="content" bind:value={currentItem.content} onpaste={handlePaste} class="w-full bg-transparent text-white placeholder-[oklch(0.7107_0.0351_256.79)] p-4 flex-1 min-h-[300px] font-mono text-sm resize-none focus:outline-none" required placeholder="Write your post content here... You can paste images directly!"></textarea>
+            <div class="bg-[oklch(0.2077_0.0398_265.75)] p-2 flex justify-between items-center rounded-b-lg border-t border-[oklch(0.3717_0.0392_257.29)]">
+              <span class="text-xs text-[oklch(0.7107_0.0351_256.79)] hidden sm:inline-block">Paste images directly or select:</span>
+              <input type="file" accept="image/*" multiple bind:this={fileInput} onchange={handleFileSelect} class="text-xs text-[oklch(0.7107_0.0351_256.79)] file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-medium file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20 cursor-pointer" />
+            </div>
+          </div>
         </div>
         
         <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">
