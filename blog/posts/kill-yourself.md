@@ -3,6 +3,7 @@ title: "You want to be better? Then kill yourself."
 date: 2026-08-14
 description: "euthanizing the dawg in me"
 tags: ["post"]
+font: "Times New Roman"
 ---
 
 ![image](/blog-images/blog-1786682825134.png)
@@ -28,7 +29,7 @@ Or you could give up. Admit your punishment for what happens when you pretend to
 
 I try not to like it. The killing and the eating. Sometimes you need to cut limbs to save the body but you shouldn't get used to it; you don't want to be the type of person who known mostly and only for cutting their own limbs. It's easy to get into the habit of this.
 
-I dream of circumstances where I do not feel it necessary to kill myself. One where my Parts can honourably end their own lives after an ripening maturity. Or, if you can forgive me for dreaming bolder: a life without death, whatever that means, if that's even possible. One with all the time in the world in a world that's simultaneously not devoid of purpose or meaning. My sanity water line, rising coolly to encompass the earth, slowly, at first, then suddenly.
+I dream of circumstances where I do not feel it necessary to kill myself. One where my Parts can honourably end their own lives after a ripening maturity. Or, if you can forgive me for dreaming bolder: a life without death, whatever that means, if that's even possible. One with all the time in the world in a world that's simultaneously not devoid of purpose or meaning. My sanity water line, rising coolly to encompass the earth, slowly, at first, then suddenly.
 
 ...
 

@@ -3,6 +3,7 @@ title: "Knives are scary."
 date: 2025-01-18
 description: "They are scary."
 tags: ["post"]
+font: "Times New Roman"
 ---
 
 I have a confession to make; I have a minor phobia of knives.
