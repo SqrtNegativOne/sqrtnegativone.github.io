@@ -71,7 +71,7 @@
     const link = (currentQuote.link || '').trim();
     const tagsStrParsed = tagsInput || '';
     
-    const tags = Array.from(new Set(tagsStrParsed.split(',').map(t => t.trim()).filter(t => t)));
+    const tags = Array.from(new Set(tagsStrParsed.split(',').map((t: string) => t.trim()).filter((t: string) => t)));
 
     if (!quote) {
       alert('Quote cannot be empty');

@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
 
-  let questions = [];
+  let questions = $state([]);
 
   onMount(() => {
     fetch('/questions/questions.json')

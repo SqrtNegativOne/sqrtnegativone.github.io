@@ -80,7 +80,7 @@
       const itemsRes = await readData<ProjectItem>('projects.json');
       const items = itemsRes.unwrapOr([] as any[]);
       
-      const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : [];
+      const tags = tagsStr ? tagsStr.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
       
       const newItem: ProjectItem = { 
         id, 
