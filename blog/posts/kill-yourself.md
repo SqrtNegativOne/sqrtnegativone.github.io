@@ -7,8 +7,7 @@ tags: ["post"]
 
 ![image](/blog-images/blog-1786682825134.png)
 
-> Sometimes a deal with the devil is better than no deal at all.
-
+> Sometimes a deal with the devil is better than no deal at all.<br/>
 > — The Book of Negroes
 
 There was once a Part of me that was really into game development. A clever, passionate fellow. He had downloaded something called 'Unity' on my computer, and decided to create a game, involving glowing geometric shapes representing enemies and very slippery protagonist. It was nice, but he vyed for more. Something a few degrees harder. Like puzzle games. Or story games. He would watch those game dev puzzle design youtube channels of course, even ones you never heard of.
@@ -21,14 +20,10 @@ We've heard of the exceptions that prove the rule: eclectics, polymaths, multi-h
 
 Or you could give up. Admit your punishment for what happens when you pretend to be something you are not, and give up. Hope whatever path you locked yourself into does not require any more cannibalism of the self.
 
-> And I say to any man or woman, Let your soul stand cool and composed before a million universes.
-
-> Do I contradict myself?
-
-> Very well then I contradict myself
-
-> I am large, I contain multitudes
-
+> And I say to any man or woman, Let your soul stand cool and composed before a million universes.<br/>
+> Do I contradict myself?<br/>
+> Very well then I contradict myself<br/>
+> I am large, I contain multitudes<br/>
 > — Walt Whitman
 
 I try not to like it. The killing and the eating. Sometimes you need to cut limbs to save the body but you shouldn't get used to it; you don't want to be the type of person who known mostly and only for cutting their own limbs. It's easy to get into the habit of this.
