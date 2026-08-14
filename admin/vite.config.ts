@@ -1,10 +1,51 @@
+import fs from 'fs';
+import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
+function serveParentStatic() {
+	return {
+		name: 'serve-parent-static',
+		configureServer(server: any) {
+			server.middlewares.use((req: any, res: any, next: any) => {
+				const url = req.url?.split('?')[0];
+				if (!url || !(url.startsWith('/media/') || url.startsWith('/logos/') || url.startsWith('/projects/'))) {
+					next();
+					return;
+				}
+				const filePath = path.resolve(import.meta.dirname, '..', 'static', url.slice(1));
+				fs.stat(filePath, (err, stat) => {
+					if (err || !stat.isFile()) {
+						next();
+						return;
+					}
+					const ext = path.extname(filePath).toLowerCase();
+					const mimeTypes: Record<string, string> = {
+						'.jpg': 'image/jpeg',
+						'.jpeg': 'image/jpeg',
+						'.png': 'image/png',
+						'.webp': 'image/webp',
+						'.avif': 'image/avif',
+						'.svg': 'image/svg+xml'
+					};
+					res.setHeader('Content-Type', mimeTypes[ext] || 'application/octet-stream');
+					res.setHeader('Content-Length', stat.size);
+					res.writeHead(200);
+					fs.createReadStream(filePath).pipe(res);
+					return;
+					next();
+				});
+				return;
+			});
+		}
+	};
+}
+
 export default defineConfig({
 	plugins: [
+		serveParentStatic(),
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {
@@ -22,21 +63,6 @@ export default defineConfig({
 	server: {
 		fs: {
 			allow: ['..']
-		},
-		// Pre-transform the layout and all route entry files immediately on startup
-		// so the first page open doesn't trigger a cold compile cascade.
-		warmup: {
-			clientFiles: [
-				'./src/routes/+layout.svelte',
-				'./src/routes/+page.svelte',
-				'./src/routes/media/+page.svelte',
-				'./src/routes/projects/+page.svelte',
-				'./src/routes/quotes/+page.svelte',
-				'./src/routes/skills/+page.svelte',
-				'./src/routes/socials/+page.svelte',
-				'./src/app.css',
-				'./src/lib/nav.ts',
-			]
 		}
 	},
 	// Eagerly pre-bundle dependencies so Vite doesn't discover and re-bundle them

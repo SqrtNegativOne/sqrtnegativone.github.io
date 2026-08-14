@@ -15,6 +15,7 @@
   }>();
 
   let errorMsg = $state('');
+  // svelte-ignore state_referenced_locally
   let currentItem = $state({ ...item });
   let fileInput: HTMLInputElement | undefined = $state();
   let uploadStatus = $state('');

@@ -14,7 +14,9 @@
     close: () => void;
   }>();
 
+  // svelte-ignore state_referenced_locally
   let currentQuote = $state({ ...item });
+  // svelte-ignore state_referenced_locally
   let tagsInput = $state(tagsStr);
   let importUrl = $state('');
   let isFetching = $state(false);

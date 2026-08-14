@@ -17,6 +17,7 @@
     close: () => void;
   }>();
 
+  // svelte-ignore state_referenced_locally
   let currentItem = $state({ ...item });
   let fileInput: HTMLInputElement | undefined = $state();
 
