@@ -1,14 +1,14 @@
 ## Tech Stack Overview
 - **Main Website**: Built with [SvelteKit](https://svelte.dev/) (Svelte 5) and styled using [Tailwind CSS v4](https://tailwindcss.com/).
 - **Blog Engine**: The blog is statically generated using [Eleventy (11ty)](https://www.11ty.dev/). Markdown files are in the `blog/` directory and compiled into the `static/` folder where SvelteKit serves them.
-- **Admin Dashboard**: A separate SvelteKit application located in the `admin/` directory.
+- **Admin Dashboard**: A SvelteKit + Tauri desktop application located in the `admin/` directory used for managing data/media.
 - **Package Manager**: **Bun**. Don't use npm.
 
 ## Repository Structure
 - `src/` - The main SvelteKit application source (components, routes, styles).
 - `blog/` - Markdown files (`*.md`) for blog posts.
 - `static/` - Static assets. Eleventy outputs the compiled blog HTML here.
-- `admin/` - The admin dashboard (a distinct SvelteKit app for managing data/media).
+- `admin/` - The admin dashboard (a SvelteKit + Tauri desktop app for managing data/media).
 - `eleventy.config.js` - Configuration for the Eleventy blog engine.
 - `admin.bat` / `dev.bat` - Scripts for running local dev servers.
 
@@ -21,8 +21,8 @@ All commands should be run using `bun`.
 - `bun run lint` - Runs `oxlint` for fast linting.
 - `bun run check` - Runs SvelteKit sync and `svelte-check` for type-checking and accessibility (a11y) checks.
 
-**Admin App Commands (Run inside `admin/`):**
-- `bun run dev` - Starts the admin Vite dev server.
+**Admin App Commands:**
+- Run `admin.bat` in the root folder, which executes `bun run tauri dev` inside the `admin/` directory to start the Tauri desktop app.
 
 ## Coding Guidelines & Rules
 - **Svelte 5 Syntax**: This project uses Svelte 5. Use runes (`$state`, `$derived`, `$props`, `$effect`) instead of the legacy Svelte 4 `export let` or reactive statements (`$: `).
