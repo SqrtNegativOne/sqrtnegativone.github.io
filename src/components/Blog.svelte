@@ -239,6 +239,12 @@
   opacity: 0.5;
 }
 
+:global(.blog-post-body img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
 :global(.blog-post-body blockquote) {
   border-left: 2px solid var(--text-secondary);
   padding-left: 1.2rem;
