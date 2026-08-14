@@ -19,12 +19,7 @@
   <meta name="twitter:description" content="{{ description | default("The blog of Ark Malhotra — thoughts on technology, creativity, and building things.") }}" />
   <meta name="twitter:image" content="https://sqrt.fyi/portraits/portrait.png" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400&family=Instrument+Serif&family=Inter:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="/fonts/fonts.css" rel="stylesheet" />
   <script data-goatcounter="https://sqrt.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
   <style>
@@ -363,11 +358,17 @@
     }
 
     /* Inline footnote reference superscript */
+    .footnote-ref {
+      line-height: 0;
+    }
+    
     .footnote-ref a {
       font-size: 0.75rem;
       color: var(--text-secondary);
       text-decoration: none;
       vertical-align: super;
+      line-height: 0;
+      font-weight: 300;
       transition: color 0.2s;
     }
 
@@ -413,9 +414,14 @@
       .blog-content {
         padding: 1.5rem 0 0 0;
         max-height: none;
-        overflow-y: visible;
       }
     }
+
+    {% for f in fonts %}
+    {% if font == f.name %}
+    .post-body { {{ f.css | safe }} }
+    {% endif %}
+    {% endfor %}
   </style>
 </head>
 {% set isPost = bodyClass == "no-border" %}

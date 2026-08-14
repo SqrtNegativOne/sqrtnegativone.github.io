@@ -9,6 +9,7 @@ interface BlogItem {
   description: string;
   content: string;
   tags?: string[];
+  font?: string;
 }
 
 function parseMarkdown(rawContent: string, filename: string): BlogItem {
@@ -28,9 +29,11 @@ function parseMarkdown(rawContent: string, filename: string): BlogItem {
     if (tagsMatch) {
        tags = tagsMatch[1].split(',').map(t => t.replace(/"/g, '').trim()).filter(Boolean);
     }
-    return { id: filename, title, date, description, content: body.trim(), tags };
+    const fontMatch = frontmatter.match(/font:\s*"(.*?)"/);
+    const font = fontMatch ? fontMatch[1] : 'IBM Plex Sans';
+    return { id: filename, title, date, description, content: body.trim(), tags, font };
   }
-  return { id: filename, title, date, description, content: body.trim(), tags: [] };
+  return { id: filename, title, date, description, content: body.trim(), tags: [], font: 'IBM Plex Sans' };
 }
 
 import { ResultAsync } from 'neverthrow';
@@ -44,11 +47,22 @@ export const load: PageLoad = async () => {
   
   const root = rootRes.value;
   const blogDir = `${root}/blog/posts`;
+  const fontsPath = `${root}/blog/_data/fonts.json`;
+
+  let fonts = [];
+  const fontsContentRes = await ResultAsync.fromPromise(invoke<string>('read_file', { path: fontsPath }), e => e);
+  if (fontsContentRes.isOk()) {
+    try {
+      fonts = JSON.parse(fontsContentRes.value);
+    } catch (e) {
+      console.error('Failed to parse fonts.json:', e);
+    }
+  }
   
   const filesRes = await ResultAsync.fromPromise(invoke<string[]>('read_dir', { path: blogDir }), e => e);
   if (filesRes.isErr()) {
     console.error('Failed to read posts dir:', filesRes.error);
-    return { posts: [] };
+    return { posts: [], fonts };
   }
   
   const files = filesRes.value;
@@ -70,5 +84,5 @@ export const load: PageLoad = async () => {
   
   posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   
-  return { posts };
+  return { posts, fonts };
 };

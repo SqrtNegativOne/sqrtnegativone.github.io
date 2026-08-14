@@ -1,0 +1,10 @@
+[
+  {
+    "name": "IBM Plex Sans",
+    "css": "font-family: 'IBM Plex Sans', sans-serif;"
+  },
+  {
+    "name": "Times New Roman",
+    "css": "font-family: 'Times New Roman', serif; font-size: 1.15rem; line-height: 1.6;"
+  }
+]

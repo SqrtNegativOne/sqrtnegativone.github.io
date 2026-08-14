@@ -2,6 +2,7 @@
 title: "The Quick-n'-Dirty Guide to Not Produce Slop."
 date: 2026-04-14
 description: "It's really easy and you have no excuse."
+tags: ["post"]
 ---
 
 It's the Age of Slop. Social networks have become attention media economies, and the best way to game them is to produce the same mass produced garbage that appeals to the broadest of possible audiences while competing with the other mass produced garbage that appeals to the broadest of possible audiences only by going yet broader.
@@ -28,5 +29,5 @@ You can probably notice this pattern: these are very high risk writing practices
 Maybe an year ago[^2] I would be ambivalent on these practices, but as I said, this is the Age of Slop. If I wanted Slop I would go to the freaking Slop Factory; what do I need you for? Not everyone likes almonds in their cookies but the pure-dough biscuits we are fed by AI generated voiceovers on AI generated scripts cannot _possibly_ be healthy for you. Writing is a far more flexible technology than academia wants you to realise.[^3]
 
 [^1]: [source](https://bsky.app/profile/axeghostgame.bsky.social/post/3mejngh3mmk2c)
-[^2]: see what I did there?
+[^2]: see what I did there? (see rule no. 1)
 [^3]: See [this](https://paulgraham.com/words.html) and [that](https://paulgraham.com/writes.html)

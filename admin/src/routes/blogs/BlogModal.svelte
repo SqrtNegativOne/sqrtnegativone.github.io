@@ -5,12 +5,13 @@
   import { ResultAsync, ok, err, type Result } from 'neverthrow';
 
   interface BlogFormItem {
-    id: string; title: string; date: string; description: string; content: string; tags: string;
+    id: string; title: string; date: string; description: string; content: string; tags: string; font: string;
   }
 
-  let { isEditing, item, close } = $props<{
+  let { isEditing, item, fonts, close } = $props<{
     isEditing: boolean;
     item: BlogFormItem;
+    fonts: { name: string; css: string }[];
     close: () => void;
   }>();
 
@@ -109,7 +110,7 @@
     if (fileInput) fileInput.value = '';
   }
 
-  function createMarkdown(title: string, date: string, description: string, tags: string, content: string) {
+  function createMarkdown(title: string, date: string, description: string, tags: string, font: string, content: string) {
     let tagsFrontmatter = '';
     if (tags.trim()) {
       const tagsArray = tags.split(',').map(t => `"${t.trim()}"`).filter(t => t !== '""');
@@ -121,6 +122,7 @@
 title: "${title}"
 date: ${date}
 description: "${description}"${tagsFrontmatter}
+font: "${font}"
 ---
 
 ${content}
@@ -131,7 +133,7 @@ ${content}
     e.preventDefault();
     errorMsg = '';
     
-    let { id, title, date, description, tags, content } = currentItem;
+    let { id, title, date, description, tags, font, content } = currentItem;
     const isNew = !isEditing;
     
     if (!id || !title || !date) {
@@ -161,7 +163,7 @@ ${content}
       }
     }
     
-    const fileContent = createMarkdown(title, date, description, tags, content);
+    const fileContent = createMarkdown(title, date, description, tags, font, content);
     const writeRes = await ResultAsync.fromPromise(invoke('write_file', { path: filepath, content: fileContent }), e => String(e));
     if (writeRes.isErr()) {
       errorMsg = writeRes.error || 'Failed to save blog post';
@@ -204,9 +206,18 @@ ${content}
           <textarea id="post-desc" name="description" bind:value={currentItem.description} rows="2" class="input-field resize-none"></textarea>
         </div>
         
-        <div class="space-y-2 md:col-span-2">
+        <div class="space-y-2 md:col-span-1">
           <label for="post-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags (comma separated)</label>
           <input id="post-tags" type="text" name="tags" bind:value={currentItem.tags} class="input-field" placeholder="post, afterdark" />
+        </div>
+
+        <div class="space-y-2 md:col-span-1">
+          <label for="post-font" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Main Text Font</label>
+          <select id="post-font" name="font" bind:value={currentItem.font} class="input-field">
+            {#each fonts || [] as font}
+              <option value={font.name}>{font.name}</option>
+            {/each}
+          </select>
         </div>
       </div>
       

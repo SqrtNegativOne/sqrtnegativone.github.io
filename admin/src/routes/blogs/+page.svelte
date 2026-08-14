@@ -7,11 +7,11 @@
   import BlogModal from './BlogModal.svelte';
 
   interface BlogItem {
-    id: string; title: string; date: string; description: string; content: string; tags?: string[];
+    id: string; title: string; date: string; description: string; content: string; tags?: string[]; font?: string;
   }
 
   interface BlogFormItem {
-    id: string; title: string; date: string; description: string; content: string; tags: string;
+    id: string; title: string; date: string; description: string; content: string; tags: string; font: string;
   }
 
   let { data } = $props();
@@ -21,21 +21,21 @@
   let errorMsg = $state('');
   
   let currentItem: BlogFormItem = $state({
-    id: '', title: '', date: '', description: '', content: '', tags: ''
+    id: '', title: '', date: '', description: '', content: '', tags: '', font: 'IBM Plex Sans'
   });
 
   function openNew() {
     isEditing = false;
     const today = new Date().toISOString().split('T')[0];
     currentItem = {
-      id: '', title: '', date: today, description: '', content: '', tags: 'post'
+      id: '', title: '', date: today, description: '', content: '', tags: 'post', font: 'IBM Plex Sans'
     };
     isModalOpen = true;
   }
 
   function openEdit(item: BlogItem) {
     isEditing = true;
-    currentItem = { ...item, tags: item.tags ? item.tags.join(', ') : '' };
+    currentItem = { ...item, tags: item.tags ? item.tags.join(', ') : '', font: item.font || 'IBM Plex Sans' };
     isModalOpen = true;
   }
 
@@ -94,5 +94,5 @@
 </div>
 
 {#if isModalOpen}
-  <BlogModal {isEditing} item={currentItem} close={() => isModalOpen = false} />
+  <BlogModal {isEditing} item={currentItem} fonts={data.fonts} close={() => isModalOpen = false} />
 {/if}
