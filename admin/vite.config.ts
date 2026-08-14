@@ -65,15 +65,5 @@ export default defineConfig({
 			allow: ['..']
 		}
 	},
-	// Eagerly pre-bundle dependencies so Vite doesn't discover and re-bundle them
-	// mid-request, which causes a page reload waterfall on first open.
-	optimizeDeps: {
-		include: [
-			'svelte',
-			'svelte/internal',
-			'svelte/store',
-			'@sveltejs/kit',
-		]
-	},
 	envDir: '..'
 });
