@@ -3,6 +3,7 @@ title: "The Quick-n'-Dirty Guide to Not Produce Slop."
 date: 2026-04-14
 description: "It's really easy and you have no excuse."
 tags: ["post"]
+font: "IBM Plex Sans"
 ---
 
 It's the Age of Slop. Social networks have become attention media economies, and the best way to game them is to produce the same mass produced garbage that appeals to the broadest of possible audiences while competing with the other mass produced garbage that appeals to the broadest of possible audiences only by going yet broader.
@@ -24,10 +25,11 @@ So. A low effort, Quick-n'-Dirty guide to not sound like a clanker, in April, 20
 8. Have an intent beyond distribution.
 9. There's a reason long AI use gives people psychosis; all responses are structured towards _convincingness_. They try to override an assumed prior without knowing your assumed priors: "it's X, not Y". 
 
-You can probably notice this pattern: these are very high risk writing practices. It's not something you can do in your board examinations. But the same inoffensive cookie-cutter writing practices is exactly what artificial intelligence is trained on, exactly what millions of LinkedIn profiles salivate on hearing, and exactly what AI companies want it to generate.
+You can probably notice this pattern: these are very high risk writing practices. It's not something you can do in your board examinations. But the same inoffensive cookie-cutter composition is exactly what artificial intelligence is trained on, exactly the sort of punchy prose the tasteless salivate on hearing, and exactly what AI companies want it to generate.
 
-Maybe an year ago[^2] I would be ambivalent on these practices, but as I said, this is the Age of Slop. If I wanted Slop I would go to the freaking Slop Factory; what do I need you for? Not everyone likes almonds in their cookies but the pure-dough biscuits we are fed by AI generated voiceovers on AI generated scripts cannot _possibly_ be healthy for you. Writing is a far more flexible technology than academia wants you to realise.[^3]
+Maybe an year ago[^2] I would be ambivalent on these practices, but as I said, this is the Age of Slop. If I wanted Slop I would go to the freaking Slop Factory; what do I need you for? Not everyone likes almonds in their cookies but the pure-dough biscuits we are fed by AI generated voiceovers on AI generated scripts cannot _possibly_ be healthy for you. Writing is a far more flexible technology than academia or LinkedIn wants you to realise.[^3] No one who thinks in terms of "content" or "personal brand" could ever create anything nontrivial.[^4]
 
-[^1]: [source](https://bsky.app/profile/axeghostgame.bsky.social/post/3mejngh3mmk2c)
-[^2]: see what I did there? (see rule no. 1)
+[^1]: [src](https://bsky.app/profile/axeghostgame.bsky.social/post/3mejngh3mmk2c)
+[^2]: see what I did there? (rule no. 1)
 [^3]: See [this](https://paulgraham.com/words.html) and [that](https://paulgraham.com/writes.html)
+[^4]: [src](https://x.com/DylanoA4/status/2085769336958955711)
