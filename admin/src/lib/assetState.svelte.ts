@@ -5,7 +5,7 @@ class AssetState {
     repoRoot = $state('');
 
     constructor() {
-        if (typeof window !== 'undefined' && window.__TAURI__) {
+        if (typeof window !== 'undefined' && (window as any).__TAURI__) {
             getRepoRoot().then(root => {
                 this.repoRoot = root;
             });

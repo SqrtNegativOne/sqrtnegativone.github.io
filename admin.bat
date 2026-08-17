@@ -4,7 +4,10 @@ if exist "src-tauri\target\release\admin-app.exe" (
     echo Starting compiled Admin Dashboard... Obsidian Fast!
     start "" "src-tauri\target\release\admin-app.exe"
 ) else (
-    echo First time setup: Building compiled Admin App for maximum speed...
-    call bun run tauri build
-    start "" "src-tauri\target\release\admin-app.exe"
+    echo First time setup: App is not compiled yet.
+    echo Launching development server so you can work immediately...
+    echo Compiling production build seamlessly in the background.
+    
+    start /B cmd /c "bun run tauri build > build.log 2>&1"
+    bun run tauri dev
 )
