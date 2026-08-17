@@ -355,7 +355,9 @@
     "quote": "...cannot consistently believe this sentence is true.",
     "source": "",
     "link": "",
-    "tags": []
+    "tags": [
+      "suffix"
+    ]
   },
   {
     "id": "6f66d5ec-5944-448b-8b95-0da729c4a212",
@@ -593,7 +595,9 @@
     "quote": "all love is humiliating",
     "source": "",
     "link": "",
-    "tags": []
+    "tags": [
+      "afterdark"
+    ]
   },
   {
     "id": "e30910ad-4743-49af-84ca-b1c5196292c7",
@@ -830,7 +834,7 @@
   {
     "id": "cf366c15-06ce-444e-984e-35f053647511",
     "quote": "in the desert of the real",
-    "source": "",
+    "source": "The Matrix (paraphrased)",
     "link": "",
     "tags": []
   },
@@ -907,7 +911,7 @@
   {
     "id": "29637a56-49f4-48f6-abdd-65a40237e7a2",
     "quote": "That was stupid, and *I* was stupid.",
-    "source": "",
+    "source": "Exurb1a",
     "link": "",
     "tags": []
   },
@@ -1385,7 +1389,7 @@
   {
     "id": "61062b46-7979-40d7-bc42-010a708534ea",
     "quote": "I can’t go to hell. I’m all out of vacation days.",
-    "source": "",
+    "source": "Burgerpants",
     "link": "",
     "tags": []
   },
@@ -1532,7 +1536,7 @@
   {
     "id": "c7ac1f8b-08ce-47b0-9616-f53d765de678",
     "quote": "My utility monster could beat up your utility monster",
-    "source": "",
+    "source": "Grace Kind",
     "link": "",
     "tags": []
   },
@@ -2274,5 +2278,32 @@
     "source": "me",
     "link": "",
     "tags": []
+  },
+  {
+    "id": "95edd812-ea59-48fe-92d2-b388845aafda",
+    "quote": "what the fuck is right with you?",
+    "source": "",
+    "link": "",
+    "tags": [
+      "afterdark"
+    ]
+  },
+  {
+    "id": "137016e9-1d87-43ab-ac08-2f73456ca34c",
+    "quote": "sleeping is just practicing to die",
+    "source": "",
+    "link": "",
+    "tags": [
+      "afterdark"
+    ]
+  },
+  {
+    "id": "44eeed95-a95c-4073-92af-15cb60206f3b",
+    "quote": "you think you're bad with procrastination? try killing yourself",
+    "source": "",
+    "link": "",
+    "tags": [
+      "afterdark"
+    ]
   }
 ]
