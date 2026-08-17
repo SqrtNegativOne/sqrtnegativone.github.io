@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { assetState } from '../../lib/assetState.svelte';
   let { item, handleMove, openEdit, handleDelete } = $props();
 </script>
 
@@ -6,7 +7,7 @@
   <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
   <div class="w-full md:w-48 h-48 md:h-auto bg-[oklch(0.2077_0.0398_265.75)] shrink-0 border-b md:border-b-0 md:border-r border-[oklch(0.3717_0.0392_257.29)] relative overflow-hidden">
     {#if item.image}
-      <img src={item.image} alt={item.name} class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity group-hover:scale-105 duration-500" />
+      <img src={assetState.resolve(item.image)} alt={item.name} class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity group-hover:scale-105 duration-500" />
     {:else}
       <div class="w-full h-full flex items-center justify-center text-[oklch(0.7107_0.0351_256.79)]">No Image</div>
     {/if}
