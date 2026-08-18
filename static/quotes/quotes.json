@@ -2177,21 +2177,21 @@
   {
     "id": "553eddf1-8fcb-4718-acc6-69d87fbb3e37",
     "quote": "How odd I can have all this inside me and to you it’s just words.",
-    "source": "",
+    "source": "David Foster Wallace",
     "link": "",
     "tags": []
   },
   {
     "id": "ee6e5bd9-72e6-45e0-9ab7-f88f4151da8f",
     "quote": "I like having lots of hidden motives. It's the closest I can ethically get to being a supervillain.",
-    "source": "",
+    "source": "Eliezer Yudkowsky",
     "link": "",
     "tags": []
   },
   {
     "id": "fed8cb48-e824-47b9-b5d9-15f85fd53b81",
     "quote": "\"great artists lift elements from several sources and recontextualise them\" isn't really that catchy",
-    "source": "",
+    "source": "Andrew Cunningham",
     "link": "",
     "tags": []
   },
@@ -2233,7 +2233,7 @@
   {
     "id": "f472770e-337c-4486-8cf6-0a0189ade795",
     "quote": "See? Everyone finds something worth holding onto in this world — howerver wasted its opportunities.",
-    "source": "",
+    "source": "Disco Elysium",
     "link": "",
     "tags": []
   },
@@ -2303,6 +2303,16 @@
     "source": "",
     "link": "",
     "tags": [
+      "afterdark"
+    ]
+  },
+  {
+    "id": "3b022579-083d-4cd7-97c8-948ebe37bdac",
+    "quote": "thrives on neglect",
+    "source": "",
+    "link": "",
+    "tags": [
+      "suffix",
       "afterdark"
     ]
   }
