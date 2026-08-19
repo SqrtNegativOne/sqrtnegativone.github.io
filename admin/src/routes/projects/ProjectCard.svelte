@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { assetState } from '$lib/assetState.svelte.ts';
+  import { assetState } from '$lib/assetState.svelte';
   let { item, handleMove, openEdit, handleDelete } = $props();
 </script>
 

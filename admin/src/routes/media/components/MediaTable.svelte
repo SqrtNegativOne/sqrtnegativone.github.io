@@ -5,7 +5,7 @@
   import RatingChart from '../../../../../shared/components/RatingChart.svelte';
   import TypeBadge from '../../../../../shared/components/TypeBadge.svelte';
   import { getPosterUrl } from '../../../../../src/lib/utils';
-  import { assetState } from '$lib/assetState.svelte.ts';
+  import { assetState } from '$lib/assetState.svelte';
   let { filteredMedia, openEdit } = $props();
 </script>
 

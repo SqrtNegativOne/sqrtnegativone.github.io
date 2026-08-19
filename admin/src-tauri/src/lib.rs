@@ -92,6 +92,19 @@ fn convert_image_to_avif(path: String) -> Result<String, String> {
     Ok(output_path)
 }
 
+#[tauri::command]
+fn fetch_url(url: String) -> Result<String, String> {
+    let client = reqwest::blocking::Client::builder()
+        .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
+        .build()
+        .map_err(|e| e.to_string())?;
+    
+    let res = client.get(&url).send().map_err(|e| e.to_string())?;
+    let text = res.text().map_err(|e| e.to_string())?;
+    Ok(text)
+}
+
+
 /// # Panics
 /// Panics if the tauri application fails to build or run.
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -106,7 +119,8 @@ pub fn run() {
         access,
         write_file_binary,
         get_repo_root,
-        convert_image_to_avif
+        convert_image_to_avif,
+        fetch_url
     ])
     .setup(|app| {
       if cfg!(debug_assertions) {
