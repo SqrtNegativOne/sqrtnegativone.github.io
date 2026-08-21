@@ -104,6 +104,18 @@ fn fetch_url(url: String) -> Result<String, String> {
     Ok(text)
 }
 
+#[tauri::command]
+fn fetch_binary(url: String) -> Result<Vec<u8>, String> {
+    let client = reqwest::blocking::Client::builder()
+        .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
+        .build()
+        .map_err(|e| e.to_string())?;
+    
+    let res = client.get(&url).send().map_err(|e| e.to_string())?;
+    let bytes = res.bytes().map_err(|e| e.to_string())?;
+    Ok(bytes.to_vec())
+}
+
 
 /// # Panics
 /// Panics if the tauri application fails to build or run.
@@ -120,7 +132,8 @@ pub fn run() {
         write_file_binary,
         get_repo_root,
         convert_image_to_avif,
-        fetch_url
+        fetch_url,
+        fetch_binary
     ])
     .setup(|app| {
       if cfg!(debug_assertions) {

@@ -1212,7 +1212,7 @@
     "description": "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "https://image.tmdb.org/t/p/w500/6izwz7rsy95ARzTR3poZ8H6c5pp.jpg"
+    "poster_image": "movie_dune_part_two"
   },
   {
     "id": "dune_part_three",
@@ -1224,7 +1224,7 @@
     "description": "Emperor Paul Atreides faces the fallout from his ascent to power as political plots and a galaxy-wide holy war endanger the future only he can see.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "https://image.tmdb.org/t/p/w500/d43fvHQsIMa4kpyhKXw0haEJIvI.jpg"
+    "poster_image": "movie_dune_part_three"
   },
   {
     "id": "oppenheimer",
@@ -1236,7 +1236,7 @@
     "description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg"
+    "poster_image": "movie_oppenheimer"
   },
   {
     "id": "there_is_no_antimemetics_division",
@@ -1248,7 +1248,7 @@
     "description": "Explore the new SCP miniseries, where you'll journey alongside Marion Wheeler, the director of the SCP Foundation's Antimemetics Division, as she confronts an eternal and un-killable idea.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "https://image.tmdb.org/t/p/w500/71OGHHO4isz8zwcGXnPn6el0zNx.jpg"
+    "poster_image": "book_there_is_no_antimemetics_division"
   },
   {
     "id": "twin_peaks",
@@ -1260,7 +1260,7 @@
     "description": "The body of Laura Palmer is washed up on a beach near the small Washington state town of Twin Peaks. FBI Special Agent Dale Cooper is called in to investigate her strange demise only to uncover a web of mystery that ultimately leads him deep into the heart of the surrounding woodland and his very own soul.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "https://image.tmdb.org/t/p/w500/lA9CNSdo50iQPZ8A2fyVpMvJZAf.jpg"
+    "poster_image": "show_twin_peaks"
   },
   {
     "id": "true_detective",
@@ -1272,6 +1272,30 @@
     "description": "An American anthology police detective series utilizing multiple timelines in which investigations seem to unearth personal and professional secrets of those involved, both within or outside the law.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "https://image.tmdb.org/t/p/w500/dC7jkj2g1aU8sxKqM6D4g44xA6w.jpg"
+    "poster_image": "show_true_detective"
+  },
+  {
+    "id": "influence_new_and_expanded",
+    "type": "book",
+    "rating": 5,
+    "status": "finished",
+    "title": "Influence: Science and Practice",
+    "tagline": "",
+    "description": "Robert B Cialdini\n\"In this highly acclaimed New York Times bestseller, Dr. Robert B. Cialdini-the seminal expert in the field of influence and persuasion-explains the psychology of why people say yes and how to apply these principles ethically in business and everyday situations\"--",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_influence_new_and_expanded"
+  },
+  {
+    "id": "thinking_phy_book",
+    "type": "book",
+    "rating": 6,
+    "status": "finished",
+    "title": "Thinking Physics",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_thinking_phy_book"
   }
 ]

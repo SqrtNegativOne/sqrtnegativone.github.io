@@ -1,4 +1,4 @@
-import { ResultAsync } from 'neverthrow';
+import { Result, ResultAsync, err, ok } from 'neverthrow';
 import { invoke } from '@tauri-apps/api/core';
 import { getRepoRoot, readData, writeData } from '$lib/db';
 import { applyFilters, applySorts } from '../../../../shared/utils/mediaFilters';
@@ -56,6 +56,77 @@ export class MediaState {
     this.isModalOpen = true;
   }
 
+  async searchBooks(title: string, apiKey: string): Promise<Result<SearchResult[], string>> {
+    let searchUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=10`;
+    if (apiKey) searchUrl += `&key=${apiKey}`;
+    
+    const fetchRes = await ResultAsync.fromPromise(
+      fetch(searchUrl, { signal: AbortSignal.timeout(10000) }),
+      (e) => e instanceof Error ? e.message : 'Network error during search'
+    );
+    if (fetchRes.isErr()) return err(fetchRes.error);
+    
+    const response = fetchRes.value;
+    if (!response.ok) {
+      const errTextRes = await ResultAsync.fromPromise(response.text(), () => 'Failed to read error body');
+      return err(`Search failed: ${response.status} ${response.statusText}. ${errTextRes.unwrapOr('')}`);
+    }
+
+    const jsonRes = await ResultAsync.fromPromise(response.json(), () => 'Failed to parse JSON response');
+    if (jsonRes.isErr()) return err(jsonRes.error);
+    
+    const data = jsonRes.value;
+    if (!data.items || data.items.length === 0) return err('No results found for that query.');
+    
+    return ok(data.items.map((r: any) => {
+      const vol = r.volumeInfo || {};
+      let coverUrl = '';
+      if (vol.imageLinks?.thumbnail) {
+        coverUrl = vol.imageLinks.thumbnail.replace('http:', 'https:');
+      }
+      return {
+        title: vol.title || '',
+        tagline: vol.authors ? vol.authors.join(', ') : '',
+        description: vol.description || '',
+        coverUrl
+      };
+    }));
+  }
+
+  async searchTmdb(title: string, isMovie: boolean, apiKey: string): Promise<Result<SearchResult[], string>> {
+    const typeStr = isMovie ? 'movie' : 'tv';
+    const searchUrl = `https://api.themoviedb.org/3/search/${typeStr}?query=${encodeURIComponent(title)}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`;
+    
+    const fetchRes = await ResultAsync.fromPromise(
+      fetch(searchUrl, { signal: AbortSignal.timeout(10000), headers: { 'Accept': 'application/json' } }),
+      (e) => e instanceof Error ? e.message : 'Network error during search'
+    );
+    if (fetchRes.isErr()) return err(fetchRes.error);
+
+    const response = fetchRes.value;
+    if (!response.ok) {
+      const errTextRes = await ResultAsync.fromPromise(response.text(), () => 'Failed to read error body');
+      return err(`Search failed: ${response.status} ${response.statusText}. ${errTextRes.unwrapOr('')}`);
+    }
+
+    const jsonRes = await ResultAsync.fromPromise(response.json(), () => 'Failed to parse JSON response');
+    if (jsonRes.isErr()) return err(jsonRes.error);
+    
+    const data = jsonRes.value;
+    if (!data.results || data.results.length === 0) return err('No results found for that query.');
+    
+    return ok(data.results.map((r: any) => ({
+      title: isMovie ? r.title : r.name,
+      tagline: '', 
+      description: r.overview,
+      coverUrl: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : ''
+    })));
+  }
+
+  async searchGames(title: string): Promise<Result<SearchResult[], string>> {
+    return err('Game search is not supported yet.');
+  }
+
   async handleSearch() {
     if (!this.currentItem.title || !this.currentItem.type) return;
     this.isSearching = true;
@@ -81,55 +152,34 @@ export class MediaState {
     
     const envText = envRes.value;
     const tokenMatch = envText.match(/TMDB_API_KEY=(.*)/);
-    const apiKey = tokenMatch ? tokenMatch[1].trim() : '';
-    const isMovie = this.currentItem.type === 'movie';
-    const typeStr = isMovie ? 'movie' : 'tv';
+    const tmdbApiKey = tokenMatch ? tokenMatch[1].trim() : '';
+    const booksMatch = envText.match(/GOOGLE_BOOKS_API_KEY=(.*)/);
+    const booksApiKey = booksMatch ? booksMatch[1].trim() : '';
     
-    const searchRes = await ResultAsync.fromPromise(
-      fetch(`https://api.themoviedb.org/3/search/${typeStr}?query=${encodeURIComponent(this.currentItem.title)}&include_adult=false&language=en-US&page=1&api_key=${apiKey}`, {
-        signal: AbortSignal.timeout(10000),
-        headers: {
-          'Accept': 'application/json'
-        }
-      }),
-      (e) => e instanceof Error ? e.message : 'Network error during search'
-    );
-
-    if (searchRes.isErr()) {
-      this.searchError = searchRes.error;
-      this.isSearching = false;
-      return;
+    let searchResult: Result<SearchResult[], string>;
+    switch (this.currentItem.type) {
+      case 'book':
+        searchResult = await this.searchBooks(this.currentItem.title, booksApiKey);
+        break;
+      case 'movie':
+        searchResult = await this.searchTmdb(this.currentItem.title, true, tmdbApiKey);
+        break;
+      case 'show':
+        searchResult = await this.searchTmdb(this.currentItem.title, false, tmdbApiKey);
+        break;
+      case 'game':
+        searchResult = await this.searchGames(this.currentItem.title);
+        break;
+      default:
+        searchResult = err('Unsupported media type');
+        break;
     }
 
-    const response = searchRes.value;
-    if (!response.ok) {
-      const errTextRes = await ResultAsync.fromPromise(response.text(), () => 'Failed to read error body');
-      this.searchError = `Search failed: ${response.status} ${response.statusText}. ${errTextRes.unwrapOr('')}`;
-      this.isSearching = false;
-      return;
-    }
-
-    const jsonRes = await ResultAsync.fromPromise(
-      response.json(),
-      () => 'Failed to parse JSON response'
-    );
-    if (jsonRes.isErr()) {
-      this.searchError = jsonRes.error;
-      this.isSearching = false;
-      return;
-    }
-    
-    const resData = jsonRes.value;
-    if (resData.results && resData.results.length > 0) {
-      this.searchResults = resData.results.map((r: any) => ({
-        title: isMovie ? r.title : r.name,
-        tagline: '', 
-        description: r.overview,
-        coverUrl: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : ''
-      }));
-      this.isSearchModalOpen = true;
+    if (searchResult.isErr()) {
+      this.searchError = searchResult.error;
     } else {
-      this.searchError = 'No results found for that query.';
+      this.searchResults = searchResult.value;
+      this.isSearchModalOpen = true;
     }
     this.isSearching = false;
   }
@@ -229,32 +279,32 @@ export class MediaState {
         poster_image = `${type}_${safeId}`;
       }
     } else if (poster_image.startsWith('http://') || poster_image.startsWith('https://')) {
-      const fetchRes = await ResultAsync.fromPromise(fetch(poster_image), () => 'Failed to fetch image');
-      if (fetchRes.isOk() && fetchRes.value.ok) {
-        const bufferRes = await ResultAsync.fromPromise(fetchRes.value.arrayBuffer(), () => 'Failed to read buffer');
-        if (bufferRes.isOk()) {
-          const bytes = new Uint8Array(bufferRes.value);
-          const filename = `${type}_${safeId}.jpg`;
-          const filepath = `${postersDir}/${filename}`;
-          
-          const writeRes = await ResultAsync.fromPromise(
-            invoke('write_file_binary', { path: filepath, content: Array.from(bytes) }),
-            (err) => typeof err === 'string' ? err : 'Failed to write image'
-          );
-          if (writeRes.isErr()) {
-            this.errorMsg = writeRes.error;
-            return;
-          }
-          const convertRes = await ResultAsync.fromPromise(
-            invoke('convert_image_to_avif', { path: filepath }),
-            (err) => typeof err === 'string' ? err : 'Failed to convert image'
-          );
-          if (convertRes.isErr()) {
-            this.errorMsg = convertRes.error;
-            return;
-          }
-          poster_image = `${type}_${safeId}`;
+      const fetchRes = await ResultAsync.fromPromise(
+        invoke<number[]>('fetch_binary', { url: poster_image }),
+        (err) => typeof err === 'string' ? err : 'Failed to fetch image via backend'
+      );
+      if (fetchRes.isOk()) {
+        const bytes = new Uint8Array(fetchRes.value);
+        const filename = `${type}_${safeId}.jpg`;
+        const filepath = `${postersDir}/${filename}`;
+        
+        const writeRes = await ResultAsync.fromPromise(
+          invoke('write_file_binary', { path: filepath, content: Array.from(bytes) }),
+          (err) => typeof err === 'string' ? err : 'Failed to write image'
+        );
+        if (writeRes.isErr()) {
+          this.errorMsg = writeRes.error;
+          return;
         }
+        const convertRes = await ResultAsync.fromPromise(
+          invoke('convert_image_to_avif', { path: filepath }),
+          (err) => typeof err === 'string' ? err : 'Failed to convert image'
+        );
+        if (convertRes.isErr()) {
+          this.errorMsg = convertRes.error;
+          return;
+        }
+        poster_image = `${type}_${safeId}`;
       }
     }
 
