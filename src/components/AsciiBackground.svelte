@@ -199,21 +199,53 @@
     let lastTime = 0;
     const FRAME_MS = 1000 / 30;
 
-    function tick(now) {
-      rafId = requestAnimationFrame(tick);
-      if (now - lastTime < FRAME_MS) return;
-      lastTime = now;
-
+    function renderFrame(now) {
       perlinProgram.uniforms.uTime.value = now * 0.001;
       renderer.render({ scene: perlinMesh, camera, target });
 
       asciiProgram.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height];
       renderer.render({ scene: asciiMesh, camera });
     }
-    rafId = requestAnimationFrame(tick);
+
+    function tick(now) {
+      rafId = requestAnimationFrame(tick);
+      if (now - lastTime < FRAME_MS) return;
+      lastTime = now;
+      renderFrame(now);
+    }
+
+    function startLoop() {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function stopLoop() {
+      cancelAnimationFrame(rafId);
+      rafId = undefined;
+    }
+
+    // Respect prefers-reduced-motion: render a single static frame instead of looping
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleMotionChange = () => {
+      if (motionQuery.matches) {
+        stopLoop();
+        renderFrame(performance.now());
+      } else {
+        lastTime = performance.now();
+        startLoop();
+      }
+    };
+    motionQuery.addEventListener('change', handleMotionChange);
+
+    if (motionQuery.matches) {
+      renderFrame(performance.now());
+    } else {
+      rafId = requestAnimationFrame(tick);
+    }
 
     return () => {
-      cancelAnimationFrame(rafId);
+      stopLoop();
+      motionQuery.removeEventListener('change', handleMotionChange);
       window.removeEventListener('resize', handleResize);
       if (wrapper.contains(gl.canvas)) { wrapper.removeChild(gl.canvas); }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
@@ -223,6 +255,7 @@
 
 <div
   bind:this={wrapperRef}
+  aria-hidden="true"
   style="
     position: fixed;
     inset: 0;

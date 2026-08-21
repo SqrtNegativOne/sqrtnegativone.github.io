@@ -22,6 +22,8 @@
   let query = $state("");
   let selectedIndex = $state(0);
   let searchInput = $state();
+  let burgerButton = $state();
+  let overlayEl = $state();
   
   let filteredItems = $derived(
     NAV_ITEMS.filter(
@@ -45,10 +47,12 @@
   });
 
   function closeMenu() {
+    // Return focus to the burger button if focus was inside the overlay
+    const hadFocus = open && overlayEl?.contains(document.activeElement);
     open = false;
     document.body.classList.remove("menu-is-open");
-    // Clear query slightly after transition ends
     setTimeout(() => { query = ""; }, 150);
+    if (hadFocus) burgerButton?.focus();
   }
 
   function handleOpen() {
@@ -117,6 +121,7 @@
 />
 
 <button
+  bind:this={burgerButton}
   class="nav-burger {open ? 'nav-burger--open' : ''}"
   onclick={() => { if (open) closeMenu(); else handleOpen(); }}
   aria-label={open ? "Close menu" : "Open menu"}
@@ -127,7 +132,8 @@
 </button>
 
 {#if !hideHint}
-  <div class="menu-hint" aria-hidden="true" onclick={() => { if (!open) handleOpen(); }} style="cursor: pointer;">
+  <!-- Decorative hint: keyboard users activate the menu via the Space shortcut -->
+  <div class="menu-hint" aria-hidden="true">
     <div class="hint-text {open ? '' : 'is-visible'}">
       press space to activate menu
     </div>
@@ -144,7 +150,15 @@
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="menu-overlay {open ? 'is-open' : ''}" onclick={closeMenu}>
+<div
+  bind:this={overlayEl}
+  class="menu-overlay {open ? 'is-open' : ''}"
+  onclick={closeMenu}
+  role={open ? "dialog" : undefined}
+  aria-modal={open ? "true" : undefined}
+  aria-label={open ? "Site menu" : undefined}
+  inert={!open}
+>
   <div class="command-palette-wrapper {open ? 'is-open' : ''}">
     <div class="command-palette" onclick={(e) => e.stopPropagation()}>
       <div class="search-header">

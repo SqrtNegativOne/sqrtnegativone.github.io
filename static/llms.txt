@@ -1,0 +1,24 @@
+# Ark Malhotra (sqrt.fyi)
+
+> Personal site of Ark Malhotra, computer science undergrad at NSUT chasing the joy of building software. Home to his blog, projects, small web toys, and notes on what he is learning and reading.
+
+## Main Pages
+
+- [About](https://sqrt.fyi/about): Who Ark Malhotra is: a computer science undergrad at NSUT chasing the joy of building software.
+- [Blog](https://sqrt.fyi/blog): Essays and writing by Ark Malhotra on programming, games, and whatever else he is thinking about.
+- [Projects](https://sqrt.fyi/projects): Things Ark Malhotra has built: coursework, tools, and experiments.
+- [Now](https://sqrt.fyi/now): What Ark Malhotra is currently learning, building, and reading.
+- [Colophon](https://sqrt.fyi/colophon): How this site is built: the tools, fonts, and stack behind sqrt.fyi.
+- [Skills](https://sqrt.fyi/skills): The languages, frameworks, and tools in Ark Malhotra's toolkit.
+- [Minis](https://sqrt.fyi/minis): Small experiments and bite-sized web toys by Ark Malhotra.
+- [Questions](https://sqrt.fyi/questions): Open problems and puzzles Ark Malhotra is currently working through.
+
+## Feeds & Indexes
+
+- [Atom Feed](https://sqrt.fyi/feed.xml): Full feed of blog posts.
+- [Sitemap](https://sqrt.fyi/sitemap.xml): XML sitemap of all pages.
+
+## Markdown Source
+
+- [Blog](https://sqrt.fyi/blog): Blog listing page.
+- Every blog post's raw Markdown source is available by appending `.md` to its URL, e.g. https://sqrt.fyi/blog/nonslop.md

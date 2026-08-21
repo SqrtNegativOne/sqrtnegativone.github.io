@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>The Blog of Sqrt-1</title>
+  <subtitle>Nothing particularly special about it.</subtitle>
+  <link href="https://sqrt.fyi/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://sqrt.fyi/blog/" rel="alternate" type="text/html" />
+  <id>https://sqrt.fyi/blog/</id>
+  <updated>2026-08-14T00:00:00Z</updated>
+  <rights>Ark Malhotra</rights>
+  <generator uri="https://www.11ty.dev/">Eleventy</generator>
+  <author>
+    <name>Ark Malhotra</name>
+    <uri>https://sqrt.fyi/</uri>
+  </author>
+  <entry>
+    <title>You want to be better? Then kill yourself.</title>
+    <link href="https://sqrt.fyi/blog/kill-yourself/" rel="alternate" type="text/html" />
+    <id>https://sqrt.fyi/blog/kill-yourself/</id>
+    <published>2026-08-14T00:00:00Z</published>
+    <updated>2026-08-14T00:00:00Z</updated>
+    <summary>euthanizing the dawg in me</summary>
+    <content type="html">&lt;p&gt;&lt;img src=&quot;https://sqrt.fyi/blog-images/blog-1786682825134.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Sometimes a deal with the devil is better than no deal at all.&lt;br /&gt;
+— The Book of Negroes&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;There was once a Part of me that was really into game development. A clever, passionate fellow. He had downloaded something called ‘Unity’ on my computer, and decided to create a game, involving glowing geometric shapes representing enemies and very slippery protagonist. It was nice, but he vyed for more. Something a few degrees harder. Like puzzle games. Or story games. He would watch those game dev puzzle design youtube channels of course, even ones you never heard of.&lt;/p&gt;
+&lt;p&gt;It’s always been my experience that it is difficult to kill your Parts through the &lt;a href=&quot;https://sqrt.fyi/blog/knives-are-scary/&quot;&gt;knife&lt;/a&gt; head on. Slow suffocation and starvation are the surest ways to end.&lt;/p&gt;
+&lt;p&gt;I never did figure out how he died. The final blow might have been when the old project data was finally corrupted. Or maybe another Part needing the same resources ate him up. Or maybe I did, you can’t really tell with corpses these days, not with everything gnawing for your attention and time. My circumstances may be the ones that construct the scarcity of these resources in the first place but I am the one who pulls the trigger.&lt;/p&gt;
+&lt;p&gt;We’ve heard of the exceptions that prove the rule: eclectics, polymaths, multi-hyphenates. Don’t kid yourself: resurrection of a Part is impossible without sacrifice. From statistics alone I can guarantee you, dear reader, that the best way to get ahead of the Naturals in your ambition of choice, is to kill yourself. You make a deal with Mr Scratch, saw off limbs orthogonal to your utility function, drop them off in His cauldron, and hope to eke out the aerodynamics from your remaining whittled shell.&lt;/p&gt;
+&lt;p&gt;Or you could give up. Admit your punishment for what happens when you pretend to be something you are not, and give up. Hope whatever path you locked yourself into does not require any more cannibalism of the self.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;And I say to any man or woman, Let your soul stand cool and composed before a million universes.&lt;br /&gt;
+Do I contradict myself?&lt;br /&gt;
+Very well then I contradict myself&lt;br /&gt;
+I am large, I contain multitudes&lt;br /&gt;
+— Walt Whitman&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I try not to like it. The killing and the eating. Sometimes you need to cut limbs to save the body but you shouldn’t get used to it; you don’t want to be the type of person who known mostly and only for cutting their own limbs. It’s easy to get into the habit of this.&lt;/p&gt;
+&lt;p&gt;I dream of circumstances where I do not feel it necessary to kill myself. One where my Parts can honourably end their own lives after a ripening maturity. Or, if you can forgive me for dreaming bolder: a life without death, whatever that means, if that’s even possible. One with all the time in the world in a world that’s simultaneously not devoid of purpose or meaning. My sanity water line, rising coolly to encompass the earth, slowly, at first, then suddenly.&lt;/p&gt;
+&lt;p&gt;…&lt;/p&gt;
+&lt;p&gt;How’s Rust for game dev, anyway?&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>The Quick-n&#39;-Dirty Guide to Not Produce Slop.</title>
+    <link href="https://sqrt.fyi/blog/nonslop/" rel="alternate" type="text/html" />
+    <id>https://sqrt.fyi/blog/nonslop/</id>
+    <published>2026-04-14T00:00:00Z</published>
+    <updated>2026-04-14T00:00:00Z</updated>
+    <summary>It&#39;s really easy and you have no excuse.</summary>
+    <content type="html">&lt;p&gt;It’s the Age of Slop. Social networks have become attention media economies, and the best way to game them is to produce the same mass produced garbage that appeals to the broadest of possible audiences while competing with the other mass produced garbage that appeals to the broadest of possible audiences only by going yet broader.&lt;/p&gt;
+&lt;p&gt;We will not play this game.&lt;/p&gt;
+&lt;p&gt;Contra homeopathy, diluting something does not make it stronger. It’s harmless and ineffective. In other words, &lt;em&gt;slop&lt;/em&gt;. Removing emojis, semicolons, and em-dashes isn’t going to cut it anymore. Every piece of your writing should have the potential to kill at least one Victorian-era child.&lt;/p&gt;
+&lt;p&gt;But I also don’t think you &lt;em&gt;need&lt;/em&gt; to be Dostovesky, or spend even more time reading or writing, to do something better than a large language model. I mean, it would be great if you did, but I am not elitist enough to gatekeep &lt;em&gt;writing&lt;/em&gt; of all things to only smart people. And I don’t want being dumb to be a good excuse to speaking like a LinkedIn influencer.&lt;/p&gt;
+&lt;p&gt;So. A low effort, Quick-n’-Dirty guide to not sound like a clanker, in April, 2026.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Don’t use correct English. It’s a social construct. Use “passer-by’s” instead of “passers-by”. Use “talismen” instead of “talismans” because that just sounds weird.&lt;/li&gt;
+&lt;li&gt;Use images. Empty your meme folder. Embed Youtube videos. Use quotes from your favourite music. Cite blogs, articles, papers, no one has read or will read, except you.&lt;/li&gt;
+&lt;li&gt;Headings don’t have to be topic organisers, they can be statements.&lt;/li&gt;
+&lt;li&gt;Use obscure references no one asked for. I mean, explain them, of course, but don’t worry about coming off pretentious.&lt;/li&gt;
+&lt;li&gt;Say shit. Say fuck. Make it clear that this is &lt;em&gt;not&lt;/em&gt; an advertiser friendly space.&lt;/li&gt;
+&lt;li&gt;Be dense. Non-tautological. Unless you have a clever turn of phrase you wish to use, in which case there is no copywriting saving you.&lt;/li&gt;
+&lt;li&gt;Tricolons. Humans do this sometimes; LLMs do it compulsively. It’s the written equivalent of a laugh track—structurally correct, rhythmically satisfying, and immediately suspicious.&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://sqrt.fyi/#fn1&quot; id=&quot;fnref1&quot;&gt;[1]&lt;/a&gt;&lt;/sup&gt; Don’t use it.&lt;/li&gt;
+&lt;li&gt;Have an intent beyond distribution.&lt;/li&gt;
+&lt;li&gt;There’s a reason long AI use gives people psychosis; all responses are structured towards &lt;em&gt;convincingness&lt;/em&gt;. They try to override an assumed prior without knowing your assumed priors: “it’s X, not Y”.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You can probably notice this pattern: these are very high risk writing practices. It’s not something you can do in your board examinations. But the same inoffensive cookie-cutter composition is exactly what artificial intelligence is trained on, exactly the sort of punchy prose the tasteless salivate on hearing, and exactly what AI companies want it to generate.&lt;/p&gt;
+&lt;p&gt;Maybe an year ago&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://sqrt.fyi/#fn2&quot; id=&quot;fnref2&quot;&gt;[2]&lt;/a&gt;&lt;/sup&gt; I would be ambivalent on these practices, but as I said, this is the Age of Slop. If I wanted Slop I would go to the freaking Slop Factory; what do I need you for? Not everyone likes almonds in their cookies but the pure-dough biscuits we are fed by AI generated voiceovers on AI generated scripts cannot &lt;em&gt;possibly&lt;/em&gt; be healthy for you. Writing is a far more flexible technology than academia or LinkedIn wants you to realise.&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://sqrt.fyi/#fn3&quot; id=&quot;fnref3&quot;&gt;[3]&lt;/a&gt;&lt;/sup&gt; No one who thinks in terms of “content” or “personal brand” could ever create anything nontrivial.&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;https://sqrt.fyi/#fn4&quot; id=&quot;fnref4&quot;&gt;[4]&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;hr class=&quot;footnotes-sep&quot; /&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol class=&quot;footnotes-list&quot;&gt;
+&lt;li id=&quot;fn1&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;&lt;a href=&quot;https://bsky.app/profile/axeghostgame.bsky.social/post/3mejngh3mmk2c&quot;&gt;src&lt;/a&gt; &lt;a href=&quot;https://sqrt.fyi/#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;see what I did there? (rule no. 1) &lt;a href=&quot;https://sqrt.fyi/#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn3&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;See &lt;a href=&quot;https://paulgraham.com/words.html&quot;&gt;this&lt;/a&gt; and &lt;a href=&quot;https://paulgraham.com/writes.html&quot;&gt;that&lt;/a&gt; &lt;a href=&quot;https://sqrt.fyi/#fnref3&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn4&quot; class=&quot;footnote-item&quot;&gt;&lt;p&gt;&lt;a href=&quot;https://x.com/DylanoA4/status/2085769336958955711&quot;&gt;src&lt;/a&gt; &lt;a href=&quot;https://sqrt.fyi/#fnref4&quot; class=&quot;footnote-backref&quot;&gt;↩︎&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Knives are scary.</title>
+    <link href="https://sqrt.fyi/blog/knives-are-scary/" rel="alternate" type="text/html" />
+    <id>https://sqrt.fyi/blog/knives-are-scary/</id>
+    <published>2025-01-18T00:00:00Z</published>
+    <updated>2025-01-18T00:00:00Z</updated>
+    <summary>They are scary.</summary>
+    <content type="html">&lt;p&gt;I have a confession to make; I have a minor phobia of knives.&lt;/p&gt;
+&lt;p&gt;It’s strange because I am not that afraid of guns in movies as much as I find swords or knives &lt;s&gt;or pencils&lt;/s&gt; or other sharp weapons, even though guns are much deadlier.&lt;/p&gt;
+&lt;p&gt;&lt;s&gt;It may be because I played too much Undertale and Omori, two of my favourite games, where the Knife does more damage than honest-to-god actual guns and both of their main characters can wield one sometime in the game but I digress&lt;/s&gt;&lt;/p&gt;
+&lt;p&gt;But you know what’s even deadlier than knives, swords, guns, rocket launchers, tanks or UAVs?&lt;/p&gt;
+&lt;p&gt;Thermonuclear fusion bombs.&lt;/p&gt;
+&lt;p&gt;In March 1981, Roger Fisher, a Harvard Law professor specialising in conflict management and the director of Harvard’s Program on Negotiation, wrote an article in the Bulletin of the Atomic Scientists that, in all seriousness, advocated a mechanism of how the president should operate the nuclear football.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;My suggestion was quite simple: Put that needed code number in a little capsule, and then implant that capsule right next to the heart of a volunteer. The volunteer would carry with him a big, heavy butcher knife as he accompanied the President. If ever the President wanted to fire nuclear weapons, the only way he could do so would be for him first, with his own hands, to kill one human being. The President says, “George, I’m sorry but tens of millions must die.” He has to look at someone and realize what death is — what an innocent death is. Blood on the White House carpet. It’s reality brought home.&lt;/p&gt;
+&lt;p&gt;When I suggested this to friends in the Pentagon they said, “My God, that’s terrible. Having to kill someone would distort the President’s judgment. He might never push the button.”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Sometimes, violence is inevitable. Maybe even necessary.&lt;/p&gt;
+&lt;p&gt;But what it should never be, is easy.&lt;/p&gt;
+&lt;p&gt;Knives don’t shirk away from responsibility. They are close range. Both the weapon and its wielder must get the enemy’s blood on them if they are to be used properly. You see your victim feel the pain and loss and watch them die.&lt;/p&gt;
+&lt;p&gt;Guns don’t have this aura, as they aren’t fully transparent about this process. No movie or book, no number of board meetings or conferences about the necessity of peace can really help fully describe what it feels like to see someone die, and even that image wouldn’t render the full force of the true realisation of ending another consciousness, a cacophony of electric signals representing the cognizance of memories, wants, hopes, and dreams, coming to an indissoluble shutdown like a whirring generator losing its power, both body and viscera falling down like a ragdoll, a crimson pool leaking from under the ear, kissing the welt of your shoe.&lt;/p&gt;
+&lt;p&gt;Guns are long range. They distance the killer from their victims. They make invisible the moral profundity and appear as instruments. Mere solutions to a tactical problem, not a moral one; allowing killing with cool, clinical efficiency and disinterest. A game.&lt;/p&gt;
+&lt;p&gt;Knives necessitate the visibility of this moral transaction that guns conceal. The gun is asserted to be the quotidian tool for both the Good and the Bad. The knife is the weapon of psychopaths or the desperate. Its usage means the wielder has consciously agreed to the moral transaction and bartered a piece of their soul to use it. They at least partially comprehend the reality about the infinite irreality they are about to plunge their victim into.&lt;/p&gt;
+&lt;p&gt;Knives are scary.&lt;/p&gt;
+</content>
+  </entry>
+</feed>

@@ -19,11 +19,11 @@ export async function GET() {
       route = '/';
     }
     
-    urls.push(route);
+    urls.push({ loc: route });
   }
   
   // 2. Process Eleventy routes
-  urls.push('/blog/');
+  urls.push({ loc: '/blog/' });
   
   for (const [path, rawContent] of Object.entries(eleventyPosts)) {
     // Basic frontmatter parsing
@@ -33,15 +33,17 @@ export async function GET() {
     
     if (isDraft || isAfterdark) continue;
     
+    const dateLine = frontmatter.split('\n').find((line) => line.trim().startsWith('date:')) || '';
+    const lastmod = dateLine.split('date:')[1]?.trim() || '';
+    
     // Extract filename for slug
     const slug = path.split('/').pop().replace('.md', '');
-    urls.push(`/blog/${slug}/`);
+    urls.push({ loc: `/blog/${slug}/`, lastmod });
   }
   
-  // Optional: You could extract the date from frontmatter to include <lastmod>
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((url) => `  <url>\n    <loc>${SITE_URL}${url}</loc>\n  </url>`).join('\n')}
+${urls.map(({ loc, lastmod }) => `  <url>\n    <loc>${SITE_URL}${loc}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''}\n  </url>`).join('\n')}
 </urlset>`;
 
   return new Response(sitemap, {

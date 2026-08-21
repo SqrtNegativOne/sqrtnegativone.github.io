@@ -1,0 +1,33 @@
+---
+permalink: /feed.xml
+eleventyExcludeFromCollections: true
+title: The Blog of Sqrt-1
+subtitle: Nothing particularly special about it.
+copyright: Ark Malhotra
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <title>{{ title }}</title>
+  <subtitle>{{ subtitle }}</subtitle>
+  <link href="https://sqrt.fyi/feed.xml" rel="self" type="application/atom+xml" />
+  <link href="https://sqrt.fyi/blog/" rel="alternate" type="text/html" />
+  <id>https://sqrt.fyi/blog/</id>
+  <updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+  <rights>{{ copyright }}</rights>
+  <generator uri="https://www.11ty.dev/">Eleventy</generator>
+  <author>
+    <name>Ark Malhotra</name>
+    <uri>https://sqrt.fyi/</uri>
+  </author>
+  {%- for post in collections.posts.slice(0, 20) %}
+  <entry>
+    <title>{{ post.data.title | escape }}</title>
+    <link href="https://sqrt.fyi{{ post.url }}" rel="alternate" type="text/html" />
+    <id>https://sqrt.fyi{{ post.url }}</id>
+    <published>{{ post.date | dateToRfc3339 }}</published>
+    <updated>{{ post.date | dateToRfc3339 }}</updated>
+    <summary>{{ post.data.description | escape }}</summary>
+    <content type="html">{{ post.templateContent | htmlToAbsoluteUrls("https://sqrt.fyi") | escape }}</content>
+  </entry>
+  {%- endfor %}
+</feed>

@@ -1,19 +1,14 @@
 <script>
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import gsap from "gsap";
   import MouseFollower from "mouse-follower";
   import "mouse-follower/dist/mouse-follower.min.css";
 
   let cursor;
 
-  onMount(() => {
-    // Disable on touch devices
-    if (('ontouchstart' in window) || navigator.maxTouchPoints > 0) {
-      return;
-    }
-
+  function createCursor() {
+    if (cursor) return;
     MouseFollower.registerGSAP(gsap);
-    
     cursor = new MouseFollower({
       className: 'mf-cursor -exclusion', // Add -exclusion by default
       stateDetection: {
@@ -22,12 +17,35 @@
         '-hidden': '.use-native-cursor, .use-native-cursor *'
       }
     });
-  });
+  }
 
-  onDestroy(() => {
-    if (cursor) {
-      cursor.destroy();
+  function destroyCursor() {
+    cursor?.destroy();
+    cursor = null;
+  }
+
+  onMount(() => {
+    // Disable on touch devices
+    if (('ontouchstart' in window) || navigator.maxTouchPoints > 0) {
+      return;
     }
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleMotionChange = () => {
+      if (motionQuery.matches) {
+        destroyCursor();
+      } else {
+        createCursor();
+      }
+    };
+    motionQuery.addEventListener('change', handleMotionChange);
+
+    if (!motionQuery.matches) createCursor();
+
+    return () => {
+      motionQuery.removeEventListener('change', handleMotionChange);
+      destroyCursor();
+    };
   });
 </script>
 

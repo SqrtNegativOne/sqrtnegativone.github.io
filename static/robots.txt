@@ -1,5 +1,51 @@
 User-agent: *
 Allow: /
-Disallow: /blog/afterdark/
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: GPTBot
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: CCBot
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
+
+User-agent: Applebot
+Allow: /
+Disallow: /blog-afterdark/
+Disallow: /media-library/
 
 Sitemap: https://sqrt.fyi/sitemap.xml

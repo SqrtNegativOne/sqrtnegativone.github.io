@@ -7,6 +7,29 @@
   <meta name="description" content="{{ description | default("The Blog of Sqrt-1. Nothing particularly special about it.") }}" />
   <meta name="author" content="Ark Malhotra" />
   <link rel="canonical" href="https://sqrt.fyi{{ page.url }}" />
+  <link rel="alternate" type="application/atom+xml" title="Ark Malhotra's blog" href="/feed.xml" />
+  {% set isPost = bodyClass == "no-border" %}
+  {% if isPost %}
+  <script type="application/ld+json">{{ {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "datePublished": date | isoDate,
+    "url": "https://sqrt.fyi" + page.url,
+    "mainEntityOfPage": "https://sqrt.fyi" + page.url,
+    "author": { "@type": "Person", "name": "Ark Malhotra", "url": "https://sqrt.fyi/" }
+  } | json | safe }}</script>
+  {% else %}
+  <script type="application/ld+json">{{ {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "The Blog of Sqrt-1",
+    "description": "The Blog of Sqrt-1. Nothing particularly special about it.",
+    "url": "https://sqrt.fyi/blog/",
+    "author": { "@type": "Person", "name": "Ark Malhotra", "url": "https://sqrt.fyi/" }
+  } | json | safe }}</script>
+  {% endif %}
   <!-- Open Graph -->
   <meta property="og:type" content="{% if bodyClass == 'no-border' %}article{% else %}website{% endif %}" />
   <meta property="og:url" content="https://sqrt.fyi{{ page.url }}" />
@@ -141,6 +164,22 @@
       letter-spacing: 0.08em;
       color: var(--text-secondary);
       margin-top: 0.15em;
+    }
+
+    .blog-feed-link {
+      display: block;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-top: 1rem;
+      transition: color 0.2s;
+    }
+
+    .blog-feed-link:hover {
+      color: var(--text);
     }
 
     /* Vertical divider */
@@ -424,7 +463,6 @@
     {% endfor %}
   </style>
 </head>
-{% set isPost = bodyClass == "no-border" %}
 <body class="{{ bodyClass }}">
   <div class="blog-layout{% if isPost %} is-post{% endif %}">
     {% if not isPost %}
@@ -434,6 +472,7 @@
         <span>BLOG</span>
         {% if isAfterdark %}<span class="afterdark-sub">afterdark</span>{% endif %}
       </h1>
+      <a class="blog-feed-link" href="/feed.xml" type="application/atom+xml">atom feed</a>
     </header>
 
     <div class="blog-divider"></div>

@@ -43,16 +43,20 @@
   let contentFill = $derived(currentPath === "/projects" || currentPath === "/skills");
 </script>
 
+<a class="skip-link" href="#main-content">Skip to content</a>
+
 {#if !isKnown}
-  <div class="with-frame">
+  <div class="with-frame" id="main-content" tabindex="-1">
     <AsciiBackground />
     {@render children()}
   </div>
 {:else if currentPath === "/media-library"}
-  {@render children()}
+  <div id="main-content" tabindex="-1">
+    {@render children()}
+  </div>
   <MenuOverlay view="media-library" />
 {:else if currentPath === "/"}
-  <div class="page-content with-frame">
+  <div class="page-content with-frame" id="main-content" tabindex="-1">
     <AsciiBackground />
     {@render children()}
     <div class="home-name-overlay">
@@ -62,7 +66,9 @@
   </div>
   <MenuOverlay view="home" />
 {:else if currentPath === "/questions"}
-  {@render children()}
+  <div id="main-content" tabindex="-1">
+    {@render children()}
+  </div>
 {:else}
   <div class="page page-content with-frame" class:no-portrait={!showPortrait}>
     <AsciiBackground />
@@ -87,7 +93,7 @@
     {/if}
 
     <!-- Content — bottom-right, swaps based on route -->
-    <main class="content {contentFill ? 'content--fill' : ''}">
+    <main class="content {contentFill ? 'content--fill' : ''}" id="main-content" tabindex="-1">
       {@render children()}
     </main>
   </div>
@@ -97,3 +103,26 @@
 {/if}
 
 <Cursor />
+
+<style>
+  .skip-link {
+    position: fixed;
+    top: -100%;
+    left: 1rem;
+    z-index: 100000;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--text);
+    border-radius: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: top 0.15s ease-out;
+  }
+  .skip-link:focus-visible {
+    top: 1rem;
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+</style>
