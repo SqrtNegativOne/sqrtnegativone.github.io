@@ -7,7 +7,10 @@
     "title": "Deltarune",
     "description": "",
     "poster_image": "game_deltarune",
-    "tagline": "There's something more important than reaching the end."
+    "tagline": "There's something more important than reaching the end.",
+    "tags": [
+      "goat"
+    ]
   },
   {
     "id": "undertale",
@@ -18,7 +21,10 @@
     "description": "",
     "poster_image": "game_undertale",
     "notes": "“Have you ever played a game so great that you were sad and felt empty after beating it since there was nothing out there like it?”",
-    "tagline": "The friendly RPG where no one has to die."
+    "tagline": "The friendly RPG where no one has to die.",
+    "tags": [
+      "goat"
+    ]
   },
   {
     "id": "portal_2",
@@ -94,7 +100,10 @@
     "description": "",
     "poster_image": "movie_fight_club",
     "notes": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
-    "tagline": "Self improvement is masturbation. Now self destruction..."
+    "tagline": "Self improvement is masturbation. Now self destruction...",
+    "tags": [
+      "goat"
+    ]
   },
   {
     "id": "house_of_leaves",
@@ -104,7 +113,10 @@
     "title": "House of Leaves",
     "description": "",
     "poster_image": "book_house_of_leaves",
-    "tagline": "This is not for you."
+    "tagline": "This is not for you.",
+    "tags": [
+      "goat"
+    ]
   },
   {
     "id": "the_martian",
@@ -230,7 +242,10 @@
     "description": "",
     "poster_image": "game_in_stars_and_time",
     "notes": "Live with the ever-present burden of being trapped in a time loop only you can know about in this turn-based RPG. Create a better future for you and your friends. Find hope where there is none left. Pray to the stars and free yourself from time.\n\nPretty sure the author just.... broke the encryption on my Veracrypt vault storing my old journal pages to write the main character.",
-    "tagline": "Pray to the stars and free yourself from time."
+    "tagline": "Pray to the stars and free yourself from time.",
+    "tags": [
+      "goat"
+    ]
   },
   {
     "id": "inscryption",
@@ -308,7 +323,10 @@
     "description": "",
     "notes": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
     "private_notes": "",
-    "poster_image": "game_disco_elysium_-_the_final_cut"
+    "poster_image": "game_disco_elysium_-_the_final_cut",
+    "tags": [
+      "goat"
+    ]
   },
   {
     "id": "the_hunger_games",
@@ -682,7 +700,10 @@
     "tagline": "Inception",
     "description": "Inception",
     "notes": "Inception",
-    "poster_image": "movie_Inception"
+    "poster_image": "movie_Inception",
+    "tags": [
+      "goat"
+    ]
   },
   {
     "id": "tenet",
@@ -803,7 +824,8 @@
     "tagline": "",
     "description": "",
     "notes": "I guess I got too hyped about it. It perfects everything about Undertale, except the parts that made Undertale good and which it excelled at. Can't exactly expect anyone to do that for free.",
-    "poster_image": "game_undertale_yellow"
+    "poster_image": "game_undertale_yellow",
+    "tags": []
   },
   {
     "id": "dexter_show_1_4",
