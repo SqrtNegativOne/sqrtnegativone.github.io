@@ -58,10 +58,11 @@
 .name {
   font-family: "Instrument Serif", serif;
   font-weight: 300;
-  font-size: clamp(5rem, 11vw, 11rem);
+  font-size: clamp(5rem, 11vw, 10rem);
   line-height: 0.9;
   letter-spacing: -0.04em;
   color: var(--name-color);
+  mix-blend-mode: difference;
   white-space: nowrap;
   margin: 0;
 }

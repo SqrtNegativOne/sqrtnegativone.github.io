@@ -214,7 +214,7 @@ ${content}
         <div class="space-y-2 md:col-span-1">
           <label for="post-font" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Main Text Font</label>
           <select id="post-font" name="font" bind:value={currentItem.font} class="input-field">
-            {#each fonts || [] as font}
+            {#each fonts || [] as font (font.name)}
               <option value={font.name}>{font.name}</option>
             {/each}
           </select>

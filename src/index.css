@@ -69,8 +69,8 @@
   --glass-bg: oklch(1 0 0 / 0.08);
   --glass-border: oklch(1 0 0 / 0.15);
   --glass-shadow: oklch(0 0 0 / 0.3);
-  --quote-color: oklch(0.5693 0 0);
-  --name-color: oklch(0.931 0 0);
+  --quote-color: #fff;
+  --name-color: #fff;
 }
 
 html,

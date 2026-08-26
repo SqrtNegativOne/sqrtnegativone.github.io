@@ -39,17 +39,25 @@
     background: linear-gradient(180deg, oklch(0.2108 0.0078 285.71) 0%, oklch(0.179 0.0061 285.77) 100%);
     border-radius: 6px;
     overflow: hidden;
-    transition: transform 180ms ease, box-shadow 180ms ease;
+    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 1px 0 oklch(1 0 0 / 0.03) inset;
+    cursor: pointer;
+    flex-shrink: 0;
+    width: 200px; /* Reduced size for carousel */
+    display: flex;
+    flex-direction: column;
   }
 
   .ml-hero-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px oklch(0 0 0 / 0.5);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 16px 40px oklch(0 0 0 / 0.6), 0 0 0 1px oklch(1 1 1 / 0.1);
   }
 
   .ml-hero-meta {
     padding: 16px 18px 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .ml-hero-title-row {
@@ -61,7 +69,7 @@
 
   .ml-hero-title {
     margin: 0;
-    font-size: 18px;
+    font-size: 16px; /* slightly smaller title */
     font-weight: 600;
     letter-spacing: -0.01em;
     line-height: 1.25;
@@ -75,7 +83,8 @@
   }
 
   .ml-hero-line {
-    margin: 10px 0 0;
+    margin: auto 0 0; /* push to bottom */
+    padding-top: 10px;
     color: oklch(0.5416 0.0154 285.87);
     font-size: 12px;
     letter-spacing: 0.06em;
@@ -93,11 +102,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 300ms ease;
-  }
-
-  .ml-poster:hover img {
-    transform: scale(1.05);
   }
 
   .ml-poster--lg {

@@ -15,9 +15,10 @@
 
 <style>
 .quote {
-  font-size: 1.15rem; /* bumped up a bit */
+  font-size: 1rem;
   font-style: italic;
   color: var(--quote-color);
+  mix-blend-mode: difference;
   user-select: none;
   max-width: 100%;
   z-index: 11;

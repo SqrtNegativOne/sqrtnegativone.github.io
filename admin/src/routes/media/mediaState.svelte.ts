@@ -308,7 +308,7 @@ export class MediaState {
       }
     }
 
-    let items = (await readData<MediaItem>('../../static/media/media.json')).unwrapOr([] as any[]);
+    const items = (await readData<MediaItem>('../../static/media/media.json')).unwrapOr([] as any[]);
     const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image };
     
     if (isNew) {

@@ -5,5 +5,5 @@ export const safeJsonParse = Result.fromThrowable(JSON.parse, (e) => e instanceo
 
 export const safeUrlParse = Result.fromThrowable((url: string) => new URL(url), () => new Error("The URL provided is not valid."));
 
-export const safeInvoke = <T>(cmd: string, args?: any) => 
+export const safeInvoke = <T>(cmd: string, args?: Record<string, unknown>) => 
   ResultAsync.fromPromise(invoke<T>(cmd, args), (e) => new Error(`Tauri invoke error: ${String(e)}`));

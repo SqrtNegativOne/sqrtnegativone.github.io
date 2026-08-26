@@ -73,7 +73,7 @@ export const load: PageLoad = async () => {
       const filePath = `${blogDir}/${filename}`;
       const contentRes = await ResultAsync.fromPromise(invoke<string>('read_file', { path: filePath }), e => e);
       if (contentRes.isOk()) {
-        let parsed = parseMarkdown(contentRes.value, filename);
+        const parsed = parseMarkdown(contentRes.value, filename);
         if (!parsed.tags || parsed.tags.length === 0) parsed.tags = ['post'];
         posts.push(parsed);
       } else {

@@ -21,10 +21,10 @@ interface PrivateNoteItem {
 
 export const load: PageLoad = async () => {
   const mediaRes = await readData<MediaItem>('../../static/media/media.json');
-  const media = mediaRes.unwrapOr([] as any[]);
+  const media = mediaRes.unwrapOr([] as MediaItem[]);
   
   const privateNotesRes = await readData<PrivateNoteItem>('../../static/media/media-private.json');
-  let privateNotes = privateNotesRes.unwrapOr([] as any[]);
+  let privateNotes = privateNotesRes.unwrapOr([] as PrivateNoteItem[]);
   
   if (!Array.isArray(privateNotes)) privateNotes = [];
 
