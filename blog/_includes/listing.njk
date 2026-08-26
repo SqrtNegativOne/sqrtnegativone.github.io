@@ -1,0 +1,33 @@
+---
+layout: base.njk
+---
+<div class="blog-layout">
+  <header class="blog-header">
+    <h1 class="blog-title">
+      <em>the</em>
+      <span>BLOG</span>
+      {% if isAfterdark %}<span class="afterdark-sub">afterdark</span>{% endif %}
+    </h1>
+    <a class="blog-feed-link" href="/feed.xml" type="application/atom+xml">atom feed</a>
+  </header>
+
+  <div class="blog-divider"></div>
+
+  <div class="blog-content">
+    <a href="/" class="blog-home-link">&larr; Back to site</a>
+    {{ content | safe }}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.post-list-item a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var href = this.href;
+      document.body.classList.add('border-out');
+      setTimeout(function() {
+        window.location.href = href;
+      }, 400);
+    });
+  });
+</script>
