@@ -12,9 +12,21 @@ isAfterdark: true
   <li class="post-list-item">
     <a href="{{ post.url }}">
       <h3 class="post-list-title">{{ post.data.title }}</h3>
+      {% if post.data.subtitle %}
+      <p class="post-list-subtitle">{{ post.data.subtitle }}</p>
+      {% endif %}
       <time class="post-list-date">{{ post.date | readableDate }}</time>
       {% if post.data.description %}
       <p class="post-list-desc">{{ post.data.description }}</p>
+      {% endif %}
+      {% if post.data.tags %}
+      <div class="post-list-tags">
+        {% for tag in post.data.tags %}
+          {% if tag != "post" and tag != "afterdark" %}
+          <span class="post-tag">#{{ tag }}</span>
+          {% endif %}
+        {% endfor %}
+      </div>
       {% endif %}
     </a>
   </li>

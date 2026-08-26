@@ -14,7 +14,19 @@ bodyClass: no-border
     <article>
       <header class="post-header">
         <h2 class="post-title">{{ title }}</h2>
+        {% if description %}
+        <p class="post-subtitle">{{ description }}</p>
+        {% endif %}
         <time class="post-date">{{ date | readableDate }}</time>
+        {% if tags %}
+        <div class="post-tags">
+          {% for tag in tags %}
+            {% if tag != "post" and tag != "afterdark" %}
+            <span class="post-tag">#{{ tag }}</span>
+            {% endif %}
+          {% endfor %}
+        </div>
+        {% endif %}
       </header>
       <div class="post-body">
         {{ content | safe }}

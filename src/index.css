@@ -1,14 +1,5 @@
 @import "tailwindcss";
 
-/* ── Reduced motion: restore native cursor (custom cursor is disabled in JS) ── */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    cursor: auto !important;
-  }
-}
-
 /* ── Reset ─────────────────────────────────────── */
 /* Wrapped in @layer base so Tailwind utility classes (p-*, m-*, etc.)
    can properly override it in the cascade. */
@@ -30,6 +21,15 @@
   .use-native-cursor,
   .use-native-cursor * {
     cursor: auto !important;
+  }
+
+  /* ── Reduced motion: restore native cursor (custom cursor is disabled in JS) ── */
+  @media (prefers-reduced-motion: reduce) {
+    *:not(.use-native-cursor):not(.use-native-cursor *),
+    *::before,
+    *::after {
+      cursor: auto !important;
+    }
   }
 
   /* Custom scrollbar for Firefox */

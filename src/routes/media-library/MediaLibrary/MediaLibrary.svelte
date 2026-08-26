@@ -17,7 +17,18 @@
     const filtered = applyFilters(mediaData, filters, searchQuery);
     const sorted = applySorts(filtered, sorts);
     
-    const buckets: { consuming: Record<string, unknown>[], library: Record<string, unknown>[] } = { consuming: [], library: [] };
+    const byRatingDesc = [...filtered].sort((a, b) => ((b.rating as number) || 0) - ((a.rating as number) || 0));
+    
+    const buckets: { 
+      consuming: Record<string, unknown>[], 
+      topConsumed: Record<string, unknown>[],
+      topHyped: Record<string, unknown>[],
+      library: Record<string, unknown>[] 
+    } = { consuming: [], topConsumed: [], topHyped: [], library: [] };
+
+    buckets.topConsumed = byRatingDesc.filter(i => ['finished', 'rewishlist'].includes(i.status as string)).slice(0, 10);
+    buckets.topHyped = byRatingDesc.filter(i => ['wishlist', 'next up', 'waiting for'].includes(i.status as string)).slice(0, 10);
+
     for (const item of sorted) {
       if (item.status === "consuming") {
         buckets.consuming.push(item);
@@ -90,6 +101,28 @@
       <h2 class="ml-section-title">Currently</h2>
       <div class="ml-hero-row">
         {#each filteredBuckets.consuming as item (item.type + '-' + item.id)}
+          <HeroCard {item} {openDetails} {openFullPoster} />
+        {/each}
+      </div>
+    </section>
+  {/if}
+
+  {#if filteredBuckets.topConsumed.length > 0}
+    <section class="ml-section ml-section--hero">
+      <h2 class="ml-section-title">Greatest Of All Time</h2>
+      <div class="ml-hero-row">
+        {#each filteredBuckets.topConsumed as item (item.type + '-' + item.id)}
+          <HeroCard {item} {openDetails} {openFullPoster} />
+        {/each}
+      </div>
+    </section>
+  {/if}
+
+  {#if filteredBuckets.topHyped.length > 0}
+    <section class="ml-section ml-section--hero">
+      <h2 class="ml-section-title">Looking forward for</h2>
+      <div class="ml-hero-row">
+        {#each filteredBuckets.topHyped as item (item.type + '-' + item.id)}
           <HeroCard {item} {openDetails} {openFullPoster} />
         {/each}
       </div>

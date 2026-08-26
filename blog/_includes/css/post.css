@@ -7,7 +7,11 @@
     font-size: 3rem;
     line-height: 1.2;
 }
+.post-subtitle { font-size: 1.25rem; color: var(--text-secondary); margin-top: 0.5rem; }
 .post-date { font-size: 0.75rem; color: var(--text-secondary); display: block; margin-top: 0.5rem; }
+.post-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem; }
+.post-tag { font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; color: var(--text-secondary); background: oklch(0 0 0 / 0.05); padding: 0.1rem 0.4rem; border-radius: 4px; }
+[data-theme="dark"] .post-tag { background: oklch(1 0 0 / 0.08); }
 .post-body { display: flex; flex-direction: column; gap: 1rem; max-width: 600px; }
 .post-body p, .post-body li { 
     font-size: 1.5rem;

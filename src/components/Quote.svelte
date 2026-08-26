@@ -15,11 +15,11 @@
 
 <style>
 .quote {
-  font-size: 1rem;
+  font-size: 1.15rem; /* bumped up a bit */
   font-style: italic;
   color: var(--quote-color);
   user-select: none;
-  max-width: 70%;
+  max-width: 100%;
   z-index: 11;
 }
 .quote-cursor {
@@ -34,8 +34,7 @@
 @media (max-width: 1024px) and (min-width: 641px) {
   .quote {
     grid-area: quote;
-    max-width: 100%;
-    font-size: 0.9rem;
+    font-size: 1.05rem; /* bumped up */
     margin: 0;
     align-self: start;
   }
@@ -43,8 +42,7 @@
 @media (max-width: 640px) {
   .quote {
     grid-area: quote;
-    max-width: 100%;
-    font-size: 0.85rem;
+    font-size: 1rem; /* bumped up */
   }
 }
 </style>
