@@ -1,6 +1,7 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
+  import { assetState } from '$lib/assetState.svelte';
   import type { SkillItem } from './+page';
 
   interface SkillFormItem extends SkillItem {
@@ -95,16 +96,17 @@
       <div class="card p-4 flex flex-col group relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div class="flex items-center space-x-4 mb-4 relative">
-          <div class="w-12 h-12 bg-[oklch(0.2077_0.0398_265.75)] rounded-lg border border-[oklch(0.3717_0.0392_257.29)] flex items-center justify-center">
+          <div class="w-12 h-12 bg-[oklch(0.2077_0.0398_265.75)] rounded-lg border border-[oklch(0.3717_0.0392_257.29)] flex items-center justify-center overflow-hidden">
             {#if item.icon}
               <i class="{item.icon} text-2xl text-white"></i>
+            {:else if item.logo}
+              <img src={assetState.resolve(item.logo)} alt={item.name} class="w-8 h-8 object-contain" />
             {:else}
               <span class="text-xl font-bold text-[oklch(0.7107_0.0351_256.79)]">{item.name.charAt(0)}</span>
             {/if}
           </div>
           <div>
             <h3 class="font-medium text-white">{item.name}</h3>
-            <p class="text-xs text-[oklch(0.7107_0.0351_256.79)] truncate w-32">{item.logo || 'No logo'}</p>
           </div>
         </div>
         <div class="mt-auto flex justify-end space-x-2 border-t border-[oklch(0.3717_0.0392_257.29)] pt-3 relative">

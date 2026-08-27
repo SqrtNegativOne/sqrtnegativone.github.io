@@ -15,8 +15,9 @@ class AssetState {
     resolve(url: string) {
         if (!url || !this.repoRoot) return url;
         if (url.startsWith('http') || url.startsWith('data:')) return url;
-        if (url.startsWith('/media/') || url.startsWith('/projects/')) {
-            return convertFileSrc(`${this.repoRoot}/static${url}`);
+        if (url.startsWith('/')) {
+            const root = this.repoRoot.replace(/\\/g, '/');
+            return convertFileSrc(`${root}/static${url}`);
         }
         return url;
     }

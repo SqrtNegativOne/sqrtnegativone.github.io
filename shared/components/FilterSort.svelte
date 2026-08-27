@@ -41,7 +41,7 @@
       onclick={() => { showFilterMenu = !showFilterMenu; showSortMenu = false; }}
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
-      Filter {filters.length > 0 ? `(${filters.length})` : ''}
+      {filters.length > 0 ? filters.length : ''}
     </button>
 
     {#if showFilterMenu}
@@ -102,7 +102,7 @@
       onclick={() => { showSortMenu = !showSortMenu; showFilterMenu = false; }}
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/></svg>
-      Sort {sorts.length > 0 ? `(${sorts.length})` : ''}
+      {sorts.length > 0 ? sorts.length : ''}
     </button>
 
     {#if showSortMenu}

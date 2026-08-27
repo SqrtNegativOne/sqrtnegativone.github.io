@@ -51,13 +51,14 @@
   {
     "id": "hollow_knight",
     "type": "game",
-    "rating": 4,
+    "rating": 4.5,
     "status": "dropped",
     "title": "Hollow Knight",
+    "tagline": "A world you gave to bug and beast as they had never dreamed of.",
     "description": "",
-    "poster_image": "game_hollow_knight",
     "notes": "Didn't like how the save points were so far away from most bosses. Made the game less fun because you had to go through a boring walk of humiliation to defeat the boss again. As far as I have played, the lore was rather sparse, contrary to what I believed about the game.",
-    "tagline": "A world you gave to bug and beast as they had never dreamed of."
+    "private_notes": "",
+    "poster_image": "game_hollow_knight"
   },
   {
     "id": "project_hail_mary",
@@ -1319,5 +1320,29 @@
     "notes": "",
     "private_notes": "",
     "poster_image": "book_thinking_phy_book"
+  },
+  {
+    "id": "surely_you_re_joking_mr_feynman",
+    "type": "book",
+    "rating": 6,
+    "status": "finished",
+    "title": "Surely You're Joking Mr Feynman!",
+    "tagline": "",
+    "description": "Richard P Feynman\nIn this warm, insightful portrait of the Winner of the Nobel Prize for Physics in 1965, we see the wisdom, humour and curiosity of Richard Feynman through a series of conversations with his friend Ralph Leighton. Winner of the Nobel Prize for Physics in 1965, Richard Feynman was one of the world's greatest theoretical physicists, but he was also a man who fell, often jumped, into adventure. An artist, safecracker, practical joker and storyteller, Feynman's life was a series of combustible combinations made possible by his unique mixture of high intelligence, unquenchable curiosity and eternal scepticism. Over a period of years, Feynman's conversations with his friend Ralph Leighton were first taped and then set down as they appear here, little changed from their spoken form, giving a wise, funny, passionate and totally honest self-portrait of one of the greatest men of our age.",
+    "notes": "Really loved reading this during JEE days.",
+    "private_notes": "",
+    "poster_image": "book_surely_you_re_joking_mr_feynman"
+  },
+  {
+    "id": "moonwalking_with_einstein",
+    "type": "book",
+    "rating": 5.5,
+    "status": "finished",
+    "title": "Moonwalking with Einstein",
+    "tagline": "Journalism at its best",
+    "description": "Joshua Foer\n'Be prepared to be amazed' Guardian Can anyone get a perfect memory? Joshua Foer used to be like most of us, forgetting phone numbers and mislaying keys. Then he learnt the art of memory training, and a year later found himself in the finals of the US Memory Championship. He also discovered a truth we often forget: that, even in an age of technology, memory is the key to everything we are. In Moonwalking with Einstein he takes us on an astonishing journey through the mind, from ancient 'memory palace' techniques to neuroscience, from the man who can recall nine thousand books to another who constantly forgets who he is. In doing so, Foer shows how we can all improve our memories. 'Captivating ... engaging ... smart and funny' The New York Times 'Delightful ... uplifting ... it shows that our minds can do extraordinary things' Wall Street Journal 'Great fun ... a book worth remembering' Independent 'A lovely exploration of the ways that we preserve our lives and our world in the golden amber of human memory' New Scientist",
+    "notes": "Fun read",
+    "private_notes": "",
+    "poster_image": "book_moonwalking_with_einstein"
   }
 ]
