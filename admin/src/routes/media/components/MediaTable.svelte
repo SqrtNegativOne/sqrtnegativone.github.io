@@ -59,7 +59,7 @@
             {/if}
           </td>
           <td class="p-4">
-            <RatingChart rating={item.rating} expected={['wishlist', 'rewishlist', 'next up', 'waiting for'].includes(item.status)} />
+            <RatingChart rating={item.rating} expected={['wishlist', 'next up', 'waiting for'].includes(item.status)} />
           </td>
         </tr>
       {/each}

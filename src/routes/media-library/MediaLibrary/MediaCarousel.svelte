@@ -1,11 +1,10 @@
 <script lang="ts">
   import HeroCard from "./HeroCard.svelte";
 
-  let { title, items, openDetails, openFullPoster } = $props<{
+  let { title, items, openDetails } = $props<{
     title: string;
     items: Record<string, unknown>[];
     openDetails: (item: Record<string, unknown>) => void;
-    openFullPoster?: (url: string) => void;
   }>();
 </script>
 
@@ -14,7 +13,7 @@
     <h2 class="ml-section-title">{title}</h2>
     <div class="ml-hero-row">
       {#each items as item (item.type + '-' + item.id)}
-        <HeroCard {item} {openDetails} {openFullPoster} />
+        <HeroCard {item} {openDetails} />
       {/each}
     </div>
   </section>

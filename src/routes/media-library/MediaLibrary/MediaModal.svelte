@@ -42,7 +42,7 @@
             <TypeBadge type={item.type} variant="icon" sizeClass="w-[18px] h-[18px]" />
             <StatusBadge status={item.status} />
           </div>
-          <RatingChart rating={item.rating as number} expected={['wishlist', 'rewishlist', 'next up', 'waiting for'].includes(item.status as string)} />
+          <RatingChart rating={item.rating as number} expected={['wishlist', 'next up', 'waiting for'].includes(item.status as string)} />
         </div>
         {#if item.description}
           <div class="ml-modal-description">
@@ -51,7 +51,7 @@
         {/if}
         {#if item.notes}
           <div class="ml-modal-desc">
-            <strong class="text-white">Notes</strong><br/>{item.notes}
+            {item.notes}
           </div>
         {/if}
       </div>
@@ -77,7 +77,7 @@
     border: 1px solid oklch(0.2419 0.0114 285.52);
     border-radius: 16px;
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
@@ -105,7 +105,8 @@
 
   .ml-modal-grid {
     display: grid;
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: minmax(220px, 38%) 1fr;
+    align-items: center;
     gap: 32px;
   }
 
@@ -181,6 +182,7 @@
     line-height: 1.5;
     white-space: pre-wrap;
     margin-bottom: 16px;
+    font-style: italic;
   }
 
   .ml-modal-desc {

@@ -3,7 +3,7 @@
   import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   import { getPosterUrl } from "$lib/utils";
   
-  let { item, openDetails, openFullPoster } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; openFullPoster?: (url: string) => void }>();
+  let { item, openDetails } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; }>();
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -11,7 +11,7 @@
 <article class="ml-hero-card" onclick={() => openDetails(item)}>
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="ml-poster ml-poster--lg" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(getPosterUrl(item.poster_image as string)); } }}>
+  <div class="ml-poster ml-poster--lg">
     {#if item.poster_image}
       <img src={getPosterUrl(item.poster_image as string)} alt="" loading="lazy" />
     {:else}

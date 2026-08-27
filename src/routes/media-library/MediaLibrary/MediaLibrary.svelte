@@ -14,28 +14,17 @@
   let filters = $state([]);
   let sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'rating', direction: 'desc' }]);
 
-  let filteredBuckets = $derived((() => {
+  let carouselsData = $derived((() => {
+    const byRatingDesc = [...mediaData].sort((a, b) => ((b.rating as number) || 0) - ((a.rating as number) || 0));
+    const goat = byRatingDesc.filter(i => Array.isArray((i as any).tags) && (i as any).tags.includes('goat'));
+    const consuming = byRatingDesc.filter(i => i.status === "consuming");
+    return { goat, consuming };
+  })());
+
+  let libraryData = $derived((() => {
     const filtered = applyFilters(mediaData, filters, searchQuery);
     const sorted = applySorts(filtered, sorts);
-    
-    const byRatingDesc = [...filtered].sort((a, b) => ((b.rating as number) || 0) - ((a.rating as number) || 0));
-    
-    const buckets: { 
-      consuming: Record<string, unknown>[], 
-      goat: Record<string, unknown>[],
-      library: Record<string, unknown>[] 
-    } = { consuming: [], goat: [], library: [] };
-
-    buckets.goat = byRatingDesc.filter(i => Array.isArray((i as any).tags) && (i as any).tags.includes('goat'));
-
-    for (const item of sorted) {
-      if (item.status === "consuming") {
-        buckets.consuming.push(item);
-      } else {
-        buckets.library.push(item);
-      }
-    }
-    return buckets;
+    return sorted.filter(item => item.status !== "consuming");
   })());
 
   let activeItem: Record<string, unknown> | null = $state(null);
@@ -88,18 +77,20 @@
       <h1 class="ml-title">Media Library</h1>
       <p class="ml-tagline">Things I'm watching, reading, playing.</p>
     </div>
-    
+  </header>
+
+  <MediaCarousel title="Currently" items={carouselsData.consuming} {openDetails} />
+  
+  <MediaCarousel title="Greatest of All Time" items={carouselsData.goat} {openDetails} />
+
+  <div class="ml-filters-container">
     <div class="ml-filters">
       <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
       <FilterSort bind:filters bind:sorts />
     </div>
-  </header>
+  </div>
 
-  <MediaCarousel title="Currently" items={filteredBuckets.consuming} {openDetails} {openFullPoster} />
-  
-  <MediaCarousel title="Greatest of All Time" items={filteredBuckets.goat} {openDetails} {openFullPoster} />
-
-  <LibraryTable items={filteredBuckets.library} {sorts} {toggleSort} {openDetails} {openFullPoster} />
+  <LibraryTable items={libraryData} {sorts} {toggleSort} {openDetails} {openFullPoster} />
 
   {#if mediaData.length === 0}
     <p class="ml-empty">Nothing here yet.</p>
