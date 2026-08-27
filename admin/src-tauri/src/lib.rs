@@ -50,15 +50,37 @@ fn write_file_binary(path: String, content: Vec<u8>) -> Result<(), String> {
 
 #[tauri::command]
 fn get_repo_root() -> Result<String, String> {
-    let mut current = std::env::current_dir().map_err(|e| e.to_string())?;
-    loop {
-        if current.join("eleventy.config.js").exists() {
-            return Ok(current.to_string_lossy().to_string());
-        }
-        if !current.pop() {
-            break;
+    // Try current_dir first
+    if let Ok(mut current) = std::env::current_dir() {
+        loop {
+            if current.join("eleventy.config.js").exists() {
+                return Ok(current.to_string_lossy().to_string());
+            }
+            if !current.pop() {
+                break;
+            }
         }
     }
+    
+    // Fallback to current_exe
+    if let Ok(mut current) = std::env::current_exe() {
+        current.pop(); // remove executable name
+        loop {
+            if current.join("eleventy.config.js").exists() {
+                return Ok(current.to_string_lossy().to_string());
+            }
+            if !current.pop() {
+                break;
+            }
+        }
+    }
+    
+    // Absolute fallback for the developer's specific machine in case it's installed globally via MSI
+    let hardcoded = std::path::Path::new("C:\\Users\\arkma\\Documents\\GitHub\\sqrtnegativone.github.io");
+    if hardcoded.join("eleventy.config.js").exists() {
+        return Ok(hardcoded.to_string_lossy().to_string());
+    }
+    
     Err("Could not find repo root".to_string())
 }
 

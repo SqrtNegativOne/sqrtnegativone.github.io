@@ -1,14 +1,14 @@
 ## Tech Stack Overview
 - **Main Website**: Built with [SvelteKit](https://svelte.dev/) (Svelte 5) and styled using [Tailwind CSS v4](https://tailwindcss.com/).
 - **Blog Engine**: The blog is statically generated using [Eleventy (11ty)](https://www.11ty.dev/). Markdown files are in the `blog/` directory and compiled into the `static/` folder where SvelteKit serves them.
-- **Admin Dashboard**: A SvelteKit + Tauri desktop application located in the `admin/` directory used for managing data/media.
 - **Package Manager**: **Bun**. Don't use npm.
+- **Admin Dashboard**: See `admin/AGENTS.md` for details.
 
 ## Repository Structure
 - `src/` - The main SvelteKit application source (components, routes, styles).
 - `blog/` - Markdown files (`*.md`) for blog posts, plus Eleventy templates (`*.njk`) and includes.
 - `static/` - Static assets. Eleventy outputs the compiled blog HTML here. Also hosts site-level files: `robots.txt`, `llms.txt`, `feed.xml` (generated), `.well-known/security.txt`, favicons, and self-hosted fonts/vendor CSS (`static/vendor/`).
-- `admin/` - The admin dashboard (a SvelteKit + Tauri desktop app for managing data/media).
+- `admin/` - The admin dashboard (a SvelteKit + Tauri desktop app for managing data/media). Contains its own `AGENTS.md` rules file.
 - `eleventy.config.js` - Configuration for the Eleventy blog engine (collections, date filters, `@11ty/eleventy-plugin-rss`).
 - `admin.bat` / `dev.bat` - Scripts for running local dev servers.
 
@@ -22,8 +22,7 @@ All commands should be run using `bun`.
 - `bun run lint` - Runs `oxlint` for fast linting.
 - `bun run check` - Runs SvelteKit sync and `svelte-check` for type-checking and accessibility (a11y) checks.
 
-**Admin App Commands:**
-- Run `admin.bat` in the root folder, which executes `bun run tauri dev` inside the `admin/` directory to start the Tauri desktop app.
+*(For admin commands, check `admin/AGENTS.md`)*
 
 ## Coding Guidelines & Rules
 - **Svelte 5 Syntax**: This project uses Svelte 5. Use runes (`$state`, `$derived`, `$props`, `$effect`) instead of the legacy Svelte 4 `export let` or reactive statements (`$: `).
@@ -32,7 +31,6 @@ All commands should be run using `bun`.
 - **Reduced motion**: Respect `prefers-reduced-motion`. A global guard in `src/App.css` kills CSS animations/transitions; JS-driven animation (rAF loops, GSAP) must be gated behind a `matchMedia('(prefers-reduced-motion: reduce)')` check like `AsciiBackground.svelte` and `Cursor.svelte`.
 - **Component Scoped Styling**: For dynamically injected HTML (like the eleventy blog posts via `{@html ...}`), use `:global(.class)` in Svelte `<style>` blocks to avoid unused CSS warnings and properly style the injected markup.
 - **Per-page SEO**: Every route uses the shared `src/lib/components/Seo.svelte` component (title, description, canonical, OG tags, optional noindex). Do not add per-page head tags directly when `Seo.svelte` covers them; site-wide defaults live in `src/app.html`. Structured data is JSON-LD (`Person` on the homepage, `BlogPosting`/`Blog` in the Eleventy templates).
-- **Error Handling**: Use neverthrow over try and catch statements. When working in the admin app, always utilize the centralized `neverthrow` wrappers (`safeInvoke`, `safeJsonParse`, `safeUrlParse`, etc.) exported from `admin/src/lib/utils.ts` to maintain clean, functional `ResultAsync` pipelines.
 
 ## Blog Engine (Eleventy)
 - Posts live in `blog/posts/*.md` with frontmatter: `title`, `date` (YYYY-MM-DD), `description`, `tags`, optional `font` and `draft: true`. Tagging a post `afterdark` routes it to `/blog-afterdark/` and excludes it from the public feed/sitemap/markdown endpoints.

@@ -1008,23 +1008,25 @@
   {
     "id": "b_hubali_2_the_conclusion",
     "type": "movie",
-    "rating": 4,
+    "rating": 5,
     "status": "finished",
     "title": "Bāhubali 2: The Conclusion",
     "tagline": "",
     "description": "When Mahendra, the son of Bāhubali, learns about his heritage, he begins to look for answers. His story is juxtaposed with past events that unfolded in the Mahishmati Kingdom.",
     "notes": "",
+    "private_notes": "",
     "poster_image": "movie_b_hubali_2_the_conclusion"
   },
   {
     "id": "b_hubali_the_beginning",
     "type": "movie",
-    "rating": 4,
+    "rating": 5,
     "status": "finished",
     "title": "Bāhubali: The Beginning",
     "tagline": "",
     "description": "The young Shivudu is left as a foundling in a small village by his mother. By the time he’s grown up, it has become apparent that he possesses exceptional gifts. He meets the beautiful warrior princess Avanthika and learns that her queen has been held captive for the last 25 years. Shividu sets off to rescue her, discovering his own origins in the process.",
     "notes": "",
+    "private_notes": "",
     "poster_image": "movie_b_hubali_the_beginning"
   },
   {
@@ -1344,5 +1346,17 @@
     "notes": "Fun read",
     "private_notes": "",
     "poster_image": "book_moonwalking_with_einstein"
+  },
+  {
+    "id": "the_cuckoo_egg_book",
+    "type": "book",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "The Cuckoo's Egg",
+    "tagline": "",
+    "description": "Clifford Stoll",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_the_cuckoo_egg_book"
   }
 ]

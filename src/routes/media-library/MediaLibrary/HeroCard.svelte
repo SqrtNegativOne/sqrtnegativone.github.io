@@ -1,6 +1,7 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
   import RatingChart from "../../../../shared/components/RatingChart.svelte";
+  import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   import { getPosterUrl } from "$lib/utils";
   
   let { item, openDetails, openFullPoster } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; openFullPoster?: (url: string) => void }>();
@@ -16,21 +17,21 @@
       <img src={getPosterUrl(item.poster_image as string)} alt="" loading="lazy" />
     {:else}
       <div class="ml-poster-fallback">
-        <span>{TYPE_LABEL[item.type] || item.type}</span>
+        <span>{TYPE_LABEL[item.type as string] || item.type}</span>
       </div>
     {/if}
   </div>
   <div class="ml-hero-meta">
     <div class="ml-hero-title-row">
-      <h3 class="ml-hero-title">{item.title}</h3>
-      <RatingChart rating={item.rating} />
+      <div class="ml-hero-title-group">
+        <h3 class="ml-hero-title">{item.title}</h3>
+        <TypeBadge type={item.type as string} variant="icon" sizeClass="w-[18px] h-[18px]" />
+      </div>
+      <RatingChart rating={item.rating as number} />
     </div>
     {#if item.tagline}
       <p class="ml-hero-sub">{item.tagline}</p>
     {/if}
-    <p class="ml-hero-line">
-      {TYPE_LABEL[item.type] || item.type}
-    </p>
   </div>
 </article>
 
@@ -49,7 +50,7 @@
   }
 
   .ml-hero-card:hover {
-    transform: translateY(-4px) scale(1.02);
+    transform: translateY(-4px);
     box-shadow: 0 16px 40px oklch(0 0 0 / 0.6), 0 0 0 1px oklch(1 1 1 / 0.1);
   }
 
@@ -62,9 +63,15 @@
 
   .ml-hero-title-row {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 12px;
+  }
+
+  .ml-hero-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .ml-hero-title {
@@ -80,15 +87,6 @@
     color: oklch(0.6891 0.013 286.05);
     font-size: 13px;
     line-height: 1.4;
-  }
-
-  .ml-hero-line {
-    margin: auto 0 0; /* push to bottom */
-    padding-top: 10px;
-    color: oklch(0.5416 0.0154 285.87);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
   }
 
   .ml-poster {
