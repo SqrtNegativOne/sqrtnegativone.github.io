@@ -34,6 +34,11 @@
         <h2 class="ml-modal-title">
           {item.title}
         </h2>
+        {#if item.author || item.publisher}
+          <div class="ml-modal-author-pub text-[oklch(0.8_0.03_256)] font-medium mt-2">
+            {[item.author, item.publisher].filter(Boolean).join(' • ')}
+          </div>
+        {/if}
         {#if item.tagline}
           <p class="ml-modal-tagline">{item.tagline}</p>
         {/if}

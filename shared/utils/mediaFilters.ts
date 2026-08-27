@@ -4,8 +4,10 @@ export function applyFilters<T extends Record<string, any>>(items: T[], filters:
       const q = searchQuery.toLowerCase();
       const titleMatch = item.title?.toLowerCase().includes(q);
       const taglineMatch = item.tagline?.toLowerCase().includes(q);
+      const authorMatch = item.author?.toLowerCase().includes(q);
+      const publisherMatch = item.publisher?.toLowerCase().includes(q);
       const idMatch = item.id?.toLowerCase().includes(q);
-      if (!titleMatch && !taglineMatch && !idMatch) return false;
+      if (!titleMatch && !taglineMatch && !authorMatch && !publisherMatch && !idMatch) return false;
     }
     
     for (const f of filters) {

@@ -61,8 +61,18 @@
           </div>
           
           <div class="space-y-2 md:col-span-2">
+            <label for="media-author" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Author</label>
+            <input id="media-author" type="text" name="author" bind:value={currentItem.author} class="input-field" placeholder="e.g. Stephen King, Christopher Nolan, Valve" />
+          </div>
+
+          <div class="space-y-2 md:col-span-2">
+            <label for="media-publisher" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Publisher</label>
+            <input id="media-publisher" type="text" name="publisher" bind:value={currentItem.publisher} class="input-field" placeholder="e.g. Penguin Random House, Warner Bros" />
+          </div>
+
+          <div class="space-y-2 md:col-span-2">
             <label for="media-tagline" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tagline (Optional)</label>
-            <input id="media-tagline" type="text" name="tagline" bind:value={currentItem.tagline} class="input-field" placeholder="e.g. Director, Author, or Tagline" />
+            <input id="media-tagline" type="text" name="tagline" bind:value={currentItem.tagline} class="input-field" placeholder="e.g. The subtitle or tagline" />
           </div>
 
           <div class="space-y-2 md:col-span-2">

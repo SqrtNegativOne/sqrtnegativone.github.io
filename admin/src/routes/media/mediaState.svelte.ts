@@ -7,10 +7,11 @@ import { invalidateAll } from '$app/navigation';
 export interface MediaItem {
   id: string; type: string; rating: number; status: string;
   title: string; tagline: string; description: string; notes: string; poster_image: string; private_notes: string;
+  author?: string; publisher?: string;
   tags?: string[];
 }
 
-export interface SearchResult { title?: string; tagline?: string; description?: string; coverUrl?: string; }
+export interface SearchResult { title?: string; tagline?: string; description?: string; coverUrl?: string; author?: string; publisher?: string; }
 
 export class MediaState {
   isModalOpen = $state(false);
@@ -20,6 +21,7 @@ export class MediaState {
   currentItem: MediaItem = $state({
     id: '', type: 'movie', rating: 4, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
+    author: '', publisher: '',
     tags: []
   });
   
@@ -47,6 +49,7 @@ export class MediaState {
     this.currentItem = { 
       id: '', type: 'movie', rating: 4, status: 'wishlist',
       title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
+      author: '', publisher: '',
       tags: []
     };
     this.isModalOpen = true;
@@ -89,7 +92,9 @@ export class MediaState {
       }
       return {
         title: vol.title || '',
-        tagline: vol.authors ? vol.authors.join(', ') : '',
+        tagline: vol.subtitle || '',
+        author: vol.authors ? vol.authors.join(', ') : '',
+        publisher: vol.publisher || '',
         description: vol.description || '',
         coverUrl
       };
@@ -118,16 +123,95 @@ export class MediaState {
     const data = jsonRes.value;
     if (!data.results || data.results.length === 0) return err('No results found for that query.');
     
-    return ok(data.results.map((r: any) => ({
-      title: isMovie ? r.title : r.name,
-      tagline: '', 
-      description: r.overview,
-      coverUrl: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : ''
-    })));
+    const topResults = data.results.slice(0, 5);
+    const detailedResults: SearchResult[] = [];
+
+    for (const r of topResults) {
+      let author = '';
+      let publisher = '';
+      const detailsUrl = `https://api.themoviedb.org/3/${typeStr}/${r.id}?api_key=${apiKey}&append_to_response=credits`;
+      
+      const detFetchRes = await ResultAsync.fromPromise(
+        fetch(detailsUrl, { signal: AbortSignal.timeout(5000), headers: { 'Accept': 'application/json' } }),
+        () => 'Details fetch err'
+      );
+      if (detFetchRes.isOk() && detFetchRes.value.ok) {
+        const detJsonRes = await ResultAsync.fromPromise(detFetchRes.value.json(), () => '');
+        if (detJsonRes.isOk()) {
+          const d = detJsonRes.value;
+          if (isMovie) {
+            const directors = d.credits?.crew?.filter((c: any) => c.job === 'Director') || [];
+            author = directors.map((d: any) => d.name).join(', ');
+          } else {
+            const creators = d.created_by || [];
+            author = creators.map((c: any) => c.name).join(', ');
+          }
+          const companies = d.production_companies || [];
+          publisher = companies.map((c: any) => c.name).join(', ');
+        }
+      }
+
+      detailedResults.push({
+        title: isMovie ? r.title : r.name,
+        tagline: '', 
+        author,
+        publisher,
+        description: r.overview,
+        coverUrl: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : ''
+      });
+    }
+    
+    return ok(detailedResults);
   }
 
   async searchGames(title: string): Promise<Result<SearchResult[], string>> {
-    return err('Game search is not supported yet.');
+    const searchUrl = `https://store.steampowered.com/api/storesearch/?term=${encodeURIComponent(title)}&l=english&cc=US`;
+    const searchRes = await ResultAsync.fromPromise(
+      invoke<string>('fetch_url', { url: searchUrl }),
+      (e) => e instanceof Error ? e.message : 'Network error during Steam search'
+    );
+    if (searchRes.isErr()) return err(searchRes.error);
+
+    let searchData;
+    try {
+      searchData = JSON.parse(searchRes.value);
+    } catch (e) {
+      return err('Failed to parse Steam search JSON');
+    }
+
+    const items = searchData.items;
+    if (!items || items.length === 0) return err('No game results found on Steam.');
+
+    const topItems = items.slice(0, 5);
+    const results: SearchResult[] = [];
+    
+    for (const item of topItems) {
+      const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${item.id}`;
+      const detailsRes = await ResultAsync.fromPromise(
+        invoke<string>('fetch_url', { url: detailsUrl }),
+        () => 'Failed to fetch app details'
+      );
+      if (detailsRes.isOk()) {
+        try {
+          const detailsData = JSON.parse(detailsRes.value);
+          const appData = detailsData[item.id.toString()];
+          if (appData && appData.success && appData.data) {
+            const d = appData.data;
+            results.push({
+              title: d.name,
+              tagline: '',
+              author: d.developers ? d.developers.join(', ') : '',
+              publisher: d.publishers ? d.publishers.join(', ') : '',
+              description: d.short_description || '',
+              coverUrl: d.header_image || ''
+            });
+          }
+        } catch (e) {}
+      }
+    }
+
+    if (results.length === 0) return err('Failed to retrieve game details.');
+    return ok(results);
   }
 
   async handleSearch() {
@@ -189,6 +273,8 @@ export class MediaState {
 
   selectSearchResult(result: SearchResult) {
     if (result.title) this.currentItem.title = result.title;
+    if (result.author) this.currentItem.author = result.author;
+    if (result.publisher) this.currentItem.publisher = result.publisher;
     const descParts = [];
     if (result.tagline) descParts.push(result.tagline);
     if (result.description) descParts.push(result.description);
@@ -232,7 +318,7 @@ export class MediaState {
   async handleSave(e: Event) {
     e.preventDefault();
     this.errorMsg = '';
-    let { id, type, rating, status, title, tagline, description, notes, poster_image, private_notes, tags } = this.currentItem;
+    let { id, type, rating, status, title, tagline, description, notes, poster_image, private_notes, tags, author, publisher } = this.currentItem;
     
     if (!id || !title) {
       this.errorMsg = 'ID and Title are required';
@@ -312,7 +398,7 @@ export class MediaState {
     }
 
     const items = (await readData<MediaItem>('../../static/media/media.json')).unwrapOr([] as any[]);
-    const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image, tags };
+    const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image, tags, author, publisher };
     
     if (isNew) {
       if (items.some(i => i.id === id)) {

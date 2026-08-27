@@ -33,13 +33,19 @@
       <TypeBadge type={item.type} variant="icon" sizeClass="w-5 h-5" />
       <StatusBadge status={item.status} />
     </span>
-    {#if item.tagline || item.notes}
+    {#if item.author || item.publisher || item.tagline || item.notes}
       <span class="ml-row-sub">
+        {#if item.author || item.publisher}
+          <span class="truncate font-medium text-[oklch(0.8_0.03_256)]">{[item.author, item.publisher].filter(Boolean).join(' • ')}</span>
+          {#if item.tagline}
+            <span class="opacity-50 mx-1">•</span>
+          {/if}
+        {/if}
         {#if item.tagline}
-          <span class="truncate">{item.tagline}</span>
+          <span class="truncate italic">{item.tagline}</span>
         {/if}
         {#if item.notes}
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 shrink-0"><title>Has notes</title><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 shrink-0 ml-1"><title>Has notes</title><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
         {/if}
       </span>
     {/if}

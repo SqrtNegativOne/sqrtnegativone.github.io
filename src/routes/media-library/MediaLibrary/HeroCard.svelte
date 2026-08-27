@@ -27,8 +27,13 @@
         <TypeBadge type={item.type as string} variant="icon" sizeClass="w-[18px] h-[18px]" />
       </div>
     </div>
+    {#if item.author || item.publisher}
+      <div class="text-xs text-[oklch(0.8_0.03_256)] mt-1.5 font-medium truncate">
+        {[item.author, item.publisher].filter(Boolean).join(' • ')}
+      </div>
+    {/if}
     {#if item.tagline}
-      <p class="ml-hero-sub">{item.tagline}</p>
+      <p class="ml-hero-sub truncate">{item.tagline}</p>
     {/if}
   </div>
 </article>

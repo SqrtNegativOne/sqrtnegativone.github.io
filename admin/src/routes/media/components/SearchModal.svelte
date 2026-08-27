@@ -27,8 +27,13 @@
             {/if}
             <div class="flex-1 min-w-0">
               <h3 class="text-lg font-medium text-white truncate">{result.title}</h3>
+              {#if result.author || result.publisher}
+                <div class="text-sm text-blue-400 mb-1">
+                  {[result.author, result.publisher].filter(Boolean).join(' • ')}
+                </div>
+              {/if}
               {#if result.tagline}
-                <div class="text-sm text-blue-400 mb-1">{result.tagline}</div>
+                <div class="text-xs text-[oklch(0.7107_0.0351_256.79)] italic mb-1">{result.tagline}</div>
               {/if}
               {#if result.description}
                 <p class="text-sm text-[oklch(0.7107_0.0351_256.79)] line-clamp-2">{result.description}</p>
