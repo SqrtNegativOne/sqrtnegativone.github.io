@@ -2,6 +2,22 @@
   import mediaProperties from '../../../../../static/media/media-properties.json';
 
   let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, searchError, handleSearch, handlePaste, handleRatingKeydown, handleSave, handleDelete } = $props();
+
+  import { untrack } from 'svelte';
+  
+  let tagsInput = $state('');
+  
+  $effect(() => {
+    if (isModalOpen) {
+      tagsInput = untrack(() => currentItem.tags?.join(', ') || '');
+    }
+  });
+
+  function handleTagsInput(e: Event) {
+    const val = (e.target as HTMLInputElement).value;
+    tagsInput = val;
+    currentItem.tags = val.split(',').map(s => s.trim()).filter(Boolean);
+  }
 </script>
 
 {#if isModalOpen}
@@ -47,6 +63,11 @@
           <div class="space-y-2 md:col-span-2">
             <label for="media-tagline" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tagline (Optional)</label>
             <input id="media-tagline" type="text" name="tagline" bind:value={currentItem.tagline} class="input-field" placeholder="e.g. Director, Author, or Tagline" />
+          </div>
+
+          <div class="space-y-2 md:col-span-2">
+            <label for="media-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags (Comma separated)</label>
+            <input id="media-tags" type="text" name="tags" value={tagsInput} oninput={handleTagsInput} class="input-field" placeholder="e.g. goat, favorites" />
           </div>
 
           <div class="space-y-2 md:col-span-2">

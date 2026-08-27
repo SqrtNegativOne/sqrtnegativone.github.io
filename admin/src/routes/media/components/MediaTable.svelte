@@ -32,7 +32,7 @@
           tabindex="0"
         >
           <td class="p-4">
-            <div class="w-12 h-16 bg-[oklch(0.2795_0.0368_260.03)] rounded overflow-hidden flex items-center justify-center shrink-0 border border-[oklch(0.3717_0.0392_257.29)]">
+            <div class="w-12 h-16 bg-[oklch(0.2795_0.0368_260.03)] overflow-hidden flex items-center justify-center shrink-0 border border-[oklch(0.3717_0.0392_257.29)]">
               <img 
                 src={assetState.resolve(item.poster_image ? getPosterUrl(item.poster_image) : `/media/media-posters/${item.type}_${item.id}.jpg`)} 
                 alt="Poster"
@@ -59,7 +59,7 @@
             {/if}
           </td>
           <td class="p-4">
-            <RatingChart rating={item.rating} />
+            <RatingChart rating={item.rating} expected={['wishlist', 'rewishlist', 'next up', 'waiting for'].includes(item.status)} />
           </td>
         </tr>
       {/each}

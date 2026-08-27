@@ -36,7 +36,6 @@
 <style>
   .ml-hero-card {
     background: linear-gradient(180deg, oklch(0.2108 0.0078 285.71) 0%, oklch(0.179 0.0061 285.77) 100%);
-    border-radius: 6px;
     overflow: hidden;
     transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 1px 0 oklch(1 0 0 / 0.03) inset;

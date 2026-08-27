@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { rating }: { rating: number } = $props();
+  let { rating, expected = false }: { rating: number, expected?: boolean } = $props();
   let percent = $derived((rating / 7) * 100);
   let colorClass = $derived(
     rating >= 7 ? 'text-[oklch(0.860_0.150_151.90)]' :
@@ -33,7 +33,7 @@
   );
 </script>
 
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 {expected ? 'opacity-70 saturate-50' : ''}">
   <div class="relative w-[22px] h-[22px] flex items-center justify-center shrink-0">
     <svg class="w-full h-full" viewBox="0 0 36 36">
       <g transform="rotate(-90 18 18)">
@@ -42,5 +42,5 @@
       </g>
     </svg>
   </div>
-  <span class="font-medium font-mono text-[15px] {colorClass}">{rating}</span>
+  <span class="font-medium font-mono text-[15px] {colorClass}">{rating}{expected ? 'E' : ''}</span>
 </div>

@@ -7,6 +7,7 @@ import { invalidateAll } from '$app/navigation';
 export interface MediaItem {
   id: string; type: string; rating: number; status: string;
   title: string; tagline: string; description: string; notes: string; poster_image: string; private_notes: string;
+  tags?: string[];
 }
 
 export interface SearchResult { title?: string; tagline?: string; description?: string; coverUrl?: string; }
@@ -18,7 +19,8 @@ export class MediaState {
   
   currentItem: MediaItem = $state({
     id: '', type: 'movie', rating: 4, status: 'wishlist',
-    title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: ''
+    title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
+    tags: []
   });
   
   isSearching = $state(false);
@@ -44,7 +46,8 @@ export class MediaState {
     this.errorMsg = '';
     this.currentItem = { 
       id: '', type: 'movie', rating: 4, status: 'wishlist',
-      title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: ''
+      title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
+      tags: []
     };
     this.isModalOpen = true;
   }
@@ -229,7 +232,7 @@ export class MediaState {
   async handleSave(e: Event) {
     e.preventDefault();
     this.errorMsg = '';
-    let { id, type, rating, status, title, tagline, description, notes, poster_image, private_notes } = this.currentItem;
+    let { id, type, rating, status, title, tagline, description, notes, poster_image, private_notes, tags } = this.currentItem;
     
     if (!id || !title) {
       this.errorMsg = 'ID and Title are required';
@@ -309,7 +312,7 @@ export class MediaState {
     }
 
     const items = (await readData<MediaItem>('../../static/media/media.json')).unwrapOr([] as any[]);
-    const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image };
+    const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image, tags };
     
     if (isNew) {
       if (items.some(i => i.id === id)) {

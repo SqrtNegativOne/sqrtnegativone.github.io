@@ -139,7 +139,6 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  border-radius: 8px;
   box-shadow: 0 24px 48px oklch(0 0 0 / 0.6);
 }
 

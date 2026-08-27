@@ -1138,17 +1138,6 @@
     "poster_image": "game_escaped_chasm"
   },
   {
-    "id": "hyouka",
-    "type": "show",
-    "rating": 6,
-    "status": "wishlist",
-    "title": "Hyouka",
-    "tagline": "",
-    "description": "Oreki Houtarou is a minimalistic high school boy. One day, he joins the Classic Literature Club at his elder sister's request. There he meets Chitanda Eru, Fukube Satoshi, and Ibara Mayaka. Chitanda is a calm beautiful girl but she turns into an embodiment of curiosity once she says, \"I'm curious.\" Fukube is a smiling boy with a fantastic memory who calls himself a database. Ibara is a short girl and is strict with others and herself. They begin to investigate a case that occurred 45 years ago. Hints of the mystery are buried in an old collection of works of the former members of Classics Club. The collection is titled \"Hyouka.\"",
-    "notes": "",
-    "poster_image": "show_hyouka"
-  },
-  {
     "id": "kentucky_route_zero_pc_edition",
     "type": "game",
     "rating": 5,
@@ -1184,12 +1173,13 @@
   {
     "id": "minority_report",
     "type": "movie",
-    "rating": 7,
+    "rating": 6.5,
     "status": "finished",
     "title": "Minority Report",
-    "tagline": "",
+    "tagline": "Can you see?",
     "description": "John Anderton is a top 'Precrime' cop in the late-21st century, when technology can predict crimes before they're committed. But Anderton becomes the quarry when another investigator targets him for a murder charge.",
     "notes": "Can't believe I sat on this one for so long...",
+    "private_notes": "",
     "poster_image": "movie_minority_report"
   },
   {
