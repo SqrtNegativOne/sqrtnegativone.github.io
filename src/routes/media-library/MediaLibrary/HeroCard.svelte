@@ -1,6 +1,5 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
-  import RatingChart from "../../../../shared/components/RatingChart.svelte";
   import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   import { getPosterUrl } from "$lib/utils";
   
@@ -27,7 +26,6 @@
         <h3 class="ml-hero-title">{item.title}</h3>
         <TypeBadge type={item.type as string} variant="icon" sizeClass="w-[18px] h-[18px]" />
       </div>
-      <RatingChart rating={item.rating as number} />
     </div>
     {#if item.tagline}
       <p class="ml-hero-sub">{item.tagline}</p>

@@ -319,15 +319,12 @@
     "type": "game",
     "rating": 7,
     "status": "rewishlist",
-    "title": "Disco Elysium — The Final Cut",
+    "title": "Disco Elysium",
     "tagline": "A tragicomedy of hope and redemption.",
     "description": "",
     "notes": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
     "private_notes": "",
-    "poster_image": "game_disco_elysium_-_the_final_cut",
-    "tags": [
-      "goat"
-    ]
+    "poster_image": "game_disco_elysium_-_the_final_cut"
   },
   {
     "id": "the_hunger_games",
@@ -1076,12 +1073,13 @@
   {
     "id": "kill_bill_vol_1",
     "type": "movie",
-    "rating": 6,
-    "status": "wishlist",
+    "rating": 5,
+    "status": "finished",
     "title": "Kill Bill: Vol. 1",
     "tagline": "",
     "description": "An assassin is shot by her ruthless employer, Bill, and other members of their assassination circle – but she lives to plot her vengeance.",
     "notes": "",
+    "private_notes": "",
     "poster_image": "movie_kill_bill_vol_1"
   },
   {
@@ -1358,5 +1356,17 @@
     "notes": "",
     "private_notes": "",
     "poster_image": "book_the_cuckoo_egg_book"
+  },
+  {
+    "id": "kill_bill_vol_2",
+    "type": "movie",
+    "rating": 5,
+    "status": "finished",
+    "title": "Kill Bill: Vol. 2",
+    "tagline": "",
+    "description": "The Bride unwaveringly continues on her roaring rampage of revenge against the band of assassins who had tried to kill her and her unborn child. She visits each of her former associates one-by-one, checking off the victims on her Death List Five until there's nothing left to do … but kill Bill.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_kill_bill_vol_2"
   }
 ]

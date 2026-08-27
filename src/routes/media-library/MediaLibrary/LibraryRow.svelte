@@ -34,7 +34,7 @@
       <StatusBadge status={item.status} />
     </span>
     {#if item.tagline || item.notes}
-      <span class="ml-row-sub flex items-center gap-1.5">
+      <span class="ml-row-sub">
         {#if item.tagline}
           <span class="truncate">{item.tagline}</span>
         {/if}
@@ -73,7 +73,9 @@
   }
 
   .ml-row-sub {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 14px;
     color: oklch(0.6363 0.0133 286.02);
     margin-top: 2px;

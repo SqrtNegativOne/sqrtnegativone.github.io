@@ -39,6 +39,8 @@
     display: flex;
     gap: 20px;
     overflow-x: auto;
+    padding-top: 12px;
+    margin-top: -12px;
     padding-bottom: 24px;
     scrollbar-width: thin;
     scrollbar-color: oklch(1 0 0 / 0.2) transparent;
