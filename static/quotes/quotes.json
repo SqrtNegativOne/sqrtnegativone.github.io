@@ -708,7 +708,9 @@
     "quote": "at peace or dgaf anymore",
     "source": "",
     "link": "",
-    "tags": []
+    "tags": [
+      "afterdark"
+    ]
   },
   {
     "id": "f665a149-6752-4a02-9f63-84a7e75e2475",
@@ -905,7 +907,9 @@
     "quote": "assume I have killed the dawg in me",
     "source": "",
     "link": "",
-    "tags": []
+    "tags": [
+      "afterdark"
+    ]
   },
   {
     "id": "13a9942a-ac9d-4e92-aace-cacfc007243b",
@@ -1904,7 +1908,9 @@
     "quote": "the subtle guardness of someone who learnt social skills the hard way",
     "source": "",
     "link": "",
-    "tags": []
+    "tags": [
+      "afterdark"
+    ]
   },
   {
     "id": "6ad1ab15-1679-4ee3-91a8-9a2402d18518",
@@ -2023,7 +2029,9 @@
     "quote": "the thought of suicide is a consolation. It can get one through many a bad night.",
     "source": "",
     "link": "",
-    "tags": []
+    "tags": [
+      "afterdark"
+    ]
   },
   {
     "id": "2bd00909-9a9d-4a15-8684-dee881bd058e",
@@ -2350,5 +2358,14 @@
     "source": "Clifford Stoll (The Cuckoo's Egg)",
     "link": "",
     "tags": []
+  },
+  {
+    "id": "fb802997-4cae-46cb-a386-df2b0b438215",
+    "quote": "...is less than 1% of the population.",
+    "source": "",
+    "link": "",
+    "tags": [
+      "suffix"
+    ]
   }
 ]
