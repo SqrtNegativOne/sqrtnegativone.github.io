@@ -1,11 +1,11 @@
-import { convertFileSrc } from '@tauri-apps/api/core';
+import { convertFileSrc, isTauri } from '@tauri-apps/api/core';
 import { getRepoRoot } from './db';
 
 class AssetState {
     repoRoot = $state('');
 
     constructor() {
-        if (typeof window !== 'undefined' && '__TAURI__' in window) {
+        if (typeof window !== 'undefined' && isTauri()) {
             getRepoRoot().then(root => {
                 this.repoRoot = root;
             });

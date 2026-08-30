@@ -1,0 +1,4 @@
+books:
+- openlibrary from internet archive
+- hardcover.app
+- librarything — probably not. doesn't have a large collection of books.

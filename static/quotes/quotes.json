@@ -2326,7 +2326,9 @@
     "quote": "Have you considered how happy you would be if you have up everything you enjoyed?",
     "source": "@RambleMan51 on Twitter",
     "link": "",
-    "tags": []
+    "tags": [
+      "afterdark"
+    ]
   },
   {
     "id": "c48af7fb-8eb7-49c8-a3ab-47378c5a40f1",
@@ -2339,6 +2341,13 @@
     "id": "f7e4315f-37e9-4bba-9138-07eaa7f615dd",
     "quote": "No technique is without counter. Speed alone is the exception.",
     "source": "",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "9b71ff6c-4276-4164-87ce-5ff468115d7f",
+    "quote": "The astronomer's rule of thumb: if you don't write it down, it didn't happen.",
+    "source": "Clifford Stoll (The Cuckoo's Egg)",
     "link": "",
     "tags": []
   }

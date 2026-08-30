@@ -1,5 +1,16 @@
 <script lang="ts">
   let { isSearchModalOpen = $bindable(), searchResults, selectSearchResult } = $props();
+
+  function handleImageLoad(e: Event) {
+    const img = e.currentTarget as HTMLImageElement;
+    const parent = img.closest('.cover-container');
+    if (parent) {
+      const dimEl = parent.querySelector('.cover-dimensions');
+      if (dimEl) {
+        dimEl.textContent = `${img.naturalWidth} × ${img.naturalHeight}`;
+      }
+    }
+  }
 </script>
 
 {#if isSearchModalOpen}
@@ -21,8 +32,11 @@
             role="button"
           >
             {#if result.coverUrl}
-              <div class="w-16 h-24 bg-[oklch(0.2795_0.0368_260.03)] rounded overflow-hidden shrink-0">
-                <img src={result.coverUrl} alt="Cover" class="w-full h-full object-cover" />
+              <div class="cover-container w-16 shrink-0 flex flex-col gap-1 items-center">
+                <div class="w-16 h-24 bg-[oklch(0.2795_0.0368_260.03)] rounded overflow-hidden">
+                  <img src={result.coverUrl} alt="Cover" class="w-full h-full object-cover" onload={handleImageLoad} />
+                </div>
+                <div class="cover-dimensions text-[10px] text-[oklch(0.7107_0.0351_256.79)] whitespace-nowrap empty:hidden"></div>
               </div>
             {/if}
             <div class="flex-1 min-w-0">

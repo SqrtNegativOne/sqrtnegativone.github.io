@@ -63,42 +63,85 @@ export class MediaState {
   }
 
   async searchBooks(title: string, apiKey: string): Promise<Result<SearchResult[], string>> {
-    let searchUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=10`;
-    if (apiKey) searchUrl += `&key=${apiKey}`;
-    
-    const fetchRes = await ResultAsync.fromPromise(
-      fetch(searchUrl, { signal: AbortSignal.timeout(10000) }),
-      (e) => e instanceof Error ? e.message : 'Network error during search'
-    );
-    if (fetchRes.isErr()) return err(fetchRes.error);
-    
-    const response = fetchRes.value;
-    if (!response.ok) {
-      const errTextRes = await ResultAsync.fromPromise(response.text(), () => 'Failed to read error body');
-      return err(`Search failed: ${response.status} ${response.statusText}. ${errTextRes.unwrapOr('')}`);
+    const providers = [
+      {
+        name: 'Apple Books',
+        fetch: async (): Promise<SearchResult[]> => {
+          const searchUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(title)}&entity=ebook&limit=10`;
+          const res = await fetch(searchUrl, { signal: AbortSignal.timeout(10000) });
+          if (!res.ok) throw new Error(`Apple Books error: ${res.status}`);
+          const data = await res.json();
+          if (!data.results) return [];
+          return data.results.map((r: any) => {
+            let coverUrl = '';
+            if (r.artworkUrl100) {
+              coverUrl = r.artworkUrl100.replace('100x100bb.jpg', '1000x1000bb.jpg');
+            }
+            let description = r.description || '';
+            if (description) description = description.replace(/<[^>]*>?/gm, '').trim();
+            
+            return {
+              title: r.trackName || '',
+              tagline: 'Apple Books Edition',
+              author: r.artistName || '',
+              publisher: '',
+              description,
+              coverUrl
+            };
+          });
+        }
+      },
+      {
+        name: 'Google Books',
+        fetch: async (): Promise<SearchResult[]> => {
+          let searchUrl = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(title)}&maxResults=10`;
+          if (apiKey) searchUrl += `&key=${apiKey}`;
+          const res = await fetch(searchUrl, { signal: AbortSignal.timeout(10000) });
+          if (!res.ok) throw new Error(`Google Books error: ${res.status}`);
+          const data = await res.json();
+          if (!data.items) return [];
+          return data.items.map((r: any) => {
+            const vol = r.volumeInfo || {};
+            let coverUrl = '';
+            if (vol.imageLinks?.thumbnail) {
+              coverUrl = vol.imageLinks.thumbnail.replace('http:', 'https:').replace('zoom=1', 'zoom=3');
+            }
+            return {
+              title: vol.title || '',
+              tagline: vol.subtitle ? `${vol.subtitle} (Google Books)` : 'Google Books Edition',
+              author: vol.authors ? vol.authors.join(', ') : '',
+              publisher: vol.publisher || '',
+              description: vol.description || '',
+              coverUrl
+            };
+          });
+        }
+      }
+    ];
+
+    const results = await Promise.allSettled(providers.map(p => p.fetch()));
+    const allBooks: SearchResult[] = [];
+    let allFailed = true;
+    let errors: string[] = [];
+
+    results.forEach((res, i) => {
+      if (res.status === 'fulfilled') {
+        allFailed = false;
+        allBooks.push(...res.value);
+      } else {
+        errors.push(`${providers[i].name} failed: ${res.reason}`);
+      }
+    });
+
+    if (allFailed) {
+      return err(`All book providers failed. ${errors.join(' | ')}`);
     }
 
-    const jsonRes = await ResultAsync.fromPromise(response.json(), () => 'Failed to parse JSON response');
-    if (jsonRes.isErr()) return err(jsonRes.error);
-    
-    const data = jsonRes.value;
-    if (!data.items || data.items.length === 0) return err('No results found for that query.');
-    
-    return ok(data.items.map((r: any) => {
-      const vol = r.volumeInfo || {};
-      let coverUrl = '';
-      if (vol.imageLinks?.thumbnail) {
-        coverUrl = vol.imageLinks.thumbnail.replace('http:', 'https:');
-      }
-      return {
-        title: vol.title || '',
-        tagline: vol.subtitle || '',
-        author: vol.authors ? vol.authors.join(', ') : '',
-        publisher: vol.publisher || '',
-        description: vol.description || '',
-        coverUrl
-      };
-    }));
+    if (allBooks.length === 0) {
+      return err('No results found for that query.');
+    }
+
+    return ok(allBooks);
   }
 
   async searchTmdb(title: string, isMovie: boolean, apiKey: string): Promise<Result<SearchResult[], string>> {

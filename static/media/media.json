@@ -452,10 +452,10 @@
     "rating": 6,
     "status": "wishlist",
     "title": "Pokémon: The Origin of Species.",
-    "subtitle": "Maybe this ratfic will be better written...",
     "description": "",
     "notes": "",
-    "poster_image": ""
+    "private_notes": "",
+    "poster_image": "book_pokemon_origin_of_species"
   },
   {
     "id": "va-11_hall-a_cyberpunk_bartender_action",
@@ -489,17 +489,6 @@
     "description": "Lucas Pope\nLost at sea 1803 ~ The good ship Obra Dinn.",
     "notes": "",
     "poster_image": "game_return_of_the_obra_dinn"
-  },
-  {
-    "id": "watch_dogs_",
-    "type": "game",
-    "rating": 6,
-    "status": "wishlist",
-    "title": "Watch_Dogs™ (with graphic mods)",
-    "tagline": "",
-    "description": "In today's hyper-connected world, Chicago operates under ctOS, the most advanced computer network in America.",
-    "notes": "",
-    "poster_image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/243470/library_600x900_2x.jpg"
   },
   {
     "id": "the_coffin_of_andy_and_leyley",
@@ -1338,8 +1327,8 @@
   {
     "id": "the_cuckoo_egg_book",
     "type": "book",
-    "rating": 5,
-    "status": "wishlist",
+    "rating": 6,
+    "status": "consuming",
     "title": "The Cuckoo's Egg",
     "tagline": "",
     "description": "Clifford Stoll",
@@ -1433,5 +1422,20 @@
     "tags": [],
     "author": "corru.works",
     "publisher": ""
+  },
+  {
+    "id": "the_thing",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "The Thing",
+    "tagline": "",
+    "description": "A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.",
+    "notes": "",
+    "private_notes": "Recommended by Adit",
+    "poster_image": "movie_the_thing",
+    "tags": [],
+    "author": "John Carpenter",
+    "publisher": "Universal Pictures, The Turman-Foster Company"
   }
 ]

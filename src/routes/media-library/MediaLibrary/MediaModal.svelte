@@ -118,8 +118,8 @@
   .ml-modal-poster {
     overflow: hidden;
     background: oklch(0.2329 0.0095 285.64);
-    aspect-ratio: 2/3;
     width: 100%;
+    border-radius: 8px;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
@@ -130,13 +130,13 @@
 
   .ml-modal-poster img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    display: block;
   }
 
   .ml-poster-fallback {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 2/3;
     display: flex;
     align-items: center;
     justify-content: center;

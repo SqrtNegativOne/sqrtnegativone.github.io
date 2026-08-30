@@ -12,10 +12,6 @@
     "notes": "f85c7cad37252ed4f64668e0:457316475a7ff072eabadf0e45d627a7:b4f5ee23eba8b5a213f8b8be603e4fae551f0406db354918da7196cbb038a3ac5b23c1b7b5f95fddef139e9506c1b3e0125f64fd452eff500f6b9cdeadcf62dac0f4e7f480525338ecc39bd891502bb4d6b17c6893d1b9"
   },
   {
-    "id": "watch_dogs_",
-    "notes": "08fb64e531c30d43f9dee6cf:4d8dd8be3eecf6eb80a00a5c6fe8b1db:aa3969bf510cdc6ce29c52326037cfd3769c44fe"
-  },
-  {
     "id": "frostpunk",
     "notes": "c358a37c780c7b205e94b2ff:b00a6b34b91104baadf36894dab52f97:ab248dcca78ae4118b972c5284f4b2e98887e1cda86fc25c1b7972cefc4fd97d1b98fab5b5c7d4ea609810408b25a47fa8"
   },
@@ -30,5 +26,9 @@
   {
     "id": "playtime",
     "notes": "a21430c7aea291978ce76038:237f291c42f7a847808bb90c5250566a:a09acf68027dd02bd9baf37cdff7cb9745bab6bbf8"
+  },
+  {
+    "id": "the_thing",
+    "notes": "Recommended by Adit"
   }
 ]
