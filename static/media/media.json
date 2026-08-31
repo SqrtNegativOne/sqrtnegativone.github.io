@@ -475,9 +475,11 @@
     "status": "shelved",
     "title": "A Brief History of Time",
     "tagline": "Only time (whatever that may be) will tell.",
-    "description": "Stephen Hawking",
+    "description": "A landmark volume in science writing by one of the great minds of our time, Stephen Hawking’s book explores such profound questions as: How did the universe begin—and what made its start possible? Does time always flow forward? Is the universe unending—or are there boundaries? Are there other dimensions in space? What will happen when it all ends?Told in language we all can understand,&#xa0;A Brief History of Time&#xa0;plunges into the exotic realms of black holes and quarks, of antimatter and “arrows of time,” of the big bang and a bigger God—where the possibilities are wondrous and unexpected. With exciting images and profound imagination, Stephen Hawking brings us closer to the ultimate secrets at the very heart of creation.",
     "notes": "",
-    "poster_image": "book_a_brief_history_of_time"
+    "private_notes": "",
+    "poster_image": "book_a_brief_history_of_time",
+    "author": "Stephen Hawking"
   },
   {
     "id": "return_of_the_obra_dinn",
@@ -839,12 +841,13 @@
   {
     "id": "24",
     "type": "show",
-    "rating": 3,
+    "rating": 2.5,
     "status": "dropped",
     "title": "24 (S1)",
     "tagline": "Generic, deus ex machina machine that just doesn't work today.",
     "description": "Counterterrorism agent Jack Bauer fights the bad guys of the world, a day at a time. With each week's episode unfolding in real-time, \"24\" covers a single day in the life of Bauer each season.",
     "notes": "",
+    "private_notes": "",
     "poster_image": "show_24"
   },
   {
@@ -861,12 +864,13 @@
   {
     "id": "celeste",
     "type": "game",
-    "rating": 5,
+    "rating": 5.5,
     "status": "finished",
     "title": "Celeste",
     "tagline": "Trans People Can Double Jump",
     "description": "Maddy Makes Games Inc.\n\nHelp Madeline survive her inner demons on her journey to the top of Celeste Mountain, in this super-tight platformer from the creators of TowerFall. Brave hundreds of hand-crafted challenges, uncover devious secrets, and piece together the mystery of the mountain.",
     "notes": "",
+    "private_notes": "",
     "poster_image": "game_celeste"
   },
   {
@@ -1437,5 +1441,50 @@
     "tags": [],
     "author": "John Carpenter",
     "publisher": "Universal Pictures, The Turman-Foster Company"
+  },
+  {
+    "id": "blindsight",
+    "type": "book",
+    "rating": 6.5,
+    "status": "wishlist",
+    "title": "Blindsight",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_blindsight",
+    "tags": [],
+    "author": "Peter Watts",
+    "publisher": ""
+  },
+  {
+    "id": "the_night_of",
+    "type": "show",
+    "rating": 4.5,
+    "status": "finished",
+    "title": "The Night Of",
+    "tagline": "",
+    "description": "After a night of partying with a female stranger, a man wakes up to find her stabbed to death and is charged with her murder.",
+    "notes": "Very slow; could be more interesting. Some arcs don't make any sense. But I liked the grittyness.",
+    "private_notes": "",
+    "poster_image": "show_the_night_of",
+    "tags": [],
+    "author": "Richard Price, Steven Zaillian",
+    "publisher": "Film Rites, Bad Wolf, BBC Worldwide Productions, HBO"
+  },
+  {
+    "id": "awaria",
+    "type": "game",
+    "rating": 5,
+    "status": "finished",
+    "title": "Awaria",
+    "tagline": "",
+    "description": "Awaria is a short game about working in haunted maintenance tunnels.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "game_awaria",
+    "tags": [],
+    "author": "vanripper",
+    "publisher": "vanripper"
   }
 ]

@@ -16,6 +16,7 @@ export interface SearchResult { title?: string; tagline?: string; description?: 
 export class MediaState {
   isModalOpen = $state(false);
   isEditing = $state(false);
+  isSaving = $state(false);
   errorMsg = $state('');
   
   currentItem: MediaItem = $state({
@@ -240,13 +241,29 @@ export class MediaState {
           const appData = detailsData[item.id.toString()];
           if (appData && appData.success && appData.data) {
             const d = appData.data;
+            let coverUrl = d.header_image || '';
+            const libImageUrl2x = `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${item.id}/library_600x900_2x.jpg`;
+            const libImageUrl = `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${item.id}/library_600x900.jpg`;
+            
+            try {
+              const headRes2x = await fetch(libImageUrl2x, { method: 'HEAD', signal: AbortSignal.timeout(2000) });
+              if (headRes2x.ok) {
+                coverUrl = libImageUrl2x;
+              } else {
+                const headRes = await fetch(libImageUrl, { method: 'HEAD', signal: AbortSignal.timeout(2000) });
+                if (headRes.ok) {
+                  coverUrl = libImageUrl;
+                }
+              }
+            } catch (e) {}
+
             results.push({
               title: d.name,
               tagline: '',
               author: d.developers ? d.developers.join(', ') : '',
               publisher: d.publishers ? d.publishers.join(', ') : '',
               description: d.short_description || '',
-              coverUrl: d.header_image || ''
+              coverUrl
             });
           }
         } catch (e) {}
@@ -360,13 +377,15 @@ export class MediaState {
 
   async handleSave(e: Event) {
     e.preventDefault();
-    this.errorMsg = '';
-    let { id, type, rating, status, title, tagline, description, notes, poster_image, private_notes, tags, author, publisher } = this.currentItem;
-    
-    if (!id || !title) {
-      this.errorMsg = 'ID and Title are required';
-      return;
-    }
+    this.isSaving = true;
+    try {
+      this.errorMsg = '';
+      let { id, type, rating, status, title, tagline, description, notes, poster_image, private_notes, tags, author, publisher } = this.currentItem;
+      
+      if (!id || !title) {
+        this.errorMsg = 'ID and Title are required';
+        return;
+      }
 
     const rootRes = await ResultAsync.fromPromise(getRepoRoot(), (err) => typeof err === 'string' ? err : String(err));
     if (rootRes.isErr()) {
@@ -476,9 +495,11 @@ export class MediaState {
       this.errorMsg = savePrivateRes.error.message;
       return;
     }
-
     this.isModalOpen = false;
     await invalidateAll();
+    } finally {
+      this.isSaving = false;
+    }
   }
 
   async handleDelete(id: string) {
@@ -486,6 +507,18 @@ export class MediaState {
     this.errorMsg = '';
     
     let items = (await readData<MediaItem>('../../static/media/media.json')).unwrapOr([] as any[]);
+    const itemToDelete = items.find(i => i.id === id);
+    
+    if (itemToDelete && itemToDelete.poster_image && !itemToDelete.poster_image.startsWith('http') && !itemToDelete.poster_image.startsWith('data:')) {
+      const rootRes = await ResultAsync.fromPromise(getRepoRoot(), () => '');
+      if (rootRes.isOk() && rootRes.value) {
+        const root = rootRes.value;
+        const posterBase = `${root}/static/media/media-posters/${itemToDelete.poster_image}`;
+        await ResultAsync.fromPromise(invoke('unlink', { path: `${posterBase}.avif` }), () => {});
+        await ResultAsync.fromPromise(invoke('unlink', { path: `${posterBase}.jpg` }), () => {});
+      }
+    }
+
     items = items.filter(i => i.id !== id);
     const writeRes = await writeData('../../static/media/media.json', items);
     if (writeRes.isErr()) {

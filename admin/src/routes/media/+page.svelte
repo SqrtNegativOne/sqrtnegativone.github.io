@@ -49,6 +49,7 @@
   isEditing={state.isEditing}
   bind:currentItem={state.currentItem}
   isSearching={state.isSearching}
+  isSaving={state.isSaving}
   searchError={state.searchError}
   handleSearch={() => state.handleSearch()}
   handlePaste={(e: ClipboardEvent) => state.handlePaste(e)}

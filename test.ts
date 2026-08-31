@@ -1,0 +1,1 @@
+fetch('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3394230/library_600x900_2x.jpg', {method: 'HEAD'}).then(r => console.log('2x:', r.status)); fetch('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3394230/library_600x900.jpg', {method: 'HEAD'}).then(r => console.log('1x:', r.status));
