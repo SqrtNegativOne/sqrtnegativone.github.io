@@ -61,7 +61,7 @@ fn get_repo_root() -> Result<String, String> {
             }
         }
     }
-    
+
     // Fallback to current_exe
     if let Ok(mut current) = std::env::current_exe() {
         current.pop(); // remove executable name
@@ -74,13 +74,14 @@ fn get_repo_root() -> Result<String, String> {
             }
         }
     }
-    
+
     // Absolute fallback for the developer's specific machine in case it's installed globally via MSI
-    let hardcoded = std::path::Path::new("C:\\Users\\arkma\\Documents\\GitHub\\sqrtnegativone.github.io");
+    let hardcoded =
+        std::path::Path::new("C:\\Users\\arkma\\Documents\\GitHub\\sqrtnegativone.github.io");
     if hardcoded.join("eleventy.config.js").exists() {
         return Ok(hardcoded.to_string_lossy().to_string());
     }
-    
+
     Err("Could not find repo root".to_string())
 }
 
@@ -95,22 +96,37 @@ fn convert_image_to_avif(path: String) -> Result<String, String> {
     } else {
         path.clone()
     };
-    
+
     if path == output_path {
         return Ok(path);
     }
+
+    let mut cmd = std::process::Command::new("ffmpeg");
+    cmd.args([
+        "-y", 
+        "-i", &path, 
+        "-c:v", "libaom-av1", 
+        "-still-picture", "1", 
+        "-cpu-used", "8", 
+        &output_path
+    ]);
     
-    let status = std::process::Command::new("ffmpeg")
-        .args(["-y", "-i", &path, &output_path])
+    #[cfg(target_os = "windows")]
+    {
+        use std::os::windows::process::CommandExt;
+        cmd.creation_flags(0x08000000); // CREATE_NO_WINDOW
+    }
+    
+    let status = cmd
         .status()
         .map_err(|e| e.to_string())?;
-        
+
     if !status.success() {
         return Err("ffmpeg conversion failed".to_string());
     }
-    
+
     let _ = std::fs::remove_file(&path);
-    
+
     Ok(output_path)
 }
 
@@ -120,7 +136,7 @@ fn fetch_url(url: String) -> Result<String, String> {
         .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
         .build()
         .map_err(|e| e.to_string())?;
-    
+
     let res = client.get(&url).send().map_err(|e| e.to_string())?;
     let text = res.text().map_err(|e| e.to_string())?;
     Ok(text)
@@ -132,41 +148,71 @@ fn fetch_binary(url: String) -> Result<Vec<u8>, String> {
         .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
         .build()
         .map_err(|e| e.to_string())?;
-    
+
     let res = client.get(&url).send().map_err(|e| e.to_string())?;
     let bytes = res.bytes().map_err(|e| e.to_string())?;
     Ok(bytes.to_vec())
 }
 
+#[tauri::command]
+fn download_and_save_image(url: String, path: String) -> Result<(), String> {
+    if let Some(parent) = Path::new(&path).parent() {
+        let _ = fs::create_dir_all(parent);
+    }
+    let client = reqwest::blocking::Client::builder()
+        .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
+        .build()
+        .map_err(|e| e.to_string())?;
+
+    let res = client.get(&url).send().map_err(|e| e.to_string())?;
+    let bytes = res.bytes().map_err(|e| e.to_string())?;
+    fs::write(&path, &bytes).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[tauri::command]
+fn save_base64_image(path: String, base64_content: String) -> Result<(), String> {
+    if let Some(parent) = Path::new(&path).parent() {
+        let _ = fs::create_dir_all(parent);
+    }
+    use base64::{engine::general_purpose::STANDARD, Engine as _};
+    let bytes = STANDARD
+        .decode(&base64_content)
+        .map_err(|e| e.to_string())?;
+    fs::write(&path, &bytes).map_err(|e| e.to_string())?;
+    Ok(())
+}
 
 /// # Panics
 /// Panics if the tauri application fails to build or run.
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-  tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![
-        read_file,
-        write_file,
-        read_dir,
-        mkdir,
-        unlink,
-        access,
-        write_file_binary,
-        get_repo_root,
-        convert_image_to_avif,
-        fetch_url,
-        fetch_binary
-    ])
-    .setup(|app| {
-      if cfg!(debug_assertions) {
-        app.handle().plugin(
-          tauri_plugin_log::Builder::default()
-            .level(log::LevelFilter::Info)
-            .build(),
-        )?;
-      }
-      Ok(())
-    })
-    .run(tauri::generate_context!())
-    .expect("error while running tauri application");
+    tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![
+            read_file,
+            write_file,
+            read_dir,
+            mkdir,
+            unlink,
+            access,
+            write_file_binary,
+            get_repo_root,
+            convert_image_to_avif,
+            fetch_url,
+            fetch_binary,
+            download_and_save_image,
+            save_base64_image
+        ])
+        .setup(|app| {
+            if cfg!(debug_assertions) {
+                app.handle().plugin(
+                    tauri_plugin_log::Builder::default()
+                        .level(log::LevelFilter::Info)
+                        .build(),
+                )?;
+            }
+            Ok(())
+        })
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 }

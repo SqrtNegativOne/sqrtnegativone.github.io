@@ -37,15 +37,16 @@
       <span class="ml-row-sub">
         {#if item.author || item.publisher}
           <span class="truncate font-medium text-[oklch(0.8_0.03_256)]">{[item.author, item.publisher].filter(Boolean).join(' • ')}</span>
-          {#if item.tagline}
-            <span class="opacity-50 mx-1">•</span>
-          {/if}
         {/if}
-        {#if item.tagline}
-          <span class="truncate italic">{item.tagline}</span>
-        {/if}
-        {#if item.notes}
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 shrink-0 ml-1"><title>Has notes</title><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
+        {#if item.tagline || item.notes}
+          <span class="ml-row-tagline-group">
+            {#if item.tagline}
+              <span class="truncate italic">{item.tagline}</span>
+            {/if}
+            {#if item.notes}
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 shrink-0"><title>Has notes</title><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
+            {/if}
+          </span>
         {/if}
       </span>
     {/if}
@@ -72,19 +73,27 @@
 
   .ml-row-title {
     display: block;
-    font-family: "Manrope", system-ui, sans-serif;
+    font-family: "PT Sans Narrow", system-ui, sans-serif;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: -0.005em;
   }
 
   .ml-row-sub {
     display: flex;
-    align-items: center;
-    gap: 6px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
     font-size: 14px;
     color: oklch(0.6363 0.0133 286.02);
-    margin-top: 2px;
+    margin-top: 4px;
+  }
+
+  .ml-row-tagline-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
   }
 
   .ml-row-title-container {

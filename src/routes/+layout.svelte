@@ -18,9 +18,8 @@
   import "@fontsource/ibm-plex-mono/300.css";
   import "@fontsource/ibm-plex-mono/400.css";
   import "@fontsource/instrument-serif/400.css";
-  import "@fontsource/manrope/400.css";
-  import "@fontsource/manrope/500.css";
-  import "@fontsource/manrope/600.css";
+  import "@fontsource/pt-sans-narrow/400.css";
+  import "@fontsource/pt-sans-narrow/700.css";
   import "@fontsource/datatype/400.css";
 
   import { page } from "$app/stores";
@@ -85,7 +84,7 @@
     {#if showPortrait}
       <div class="portrait-column">
         <HalftoneImage
-          src="/portraits/tower.jpg"
+          src="/portraits/tower.webp"
           alt="Ark Malhotra portrait"
           class="portrait"
         />

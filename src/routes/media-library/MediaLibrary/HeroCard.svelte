@@ -9,8 +9,6 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <article class="ml-hero-card" onclick={() => openDetails(item)}>
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div class="ml-poster ml-poster--lg">
     {#if item.poster_image}
       <img src={getPosterUrl(item.poster_image as string)} alt="" loading="lazy" />
@@ -53,7 +51,7 @@
 
   .ml-hero-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 16px 40px oklch(0 0 0 / 0.6), 0 0 0 1px oklch(1 1 1 / 0.1);
+    box-shadow: 0 16px 40px oklch(0 0 0 / 0.6);
   }
 
   .ml-hero-meta {

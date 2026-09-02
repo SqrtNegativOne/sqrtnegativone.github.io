@@ -138,10 +138,7 @@
           <input id="skill-name" type="text" bind:value={currentItem.name} class="input-field" required />
         </div>
         
-        <div class="space-y-2">
-          <label for="skill-icon" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Icon (e.g. devicon class)</label>
-          <input id="skill-icon" type="text" bind:value={currentItem.icon} class="input-field" />
-        </div>
+
         
         <div class="space-y-2">
           <label for="skill-logo" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Logo Path</label>

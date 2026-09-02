@@ -13,18 +13,11 @@
         <span class="skill-index">
           {String(i + 1).padStart(2, "0")}
         </span>
-        {#if skill.logo}
-          <span
-            class="skill-icon skill-icon--logo"
-            style="-webkit-mask-image: url({skill.logo}); mask-image: url({skill.logo});"
-            aria-hidden="true"
-          ></span>
-        {:else}
-          <i
-            class="{skill.icon} {skill.mono ? '' : 'colored'} skill-icon"
-            aria-hidden="true"
-          ></i>
-        {/if}
+        <span
+          class="skill-icon skill-icon--logo"
+          style="-webkit-mask-image: url({skill.logo}); mask-image: url({skill.logo});"
+          aria-hidden="true"
+        ></span>
         <span class="skill-name">{skill.name}</span>
       </div>
     {/each}

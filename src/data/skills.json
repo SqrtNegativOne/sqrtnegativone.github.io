@@ -1,17 +1,65 @@
 [
-  { "name": "C", "icon": "devicon-c-plain" },
-  { "name": "C++", "icon": "devicon-cplusplus-plain" },
-  { "name": "Python", "icon": "devicon-python-plain" },
-  { "name": "CSS", "icon": "devicon-css3-plain" },
-  { "name": "JavaScript", "icon": "devicon-javascript-plain" },
-  { "name": "FastAPI", "icon": "devicon-fastapi-plain" },
-  { "name": "LangChain", "logo": "/logos/langchain.svg", "mono": true },
-  { "name": "PydanticAI", "logo": "/logos/pydantic.svg", "mono": true },
-  { "name": "Figma", "icon": "devicon-figma-plain" },
-  { "name": "Docker", "icon": "devicon-docker-plain" },
-  { "name": "Git", "icon": "devicon-git-plain" },
-  { "name": "Vim", "icon": "devicon-vim-plain" },
-  { "name": "Pandas", "icon": "devicon-pandas-plain", "mono": true },
-  { "name": "Matplotlib", "icon": "devicon-matplotlib-plain" },
-  { "name": "PyTorch", "icon": "devicon-pytorch-plain" }
+  {
+    "name": "C",
+    "logo": "/logos/c.svg"
+  },
+  {
+    "name": "C++",
+    "logo": "/logos/cplusplus-plain.svg"
+  },
+  {
+    "name": "Python",
+    "logo": "/logos/python-plain.svg"
+  },
+  {
+    "name": "CSS",
+    "logo": "/logos/css3-plain.svg"
+  },
+  {
+    "name": "JavaScript",
+    "logo": "/logos/javascript-plain.svg"
+  },
+  {
+    "name": "FastAPI",
+    "logo": "/logos/fastapi-plain.svg"
+  },
+  {
+    "name": "LangChain",
+    "logo": "/logos/langchain.svg",
+    "mono": true
+  },
+  {
+    "name": "PydanticAI",
+    "logo": "/logos/pydantic.svg",
+    "mono": true
+  },
+  {
+    "name": "Figma",
+    "logo": "/logos/figma-plain.svg"
+  },
+  {
+    "name": "Docker",
+    "logo": "/logos/docker-plain.svg"
+  },
+  {
+    "name": "Git",
+    "logo": "/logos/git-plain.svg"
+  },
+  {
+    "name": "Vim",
+    "logo": "/logos/vim-plain.svg"
+  },
+  {
+    "name": "Pandas",
+    "mono": true,
+    "logo": "/logos/pandas-plain.svg"
+  },
+  {
+    "name": "Matplotlib",
+    "logo": "/logos/matplotlib-plain.svg"
+  },
+  {
+    "name": "PyTorch",
+    "logo": "/logos/pytorch.svg"
+  }
 ]

@@ -201,7 +201,7 @@ export class MediaState {
         author,
         publisher,
         description: r.overview,
-        coverUrl: r.poster_path ? `https://image.tmdb.org/t/p/w500${r.poster_path}` : ''
+        coverUrl: r.poster_path ? `https://image.tmdb.org/t/p/original${r.poster_path}` : ''
       });
     }
     
@@ -403,16 +403,11 @@ export class MediaState {
       const matches = poster_image.match(/^data:image\/([a-zA-Z0-9]+);base64,(.+)$/);
       if (matches && matches.length === 3) {
         const base64Data = matches[2].replace(/ /g, '+');
-        const binaryString = atob(base64Data);
-        const bytes = new Uint8Array(binaryString.length);
-        for (let i = 0; i < binaryString.length; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-        }
         const filename = `${type}_${safeId}.jpg`;
         const filepath = `${postersDir}/${filename}`;
         
         const writeRes = await ResultAsync.fromPromise(
-          invoke('write_file_binary', { path: filepath, content: Array.from(bytes) }),
+          invoke('save_base64_image', { path: filepath, base64_content: base64Data }),
           (err) => typeof err === 'string' ? err : 'Failed to write image'
         );
         if (writeRes.isErr()) {
@@ -430,33 +425,26 @@ export class MediaState {
         poster_image = `${type}_${safeId}`;
       }
     } else if (poster_image.startsWith('http://') || poster_image.startsWith('https://')) {
-      const fetchRes = await ResultAsync.fromPromise(
-        invoke<number[]>('fetch_binary', { url: poster_image }),
-        (err) => typeof err === 'string' ? err : 'Failed to fetch image via backend'
+      const filename = `${type}_${safeId}.jpg`;
+      const filepath = `${postersDir}/${filename}`;
+      
+      const writeRes = await ResultAsync.fromPromise(
+        invoke('download_and_save_image', { url: poster_image, path: filepath }),
+        (err) => typeof err === 'string' ? err : 'Failed to download image via backend'
       );
-      if (fetchRes.isOk()) {
-        const bytes = new Uint8Array(fetchRes.value);
-        const filename = `${type}_${safeId}.jpg`;
-        const filepath = `${postersDir}/${filename}`;
-        
-        const writeRes = await ResultAsync.fromPromise(
-          invoke('write_file_binary', { path: filepath, content: Array.from(bytes) }),
-          (err) => typeof err === 'string' ? err : 'Failed to write image'
-        );
-        if (writeRes.isErr()) {
-          this.errorMsg = writeRes.error;
-          return;
-        }
-        const convertRes = await ResultAsync.fromPromise(
-          invoke('convert_image_to_avif', { path: filepath }),
-          (err) => typeof err === 'string' ? err : 'Failed to convert image'
-        );
-        if (convertRes.isErr()) {
-          this.errorMsg = convertRes.error;
-          return;
-        }
-        poster_image = `${type}_${safeId}`;
+      if (writeRes.isErr()) {
+        this.errorMsg = writeRes.error;
+        return;
       }
+      const convertRes = await ResultAsync.fromPromise(
+        invoke('convert_image_to_avif', { path: filepath }),
+        (err) => typeof err === 'string' ? err : 'Failed to convert image'
+      );
+      if (convertRes.isErr()) {
+        this.errorMsg = convertRes.error;
+        return;
+      }
+      poster_image = `${type}_${safeId}`;
     }
 
     const items = (await readData<MediaItem>('../../static/media/media.json')).unwrapOr([] as any[]);
