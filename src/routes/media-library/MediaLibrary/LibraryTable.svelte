@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LibraryRow from "./LibraryRow.svelte";
+  import LibraryRow from "../../../../shared/components/LibraryRow.svelte";
 
   let { items, sorts, toggleSort, openDetails, openFullPoster } = $props<{
     items: Record<string, unknown>[];

@@ -1,12 +1,12 @@
 <script lang="ts">
   import { TYPE_LABEL } from "./constants";
-  import RatingChart from "../../../../shared/components/RatingChart.svelte";
+  import RatingChart from "./RatingChart.svelte";
 
-  import StatusBadge from "../../../../shared/components/StatusBadge.svelte";
-  import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
-  import { getPosterUrl } from "$lib/utils";
+  import StatusBadge from "./StatusBadge.svelte";
+  import TypeBadge from "./TypeBadge.svelte";
+  import { getPosterUrl } from "../../src/lib/utils";
   
-  let { item, openDetails, openFullPoster } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; openFullPoster?: (url: string) => void }>();
+  let { item, openDetails, openFullPoster, resolveAsset = (url: string) => url } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; openFullPoster?: (url: string) => void; resolveAsset?: (url: string) => string }>();
 </script>
 
 
@@ -17,12 +17,12 @@
   <span role="cell" class="ml-col-poster">
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class="ml-poster ml-poster--xs" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(getPosterUrl(item.poster_image as string)); } }}>
+    <div class="ml-poster ml-poster--xs" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(resolveAsset(getPosterUrl(item.poster_image as string))); } }}>
       {#if item.poster_image}
-        <img src={getPosterUrl(item.poster_image as string)} alt="" loading="lazy" />
+        <img src={resolveAsset(getPosterUrl(item.poster_image as string))} alt="" loading="lazy" />
       {:else}
         <div class="ml-poster-fallback">
-          <span>{TYPE_LABEL[item.type] || item.type}</span>
+          <span>{TYPE_LABEL[item.type as string] || item.type}</span>
         </div>
       {/if}
     </div>

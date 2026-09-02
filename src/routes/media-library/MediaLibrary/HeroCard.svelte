@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { TYPE_LABEL } from "./constants";
+  import { TYPE_LABEL } from "../../../../shared/components/constants";
+  import RatingChart from "../../../../shared/components/RatingChart.svelte";
   import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   import { getPosterUrl } from "$lib/utils";
   

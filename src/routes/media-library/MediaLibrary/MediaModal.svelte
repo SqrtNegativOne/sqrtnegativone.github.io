@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TYPE_LABEL } from "./constants";
+  import { TYPE_LABEL } from "../../../../shared/components/constants";
   import RatingChart from "../../../../shared/components/RatingChart.svelte";
 
   import StatusBadge from "../../../../shared/components/StatusBadge.svelte";
