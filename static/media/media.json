@@ -126,20 +126,24 @@
     "rating": 6,
     "status": "finished",
     "title": "The Martian",
-    "description": "",
-    "poster_image": "book_the_martian",
+    "tagline": "How come Aquaman can control whales? They're mammals! Makes no sense.",
+    "description": "Apple Books Edition\n\n#1 NEW YORK TIMES BESTSELLER • NOW A MAJOR MOTION PICTUREA mission to Mars. A freak accident. One man’s struggle to survive. From the author of Project Hail Mary comes “a hugely entertaining novel that reads like a rocket ship afire” (Chicago Tribune).“Brilliant . . . a celebration of human ingenuity [and] the purest example of real-science sci-fi for many years . . . utterly compelling.”—The Wall Street JournalSix days ago, astronaut Mark Watney became one of the first people to walk on Mars. Now, he’s sure he’ll be the first person to die there.After a dust storm nearly kills him and forces his crew to evacuate while thinking him dead, Mark finds himself stranded and completely alone with no way to even signal Earth that he’s alive—and even if he could get word out, his supplies would be gone long before a rescue could arrive. Chances are, though, he won’t have time to starve to death. The damaged machinery, unforgiving environment, or plain-old “human error” are much more likely to kill him first. But Mark isn’t ready to give up yet. Drawing on his ingenuity, his engineering skills—and a relentless, dogged refusal to quit—he steadfastly confronts one seemingly insurmountable obstacle after the next. Will his resourcefulness be enough to overcome the impossible odds against him? NAMED ONE OF PASTE’S BEST NOVELS OF THE DECADE“As gripping as they come . . . You’ll be rooting for Watney the whole way, groaning at every setback and laughing at his pitchblack humor. Utterly nail-biting and memorable.”—Financial Times",
     "notes": "Science Guy Solves Science Puzzles... In Space! also he's really funny\n\nMy favourite was when the main character had to hide out in his car away from his hub because of a chemical reaction gone awry, and when he rides through craters dust storm with no satellite.",
-    "tagline": "How come Aquaman can control whales? They're mammals! Makes no sense."
+    "private_notes": "",
+    "poster_image": "book_the_martian",
+    "author": "Andy Weir"
   },
   {
     "id": "the_myth_of_sisyphus_and_other_essays",
     "type": "book",
     "rating": 6,
     "status": "wishlist",
-    "title": "The Myth of Sisyphus and Other Essays",
-    "description": "",
+    "title": "The Myth of Sisyphus",
+    "tagline": "",
+    "description": "A Nobel Prize-winning author delivers one of the most influential works of the twentieth century, showing a way out of despair and reaffirming the value of existence.Influenced by works such as Don Juan and the novels of Kafka, these essays begin with a meditation on suicide—the question of living or not living in a universe devoid of order or meaning. With lyric eloquence, Albert Camus brilliantly presents a crucial exposition of existentialist thought.",
+    "private_notes": "",
     "poster_image": "book_the_myth_of_sisyphus_and_other_essays",
-    "tagline": "Albert Camus"
+    "author": "Albert Camus"
   },
   {
     "id": "the_last_of_us_s1",
@@ -266,10 +270,13 @@
     "rating": 5,
     "status": "finished",
     "title": "The Hollow Man",
-    "description": "",
-    "poster_image": "book_the_hollow_man",
+    "tagline": "Carr's masterpiece",
+    "description": "The murderer of Dr Grimauld walked through a locked door, shot his victim and vanished. He killed his second victim in the middle of an empty street, with watchers at each end, yet nobody saw him, and he left no footprints in the snow. And so it is up to the irrepressible, larger-than-life Dr Gideon Fell to solve this most famous and taxing of locked-room mysteries.",
     "notes": "Too unfair. But deserves a shelf in a murder mystery fan's basement for its excellent dissection of the locked room.",
-    "tagline": "Carr's masterpiece"
+    "private_notes": "",
+    "poster_image": "book_the_hollow_man",
+    "author": "John Dickson Carr",
+    "publisher": "Hachette UK"
   },
   {
     "id": "danganronpa_trigger_happy_havoc",
@@ -388,9 +395,11 @@
     "status": "wishlist",
     "title": "The Quantum Thief",
     "tagline": "Apparently puts the Hard in Hard Sci-fi.",
-    "description": "",
+    "description": "Apple Books Edition\n\n\"A stellar debut\" with \"elegant worldbuilding,\" this sci-fi fantasy features a hunted thief challenged to complete a heist on Mars (Publishers Weekly, starred review).\n   Jean le Flambeur is a post-human criminal, mind burglar, confidence artist, and trickster. His origins are shrouded in mystery, but his exploits are known throughout the Heterarchy—from breaking into the vast Zeusbrains of the Inner System to stealing rare Earth antiques from the aristocrats of Mars. Now he's confined inside the Dilemma Prison, where every day he has to get up and kill himself before his other self can kill him.\n   \n   Rescued by the mysterious Mieli and her flirtatious spacecraft, Jean is taken to the Oubliette, the Moving City of Mars, where time is currency, memories are treasures, and a moon-turned singularity lights the night. What Mieli offers is the chance to win back his freedom and the powers of his old self-in exchange for finishing the one heist he never quite managed.\n   \n   As Jean undertakes a series of capers on behalf of Mieli and her mysterious masters, elsewhere in the Oubliette investigator Isidore Beautrelet is called in to investigate the murder of a chocolatier, and finds himself on the trail of an arch-criminal, a man named le Flambeur.&#xa0;.&#xa0;.&#xa0;. \n   \n   Hannu Rajaniemi's The Quantum Thief is a crazy joyride through the solar system several centuries hence. But for all its wonders, it is also a story powered by very human motives of betrayal, revenge, and jealousy. It is a stunning debut.\n   \n   \"The next big thing in hard SF.\" —Charles Stross, Hugo Award–winning author of the Laundry Files series\n   \n   \"Brilliant.\" —John Clute",
     "notes": "Highly recommended by Gwern.",
-    "poster_image": "book_the_quantum_thief"
+    "private_notes": "",
+    "poster_image": "book_the_quantum_thief",
+    "author": "Hannu Rajaniemi"
   },
   {
     "id": "the_fifth_science",
@@ -1326,10 +1335,11 @@
     "status": "finished",
     "title": "Moonwalking with Einstein",
     "tagline": "Journalism at its best",
-    "description": "Joshua Foer\n'Be prepared to be amazed' Guardian Can anyone get a perfect memory? Joshua Foer used to be like most of us, forgetting phone numbers and mislaying keys. Then he learnt the art of memory training, and a year later found himself in the finals of the US Memory Championship. He also discovered a truth we often forget: that, even in an age of technology, memory is the key to everything we are. In Moonwalking with Einstein he takes us on an astonishing journey through the mind, from ancient 'memory palace' techniques to neuroscience, from the man who can recall nine thousand books to another who constantly forgets who he is. In doing so, Foer shows how we can all improve our memories. 'Captivating ... engaging ... smart and funny' The New York Times 'Delightful ... uplifting ... it shows that our minds can do extraordinary things' Wall Street Journal 'Great fun ... a book worth remembering' Independent 'A lovely exploration of the ways that we preserve our lives and our world in the golden amber of human memory' New Scientist",
+    "description": "Moonwalking with Einstein recounts Joshua Foer's yearlong quest to improve his memory under the tutelage of top \"mental athletes.\" He draws on cutting-edge research, a surprising cultural history of remembering, and venerable tricks of the mentalist's trade to transform our understanding of human memory. From the United States Memory Championship to deep within the author's own mind, this is an electrifying work of journalism that reminds us that, in every way that matters, we are the sum of our memories.",
     "notes": "Fun read",
     "private_notes": "",
-    "poster_image": "book_moonwalking_with_einstein"
+    "poster_image": "book_moonwalking_with_einstein",
+    "author": "Joshua Foer"
   },
   {
     "id": "the_cuckoo_egg_book",
@@ -1533,7 +1543,7 @@
     "poster_image": "movie_the_death_of_stalin",
     "tags": [],
     "author": "Armando Iannucci",
-    "publisher": "Gaumont, Quad Productions, Main Journey, France 3 Cinéma, La Compagnie Cinématographique, Panache Productions, AFPI, Title Media, Free Range Films"
+    "publisher": ""
   },
   {
     "id": "citizen_kane",
@@ -1594,5 +1604,20 @@
     "tags": [],
     "author": "Stanley Kubrick",
     "publisher": "Stanley Kubrick Productions, Metro-Goldwyn-Mayer"
+  },
+  {
+    "id": "person_of_interest",
+    "type": "show",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Person of Interest",
+    "tagline": "",
+    "description": "John Reese, former CIA paramilitary operative, is presumed dead and teams up with reclusive billionaire Finch to prevent violent crimes in New York City by initiating their own type of justice. With the special training that Reese has had in Covert Operations and Finch's genius software inventing mind, the two are a perfect match for the job that they have to complete. With the help of surveillance equipment, they work \"outside the law\" and get the right criminal behind bars. ",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "show_person_of_interest",
+    "tags": [],
+    "author": "Jonathan Nolan",
+    "publisher": "Kilter Films, Bad Robot, Warner Bros. Television, Bonanza Productions"
   }
 ]
