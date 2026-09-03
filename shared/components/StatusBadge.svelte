@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { icons } from '../../src/lib/icons';
+  import { icons } from '../icons';
   let { status } = $props<{ status: string }>();
 
   let color = $derived.by(() => {

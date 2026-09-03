@@ -1,12 +1,12 @@
-export function applyFilters<T extends Record<string, any>>(items: T[], filters: { property: string, operator: string, value: any }[], searchQuery: string) {
+export function applyFilters<T extends Record<string, any>>(items: T[], filters: { property: string, operator: string, value: any }[], searchQuery: string): T[] {
   return items.filter(item => {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      const titleMatch = item.title?.toLowerCase().includes(q);
-      const taglineMatch = item.tagline?.toLowerCase().includes(q);
-      const authorMatch = item.author?.toLowerCase().includes(q);
-      const publisherMatch = item.publisher?.toLowerCase().includes(q);
-      const idMatch = item.id?.toLowerCase().includes(q);
+      const titleMatch = typeof item.title === 'string' && item.title.toLowerCase().includes(q);
+      const taglineMatch = typeof item.tagline === 'string' && item.tagline.toLowerCase().includes(q);
+      const authorMatch = typeof item.author === 'string' && item.author.toLowerCase().includes(q);
+      const publisherMatch = typeof item.publisher === 'string' && item.publisher.toLowerCase().includes(q);
+      const idMatch = typeof item.id === 'string' && item.id.toLowerCase().includes(q);
       if (!titleMatch && !taglineMatch && !authorMatch && !publisherMatch && !idMatch) return false;
     }
     
@@ -26,7 +26,7 @@ export function applyFilters<T extends Record<string, any>>(items: T[], filters:
   });
 }
 
-export function applySorts<T extends Record<string, any>>(items: T[], sorts: { property: string, direction: 'asc' | 'desc' }[]) {
+export function applySorts<T extends Record<string, any>>(items: T[], sorts: { property: string, direction: 'asc' | 'desc' }[]): T[] {
   if (sorts.length === 0) return items; // no sorts applied
 
   return [...items].sort((a, b) => {

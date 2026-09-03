@@ -4,9 +4,7 @@
   import ProjectCard from './ProjectCard.svelte';
   import ProjectModal from './ProjectModal.svelte';
 
-  interface ProjectItem {
-    id: string; name: string; description: string; tags: string[]; github?: string | null; url?: string | null; image?: string | null; private?: boolean;
-  }
+  import type { ProjectItem } from '../../../../shared/types';
   
   interface ProjectFormItem {
     id: string; name: string; description: string; tags: string; github: string; url: string; image: string; private: boolean;

@@ -4,9 +4,10 @@
 
   import StatusBadge from "./StatusBadge.svelte";
   import TypeBadge from "./TypeBadge.svelte";
-  import { getPosterUrl } from "../../src/lib/utils";
+  import { getPosterUrl } from "../utils/getPosterUrl";
+  import type { MediaItem } from "../types";
   
-  let { item, openDetails, openFullPoster, resolveAsset = (url: string) => url } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; openFullPoster?: (url: string) => void; resolveAsset?: (url: string) => string }>();
+  let { item, openDetails, openFullPoster, resolveAsset = (url: string) => url } = $props<{ item: MediaItem | Record<string, unknown>; openDetails: (item: any) => void; openFullPoster?: (url: string) => void; resolveAsset?: (url: string) => string }>();
 </script>
 
 

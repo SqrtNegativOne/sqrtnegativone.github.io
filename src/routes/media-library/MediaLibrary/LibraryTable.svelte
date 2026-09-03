@@ -1,11 +1,12 @@
 <script lang="ts">
   import LibraryRow from "../../../../shared/components/LibraryRow.svelte";
+  import type { MediaItem } from "../../../../shared/types";
 
   let { items, sorts, toggleSort, openDetails, openFullPoster } = $props<{
-    items: Record<string, unknown>[];
+    items: MediaItem[];
     sorts: { property: string; direction: 'asc' | 'desc' }[];
     toggleSort: (column: string) => void;
-    openDetails: (item: Record<string, unknown>) => void;
+    openDetails: (item: MediaItem) => void;
     openFullPoster?: (url: string) => void;
   }>();
 </script>

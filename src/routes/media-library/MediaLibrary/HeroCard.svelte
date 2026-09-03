@@ -1,10 +1,10 @@
 <script lang="ts">
   import { TYPE_LABEL } from "../../../../shared/components/constants";
-  import RatingChart from "../../../../shared/components/RatingChart.svelte";
   import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
   import { getPosterUrl } from "$lib/utils";
+  import type { MediaItem } from "../../../../shared/types";
   
-  let { item, openDetails } = $props<{ item: Record<string, unknown>; openDetails: (item: Record<string, unknown>) => void; }>();
+  let { item, openDetails } = $props<{ item: MediaItem; openDetails: (item: MediaItem) => void; }>();
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->

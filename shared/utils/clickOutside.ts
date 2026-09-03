@@ -1,12 +1,18 @@
-// Helper to click outside
-export function clickOutside(node: HTMLElement, cb: () => void) {
+// Helper to click outside, supporting both mouse and touch
+export function clickOutside(node: HTMLElement, cb: (e?: Event) => void) {
   const handle = (e: Event) => {
-    if (e.target instanceof Node && !node.contains(e.target)) cb();
+    if (node && !node.contains(e.target as Node) && !e.defaultPrevented) {
+      cb(e);
+    }
   };
+
   document.addEventListener('click', handle, true);
+  document.addEventListener('touchstart', handle, true);
+
   return {
     destroy() {
       document.removeEventListener('click', handle, true);
+      document.removeEventListener('touchstart', handle, true);
     }
   };
 }

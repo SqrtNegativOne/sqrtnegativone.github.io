@@ -7,8 +7,9 @@
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { getPosterUrl } from "$lib/utils";
+  import type { MediaItem } from "../../../../shared/types";
   
-  let { item, closeDetails, openFullPoster } = $props<{ item: Record<string, unknown>; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
+  let { item, closeDetails, openFullPoster } = $props<{ item: MediaItem; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
 </script>
 
 

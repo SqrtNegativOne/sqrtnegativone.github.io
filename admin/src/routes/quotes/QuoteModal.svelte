@@ -3,9 +3,7 @@
   import { ResultAsync, okAsync, errAsync } from 'neverthrow';
   import { safeInvoke, safeJsonParse, safeUrlParse } from '$lib/utils';
 
-  interface QuoteItem {
-    id: string; quote: string; source: string; link: string; tags: string[];
-  }
+  import type { QuoteItem } from '../../../../shared/types';
 
   let { isEditing, item, tagsStr, close } = $props<{
     isEditing: boolean;

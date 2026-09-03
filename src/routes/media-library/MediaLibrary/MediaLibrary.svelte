@@ -9,25 +9,28 @@
   
   import MediaCarousel from "./MediaCarousel.svelte";
   import LibraryTable from "./LibraryTable.svelte";
+  import type { MediaItem } from "../../../../shared/types";
   
+  const typedMediaData = mediaData as unknown as MediaItem[];
+
   let searchQuery = $state("");
-  let filters = $state([]);
+  let filters = $state<{ property: string, operator: string, value: any }[]>([]);
   let sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'rating', direction: 'desc' }]);
 
   let carouselsData = $derived((() => {
-    const byRatingDesc = [...mediaData].sort((a, b) => ((b.rating as number) || 0) - ((a.rating as number) || 0));
-    const goat = byRatingDesc.filter(i => Array.isArray((i as any).tags) && (i as any).tags.includes('goat'));
+    const byRatingDesc = [...typedMediaData].sort((a, b) => ((b.rating as number) || 0) - ((a.rating as number) || 0));
+    const goat = byRatingDesc.filter(i => Array.isArray(i.tags) && i.tags.includes('goat'));
     const consuming = byRatingDesc.filter(i => i.status === "consuming");
     return { goat, consuming };
   })());
 
   let libraryData = $derived((() => {
-    const filtered = applyFilters(mediaData, filters, searchQuery);
+    const filtered = applyFilters(typedMediaData, filters, searchQuery);
     const sorted = applySorts(filtered, sorts);
     return sorted.filter(item => item.status !== "consuming");
   })());
 
-  let activeItem: Record<string, unknown> | null = $state(null);
+  let activeItem: MediaItem | null = $state(null);
   let fullPosterUrl: string | null = $state(null);
 
   function toggleSort(column: string) {
@@ -44,7 +47,7 @@
     sorts = [...sorts];
   }
 
-  function openDetails(item: Record<string, unknown>) {
+  function openDetails(item: MediaItem) {
     activeItem = item;
     document.body.style.overflow = 'hidden';
   }

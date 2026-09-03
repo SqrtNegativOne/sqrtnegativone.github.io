@@ -1,10 +1,11 @@
 <script lang="ts">
   import HeroCard from "./HeroCard.svelte";
+  import type { MediaItem } from "../../../../shared/types";
 
   let { title, items, openDetails } = $props<{
     title: string;
-    items: Record<string, unknown>[];
-    openDetails: (item: Record<string, unknown>) => void;
+    items: MediaItem[];
+    openDetails: (item: MediaItem) => void;
   }>();
 </script>
 

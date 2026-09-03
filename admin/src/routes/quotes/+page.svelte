@@ -5,9 +5,7 @@
   import QuoteCard from './QuoteCard.svelte';
   import QuoteModal from './QuoteModal.svelte';
 
-  interface QuoteItem {
-    id: string; quote: string; source: string; link: string; tags: string[];
-  }
+  import type { QuoteItem } from '../../../../shared/types';
 
   let { data } = $props();
 
@@ -50,7 +48,7 @@
   function openEdit(q: QuoteItem) {
     isEditing = true;
     currentQuote = { ...q };
-    tagsInput = q.tags.join(', ');
+    tagsInput = q.tags?.join(', ') || '';
     isModalOpen = true;
   }
 

@@ -1,23 +1,6 @@
 import { readData } from '$lib/db';
 import type { PageLoad } from './$types';
-
-interface MediaItem {
-  id: string;
-  type: string;
-  rating: number;
-  status: string;
-  title: string;
-  tagline: string;
-  description: string;
-  notes?: string;
-  poster_image: string;
-  private_notes?: string;
-}
-
-interface PrivateNoteItem {
-  id: string;
-  notes: string;
-}
+import type { MediaItem, PrivateNoteItem } from '../../../../shared/types';
 
 export const load: PageLoad = async () => {
   const mediaRes = await readData<MediaItem>('../../static/media/media.json');

@@ -3,13 +3,8 @@ import { invoke } from '@tauri-apps/api/core';
 import { getRepoRoot, readData, writeData } from '$lib/db';
 import { applyFilters, applySorts } from '../../../../shared/utils/mediaFilters';
 import { invalidateAll } from '$app/navigation';
-
-export interface MediaItem {
-  id: string; type: string; rating: number; status: string;
-  title: string; tagline: string; description: string; notes: string; poster_image: string; private_notes: string;
-  author?: string; publisher?: string;
-  tags?: string[];
-}
+import type { MediaItem } from '../../../../shared/types';
+export type { MediaItem };
 
 export interface SearchResult { title?: string; tagline?: string; description?: string; coverUrl?: string; author?: string; publisher?: string; }
 

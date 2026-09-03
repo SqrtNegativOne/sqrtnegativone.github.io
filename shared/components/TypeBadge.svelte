@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { icons } from '../../src/lib/icons';
+  import { icons } from '../icons';
   
   let { type, variant = 'badge', sizeClass = 'w-[14px] h-[14px]' } = $props<{ type: string, variant?: 'badge' | 'icon', sizeClass?: string }>();
 

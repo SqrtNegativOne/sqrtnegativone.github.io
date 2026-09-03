@@ -3,9 +3,7 @@
   import { readData, writeData, getRepoRoot } from '$lib/db';
   import { invoke } from '@tauri-apps/api/core';
 
-  interface ProjectItem {
-    id: string; name: string; description: string; tags: string[]; github?: string | null; url?: string | null; image?: string | null; private?: boolean;
-  }
+  import type { ProjectItem } from '../../../../shared/types';
   
   interface ProjectFormItem {
     id: string; name: string; description: string; tags: string; github: string; url: string; image: string; private: boolean;
