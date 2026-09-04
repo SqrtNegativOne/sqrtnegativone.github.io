@@ -1,6 +1,7 @@
 import { invoke } from '@tauri-apps/api/core';
 import { ResultAsync, ok } from 'neverthrow';
 import { safeInvoke, safeJsonParse } from '$lib/utils';
+import { gitState } from '$lib/gitState.svelte';
 
 export async function getRepoRoot(): Promise<string> {
   return await invoke<string>('get_repo_root');
@@ -25,5 +26,9 @@ export function writeData<T>(filename: string, data: T[]): ResultAsync<void, Err
     .andThen((root) => {
       const filePath = `${root}/src/data/${filename}`;
       return safeInvoke<void>('write_file', { path: filePath, content: JSON.stringify(data, null, 2) });
+    })
+    .map(() => {
+      gitState.refresh();
     });
 }
+
