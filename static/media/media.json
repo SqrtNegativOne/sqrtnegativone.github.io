@@ -350,10 +350,11 @@
     "type": "book",
     "rating": 6,
     "status": "finished",
-    "title": "Mindhacker",
+    "title": "MINDHACKER",
     "tagline": "Useless retro-tech advice, but makes you think.",
     "description": "",
     "notes": "I get nostalgic for times that were stolen from me a lot. ...Remind me to add this feature soon, I want to add here an excerpt from my diary.",
+    "private_notes": "27357fe8a79ca51659f8684b:d1a8045b820d2b222fac032219818c62:968cf19c43baaac1c1184a36dabbbabd02d35dadfef15c03df2a9536c1a85b8637f0c5133294ce14d436fd939efcd367c63d3f4f6edffe32146880fddbd9b2fbb933f8d9040b3445a5668c94acf6450e6238dfc2113ef3b1f38349d5de5393a3e4e759730d11c7a8085333e2386a1aaccf077a65492154bd4eeeb5",
     "poster_image": "book_mindhacker"
   },
   {
@@ -1619,5 +1620,35 @@
     "tags": [],
     "author": "Jonathan Nolan",
     "publisher": "Kilter Films, Bad Robot, Warner Bros. Television, Bonanza Productions"
+  },
+  {
+    "id": "spirited_away",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Spirited Away",
+    "tagline": "",
+    "description": "A young girl, Chihiro, becomes trapped in a strange new world of spirits. When her parents undergo a mysterious transformation, she must call upon the courage she never knew she had to free her family.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_spirited_away",
+    "tags": [],
+    "author": "Hayao Miyazaki",
+    "publisher": "Studio Ghibli, Tokuma Shoten, Nippon Television Network Corporation, Mitsubishi, dentsu, TFC, The Walt Disney Company (Japan)"
+  },
+  {
+    "id": "my_neighbor_totoro",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "My Neighbor Totoro",
+    "tagline": "",
+    "description": "Two sisters move to the country with their father in order to be closer to their hospitalized mother, and discover the surrounding trees are inhabited by Totoros, magical spirits of the forest. When the youngest runs away from home, the older sister seeks help from the spirits to find her.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_my_neighbor_totoro",
+    "tags": [],
+    "author": "Hayao Miyazaki",
+    "publisher": "Studio Ghibli, Tokuma Shoten"
   }
 ]
