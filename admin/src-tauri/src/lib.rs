@@ -108,6 +108,9 @@ fn convert_image_to_avif(path: String) -> Result<String, String> {
         "-c:v", "libaom-av1", 
         "-still-picture", "1", 
         "-cpu-used", "8", 
+        "-row-mt", "1",
+        "-tiles", "2x2",
+        "-threads", "0",
         &output_path
     ]);
     

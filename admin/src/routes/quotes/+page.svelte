@@ -1,7 +1,9 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
-  import { getRepoRoot } from '$lib/db';
-  import { invoke } from '@tauri-apps/api/core';
+  import { safeGetRepoRoot } from '$lib/db';
+  import { safeInvoke, safeJsonParse } from '$lib/utils';
+  import { notificationState } from '$lib/notificationState.svelte';
+  import { okAsync, ResultAsync } from 'neverthrow';
   import QuoteCard from './QuoteCard.svelte';
   import QuoteModal from './QuoteModal.svelte';
 
@@ -52,32 +54,32 @@
     isModalOpen = true;
   }
 
-  async function readQuotes() {
-    try {
-      const root = await getRepoRoot();
-      const content = await invoke<string>('read_file', { path: `${root}/static/quotes/quotes.json` });
-      return JSON.parse(content);
-    } catch (e) {
-      return [];
-    }
+  function readQuotes(): ResultAsync<any[], Error> {
+    return safeGetRepoRoot()
+      .andThen((root) => safeInvoke<string>('read_file', { path: `${root}/static/quotes/quotes.json` }))
+      .andThen(safeJsonParse)
+      .orElse(() => okAsync([]));
   }
 
-  async function writeQuotes(quotes: any[]) {
-    const root = await getRepoRoot();
-    await invoke('write_file', { path: `${root}/static/quotes/quotes.json`, content: JSON.stringify(quotes, null, 2) });
+  function writeQuotes(quotes: any[]): ResultAsync<void, Error> {
+    return safeGetRepoRoot()
+      .andThen((root) => safeInvoke<void>('write_file', { path: `${root}/static/quotes/quotes.json`, content: JSON.stringify(quotes, null, 2) }));
   }
 
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this quote?')) return;
-    try {
-      let quotes = await readQuotes();
-      quotes = quotes.filter((q: any) => q.id !== id);
-      await writeQuotes(quotes);
-      await invalidateAll();
-    } catch (e) {
-      console.error(e);
-      alert('Failed to delete quote');
+    
+    const readRes = await readQuotes();
+    const quotes = readRes.unwrapOr([]).filter((q: any) => q.id !== id);
+    
+    const writeRes = await writeQuotes(quotes);
+    if (writeRes.isErr()) {
+      notificationState.error(writeRes.error.message, { title: 'Failed to delete quote' });
+      return;
     }
+
+    notificationState.success('Quote deleted successfully', { title: 'Quote Deleted' });
+    await invalidateAll();
   }
 </script>
 

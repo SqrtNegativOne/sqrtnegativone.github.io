@@ -54,7 +54,15 @@
                 {isSearching ? 'Searching...' : 'Search Metadata'}
               </button>
             </label>
-            <input id="media-title" type="text" name="title" bind:value={currentItem.title} class="input-field" required />
+            <input 
+              id="media-title" 
+              type="text" 
+              name="title" 
+              bind:value={currentItem.title} 
+              onkeydown={(e) => { if (e.key === 'Enter' && !isEditing && currentItem.title) { e.preventDefault(); handleSearch(); } }}
+              class="input-field" 
+              required 
+            />
             {#if searchError}
               <div class="text-xs text-red-400 mt-1">{searchError}</div>
             {/if}

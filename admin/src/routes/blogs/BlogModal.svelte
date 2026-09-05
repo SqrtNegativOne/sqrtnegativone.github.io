@@ -3,6 +3,7 @@
   import { invoke } from '@tauri-apps/api/core';
   import { getRepoRoot } from '$lib/db';
   import { ResultAsync, ok, err, type Result } from 'neverthrow';
+  import { notificationState } from '$lib/notificationState.svelte';
 
   interface BlogFormItem {
     id: string; title: string; date: string; description: string; content: string; tags: string; font: string;
@@ -82,8 +83,10 @@
           if (uploadRes.isOk()) {
             insertTextAtCursor(`![image](${uploadRes.value})`);
             uploadStatus = '';
+            notificationState.success('Image uploaded successfully!', { title: 'Upload Complete' });
           } else {
             uploadStatus = uploadRes.error || 'Image upload failed';
+            notificationState.error(uploadStatus, { title: 'Image Upload Failed' });
           }
         }
       }
@@ -101,8 +104,10 @@
       if (uploadRes.isOk()) {
         insertTextAtCursor(`![image](${uploadRes.value})\n`);
         uploadStatus = '';
+        notificationState.success(`Image ${i + 1} uploaded successfully!`, { title: 'Upload Complete' });
       } else {
         uploadStatus = uploadRes.error || 'Image upload failed';
+        notificationState.error(uploadStatus, { title: 'Image Upload Failed' });
         break;
       }
     }
@@ -138,6 +143,7 @@ ${content}
     
     if (!id || !title || !date) {
       errorMsg = 'ID, Title, and Date are required';
+      notificationState.error(errorMsg, { title: 'Validation Error' });
       return;
     }
     
@@ -146,6 +152,7 @@ ${content}
     const rootRes = await ResultAsync.fromPromise(getRepoRoot(), e => String(e));
     if (rootRes.isErr()) {
       errorMsg = rootRes.error;
+      notificationState.error(errorMsg, { title: 'Save Failed' });
       return;
     }
     const root = rootRes.value;
@@ -155,10 +162,12 @@ ${content}
       const accessRes = await ResultAsync.fromPromise(invoke<boolean>('access', { path: filepath }), e => String(e));
       if (accessRes.isErr()) {
         errorMsg = accessRes.error;
+        notificationState.error(errorMsg, { title: 'File Check Failed' });
         return;
       }
       if (accessRes.value) {
         errorMsg = 'Blog post ID already exists';
+        notificationState.error(errorMsg, { title: 'Duplicate ID' });
         return;
       }
     }
@@ -167,9 +176,11 @@ ${content}
     const writeRes = await ResultAsync.fromPromise(invoke('write_file', { path: filepath, content: fileContent }), e => String(e));
     if (writeRes.isErr()) {
       errorMsg = writeRes.error || 'Failed to save blog post';
+      notificationState.error(errorMsg, { title: 'Save Failed' });
       return;
     }
     
+    notificationState.success(`Blog post "${title}" saved successfully!`, { title: 'Post Saved' });
     close();
     await invalidateAll();
   }

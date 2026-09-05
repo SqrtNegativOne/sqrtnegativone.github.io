@@ -1,4 +1,5 @@
 import { getGitStatus, publishContent, commitContentChanges, pushCommits, type GitStatusInfo } from './git';
+import { notificationState } from './notificationState.svelte';
 
 export class GitState {
   status = $state<GitStatusInfo | null>(null);
@@ -10,6 +11,7 @@ export class GitState {
   customMessage = $state('');
 
   private pollInterval: ReturnType<typeof setInterval> | null = null;
+  private refreshTimer: ReturnType<typeof setTimeout> | null = null;
   private initialized = false;
 
   get hasContentChanges(): boolean {
@@ -85,10 +87,27 @@ export class GitState {
       clearInterval(this.pollInterval);
       this.pollInterval = null;
     }
+    if (this.refreshTimer) {
+      clearTimeout(this.refreshTimer);
+      this.refreshTimer = null;
+    }
     this.initialized = false;
   }
 
-  async refresh(silent = false) {
+  refresh(silent = false): Promise<void> {
+    if (this.refreshTimer) {
+      clearTimeout(this.refreshTimer);
+    }
+    return new Promise<void>((resolve) => {
+      this.refreshTimer = setTimeout(async () => {
+        this.refreshTimer = null;
+        await this.runRefresh(silent);
+        resolve();
+      }, 250);
+    });
+  }
+
+  private async runRefresh(silent = false) {
     if (!silent) this.isLoading = true;
     const res = await getGitStatus();
     if (!silent) this.isLoading = false;
@@ -110,6 +129,7 @@ export class GitState {
 
     if (res.isOk()) {
       this.successMessage = 'Changes published and pushed to GitHub!';
+      notificationState.success('Changes published and pushed to GitHub!', { title: 'Publish Successful' });
       this.isModalOpen = false;
       this.customMessage = '';
       await this.refresh();
@@ -118,6 +138,7 @@ export class GitState {
       }, 5000);
     } else {
       this.error = res.error.message;
+      notificationState.error(res.error.message, { title: 'Publish Failed' });
     }
   }
 
@@ -131,6 +152,7 @@ export class GitState {
 
     if (res.isOk()) {
       this.successMessage = `Committed: "${res.value}"`;
+      notificationState.success(`Committed: "${res.value}"`, { title: 'Commit Successful' });
       this.isModalOpen = false;
       this.customMessage = '';
       await this.refresh();
@@ -139,6 +161,7 @@ export class GitState {
       }, 4000);
     } else {
       this.error = res.error.message;
+      notificationState.error(res.error.message, { title: 'Commit Failed' });
     }
   }
 
@@ -152,12 +175,14 @@ export class GitState {
 
     if (res.isOk()) {
       this.successMessage = 'Pushed commits to remote!';
+      notificationState.success('Pushed commits to remote!', { title: 'Push Successful' });
       await this.refresh();
       setTimeout(() => {
         if (this.successMessage) this.successMessage = null;
       }, 5000);
     } else {
       this.error = res.error.message;
+      notificationState.error(res.error.message, { title: 'Push Failed' });
     }
   }
 

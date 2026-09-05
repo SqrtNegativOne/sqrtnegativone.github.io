@@ -1,6 +1,7 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
+  import { notificationState } from '$lib/notificationState.svelte';
   import ProjectCard from './ProjectCard.svelte';
   import ProjectModal from './ProjectModal.svelte';
 
@@ -49,10 +50,11 @@
     
     const writeRes = await writeData('projects.json', items);
     if (writeRes.isErr()) {
-      alert('Failed to delete project data');
+      notificationState.error(writeRes.error.message, { title: 'Delete Failed' });
       return;
     }
     
+    notificationState.success(`Project "${id}" deleted successfully`, { title: 'Project Deleted' });
     await invalidateAll();
   }
 
@@ -61,7 +63,7 @@
     const items = itemsRes.unwrapOr([] as any[]);
     const idx = items.findIndex(i => i.id === id);
     if (idx === -1) {
-      alert('Project not found');
+      notificationState.error('Project not found', { title: 'Reorder Failed' });
       return;
     }
     
@@ -77,7 +79,7 @@
     
     const writeRes = await writeData('projects.json', items);
     if (writeRes.isErr()) {
-      alert('Failed to update project data');
+      notificationState.error(writeRes.error.message, { title: 'Reorder Failed' });
       return;
     }
     

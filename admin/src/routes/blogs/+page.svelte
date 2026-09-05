@@ -3,6 +3,7 @@
   import { invoke } from '@tauri-apps/api/core';
   import { getRepoRoot } from '$lib/db';
   import { ResultAsync } from 'neverthrow';
+  import { notificationState } from '$lib/notificationState.svelte';
   import BlogCard from './BlogCard.svelte';
   import BlogModal from './BlogModal.svelte';
 
@@ -46,6 +47,7 @@
     const rootRes = await ResultAsync.fromPromise(getRepoRoot(), e => String(e));
     if (rootRes.isErr()) {
       errorMsg = rootRes.error;
+      notificationState.error(errorMsg, { title: 'Delete Failed' });
       return;
     }
     
@@ -54,9 +56,11 @@
     const unlinkRes = await ResultAsync.fromPromise(invoke('unlink', { path: filepath }), e => String(e));
     if (unlinkRes.isErr()) {
       errorMsg = unlinkRes.error || 'Could not delete file';
+      notificationState.error(errorMsg, { title: 'Delete Failed' });
       return;
     }
     
+    notificationState.success(`Blog post "${id}" deleted successfully!`, { title: 'Post Deleted' });
     await invalidateAll();
   }
 </script>

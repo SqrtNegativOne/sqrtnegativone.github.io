@@ -2,6 +2,7 @@
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
   import { assetState } from '$lib/assetState.svelte';
+  import { notificationState } from '$lib/notificationState.svelte';
   import type { SkillItem } from './+page';
 
   interface SkillFormItem extends SkillItem {
@@ -31,7 +32,7 @@
   async function handleSave(e: SubmitEvent) {
     e.preventDefault();
     if (!currentItem.name) {
-      alert('Name is required');
+      notificationState.error('Name is required', { title: 'Validation Error' });
       return;
     }
     const items = (await readData<SkillItem>('skills.json')).unwrapOr([] as SkillItem[]);
@@ -44,7 +45,7 @@
     
     if (!isEditing) {
       if (items.some(i => i.name === newItem.name)) {
-        alert('Skill name already exists');
+        notificationState.error('Skill name already exists', { title: 'Duplicate Skill' });
         return;
       }
       items.push(newItem);
@@ -59,9 +60,10 @@
     
     const res = await writeData('skills.json', items);
     if (res.isErr()) {
-      alert('Failed to save skill');
+      notificationState.error(res.error.message, { title: 'Failed to save skill' });
       return;
     }
+    notificationState.success(`Saved skill "${newItem.name}" successfully!`, { title: 'Skill Saved' });
     isModalOpen = false;
     await invalidateAll();
   }
@@ -70,7 +72,12 @@
     if (!confirm('Are you sure?')) return;
     let items = (await readData<SkillItem>('skills.json')).unwrapOr([] as SkillItem[]);
     items = items.filter(i => i.name !== name);
-    await writeData('skills.json', items);
+    const writeRes = await writeData('skills.json', items);
+    if (writeRes.isErr()) {
+      notificationState.error(writeRes.error.message, { title: 'Failed to delete skill' });
+      return;
+    }
+    notificationState.success(`Deleted skill "${name}"`, { title: 'Skill Deleted' });
     await invalidateAll();
   }
 </script>

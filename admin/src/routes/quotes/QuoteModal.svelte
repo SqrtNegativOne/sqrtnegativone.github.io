@@ -2,6 +2,8 @@
   import { invalidateAll } from '$app/navigation';
   import { ResultAsync, okAsync, errAsync } from 'neverthrow';
   import { safeInvoke, safeJsonParse, safeUrlParse } from '$lib/utils';
+  import { safeGetRepoRoot } from '$lib/db';
+  import { notificationState } from '$lib/notificationState.svelte';
 
   import type { QuoteItem } from '../../../../shared/types';
 
@@ -22,7 +24,7 @@
   function fetchTwitterQuote(url: string): ResultAsync<{ quote: string; source: string }, Error> {
     const match = url.match(/(?:twitter\.com|x\.com)\/([^/]+)\/status\/(\d+)/);
     if (!match) return errAsync(new Error("Invalid Twitter/X URL format. Expected a link to a specific post."));
-    const [_, handle, id] = match;
+    const [, handle, id] = match;
     
     return safeInvoke<string>('fetch_url', { url: `https://api.fxtwitter.com/${handle}/status/${id}` })
       .andThen(safeJsonParse)
@@ -38,7 +40,7 @@
   function fetchBlueskyQuote(url: string): ResultAsync<{ quote: string; source: string }, Error> {
     const match = url.match(/bsky\.app\/profile\/([^/]+)\/post\/([^/?#]+)/);
     if (!match) return errAsync(new Error("Invalid Bluesky URL format. Expected a link to a specific post."));
-    const [_, handle, id] = match;
+    const [, handle, id] = match;
     
     return safeInvoke<string>('fetch_url', { url: `https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=${handle}` })
       .andThen(safeJsonParse)
@@ -89,7 +91,7 @@
     
     const parsedUrlRes = safeUrlParse(importUrl);
     if (parsedUrlRes.isErr()) {
-      alert(`Error: ${parsedUrlRes.error.message}`);
+      notificationState.error(parsedUrlRes.error.message, { title: 'Invalid URL' });
       isFetching = false;
       return;
     }
@@ -110,7 +112,7 @@
         resultPromise = fetchGoodreadsQuote(importUrl);
         break;
       default:
-        alert(`Error: Unsupported URL domain: "${domain}". Please provide a Twitter, Bluesky, or Goodreads URL.`);
+        notificationState.error(`Unsupported URL domain: "${domain}". Please provide a Twitter, Bluesky, or Goodreads URL.`, { title: 'Unsupported Domain' });
         isFetching = false;
         return;
     }
@@ -119,7 +121,7 @@
     
     if (fetchResult.isErr()) {
       console.error(fetchResult.error);
-      alert(`Error fetching or parsing URL: ${fetchResult.error.message}`);
+      notificationState.error(fetchResult.error.message, { title: 'Failed to import quote' });
       isFetching = false;
       return;
     }
@@ -130,22 +132,23 @@
       currentQuote.source = result.source;
       currentQuote.link = importUrl;
       importUrl = '';
+      notificationState.success('Quote imported successfully!', { title: 'Import Successful' });
     } else {
-      alert(`Failed to extract quote or source from ${importUrl}. The page might not have standard metadata tags.`);
+      notificationState.error(`Failed to extract quote or source from ${importUrl}. The page might not have standard metadata tags.`, { title: 'Extraction Failed' });
     }
     
     isFetching = false;
   }
 
   function readQuotes(): ResultAsync<any[], Error> {
-    return safeInvoke<string>('get_repo_root')
+    return safeGetRepoRoot()
       .andThen(root => safeInvoke<string>('read_file', { path: `${root}/static/quotes/quotes.json` }))
       .andThen(safeJsonParse)
       .orElse(() => okAsync([])); // Return empty array on any failure
   }
 
   function writeQuotes(quotes: any[]): ResultAsync<void, Error> {
-    return safeInvoke<string>('get_repo_root')
+    return safeGetRepoRoot()
       .andThen(root => safeInvoke<void>('write_file', { path: `${root}/static/quotes/quotes.json`, content: JSON.stringify(quotes, null, 2) }));
   }
 
@@ -161,7 +164,7 @@
     const tags = Array.from(new Set(tagsStrParsed.split(',').map((t: string) => t.trim()).filter((t: string) => t)));
 
     if (!quote) {
-      alert('Quote cannot be empty');
+      notificationState.error('Quote cannot be empty', { title: 'Validation Error' });
       return;
     }
 
@@ -175,7 +178,7 @@
       if (index !== -1) {
         quotes[index] = { id, quote, source, link, tags };
       } else {
-        alert('Original quote not found');
+        notificationState.error('Original quote not found', { title: 'Save Failed' });
         return;
       }
     }
@@ -183,10 +186,11 @@
     const writeRes = await writeQuotes(quotes);
     if (writeRes.isErr()) {
       console.error(writeRes.error);
-      alert('Failed to save quote');
+      notificationState.error(writeRes.error.message, { title: 'Failed to save quote' });
       return;
     }
     
+    notificationState.success('Quote saved successfully!', { title: 'Quote Saved' });
     close();
     
     const invalidateRes = await ResultAsync.fromPromise(invalidateAll(), (e: unknown) => new Error(String(e)));

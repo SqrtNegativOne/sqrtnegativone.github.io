@@ -1,7 +1,9 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData, getRepoRoot } from '$lib/db';
-  import { invoke } from '@tauri-apps/api/core';
+  import { safeInvoke } from '$lib/utils';
+  import { notificationState } from '$lib/notificationState.svelte';
+  import { ResultAsync } from 'neverthrow';
 
   import type { ProjectItem } from '../../../../shared/types';
   
@@ -49,79 +51,97 @@
     const isNew = !isEditing;
     
     if (!id || !name) {
-      alert('ID and Name are required');
+      notificationState.error('ID and Name are required', { title: 'Validation Error' });
       return;
     }
 
-    try {
-      if (fileInput && fileInput.files && fileInput.files.length > 0) {
-        const imageFile = fileInput.files[0];
-        const buffer = await imageFile.arrayBuffer();
-        
-        let ext = imageFile.name.split('.').pop();
-        if (!ext || ext === 'blob' || ext === 'image') {
-           if (imageFile.type === 'image/jpeg') ext = 'jpg';
-           else if (imageFile.type === 'image/webp') ext = 'webp';
-           else ext = 'png';
-        }
-        
-        const safeId = id.replace(/[^a-zA-Z0-9.-]/g, '_');
-        const fileName = `${safeId}-${Date.now()}.${ext}`;
-        
-        const repoRoot = await getRepoRoot();
-        const filepath = `${repoRoot}/static/projects/${fileName}`;
-        
-        await invoke('write_file_binary', { path: filepath, content: Array.from(new Uint8Array(buffer)) });
-        image = `/projects/${fileName}`;
-      }
-
-      const itemsRes = await readData<ProjectItem>('projects.json');
-      const items = itemsRes.unwrapOr([] as any[]);
-      
-      const tags = tagsStr ? tagsStr.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
-      
-      const newItem: ProjectItem = { 
-        id, 
-        name, 
-        description, 
-        tags, 
-        github: github || null, 
-        url: url || null, 
-        image: image !== '(Auto-named on save)' ? image : '',
-        private: isPrivate
-      };
-      
-      if (!isPrivate) {
-        delete newItem.private;
-      }
-      
-      if (isNew) {
-        if (items.some(i => i.id === id)) {
-          alert('Project ID already exists');
-          return;
-        }
-        items.push(newItem);
-      } else {
-        const idx = items.findIndex(i => i.id === id);
-        if (idx !== -1) {
-          items[idx] = newItem;
-        } else {
-          items.push(newItem);
-        }
-      }
-      
-      const writeRes = await writeData('projects.json', items);
-      if (writeRes.isErr()) {
-        alert('Failed to write project data');
+    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+      const imageFile = fileInput.files[0];
+      const bufferRes = await ResultAsync.fromPromise(
+        imageFile.arrayBuffer(),
+        (err) => err instanceof Error ? err : new Error(String(err))
+      );
+      if (bufferRes.isErr()) {
+        notificationState.error(bufferRes.error.message, { title: 'Image Read Failed' });
         return;
       }
       
-      close();
-      await invalidateAll();
-    } catch (err) {
-      console.error(err);
-      alert('Error saving project');
+      let ext = imageFile.name.split('.').pop();
+      if (!ext || ext === 'blob' || ext === 'image') {
+         if (imageFile.type === 'image/jpeg') ext = 'jpg';
+         else if (imageFile.type === 'image/webp') ext = 'webp';
+         else ext = 'png';
+      }
+      
+      const safeId = id.replace(/[^a-zA-Z0-9.-]/g, '_');
+      const fileName = `${safeId}-${Date.now()}.${ext}`;
+      
+      const repoRootRes = await ResultAsync.fromPromise(
+        getRepoRoot(),
+        (err) => err instanceof Error ? err : new Error(String(err))
+      );
+      if (repoRootRes.isErr()) {
+        notificationState.error(repoRootRes.error.message, { title: 'Save Failed' });
+        return;
+      }
+      const repoRoot = repoRootRes.value;
+      const filepath = `${repoRoot}/static/projects/${fileName}`;
+      
+      const writeImgRes = await safeInvoke('write_file_binary', { 
+        path: filepath, 
+        content: Array.from(new Uint8Array(bufferRes.value)) 
+      });
+      if (writeImgRes.isErr()) {
+        notificationState.error(writeImgRes.error.message, { title: 'Failed to write project image' });
+        return;
+      }
+      image = `/projects/${fileName}`;
     }
+
+    const itemsRes = await readData<ProjectItem>('projects.json');
+    const items = itemsRes.unwrapOr([] as any[]);
+    
+    const tags = tagsStr ? tagsStr.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
+    
+    const newItem: ProjectItem = { 
+      id, 
+      name, 
+      description, 
+      tags, 
+      github: github || null, 
+      url: url || null, 
+      image: image !== '(Auto-named on save)' ? image : '',
+      private: isPrivate
+    };
+    
+    if (!isPrivate) {
+      delete newItem.private;
+    }
+    
+    if (isNew) {
+      if (items.some(i => i.id === id)) {
+        notificationState.error('Project ID already exists', { title: 'Duplicate ID' });
+        return;
+      }
+      items.push(newItem);
+    } else {
+      const idx = items.findIndex(i => i.id === id);
+      if (idx !== -1) {
+        items[idx] = newItem;
+      } else {
+        items.push(newItem);
+      }
+    }
+    
+    const writeRes = await writeData('projects.json', items);
+    if (writeRes.isErr()) {
+      notificationState.error(writeRes.error.message, { title: 'Failed to save project data' });
+      return;
+    }
+    
+    notificationState.success(`Saved project "${name}" successfully!`, { title: 'Project Saved' });
+    close();
+    await invalidateAll();
   }
 </script>
 

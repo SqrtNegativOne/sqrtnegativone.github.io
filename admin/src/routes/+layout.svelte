@@ -1,11 +1,18 @@
 <script lang="ts">
   import '../app.css';
+  import { onMount } from 'svelte';
   import { page } from '$app/state';
   import { navItems } from '$lib/nav';
   import GitSyncWidget from '$lib/GitSyncWidget.svelte';
+  import ToastContainer from '$lib/ToastContainer.svelte';
+  import { notificationState } from '$lib/notificationState.svelte';
+
   let { children } = $props();
   let mobileMenuOpen = $state(false);
 
+  onMount(() => {
+    notificationState.initGlobalHandlers();
+  });
 </script>
 
 <div class="flex h-screen bg-[oklch(0.1408_0.0044_285.82)]">
@@ -63,4 +70,6 @@
       </div>
     </div>
   </main>
+
+  <ToastContainer />
 </div>

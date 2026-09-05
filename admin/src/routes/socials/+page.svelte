@@ -1,6 +1,7 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
+  import { notificationState } from '$lib/notificationState.svelte';
   import type { SocialItem } from './+page';
 
   let { data } = $props();
@@ -26,7 +27,7 @@
   async function handleSave(e: SubmitEvent) {
     e.preventDefault();
     if (!currentItem.id || !currentItem.name) {
-      alert('ID and Name are required');
+      notificationState.error('ID and Name are required', { title: 'Validation Error' });
       return;
     }
 
@@ -35,7 +36,7 @@
     
     if (!isEditing) {
       if (items.some(i => i.id === newItem.id)) {
-        alert('Social ID already exists');
+        notificationState.error('Social ID already exists', { title: 'Duplicate ID' });
         return;
       }
       items.push(newItem);
@@ -50,9 +51,10 @@
     
     const res = await writeData('socials.json', items);
     if (res.isErr()) {
-      alert('Failed to save social data');
+      notificationState.error(res.error.message, { title: 'Failed to save social data' });
       return;
     }
+    notificationState.success(`Saved social "${newItem.name}" successfully!`, { title: 'Social Saved' });
     isModalOpen = false;
     await invalidateAll();
   }
@@ -61,7 +63,12 @@
     if (!confirm('Are you sure?')) return;
     let items = (await readData<SocialItem>('socials.json')).unwrapOr([] as SocialItem[]);
     items = items.filter(i => i.id !== id);
-    await writeData('socials.json', items);
+    const writeRes = await writeData('socials.json', items);
+    if (writeRes.isErr()) {
+      notificationState.error(writeRes.error.message, { title: 'Failed to delete social' });
+      return;
+    }
+    notificationState.success(`Deleted social "${id}"`, { title: 'Social Deleted' });
     await invalidateAll();
   }
 
@@ -80,7 +87,11 @@
       items[idx] = temp;
     }
     
-    await writeData('socials.json', items);
+    const writeRes = await writeData('socials.json', items);
+    if (writeRes.isErr()) {
+      notificationState.error(writeRes.error.message, { title: 'Failed to reorder social' });
+      return;
+    }
     await invalidateAll();
   }
 </script>

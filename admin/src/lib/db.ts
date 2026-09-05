@@ -1,14 +1,26 @@
 import { invoke } from '@tauri-apps/api/core';
-import { ResultAsync, ok } from 'neverthrow';
+import { ResultAsync, ok, okAsync } from 'neverthrow';
 import { safeInvoke, safeJsonParse } from '$lib/utils';
 import { gitState } from '$lib/gitState.svelte';
 
+let cachedRepoRoot: string | null = null;
+
 export async function getRepoRoot(): Promise<string> {
-  return await invoke<string>('get_repo_root');
+  if (cachedRepoRoot) return cachedRepoRoot;
+  cachedRepoRoot = await invoke<string>('get_repo_root');
+  return cachedRepoRoot;
+}
+
+export function safeGetRepoRoot(): ResultAsync<string, Error> {
+  if (cachedRepoRoot) return okAsync(cachedRepoRoot);
+  return safeInvoke<string>('get_repo_root').map((root) => {
+    cachedRepoRoot = root;
+    return root;
+  });
 }
 
 export function readData<T>(filename: string): ResultAsync<T[], Error> {
-  return safeInvoke<string>('get_repo_root')
+  return safeGetRepoRoot()
     .andThen((root) => {
       const filePath = `${root}/src/data/${filename}`;
       return safeInvoke<string>('read_file', { path: filePath });
@@ -22,7 +34,7 @@ export function readData<T>(filename: string): ResultAsync<T[], Error> {
 }
 
 export function writeData<T>(filename: string, data: T[]): ResultAsync<void, Error> {
-  return safeInvoke<string>('get_repo_root')
+  return safeGetRepoRoot()
     .andThen((root) => {
       const filePath = `${root}/src/data/${filename}`;
       return safeInvoke<void>('write_file', { path: filePath, content: JSON.stringify(data, null, 2) });
