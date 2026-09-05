@@ -3,10 +3,10 @@ import type { PageLoad } from './$types';
 import type { MediaItem, PrivateNoteItem } from '../../../../shared/types';
 
 export const load: PageLoad = async () => {
-  const mediaRes = await readData<MediaItem>('../../static/media/media.json');
+  const mediaRes = await readData<MediaItem>('media');
   const media = mediaRes.unwrapOr([] as MediaItem[]);
   
-  const privateNotesRes = await readData<PrivateNoteItem>('../../static/media/media-private.json');
+  const privateNotesRes = await readData<PrivateNoteItem>('mediaPrivate');
   let privateNotes = privateNotesRes.unwrapOr([] as PrivateNoteItem[]);
   
   if (!Array.isArray(privateNotes)) privateNotes = [];

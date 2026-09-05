@@ -209,6 +209,7 @@ fn is_content_path(path: &str) -> bool {
         || p_norm.starts_with("static/quotes/")
         || p_norm.starts_with("static/blog-images/")
         || p_norm.starts_with("blog/")
+        || (p_norm.ends_with(".json") && (p_norm.starts_with("static/") || p_norm.starts_with("src/data/")))
 }
 
 fn run_git_cmd(repo_root: &str, args: &[&str]) -> Result<(bool, String, String), String> {
@@ -243,6 +244,9 @@ fn generate_default_commit_message(files: &[String]) -> String {
             types.insert("skills");
         } else if f.starts_with("src/data/socials") {
             types.insert("socials");
+        } else if let Some(rest) = f.strip_prefix("src/data/") {
+            let name = rest.trim_end_matches(".json");
+            types.insert(name);
         } else {
             types.insert("content");
         }
@@ -468,7 +472,9 @@ mod tests {
     fn test_content_path_detection() {
         assert!(is_content_path("src/data/quotes.json"));
         assert!(is_content_path("src/data/projects.json"));
+        assert!(is_content_path("src/data/now.json"));
         assert!(is_content_path("static/media/poster.avif"));
+        assert!(is_content_path("static/media/media.json"));
         assert!(is_content_path("static/quotes/quotes.json"));
         assert!(is_content_path("static/blog-images/img.png"));
         assert!(is_content_path("blog/posts/hello.md"));
@@ -489,6 +495,10 @@ mod tests {
         assert_eq!(
             generate_default_commit_message(&["static/media/test.avif".to_string()]),
             "content(media): update media"
+        );
+        assert_eq!(
+            generate_default_commit_message(&["src/data/now.json".to_string()]),
+            "content(now): update now"
         );
         assert_eq!(
             generate_default_commit_message(&[

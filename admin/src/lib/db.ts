@@ -19,10 +19,37 @@ export function safeGetRepoRoot(): ResultAsync<string, Error> {
   });
 }
 
-export function readData<T>(filename: string): ResultAsync<T[], Error> {
+export const COLLECTIONS = {
+  projects: 'src/data/projects.json',
+  skills: 'src/data/skills.json',
+  socials: 'src/data/socials.json',
+  quotes: 'static/quotes/quotes.json',
+  media: 'static/media/media.json',
+  mediaPrivate: 'static/media/media-private.json',
+  mediaProperties: 'static/media/media-properties.json',
+} as const;
+
+export type CollectionName = keyof typeof COLLECTIONS;
+
+export function resolveDataPath(collectionOrPath: CollectionName | (string & {})): string {
+  if (collectionOrPath in COLLECTIONS) {
+    return COLLECTIONS[collectionOrPath as CollectionName];
+  }
+  if (collectionOrPath.startsWith('../../static/')) {
+    return collectionOrPath.replace('../../', '');
+  }
+  if (collectionOrPath.startsWith('static/') || collectionOrPath.startsWith('src/')) {
+    return collectionOrPath;
+  }
+  const cleanFilename = collectionOrPath.endsWith('.json') ? collectionOrPath : `${collectionOrPath}.json`;
+  return `src/data/${cleanFilename}`;
+}
+
+export function readData<T>(collectionOrPath: CollectionName | (string & {})): ResultAsync<T[], Error> {
   return safeGetRepoRoot()
     .andThen((root) => {
-      const filePath = `${root}/src/data/${filename}`;
+      const relPath = resolveDataPath(collectionOrPath);
+      const filePath = `${root}/${relPath}`;
       return safeInvoke<string>('read_file', { path: filePath });
     })
     .orElse(() => {
@@ -33,10 +60,11 @@ export function readData<T>(filename: string): ResultAsync<T[], Error> {
     });
 }
 
-export function writeData<T>(filename: string, data: T[]): ResultAsync<void, Error> {
+export function writeData<T>(collectionOrPath: CollectionName | (string & {}), data: T[]): ResultAsync<void, Error> {
   return safeGetRepoRoot()
     .andThen((root) => {
-      const filePath = `${root}/src/data/${filename}`;
+      const relPath = resolveDataPath(collectionOrPath);
+      const filePath = `${root}/${relPath}`;
       return safeInvoke<void>('write_file', { path: filePath, content: JSON.stringify(data, null, 2) });
     })
     .map(() => {

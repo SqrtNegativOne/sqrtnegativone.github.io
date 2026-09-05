@@ -1,9 +1,7 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
-  import { safeGetRepoRoot } from '$lib/db';
-  import { safeInvoke, safeJsonParse } from '$lib/utils';
+  import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
-  import { okAsync, ResultAsync } from 'neverthrow';
   import QuoteCard from './QuoteCard.svelte';
   import QuoteModal from './QuoteModal.svelte';
 
@@ -54,16 +52,12 @@
     isModalOpen = true;
   }
 
-  function readQuotes(): ResultAsync<any[], Error> {
-    return safeGetRepoRoot()
-      .andThen((root) => safeInvoke<string>('read_file', { path: `${root}/static/quotes/quotes.json` }))
-      .andThen(safeJsonParse)
-      .orElse(() => okAsync([]));
+  function readQuotes() {
+    return readData<QuoteItem>('quotes');
   }
 
-  function writeQuotes(quotes: any[]): ResultAsync<void, Error> {
-    return safeGetRepoRoot()
-      .andThen((root) => safeInvoke<void>('write_file', { path: `${root}/static/quotes/quotes.json`, content: JSON.stringify(quotes, null, 2) }));
+  function writeQuotes(quotes: any[]) {
+    return writeData('quotes', quotes);
   }
 
   async function handleDelete(id: string) {

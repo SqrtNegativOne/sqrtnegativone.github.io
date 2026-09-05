@@ -2,7 +2,7 @@
   import { invalidateAll } from '$app/navigation';
   import { ResultAsync, okAsync, errAsync } from 'neverthrow';
   import { safeInvoke, safeJsonParse, safeUrlParse } from '$lib/utils';
-  import { safeGetRepoRoot } from '$lib/db';
+  import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
 
   import type { QuoteItem } from '../../../../shared/types';
@@ -141,15 +141,11 @@
   }
 
   function readQuotes(): ResultAsync<any[], Error> {
-    return safeGetRepoRoot()
-      .andThen(root => safeInvoke<string>('read_file', { path: `${root}/static/quotes/quotes.json` }))
-      .andThen(safeJsonParse)
-      .orElse(() => okAsync([])); // Return empty array on any failure
+    return readData('quotes');
   }
 
   function writeQuotes(quotes: any[]): ResultAsync<void, Error> {
-    return safeGetRepoRoot()
-      .andThen(root => safeInvoke<void>('write_file', { path: `${root}/static/quotes/quotes.json`, content: JSON.stringify(quotes, null, 2) }));
+    return writeData('quotes', quotes);
   }
 
   async function handleSave(e: Event) {
