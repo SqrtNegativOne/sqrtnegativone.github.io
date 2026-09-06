@@ -31,14 +31,14 @@
   const KNOWN_ROUTES = [
     "/", "/about", "/skills", "/projects",
     "/now", "/colophon", "/minis", "/media-library",
-    "/questions", "/blog", "/blog-afterdark",
+    "/questions", "/blog", "/blog-afterdark", "/microblog",
   ];
 
-  const HIDE_PORTRAIT = ["/skills", "/projects"];
+  const HIDE_PORTRAIT = ["/skills", "/projects", "/microblog", "/colophon"];
 
-  let isKnown = $derived(KNOWN_ROUTES.includes(currentPath));
+  let isKnown = $derived(KNOWN_ROUTES.includes(currentPath) || currentPath.startsWith('/now/'));
   let isBlog = $derived(currentPath === '/blog' || currentPath.startsWith('/blog/') || currentPath.startsWith('/blog-afterdark'));
-  let currentView = $derived(currentPath === '/' ? 'home' : currentPath.slice(1));
+  let currentView = $derived(currentPath === '/' ? 'home' : currentPath.startsWith('/now/') ? 'now' : currentPath.slice(1));
   let showPortrait = $derived(!HIDE_PORTRAIT.includes(currentPath));
   let contentFill = $derived(currentPath === "/projects" || currentPath === "/skills");
 </script>

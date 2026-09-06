@@ -103,5 +103,18 @@ export const navItems: NavItem[] = [
     navActiveBg: 'bg-cyan-500/10',
     navActiveText: 'text-cyan-400',
     navActiveBorder: 'border-cyan-500/20'
+  },
+  {
+    href: '/now',
+    label: 'Now',
+    description: 'Manage daily now entries and day logs.',
+    path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+    bgGradient: 'from-teal-500/5',
+    iconBg: 'bg-teal-500/10',
+    iconColor: 'text-teal-400',
+    borderHover: 'hover:border-teal-500/50',
+    navActiveBg: 'bg-teal-500/10',
+    navActiveText: 'text-teal-400',
+    navActiveBorder: 'border-teal-500/20'
   }
 ];

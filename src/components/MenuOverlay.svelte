@@ -11,6 +11,7 @@
     { key: "blog",         label: "Blog",         path: "/blog",          importance: 2 },
     { key: "skills",       label: "Skills",       path: "/skills",        importance: 1 },
     { key: "now",          label: "Now",          path: "/now",           importance: 1 },
+    { key: "microblog",    label: "Microblog",    path: "/microblog",     importance: 1 },
     { key: "minis",        label: "Minis",        path: "/minis",         importance: 1 },
     { key: "media-library",label: "Media Library",path: "/media-library", importance: 1 },
     { key: "questions",    label: "Questions",    path: "/questions",     importance: 1 },

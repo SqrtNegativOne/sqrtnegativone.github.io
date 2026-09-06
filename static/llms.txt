@@ -8,6 +8,7 @@
 - [Blog](https://sqrt.fyi/blog): Essays and writing by Ark Malhotra on programming, games, and whatever else he is thinking about.
 - [Projects](https://sqrt.fyi/projects): Things Ark Malhotra has built: coursework, tools, and experiments.
 - [Now](https://sqrt.fyi/now): What Ark Malhotra is currently learning, building, and reading.
+- [Microblog](https://sqrt.fyi/microblog): Short thoughts, links, and updates fetched live from @sqrt-1.bsky.social on Bluesky.
 - [Colophon](https://sqrt.fyi/colophon): How this site is built: the tools, fonts, and stack behind sqrt.fyi.
 - [Skills](https://sqrt.fyi/skills): The languages, frameworks, and tools in Ark Malhotra's toolkit.
 - [Minis](https://sqrt.fyi/minis): Small experiments and bite-sized web toys by Ark Malhotra.

@@ -27,7 +27,16 @@ export const COLLECTIONS = {
   media: 'static/media/media.json',
   mediaPrivate: 'static/media/media-private.json',
   mediaProperties: 'static/media/media-properties.json',
+  now: 'src/data/now.json',
 } as const;
+
+export interface NowEntry {
+  id: string;
+  date: string;
+  title?: string;
+  content: string;
+  updatedAt?: string;
+}
 
 export type CollectionName = keyof typeof COLLECTIONS;
 

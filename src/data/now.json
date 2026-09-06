@@ -1,0 +1,16 @@
+[
+  {
+    "id": "2026-09-06",
+    "date": "2026-09-06",
+    "title": "Semester Kickoff & Exploring Local LLMs",
+    "content": "### What I'm Learning\n- Diving deeper into C++ memory management, templates, and DSA patterns for competitive programming.\n- Experimenting with WebGL fragment shaders and Raymarching basics for procedural graphics.\n\n### What I'm Building\n- Re-architecting this personal portfolio and blog with SvelteKit 2 and Svelte 5 runes.\n- Developing a local-first content admin tool powered by Tauri 2 and Rust.\n\n### What I'm Reading\n- *Designing Data-Intensive Applications* by Martin Kleppmann.\n- Long-form essays on internet culture, software craftsmanship, and retro computing.\n\n### Location & Mindset\n- New Delhi / NSUT campus.\n- Feeling energized by the arrival of autumn weather and fewer context switches.",
+    "updatedAt": "2026-09-06T18:30:00.000Z"
+  },
+  {
+    "id": "2026-08-22",
+    "date": "2026-08-22",
+    "title": "Late Summer Hacking & Systems Programming",
+    "content": "### Focus\n- Wrapping up summer experiments before classes resume at NSUT (CSE 2024-2028).\n- Practicing algorithmic problem solving and data structures in C++ and Python on LeetCode.\n\n### What I'm Reading & Watching\n- Reading *Anathem* by Neal Stephenson.\n- Studying classic sci-fi anime aesthetics and tinkering with retro terminal font rendering.\n\n### Projects\n- Added media library tracker and quote database to the personal site backend.\n- Polished the dithered image and halftone shader pipeline.",
+    "updatedAt": "2026-08-22T14:15:00.000Z"
+  }
+]
