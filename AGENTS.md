@@ -1,24 +1,27 @@
 ## Tech Stack Overview
 - **Main Website**: Built with [SvelteKit](https://svelte.dev/) (Svelte 5) and styled using [Tailwind CSS v4](https://tailwindcss.com/).
-- **Blog Engine**: The blog is statically generated using [Eleventy (11ty)](https://www.11ty.dev/). Markdown files are in the `blog/` directory and compiled into the `static/` folder where SvelteKit serves them.
+- **Blog Engine**: Markdown content managed via [Velite](https://velite.js.org/) and rendered natively via SvelteKit routes (`src/routes/blog/`). Posts live in `blog/posts/*.md` and are parsed into typed collections at build/dev time.
 - **Package Manager**: **Bun**. Don't use npm.
 - **Admin Dashboard**: See `admin/AGENTS.md` for details.
 
 ## Repository Structure
 - `src/` - The main SvelteKit application source (components, routes, styles).
-- `blog/` - Markdown files (`*.md`) for blog posts, plus Eleventy templates (`*.njk`) and includes.
-- `static/` - Static assets. Eleventy outputs the compiled blog HTML here. Also hosts site-level files: `robots.txt`, `llms.txt`, `feed.xml` (generated), `.well-known/security.txt`, favicons, and self-hosted fonts/vendor CSS (`static/vendor/`).
+- `src/routes/blog/` - Native SvelteKit blog listing, single-post reader (`[slug]`), and raw markdown endpoint (`[slug].md`).
+- `src/routes/blog-afterdark/` - Unlisted / draft post listing.
+- `src/routes/feed.xml/` - Prerendered Atom 1.0 feed generated via `feed`.
+- `blog/posts/` - Markdown files (`*.md`) for blog posts.
+- `blog/_data/` - Static data like `fonts.json` consumed by both the main site and the Tauri admin app.
+- `static/` - Static assets. Hosts site-level files: `robots.txt`, `llms.txt`, `.well-known/security.txt`, favicons, and self-hosted fonts/vendor CSS (`static/vendor/`).
 - `admin/` - The admin dashboard (a SvelteKit + Tauri desktop app for managing data/media). Contains its own `AGENTS.md` rules file.
-- `eleventy.config.js` - Configuration for the Eleventy blog engine (collections, date filters, `@11ty/eleventy-plugin-rss`).
+- `velite.config.ts` - Configuration for the Velite content schema.
 - `admin.bat` / `dev.bat` - Scripts for running local dev servers.
 
 ## Development Commands
 All commands should be run using `bun`. 
 
 **Main Site Commands (Run in Root):**
-- `bun run dev` - Builds the eleventy blog and starts the Vite dev server for the main site.
-- `bun run build` - Builds both eleventy and the main site for production.
-- `bun run blog:build` - Builds only the eleventy blog into `static/`.
+- `bun run dev` - Starts the Vite dev server with automated Velite watch mode.
+- `bun run build` - Builds the content and SvelteKit static site for production into `build/`.
 - `bun run lint` - Runs `oxlint` for fast linting.
 - `bun run check` - Runs SvelteKit sync and `svelte-check` for type-checking and accessibility (a11y) checks.
 
@@ -29,12 +32,12 @@ All commands should be run using `bun`.
 - **Tailwind v4**: We use TailwindCSS v4. Stick to utility classes and utilize `@theme` in your CSS if necessary instead of relying on a `tailwind.config.js` file.
 - **Accessibility (a11y)**: Svelte's a11y checks are enforced. Ensure `<button>` elements have text or `aria-label`s, `<label>` elements correctly wrap or point to inputs (`for="..."`/`id="..."`), and interactive elements have appropriate keyboard event handlers or roles. The layout has a skip link targeting `#main-content`; keep that id on main content containers in every layout branch.
 - **Reduced motion**: Respect `prefers-reduced-motion`. A global guard in `src/App.css` kills CSS animations/transitions; JS-driven animation (rAF loops, GSAP) must be gated behind a `matchMedia('(prefers-reduced-motion: reduce)')` check like `AsciiBackground.svelte` and `Cursor.svelte`.
-- **Component Scoped Styling**: For dynamically injected HTML (like the eleventy blog posts via `{@html ...}`), use `:global(.class)` in Svelte `<style>` blocks to avoid unused CSS warnings and properly style the injected markup.
-- **Per-page SEO**: Every route uses the shared `src/lib/components/Seo.svelte` component (title, description, canonical, OG tags, optional noindex). Do not add per-page head tags directly when `Seo.svelte` covers them; site-wide defaults live in `src/app.html`. Structured data is JSON-LD (`Person` on the homepage, `BlogPosting`/`Blog` in the Eleventy templates).
+- **Component Scoped Styling**: For dynamically injected HTML (like blog posts via `{@html ...}`), use `:global(.class)` in Svelte `<style>` blocks to avoid unused CSS warnings and properly style the injected markup.
+- **Per-page SEO**: Every route uses the shared `src/lib/components/Seo.svelte` component (title, description, canonical, OG tags, optional noindex). Do not add per-page head tags directly when `Seo.svelte` covers them; site-wide defaults live in `src/app.html`. Structured data is JSON-LD (`Person` on the homepage, `Blog` on the blog index, and `BlogPosting` on post routes).
 
-## Blog Engine (Eleventy)
+## Blog Engine (Velite + SvelteKit)
 - Posts live in `blog/posts/*.md` with frontmatter: `title`, `date` (YYYY-MM-DD), `description`, `tags`, optional `font` and `draft: true`. Tagging a post `afterdark` routes it to `/blog-afterdark/` and excludes it from the public feed/sitemap/markdown endpoints.
-- **Feed**: Atom feed generated by `blog/feed.njk` at `/feed.xml` using `@11ty/eleventy-plugin-rss` filters. Discovery links (`application/atom+xml`) are in `src/app.html` and `blog/_includes/base.njk`.
-- **Markdown source endpoints**: each post's raw Markdown is emitted at `/blog/<slug>.md` via `blog/post-md.njk` (pagination over the `posts` collection + `readSource` filter). Keep new posts compatible with this.
+- **Feed**: Atom 1.0 feed generated at `/feed.xml` via `src/routes/feed.xml/+server.ts`.
+- **Markdown source endpoints**: each post's raw Markdown is emitted at `/blog/<slug>.md` via `src/routes/blog/[slug].md/+server.ts`. Keep new posts compatible with this.
 - **Machine-readable files**: keep `static/llms.txt`, `static/.well-known/security.txt`, and `static/robots.txt` in sync when adding pages, feeds, or changing URLs. The sitemap is generated by `src/routes/sitemap.xml/+server.js` (includes post `<lastmod>` from frontmatter dates).
 - **Vendor assets**: third-party CSS/fonts are self-hosted under `static/vendor/` (e.g. devicon). Don't reintroduce CDN links; add SRI or self-host instead.

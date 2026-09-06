@@ -1,46 +1,35 @@
+import { getPublicPosts, formatIsoDate } from '$lib/blog';
+
 export const prerender = true;
 
 const SITE_URL = 'https://sqrt.fyi';
 
 export async function GET() {
   const sveltePages = import.meta.glob('/src/routes/**/+page.svelte');
-  const eleventyPosts = import.meta.glob('/blog/posts/*.md', { query: '?raw', import: 'default', eager: true });
-  
+
   let urls = [];
-  
-  // 1. Process SvelteKit routes
+
+  // 1. Process SvelteKit routes (ignoring dynamic routes and blog routes handled explicitly)
   for (const path of Object.keys(sveltePages)) {
     let route = path.replace('/src/routes', '').replace('/+page.svelte', '');
-    
-    // Ignore dynamic routes if any exist in the future
-    if (route.includes('[')) continue;
-    
+
+    if (route.includes('[') || route.startsWith('/blog')) continue;
+
     if (route === '') {
       route = '/';
     }
-    
+
     urls.push({ loc: route });
   }
-  
-  // 2. Process Eleventy routes
+
+  // 2. Process Blog routes
   urls.push({ loc: '/blog/' });
-  
-  for (const [path, rawContent] of Object.entries(eleventyPosts)) {
-    // Basic frontmatter parsing
-    const frontmatter = rawContent.split('---')[1] || '';
-    const isDraft = frontmatter.includes('draft: true');
-    const isAfterdark = frontmatter.includes('afterdark');
-    
-    if (isDraft || isAfterdark) continue;
-    
-    const dateLine = frontmatter.split('\n').find((line) => line.trim().startsWith('date:')) || '';
-    const lastmod = dateLine.split('date:')[1]?.trim() || '';
-    
-    // Extract filename for slug
-    const slug = path.split('/').pop().replace('.md', '');
-    urls.push({ loc: `/blog/${slug}/`, lastmod });
+
+  const posts = getPublicPosts();
+  for (const post of posts) {
+    urls.push({ loc: `/blog/${post.slug}/`, lastmod: formatIsoDate(post.date) });
   }
-  
+
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(({ loc, lastmod }) => `  <url>\n    <loc>${SITE_URL}${loc}</loc>${lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : ''}\n  </url>`).join('\n')}

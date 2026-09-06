@@ -8,7 +8,7 @@
     { key: "home",         label: "Home",         path: "/",              importance: 3 },
     { key: "projects",     label: "Projects",     path: "/projects",      importance: 3 },
     { key: "about",        label: "About",        path: "/about",         importance: 2 },
-    { key: "blog",         label: "Blog",         path: "/blog/",         importance: 2, external: true },
+    { key: "blog",         label: "Blog",         path: "/blog",          importance: 2 },
     { key: "skills",       label: "Skills",       path: "/skills",        importance: 1 },
     { key: "now",          label: "Now",          path: "/now",           importance: 1 },
     { key: "minis",        label: "Minis",        path: "/minis",         importance: 1 },

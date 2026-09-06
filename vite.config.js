@@ -1,32 +1,25 @@
 import { defineConfig } from 'vite'
 import { sveltekit } from '@sveltejs/kit/vite'
 import tailwindcss from '@tailwindcss/vite'
-import fs from 'fs'
-import path from 'path'
 
-const eleventyDevPlugin = {
-  name: 'eleventy-dev',
-  configureServer(server) {
-    server.middlewares.use((req, res, next) => {
-      if (req.url && (req.url.startsWith('/blog') || req.url.startsWith('/blog-afterdark'))) {
-        let url = req.url.split('?')[0];
-        if (url.endsWith('/')) {
-          url += 'index.html';
-        } else if (!url.includes('.')) {
-          url += '/index.html';
-        }
-        
-        const staticPath = path.resolve('static', url.slice(1));
-        if (fs.existsSync(staticPath)) {
-          req.url = url;
-        }
-      }
-      next();
-    });
-  }
-}
+const velitePlugin = () => {
+  let started = false;
+  let dev = false;
+  return {
+    name: 'velite',
+    configResolved(config) {
+      dev = config.command === 'serve';
+    },
+    async buildStart() {
+      if (started) return;
+      started = true;
+      const { build } = await import('velite');
+      await build({ watch: dev, clean: false });
+    }
+  };
+};
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [tailwindcss(), eleventyDevPlugin, sveltekit()],
+  plugins: [tailwindcss(), velitePlugin(), sveltekit()],
 })

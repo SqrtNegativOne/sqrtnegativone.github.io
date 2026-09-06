@@ -53,7 +53,7 @@ fn get_repo_root() -> Result<String, String> {
     // Try current_dir first
     if let Ok(mut current) = std::env::current_dir() {
         loop {
-            if current.join("eleventy.config.js").exists() {
+            if current.join("svelte.config.js").exists() || current.join("eleventy.config.js").exists() {
                 return Ok(current.to_string_lossy().to_string());
             }
             if !current.pop() {
@@ -66,7 +66,7 @@ fn get_repo_root() -> Result<String, String> {
     if let Ok(mut current) = std::env::current_exe() {
         current.pop(); // remove executable name
         loop {
-            if current.join("eleventy.config.js").exists() {
+            if current.join("svelte.config.js").exists() || current.join("eleventy.config.js").exists() {
                 return Ok(current.to_string_lossy().to_string());
             }
             if !current.pop() {
@@ -78,7 +78,7 @@ fn get_repo_root() -> Result<String, String> {
     // Absolute fallback for the developer's specific machine in case it's installed globally via MSI
     let hardcoded =
         std::path::Path::new("C:\\Users\\arkma\\Documents\\GitHub\\sqrtnegativone.github.io");
-    if hardcoded.join("eleventy.config.js").exists() {
+    if hardcoded.join("svelte.config.js").exists() || hardcoded.join("eleventy.config.js").exists() {
         return Ok(hardcoded.to_string_lossy().to_string());
     }
 

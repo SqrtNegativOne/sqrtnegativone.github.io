@@ -17,12 +17,13 @@
     },
     knowsAbout: ['Computer Science', 'Python', 'C++', 'Machine Learning']
   };
+  const personSchemaHtml = `<script type="application/ld+json">${JSON.stringify(personSchema)}</` + `script>`;
 </script>
 
 <Seo title="Ark Malhotra" description="Personal site of Ark Malhotra, computer science undergrad at NSUT." path="/" />
 
 <svelte:head>
-  <script type="application/ld+json">{@html JSON.stringify(personSchema)}</script>
+  {@html personSchemaHtml}
 </svelte:head>
 
 <ThomasAttractor />

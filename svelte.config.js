@@ -14,7 +14,7 @@ export default {
 			strict: true
 		}),
 		prerender: {
-			entries: ['*', '/sitemap.xml'],
+			entries: ['*', '/sitemap.xml', '/feed.xml'],
 			handleUnseenRoutes: 'ignore'
 		}
 	},

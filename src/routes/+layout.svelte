@@ -31,12 +31,13 @@
   const KNOWN_ROUTES = [
     "/", "/about", "/skills", "/projects",
     "/now", "/colophon", "/minis", "/media-library",
-    "/questions",
+    "/questions", "/blog", "/blog-afterdark",
   ];
 
   const HIDE_PORTRAIT = ["/skills", "/projects"];
 
   let isKnown = $derived(KNOWN_ROUTES.includes(currentPath));
+  let isBlog = $derived(currentPath === '/blog' || currentPath.startsWith('/blog/') || currentPath.startsWith('/blog-afterdark'));
   let currentView = $derived(currentPath === '/' ? 'home' : currentPath.slice(1));
   let showPortrait = $derived(!HIDE_PORTRAIT.includes(currentPath));
   let contentFill = $derived(currentPath === "/projects" || currentPath === "/skills");
@@ -44,7 +45,12 @@
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-{#if !isKnown}
+{#if isBlog}
+  <div id="main-content" tabindex="-1">
+    {@render children()}
+  </div>
+  <MenuOverlay view="blog" />
+{:else if !isKnown}
   <div class="with-frame" id="main-content" tabindex="-1">
     <AsciiBackground />
     {@render children()}

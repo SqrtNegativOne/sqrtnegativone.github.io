@@ -11,9 +11,8 @@ node_modules
 dist
 .cache
 dist-ssr
-static/blog
-static/blog-afterdark
-static/sitemap.xml
+.velite/
+src/lib/content/
 *.local
 build/
 
