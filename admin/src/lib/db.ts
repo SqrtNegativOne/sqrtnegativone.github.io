@@ -72,3 +72,30 @@ export function writeData<T>(collectionOrPath: CollectionName | (string & {}), d
     });
 }
 
+export function readTextFile(relativePath: string): ResultAsync<string, Error> {
+  return safeGetRepoRoot().andThen((root) => {
+    const filePath = `${root}/${relativePath}`;
+    return safeInvoke<string>('read_file', { path: filePath });
+  });
+}
+
+export function writeTextFile(relativePath: string, content: string): ResultAsync<void, Error> {
+  return safeGetRepoRoot()
+    .andThen((root) => {
+      const filePath = `${root}/${relativePath}`;
+      return safeInvoke<void>('write_file', { path: filePath, content });
+    })
+    .map(() => {
+      gitState.refresh();
+    });
+}
+
+export function readQuestions(): ResultAsync<string, Error> {
+  return readTextFile('src/data/questions.md');
+}
+
+export function writeQuestions(content: string): ResultAsync<void, Error> {
+  return writeTextFile('src/data/questions.md', content);
+}
+
+

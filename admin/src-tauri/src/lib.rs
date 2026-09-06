@@ -244,8 +244,10 @@ fn generate_default_commit_message(files: &[String]) -> String {
             types.insert("skills");
         } else if f.starts_with("src/data/socials") {
             types.insert("socials");
+        } else if f.starts_with("src/data/questions") {
+            types.insert("questions");
         } else if let Some(rest) = f.strip_prefix("src/data/") {
-            let name = rest.trim_end_matches(".json");
+            let name = rest.trim_end_matches(".json").trim_end_matches(".md");
             types.insert(name);
         } else {
             types.insert("content");
@@ -471,6 +473,7 @@ mod tests {
     #[test]
     fn test_content_path_detection() {
         assert!(is_content_path("src/data/quotes.json"));
+        assert!(is_content_path("src/data/questions.md"));
         assert!(is_content_path("src/data/projects.json"));
         assert!(is_content_path("src/data/now.json"));
         assert!(is_content_path("static/media/poster.avif"));
@@ -488,6 +491,10 @@ mod tests {
 
     #[test]
     fn test_default_commit_message_generation() {
+        assert_eq!(
+            generate_default_commit_message(&["src/data/questions.md".to_string()]),
+            "content(questions): update questions"
+        );
         assert_eq!(
             generate_default_commit_message(&["static/quotes/quotes.json".to_string()]),
             "content(quotes): update quotes"

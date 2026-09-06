@@ -4,6 +4,7 @@
   import { getRepoRoot } from '$lib/db';
   import { ResultAsync, ok, err, type Result } from 'neverthrow';
   import { notificationState } from '$lib/notificationState.svelte';
+  import markdownIt from 'markdown-it';
 
   interface BlogFormItem {
     id: string; title: string; date: string; description: string; content: string; tags: string; font: string;
@@ -16,11 +17,23 @@
     close: () => void;
   }>();
 
+  const md = markdownIt({ html: true, linkify: true, typographer: true });
+
   let errorMsg = $state('');
   // svelte-ignore state_referenced_locally
   let currentItem = $state({ ...item });
   let fileInput: HTMLInputElement | undefined = $state();
   let uploadStatus = $state('');
+  let viewMode: 'split' | 'edit' | 'preview' = $state('split');
+  let showMeta = $state(true);
+
+  let renderedPreview = $derived(md.render(currentItem.content || '*(No content yet)*'));
+  let selectedFontCss = $derived(fonts?.find((f: { name: string; css: string }) => f.name === currentItem.font)?.css || '');
+  let tagList = $derived(
+    currentItem.tags
+      ? currentItem.tags.split(',').map((t: string) => t.trim()).filter(Boolean)
+      : []
+  );
 
   async function uploadImage(file: File): Promise<Result<string, string>> {
     const bufferRes = await ResultAsync.fromPromise(file.arrayBuffer(), e => String(e));
@@ -186,78 +199,271 @@ ${content}
   }
 </script>
 
-<div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-  <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
-    <div class="p-6 border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center">
-      <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Blog Post' : 'Add New Blog Post'}</h2>
-      <button aria-label="Close modal" onclick={close} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-      </button>
-    </div>
-    
-    <form onsubmit={handleSave} class="flex-1 overflow-y-auto p-6 flex flex-col">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <div class="space-y-2">
-          <label for="post-id" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Filename (.md)</label>
-          <input id="post-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required placeholder="my-post.md" />
-        </div>
-        
-        <div class="space-y-2">
-          <label for="post-date" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Date</label>
-          <input id="post-date" type="text" name="date" bind:value={currentItem.date} class="input-field" required placeholder="YYYY-MM-DD" />
-        </div>
-        
-        <div class="space-y-2 md:col-span-2">
-          <label for="post-title" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Title</label>
-          <input id="post-title" type="text" name="title" bind:value={currentItem.title} class="input-field" required />
-        </div>
-        
-        <div class="space-y-2 md:col-span-2">
-          <label for="post-desc" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Description</label>
-          <textarea id="post-desc" name="description" bind:value={currentItem.description} rows="2" class="input-field resize-none"></textarea>
-        </div>
-        
-        <div class="space-y-2 md:col-span-1">
-          <label for="post-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags (comma separated)</label>
-          <input id="post-tags" type="text" name="tags" bind:value={currentItem.tags} class="input-field" placeholder="post, afterdark" />
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50">
+  <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-2xl w-full max-w-7xl h-[94vh] flex flex-col overflow-hidden">
+    <!-- Modal Header -->
+    <div class="px-6 py-3 border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center bg-[oklch(0.23_0.03_260)]">
+      <div class="flex items-center gap-4">
+        <h2 class="text-lg font-semibold text-white">{isEditing ? 'Edit Blog Post' : 'Add New Blog Post'}</h2>
+        <button
+          type="button"
+          class="text-xs text-[oklch(0.7107_0.0351_256.79)] hover:text-white flex items-center gap-1 px-2 py-1 rounded bg-black/20"
+          onclick={() => showMeta = !showMeta}
+        >
+          <span>{showMeta ? 'Hide Post Details' : 'Show Post Details'}</span>
+          <svg class="w-3.5 h-3.5 transition-transform {showMeta ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- View mode toggle -->
+        <div class="flex bg-black/30 rounded-lg p-1 border border-[oklch(0.3717_0.0392_257.29)] text-xs font-medium">
+          <button
+            type="button"
+            class="px-2.5 py-1 rounded transition-colors {viewMode === 'edit' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+            onclick={() => viewMode = 'edit'}
+          >
+            Editor
+          </button>
+          <button
+            type="button"
+            class="px-2.5 py-1 rounded transition-colors {viewMode === 'split' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+            onclick={() => viewMode = 'split'}
+          >
+            Split
+          </button>
+          <button
+            type="button"
+            class="px-2.5 py-1 rounded transition-colors {viewMode === 'preview' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+            onclick={() => viewMode = 'preview'}
+          >
+            Preview
+          </button>
         </div>
 
-        <div class="space-y-2 md:col-span-1">
-          <label for="post-font" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Main Text Font</label>
-          <select id="post-font" name="font" bind:value={currentItem.font} class="input-field">
-            {#each fonts || [] as font (font.name)}
-              <option value={font.name}>{font.name}</option>
-            {/each}
-          </select>
-        </div>
+        <button aria-label="Close modal" onclick={close} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white ml-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
       </div>
+    </div>
+    
+    <form onsubmit={handleSave} class="flex-1 overflow-hidden p-6 flex flex-col gap-4">
+      <!-- Collapsible Metadata Grid -->
+      {#if showMeta}
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 rounded-xl bg-black/20 border border-[oklch(0.3717_0.0392_257.29)]/50 shrink-0">
+          <div class="space-y-1">
+            <label for="post-id" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Filename (.md)</label>
+            <input id="post-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field text-xs {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required placeholder="my-post.md" />
+          </div>
+          
+          <div class="space-y-1">
+            <label for="post-date" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Date</label>
+            <input id="post-date" type="text" name="date" bind:value={currentItem.date} class="input-field text-xs" required placeholder="YYYY-MM-DD" />
+          </div>
+          
+          <div class="space-y-1 md:col-span-2">
+            <label for="post-title" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Title</label>
+            <input id="post-title" type="text" name="title" bind:value={currentItem.title} class="input-field text-xs" required />
+          </div>
+          
+          <div class="space-y-1 md:col-span-2">
+            <label for="post-desc" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Description</label>
+            <input id="post-desc" type="text" name="description" bind:value={currentItem.description} class="input-field text-xs" placeholder="Brief summary of the post..." />
+          </div>
+          
+          <div class="space-y-1">
+            <label for="post-tags" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags (comma separated)</label>
+            <input id="post-tags" type="text" name="tags" bind:value={currentItem.tags} class="input-field text-xs" placeholder="post, afterdark" />
+          </div>
+
+          <div class="space-y-1">
+            <label for="post-font" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Main Text Font</label>
+            <select id="post-font" name="font" bind:value={currentItem.font} class="input-field text-xs">
+              {#each fonts || [] as font (font.name)}
+                <option value={font.name}>{font.name}</option>
+              {/each}
+            </select>
+          </div>
+        </div>
+      {/if}
       
       {#if errorMsg}
-        <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-3 rounded-lg mb-4 text-sm">
+        <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-3 rounded-lg text-xs shrink-0">
           {errorMsg}
         </div>
       {/if}
 
-      <div class="space-y-2 flex-1 flex flex-col">
-        <div class="flex justify-between items-end">
-          <label for="post-content" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Markdown Content</label>
-          {#if uploadStatus}
-            <span class="text-xs text-blue-400 font-medium animate-pulse">{uploadStatus}</span>
-          {/if}
-        </div>
-        <div class="flex flex-col flex-1 relative border border-[oklch(0.3717_0.0392_257.29)] rounded-lg focus-within:ring-2 focus-within:ring-blue-500/50 focus-within:border-blue-500 transition-all bg-black/20">
-          <textarea id="post-content" name="content" bind:value={currentItem.content} onpaste={handlePaste} class="w-full bg-transparent text-white placeholder-[oklch(0.7107_0.0351_256.79)] p-4 flex-1 min-h-[300px] font-mono text-sm resize-none focus:outline-none" required placeholder="Write your post content here... You can paste images directly!"></textarea>
-          <div class="bg-[oklch(0.2077_0.0398_265.75)] p-2 flex justify-between items-center rounded-b-lg border-t border-[oklch(0.3717_0.0392_257.29)]">
-            <span class="text-xs text-[oklch(0.7107_0.0351_256.79)] hidden sm:inline-block">Paste images directly or select:</span>
-            <input type="file" accept="image/*" multiple bind:this={fileInput} onchange={handleFileSelect} class="text-xs text-[oklch(0.7107_0.0351_256.79)] file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-medium file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20 cursor-pointer" />
+      <!-- Main Editor / Preview Split Layout -->
+      <div class="flex-1 grid gap-4 overflow-hidden min-h-0"
+        style={viewMode === 'split' ? 'grid-template-columns: 1fr 1fr;' : ''}
+      >
+        <!-- Editor Pane -->
+        {#if viewMode !== 'preview'}
+          <div class="flex flex-col flex-1 relative border border-[oklch(0.3717_0.0392_257.29)] rounded-xl focus-within:ring-2 focus-within:ring-orange-500/50 focus-within:border-orange-500 transition-all bg-black/20 overflow-hidden">
+            <div class="px-4 py-2 bg-[oklch(0.2077_0.0398_265.75)] border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center text-xs text-[oklch(0.7107_0.0351_256.79)]">
+              <span class="font-medium text-white">Markdown Content</span>
+              {#if uploadStatus}
+                <span class="text-xs text-orange-400 font-medium animate-pulse">{uploadStatus}</span>
+              {:else}
+                <span class="text-[11px] text-[oklch(0.7107_0.0351_256.79)]">Paste images directly into editor</span>
+              {/if}
+            </div>
+
+            <textarea
+              id="post-content"
+              name="content"
+              bind:value={currentItem.content}
+              onpaste={handlePaste}
+              class="w-full bg-transparent text-white placeholder-[oklch(0.7107_0.0351_256.79)] p-4 flex-1 font-mono text-sm leading-relaxed resize-none focus:outline-none overflow-y-auto"
+              required
+              placeholder="Write your post content in Markdown here... You can paste images directly!"
+            ></textarea>
+
+            <div class="bg-[oklch(0.2077_0.0398_265.75)] p-2 flex justify-between items-center rounded-b-lg border-t border-[oklch(0.3717_0.0392_257.29)] shrink-0">
+              <span class="text-xs text-[oklch(0.7107_0.0351_256.79)] hidden sm:inline-block">Attach image:</span>
+              <input type="file" accept="image/*" multiple bind:this={fileInput} onchange={handleFileSelect} class="text-xs text-[oklch(0.7107_0.0351_256.79)] file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-medium file:bg-orange-500/10 file:text-orange-400 hover:file:bg-orange-500/20 cursor-pointer" />
+            </div>
           </div>
-        </div>
+        {/if}
+
+        <!-- Live Preview Pane -->
+        {#if viewMode !== 'edit'}
+          <div class="flex flex-col flex-1 border border-[oklch(0.3717_0.0392_257.29)] rounded-xl bg-[oklch(0.14_0_0)] overflow-hidden shadow-inner">
+            <div class="px-4 py-2 bg-[oklch(0.18_0_0)] border-b border-[oklch(0.25_0_0)] flex justify-between items-center text-xs text-[oklch(0.7107_0.0351_256.79)]">
+              <span class="font-medium text-white flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                Post Live Preview
+              </span>
+              <span class="text-[10px] text-zinc-500 font-mono font-normal">Font: {currentItem.font}</span>
+            </div>
+
+            <div class="flex-1 p-6 md:p-8 overflow-y-auto blog-preview-container bg-black text-white">
+              <header class="preview-header mb-6 pb-4 border-b border-zinc-800">
+                <h1 class="preview-post-title text-3xl md:text-4xl font-normal text-white font-serif">
+                  {currentItem.title || 'Untitled Post'}
+                </h1>
+                {#if currentItem.description}
+                  <p class="text-zinc-400 text-base mt-2">{currentItem.description}</p>
+                {/if}
+                <div class="flex items-center gap-4 mt-3 text-xs text-zinc-500 font-mono">
+                  <time>{currentItem.date || 'No date set'}</time>
+                  {#if tagList.length > 0}
+                    <div class="flex flex-wrap gap-1.5">
+                      {#each tagList as tag (tag)}
+                        <span class="px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-300 text-[11px]">#{tag}</span>
+                      {/each}
+                    </div>
+                  {/if}
+                </div>
+              </header>
+
+              <div class="preview-post-body" style={selectedFontCss}>
+                {@html renderedPreview}
+              </div>
+            </div>
+          </div>
+        {/if}
       </div>
       
-      <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">
+      <!-- Footer Actions -->
+      <div class="flex justify-end space-x-4 pt-2 border-t border-[oklch(0.3717_0.0392_257.29)] shrink-0">
         <button type="button" onclick={close} class="btn-secondary">Cancel</button>
         <button type="submit" class="btn-primary">Save Post</button>
       </div>
     </form>
   </div>
 </div>
+
+<style>
+  .preview-post-title {
+    font-family: "Instrument Serif", serif;
+  }
+
+  .preview-post-body :global(p) {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    margin: 0 0 1.25rem 0;
+    color: oklch(0.95 0 0);
+  }
+
+  .preview-post-body :global(h1),
+  .preview-post-body :global(h2),
+  .preview-post-body :global(h3),
+  .preview-post-body :global(h4) {
+    color: white;
+    font-weight: 600;
+    margin: 1.75rem 0 0.75rem 0;
+  }
+
+  .preview-post-body :global(h2) {
+    font-size: 1.6rem;
+  }
+
+  .preview-post-body :global(h3) {
+    font-size: 1.35rem;
+  }
+
+  .preview-post-body :global(ul),
+  .preview-post-body :global(ol) {
+    padding-left: 1.5rem;
+    margin: 0 0 1.25rem 0;
+  }
+
+  .preview-post-body :global(ul) {
+    list-style-type: disc;
+  }
+
+  .preview-post-body :global(ol) {
+    list-style-type: decimal;
+  }
+
+  .preview-post-body :global(li) {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+
+  .preview-post-body :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+  }
+
+  .preview-post-body :global(blockquote) {
+    border-left: 2px solid oklch(0.5 0 0);
+    padding-left: 1.25rem;
+    margin: 1rem 0;
+    color: oklch(0.75 0 0);
+    font-style: italic;
+  }
+
+  .preview-post-body :global(code) {
+    background-color: oklch(0.2 0 0);
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.9em;
+  }
+
+  .preview-post-body :global(pre) {
+    background-color: oklch(0.16 0 0);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1.25rem 0;
+  }
+
+  .preview-post-body :global(pre code) {
+    background: transparent;
+    padding: 0;
+  }
+
+  .preview-post-body :global(a) {
+    color: oklch(0.7 0.15 250);
+    text-decoration: underline;
+  }
+</style>
