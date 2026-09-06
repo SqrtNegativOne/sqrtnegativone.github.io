@@ -1,9 +1,10 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
-  import { ResultAsync, okAsync, errAsync } from 'neverthrow';
-  import { safeInvoke, safeJsonParse, safeUrlParse } from '$lib/utils';
+  import { ResultAsync } from 'neverthrow';
+  import { safeUrlParse } from '$lib/utils';
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
+  import { findQuoteProvider, quoteProviders } from './providers';
 
   import type { QuoteItem } from '../../../../shared/types';
 
@@ -21,70 +22,6 @@
   let importUrl = $state('');
   let isFetching = $state(false);
 
-  function fetchTwitterQuote(url: string): ResultAsync<{ quote: string; source: string }, Error> {
-    const match = url.match(/(?:twitter\.com|x\.com)\/([^/]+)\/status\/(\d+)/);
-    if (!match) return errAsync(new Error("Invalid Twitter/X URL format. Expected a link to a specific post."));
-    const [, handle, id] = match;
-    
-    return safeInvoke<string>('fetch_url', { url: `https://api.fxtwitter.com/${handle}/status/${id}` })
-      .andThen(safeJsonParse)
-      .andThen((data: any) => {
-        if (!data.tweet) return errAsync(new Error("Could not find tweet data."));
-        return okAsync({
-          quote: data.tweet.text,
-          source: `${data.tweet.author.name} (@${data.tweet.author.screen_name})`
-        });
-      });
-  }
-
-  function fetchBlueskyQuote(url: string): ResultAsync<{ quote: string; source: string }, Error> {
-    const match = url.match(/bsky\.app\/profile\/([^/]+)\/post\/([^/?#]+)/);
-    if (!match) return errAsync(new Error("Invalid Bluesky URL format. Expected a link to a specific post."));
-    const [, handle, id] = match;
-    
-    return safeInvoke<string>('fetch_url', { url: `https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=${handle}` })
-      .andThen(safeJsonParse)
-      .andThen((profile: any) => {
-        if (!profile.did) return errAsync(new Error("Could not find Bluesky user profile."));
-        return safeInvoke<string>('fetch_url', { url: `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread?uri=at://${profile.did}/app.bsky.feed.post/${id}` });
-      })
-      .andThen(safeJsonParse)
-      .andThen((threadData: any) => {
-        if (!threadData.thread?.post) return errAsync(new Error("Could not find Bluesky post."));
-        const author = threadData.thread.post.author;
-        return okAsync({
-          quote: threadData.thread.post.record.text,
-          source: `${author.displayName || author.handle} (@${author.handle})`
-        });
-      });
-  }
-
-  function fetchGoodreadsQuote(url: string): ResultAsync<{ quote: string; source: string }, Error> {
-    return safeInvoke<string>('fetch_url', { url })
-      .map(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        
-        const ogDesc = doc.querySelector('meta[property="og:description"]')?.getAttribute('content');
-        const nameDesc = doc.querySelector('meta[name="description"]')?.getAttribute('content');
-        let quote = ogDesc || nameDesc || '';
-        
-        const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content');
-        const titleText = doc.querySelector('title')?.textContent || '';
-        const title = ogTitle || titleText;
-
-        let source = title;
-        const grMatch = title.match(/Quote by ([^:]+):/);
-        if (grMatch)
-          source = grMatch[1];
-        
-        if (quote.startsWith('“') && quote.endsWith('”'))
-          quote = quote.substring(1, quote.length - 1);
-        
-        return { quote, source };
-      });
-  }
-
   async function fetchQuote() {
     if (!importUrl) return;
     isFetching = true;
@@ -97,27 +34,16 @@
     }
     
     const parsedUrl = parsedUrlRes.value;
-    const domain = parsedUrl.hostname.replace(/^www\./, '');
-    let resultPromise: ResultAsync<{ quote: string; source: string }, Error>;
-
-    switch (domain) {
-      case 'twitter.com':
-      case 'x.com':
-        resultPromise = fetchTwitterQuote(importUrl);
-        break;
-      case 'bsky.app':
-        resultPromise = fetchBlueskyQuote(importUrl);
-        break;
-      case 'goodreads.com':
-        resultPromise = fetchGoodreadsQuote(importUrl);
-        break;
-      default:
-        notificationState.error(`Unsupported URL domain: "${domain}". Please provide a Twitter, Bluesky, or Goodreads URL.`, { title: 'Unsupported Domain' });
-        isFetching = false;
-        return;
+    const provider = findQuoteProvider(parsedUrl);
+    
+    if (!provider) {
+      const supported = quoteProviders.map((p) => p.name).join(', ');
+      notificationState.error(`Unsupported URL. Please provide a link from: ${supported}.`, { title: 'Unsupported Domain' });
+      isFetching = false;
+      return;
     }
 
-    const fetchResult = await resultPromise;
+    const fetchResult = await provider.fetch(parsedUrl);
     
     if (fetchResult.isErr()) {
       console.error(fetchResult.error);
