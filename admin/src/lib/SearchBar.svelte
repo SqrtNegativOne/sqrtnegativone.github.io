@@ -49,14 +49,31 @@
       activeEl instanceof HTMLTextAreaElement ||
       (activeEl as HTMLElement)?.isContentEditable;
 
-    if (e.key === '/' && !isInput && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    const isModalOpen = !!document.querySelector('[role="dialog"], [data-modal], .fixed.inset-0.z-50, .fixed.inset-0.z-\\[60\\]');
+
+    // Focus search input on '/' when not in input or modal
+    if (e.key === '/' && !isInput && !isModalOpen && !e.ctrlKey && !e.metaKey && !e.altKey) {
       e.preventDefault();
       inputEl?.focus();
       inputEl?.select();
       return;
     }
 
-    if ((e.key === 'n' || e.key === 'N') && !isInput && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    const isKeyN = e.key === 'n' || e.key === 'N' || e.code === 'KeyN';
+    const isCtrlOrMeta = e.ctrlKey || e.metaKey;
+
+    // Ctrl+N / Cmd+N: Works globally across the view (even when search bar is focused),
+    // but blocked while a modal dialog is open so active input isn't discarded.
+    if (isKeyN && isCtrlOrMeta && !e.altKey) {
+      e.preventDefault();
+      if (onnew && !isModalOpen) {
+        onnew();
+      }
+      return;
+    }
+
+    // Single-key 'n' or 'N' navigation shortcut (only when not typing in any input or modal)
+    if (isKeyN && !isCtrlOrMeta && !e.altKey && !e.shiftKey && !isInput && !isModalOpen) {
       if (onnew) {
         e.preventDefault();
         onnew();

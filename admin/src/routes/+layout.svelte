@@ -10,10 +10,18 @@
   let { children } = $props();
   let mobileMenuOpen = $state(false);
 
+  function handleGlobalKeydown(e: KeyboardEvent) {
+    if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 'n' || e.key === 'N' || e.code === 'KeyN')) {
+      e.preventDefault();
+    }
+  }
+
   onMount(() => {
     notificationState.initGlobalHandlers();
   });
 </script>
+
+<svelte:window onkeydown={handleGlobalKeydown} />
 
 <div class="flex h-screen bg-[oklch(0.1408_0.0044_285.82)] text-[oklch(0.9842_0.0034_247.86)] overflow-hidden">
   <!-- Desktop Collapsible Sidebar (w-16 placeholder so content doesn't shift, with aside animating out over content) -->

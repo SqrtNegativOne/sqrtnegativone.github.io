@@ -49,10 +49,13 @@
 
 {#if open}
   <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
     class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50"
     onclick={handleBackdropClick}
+    role="dialog"
+    aria-modal="true"
+    data-modal="true"
+    tabindex="-1"
   >
     <div
       class="bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded shadow-2xl w-full {maxWidthClasses[maxWidth]} max-h-[90vh] flex flex-col overflow-hidden"

@@ -14,7 +14,7 @@
 </script>
 
 {#if isSearchModalOpen}
-  <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
+  <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-[60]" role="dialog" aria-modal="true" data-modal="true" tabindex="-1">
     <div class="bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded shadow-2xl w-[95vw] max-w-7xl flex flex-col overflow-hidden">
       <div class="p-6 border-b border-[oklch(0.2739_0.0055_286.03)] bg-[oklch(0.1603_0.0059_285.89)] flex justify-between items-center shrink-0">
         <h2 class="text-xl font-semibold text-white">Select a match</h2>

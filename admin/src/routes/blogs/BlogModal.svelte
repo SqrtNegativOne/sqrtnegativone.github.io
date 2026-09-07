@@ -199,7 +199,7 @@ ${content}
   }
 </script>
 
-<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50">
+<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50" role="dialog" aria-modal="true" data-modal="true" tabindex="-1">
   <div class="bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded shadow-2xl w-full max-w-7xl h-[94vh] flex flex-col overflow-hidden">
     <!-- Modal Header -->
     <div class="px-6 py-3 border-b border-[oklch(0.2739_0.0055_286.03)] flex justify-between items-center bg-[oklch(0.1603_0.0059_285.89)]">
