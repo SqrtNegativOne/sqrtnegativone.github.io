@@ -4,6 +4,8 @@
   import { assetState } from '$lib/assetState.svelte';
   import { notificationState } from '$lib/notificationState.svelte';
   import PageHeader from '$lib/PageHeader.svelte';
+  import EmptyState from '$lib/EmptyState.svelte';
+  import Modal from '$lib/Modal.svelte';
   import type { SkillItem } from './+page';
 
   interface SkillFormItem extends SkillItem {
@@ -116,44 +118,41 @@
     {/each}
   </div>
   {#if data.skills.length === 0}
-    <div class="card p-8 text-center text-[oklch(0.7107_0.0351_256.79)]">No skills found. Add some!</div>
+    <EmptyState
+      title="No skills found"
+      message="Add technologies and tools to your tech stack."
+      actionLabel="New Skill"
+      onaction={openNew}
+    />
   {/if}
 </div>
 
 {#if isModalOpen}
-  <div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-    <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden">
-      <div class="p-6 border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center">
-        <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Skill' : 'Add New Skill'}</h2>
-        <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
+  <Modal
+    title={isEditing ? 'Edit Skill' : 'New Skill'}
+    maxWidth="md"
+    onclose={() => isModalOpen = false}
+  >
+    <form id="skill-form" onsubmit={handleSave} class="space-y-4">
+      <div class="space-y-2">
+        <label for="skill-name" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Name</label>
+        <input id="skill-name" type="text" bind:value={currentItem.name} class="input-field" required />
       </div>
-      
-      <form onsubmit={handleSave} class="flex-1 overflow-y-auto p-6 space-y-4">
-        
-        <div class="space-y-2">
-          <label for="skill-name" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Name</label>
-          <input id="skill-name" type="text" bind:value={currentItem.name} class="input-field" required />
-        </div>
-        
 
-        
-        <div class="space-y-2">
-          <label for="skill-logo" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Logo Path</label>
-          <input id="skill-logo" type="text" bind:value={currentItem.logo} class="input-field" />
-        </div>
-        
-        <div class="space-y-2">
-          <label for="skill-mono" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Mono Logo Path</label>
-          <input id="skill-mono" type="text" bind:value={currentItem.mono} class="input-field" />
-        </div>
-        
-        <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">
-          <button type="button" onclick={() => isModalOpen = false} class="btn-secondary">Cancel</button>
-          <button type="submit" class="btn-primary">Save Skill</button>
-        </div>
-      </form>
-    </div>
-  </div>
+      <div class="space-y-2">
+        <label for="skill-logo" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Logo Path</label>
+        <input id="skill-logo" type="text" bind:value={currentItem.logo} class="input-field" />
+      </div>
+
+      <div class="space-y-2">
+        <label for="skill-mono" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Mono Logo Path</label>
+        <input id="skill-mono" type="text" bind:value={currentItem.mono} class="input-field" />
+      </div>
+    </form>
+
+    {#snippet footer()}
+      <button type="button" onclick={() => isModalOpen = false} class="btn-secondary">Cancel</button>
+      <button type="submit" form="skill-form" class="btn-primary">Save Skill</button>
+    {/snippet}
+  </Modal>
 {/if}

@@ -3,6 +3,8 @@
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
   import PageHeader from '$lib/PageHeader.svelte';
+  import EmptyState from '$lib/EmptyState.svelte';
+  import SearchInput from '$lib/SearchInput.svelte';
   import QuoteCard from './QuoteCard.svelte';
   import QuoteModal from './QuoteModal.svelte';
 
@@ -86,22 +88,13 @@
   <PageHeader title="Quotes" actionLabel="New Quote" onaction={openNew} />
 
   <div class="flex flex-col sm:flex-row gap-4 bg-[oklch(0.2103_0.0059_285.89)] p-4 rounded-xl border border-[oklch(0.2739_0.0055_286.03)] shadow-sm">
-    <div class="flex-1 relative">
-      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <svg class="h-5 w-5 text-[oklch(0.7107_0.0351_256.79)]" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-        </svg>
-      </div>
-      <input 
-        type="search" 
-        bind:value={searchQuery}
-        placeholder="Search quotes or sources..." 
-        class="input-field pl-10"
-      />
-    </div>
+    <SearchInput
+      bind:value={searchQuery}
+      placeholder="Search quotes or sources..."
+    />
     
     <div class="sm:w-48 relative">
-      <select bind:value={selectedTag} class="input-field appearance-none pr-8">
+      <select bind:value={selectedTag} class="input-field appearance-none pr-8 text-sm">
         <option value="">All Tags</option>
         {#each allTags as tag (tag)}
           <option value={tag}>{tag}</option>
@@ -129,10 +122,12 @@
   </div>
   
   {#if filteredQuotes.length === 0}
-    <div class="card p-12 text-center text-[oklch(0.7107_0.0351_256.79)] border-dashed border-2">
-      <svg class="w-12 h-12 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-      <p class="text-lg">No quotes found.</p>
-    </div>
+    <EmptyState
+      title={searchQuery || selectedTag ? 'No matching quotes' : 'No quotes found'}
+      message={searchQuery || selectedTag ? 'Try adjusting your search query or tag filter.' : 'Start collecting quotes and memorable thoughts.'}
+      actionLabel={searchQuery || selectedTag ? undefined : 'New Quote'}
+      onaction={searchQuery || selectedTag ? undefined : openNew}
+    />
   {/if}
 </div>
 

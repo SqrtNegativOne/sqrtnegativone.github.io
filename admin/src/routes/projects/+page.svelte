@@ -3,6 +3,7 @@
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
   import PageHeader from '$lib/PageHeader.svelte';
+  import EmptyState from '$lib/EmptyState.svelte';
   import ProjectCard from './ProjectCard.svelte';
   import ProjectModal from './ProjectModal.svelte';
 
@@ -101,7 +102,12 @@
     {/each}
   </div>
   {#if data.projects.length === 0}
-    <div class="card p-8 text-center text-[oklch(0.7107_0.0351_256.79)]">No projects found. Add some!</div>
+    <EmptyState
+      title="No projects found"
+      message="You haven't added any projects yet. Showcase your work by adding a project!"
+      actionLabel="New Project"
+      onaction={openNew}
+    />
   {/if}
 </div>
 

@@ -4,6 +4,9 @@
   import { readData, writeData, type NowEntry } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
   import PageHeader from '$lib/PageHeader.svelte';
+  import EmptyState from '$lib/EmptyState.svelte';
+  import SearchInput from '$lib/SearchInput.svelte';
+  import Modal from '$lib/Modal.svelte';
 
   let { data } = $props<{ data: { entries: NowEntry[] } }>();
 
@@ -201,17 +204,11 @@
 
   <!-- Search and filter -->
   <div class="flex items-center gap-3">
-    <div class="relative flex-1 max-w-md">
-      <input
-        type="text"
-        bind:value={searchQuery}
-        placeholder="Filter by date, title, or content..."
-        class="input-field pl-9 text-sm"
-      />
-      <svg class="w-4 h-4 absolute left-3 top-3 text-[oklch(0.7107_0.0351_256.79)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
-    </div>
+    <SearchInput
+      bind:value={searchQuery}
+      placeholder="Filter by date, title, or content..."
+      class="max-w-md"
+    />
     <span class="text-xs text-[oklch(0.7107_0.0351_256.79)]">
       {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'}
     </span>
@@ -219,13 +216,12 @@
 
   <!-- List of Entries -->
   {#if filteredEntries.length === 0}
-    <div class="card p-12 text-center text-[oklch(0.7107_0.0351_256.79)]">
-      {#if searchQuery}
-        No entries match your search "{searchQuery}".
-      {:else}
-        No day entries found. Click "Add Day Entry" to create your first one!
-      {/if}
-    </div>
+    <EmptyState
+      title={searchQuery ? 'No matching entries' : 'No day entries found'}
+      message={searchQuery ? `No entries match "${searchQuery}".` : 'Create your first daily log entry!'}
+      actionLabel={searchQuery ? undefined : 'New Entry'}
+      onaction={searchQuery ? undefined : openAddModal}
+    />
   {:else}
     <div class="grid grid-cols-1 gap-4">
       {#each filteredEntries as item (item.id || item.date)}
@@ -276,168 +272,139 @@
 
 <!-- Modal: Add / Edit Day Entry -->
 {#if isModalOpen}
-  <!-- svelte-ignore a11y_click_events_have_key_events -->
-  <!-- svelte-ignore a11y_no_static_element_interactions -->
-  <div class="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4 z-50" onclick={closeModal}>
-    <div
-      class="bg-[oklch(0.23_0.015_260)] border border-[oklch(0.35_0.03_257)] rounded-xl shadow-2xl w-full max-w-5xl max-h-[92vh] flex flex-col overflow-hidden"
-      onclick={(e) => e.stopPropagation()}
-    >
-      <!-- Modal Header -->
-      <div class="px-6 py-4 border-b border-[oklch(0.35_0.03_257)] flex justify-between items-center bg-[oklch(0.19_0.015_260)]">
-        <div>
-          <h2 class="text-xl font-semibold text-white">
-            {isEditing ? `Edit Day Entry (${originalDate})` : 'Add New Day Entry'}
-          </h2>
-          <p class="text-xs text-[oklch(0.7107_0.0351_256.79)] mt-0.5">
-            Individual day page will be published at /now/{currentEntry.date}
-          </p>
-        </div>
-
-        <button
-          type="button"
-          aria-label="Close modal"
-          onclick={closeModal}
-          class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded transition-colors"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+  <Modal
+    title={isEditing ? `Edit Day Entry (${originalDate})` : 'New Day Entry'}
+    subtitle={`Individual day page will be published at /now/${currentEntry.date}`}
+    maxWidth="5xl"
+    onclose={closeModal}
+  >
+    <!-- Date and Title fields -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <label for="entry-date" class="block text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)] mb-1">
+          Date (YYYY-MM-DD) *
+        </label>
+        <input
+          id="entry-date"
+          type="date"
+          bind:value={currentEntry.date}
+          required
+          class="input-field text-sm font-mono"
+        />
       </div>
 
-      <!-- Modal Body -->
-      <div class="flex-1 overflow-y-auto p-6 space-y-4">
-        <!-- Date and Title fields -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label for="entry-date" class="block text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)] mb-1">
-              Date (YYYY-MM-DD) *
-            </label>
-            <input
-              id="entry-date"
-              type="date"
-              bind:value={currentEntry.date}
-              required
-              class="input-field text-sm font-mono"
-            />
-          </div>
-
-          <div class="md:col-span-2">
-            <label for="entry-title" class="block text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)] mb-1">
-              Headline / Title (Optional)
-            </label>
-            <input
-              id="entry-title"
-              type="text"
-              bind:value={currentEntry.title}
-              placeholder="e.g. Systems Programming & Late-Summer Reading"
-              class="input-field text-sm"
-            />
-          </div>
-        </div>
-
-        <!-- Editor Toolbar & View Switcher -->
-        <div class="flex justify-between items-center pt-2">
-          <label for="entry-content" class="text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)]">
-            Content (Markdown) *
-          </label>
-
-          <div class="flex bg-[oklch(0.18_0.015_260)] rounded-lg p-0.5 border border-[oklch(0.32_0.02_260)] text-xs">
-            <button
-              type="button"
-              class="px-2.5 py-1 rounded transition-colors {editorViewMode === 'edit' ? 'bg-teal-500/20 text-teal-300 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
-              onclick={() => editorViewMode = 'edit'}
-            >
-              Editor
-            </button>
-            <button
-              type="button"
-              class="px-2.5 py-1 rounded transition-colors {editorViewMode === 'split' ? 'bg-teal-500/20 text-teal-300 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
-              onclick={() => editorViewMode = 'split'}
-            >
-              Split
-            </button>
-            <button
-              type="button"
-              class="px-2.5 py-1 rounded transition-colors {editorViewMode === 'preview' ? 'bg-teal-500/20 text-teal-300 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
-              onclick={() => editorViewMode = 'preview'}
-            >
-              Preview
-            </button>
-          </div>
-        </div>
-
-        <!-- Editor / Preview Grid -->
-        <div
-          class="grid gap-4 min-h-[380px] max-h-[500px]"
-          class:grid-cols-1={editorViewMode !== 'split'}
-          class:md:grid-cols-2={editorViewMode === 'split'}
-        >
-          {#if editorViewMode !== 'preview'}
-            <div class="flex flex-col bg-black/40 rounded-lg border border-[oklch(0.32_0.02_260)] overflow-hidden">
-              <textarea
-                id="entry-content"
-                bind:value={currentEntry.content}
-                placeholder="Write your day update using standard Markdown... (headings, lists, links)"
-                class="w-full flex-1 bg-transparent text-white font-mono text-sm leading-relaxed p-4 focus:outline-none resize-none min-h-[340px]"
-              ></textarea>
-              <div class="px-3 py-1.5 bg-[oklch(0.18_0.015_260)] border-t border-[oklch(0.32_0.02_260)] text-[11px] text-[oklch(0.7107_0.0351_256.79)] font-mono flex justify-between">
-                <span>Ctrl+S to save</span>
-                <span>{formStats().lines} lines · {formStats().words} words</span>
-              </div>
-            </div>
-          {/if}
-
-          {#if editorViewMode !== 'edit'}
-            <div class="flex flex-col bg-black/70 rounded-lg border border-[oklch(0.32_0.02_260)] overflow-y-auto p-5 text-white">
-              <div class="border-b border-white/10 pb-3 mb-3">
-                <span class="text-xs font-mono text-teal-400 font-semibold">{currentEntry.date || 'YYYY-MM-DD'}</span>
-                {#if currentEntry.title}
-                  <h3 class="text-xl font-serif text-white mt-1">{currentEntry.title}</h3>
-                {/if}
-              </div>
-              <div class="now-modal-preview">
-                <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                {@html previewHtml}
-              </div>
-            </div>
-          {/if}
-        </div>
+      <div class="md:col-span-2">
+        <label for="entry-title" class="block text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)] mb-1">
+          Headline / Title (Optional)
+        </label>
+        <input
+          id="entry-title"
+          type="text"
+          bind:value={currentEntry.title}
+          placeholder="e.g. Systems Programming & Late-Summer Reading"
+          class="input-field text-sm"
+        />
       </div>
+    </div>
 
-      <!-- Modal Footer -->
-      <div class="px-6 py-4 border-t border-[oklch(0.35_0.03_257)] flex justify-between items-center bg-[oklch(0.19_0.015_260)]">
+    <!-- Editor Toolbar & View Switcher -->
+    <div class="flex justify-between items-center pt-2">
+      <label for="entry-content" class="text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)]">
+        Content (Markdown) *
+      </label>
+
+      <div class="flex bg-[oklch(0.18_0.015_260)] rounded-lg p-0.5 border border-[oklch(0.32_0.02_260)] text-xs">
         <button
           type="button"
-          onclick={closeModal}
-          class="btn-secondary text-sm px-4 py-2"
+          class="px-2.5 py-1 rounded transition-colors {editorViewMode === 'edit' ? 'bg-teal-500/20 text-teal-300 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+          onclick={() => editorViewMode = 'edit'}
         >
-          Cancel
+          Editor
         </button>
-
         <button
           type="button"
-          onclick={handleSave}
-          disabled={isSaving}
-          class="btn-primary text-sm px-5 py-2 flex items-center shadow-lg disabled:opacity-50 cursor-pointer"
+          class="px-2.5 py-1 rounded transition-colors {editorViewMode === 'split' ? 'bg-teal-500/20 text-teal-300 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+          onclick={() => editorViewMode = 'split'}
         >
-          {#if isSaving}
-            <svg class="animate-spin -ml-0.5 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Saving...
-          {:else}
-            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-            </svg>
-            {isEditing ? 'Update Day Entry' : 'Publish Day Entry'}
-          {/if}
+          Split
+        </button>
+        <button
+          type="button"
+          class="px-2.5 py-1 rounded transition-colors {editorViewMode === 'preview' ? 'bg-teal-500/20 text-teal-300 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+          onclick={() => editorViewMode = 'preview'}
+        >
+          Preview
         </button>
       </div>
     </div>
-  </div>
+
+    <!-- Editor / Preview Grid -->
+    <div
+      class="grid gap-4 min-h-[380px] max-h-[500px]"
+      class:grid-cols-1={editorViewMode !== 'split'}
+      class:md:grid-cols-2={editorViewMode === 'split'}
+    >
+      {#if editorViewMode !== 'preview'}
+        <div class="flex flex-col bg-black/40 rounded-lg border border-[oklch(0.32_0.02_260)] overflow-hidden">
+          <textarea
+            id="entry-content"
+            bind:value={currentEntry.content}
+            placeholder="Write your day update using standard Markdown... (headings, lists, links)"
+            class="w-full flex-1 bg-transparent text-white font-mono text-sm leading-relaxed p-4 focus:outline-none resize-none min-h-[340px]"
+          ></textarea>
+          <div class="px-3 py-1.5 bg-[oklch(0.18_0.015_260)] border-t border-[oklch(0.32_0.02_260)] text-[11px] text-[oklch(0.7107_0.0351_256.79)] font-mono flex justify-between">
+            <span>Ctrl+S to save</span>
+            <span>{formStats().lines} lines · {formStats().words} words</span>
+          </div>
+        </div>
+      {/if}
+
+      {#if editorViewMode !== 'edit'}
+        <div class="flex flex-col bg-black/70 rounded-lg border border-[oklch(0.32_0.02_260)] overflow-y-auto p-5 text-white">
+          <div class="border-b border-white/10 pb-3 mb-3">
+            <span class="text-xs font-mono text-teal-400 font-semibold">{currentEntry.date || 'YYYY-MM-DD'}</span>
+            {#if currentEntry.title}
+              <h3 class="text-xl font-serif text-white mt-1">{currentEntry.title}</h3>
+            {/if}
+          </div>
+          <div class="now-modal-preview">
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+            {@html previewHtml}
+          </div>
+        </div>
+      {/if}
+    </div>
+
+    {#snippet footer()}
+      <button
+        type="button"
+        onclick={closeModal}
+        class="btn-secondary text-sm px-4 py-2"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="button"
+        onclick={handleSave}
+        disabled={isSaving}
+        class="btn-primary text-sm px-5 py-2 flex items-center shadow-lg disabled:opacity-50 cursor-pointer"
+      >
+        {#if isSaving}
+          <svg class="animate-spin -ml-0.5 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Saving...
+        {:else}
+          <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+          </svg>
+          {isEditing ? 'Update Day Entry' : 'Publish Day Entry'}
+        {/if}
+      </button>
+    {/snippet}
+  </Modal>
 {/if}
 
 <style>

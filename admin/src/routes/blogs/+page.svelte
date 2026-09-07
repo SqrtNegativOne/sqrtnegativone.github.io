@@ -5,6 +5,7 @@
   import { ResultAsync } from 'neverthrow';
   import { notificationState } from '$lib/notificationState.svelte';
   import PageHeader from '$lib/PageHeader.svelte';
+  import EmptyState from '$lib/EmptyState.svelte';
   import BlogCard from './BlogCard.svelte';
   import BlogModal from './BlogModal.svelte';
 
@@ -85,7 +86,12 @@
     {/each}
   </div>
   {#if data.posts.length === 0}
-    <div class="card p-8 text-center text-[oklch(0.7107_0.0351_256.79)]">No blog posts found. Add some!</div>
+    <EmptyState
+      title="No blog posts found"
+      message="You haven't written any posts yet. Start by creating your first blog post!"
+      actionLabel="New Post"
+      onaction={openNew}
+    />
   {/if}
 </div>
 

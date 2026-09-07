@@ -3,6 +3,7 @@
   import { readData, writeData, getRepoRoot } from '$lib/db';
   import { safeInvoke } from '$lib/utils';
   import { notificationState } from '$lib/notificationState.svelte';
+  import Modal from '$lib/Modal.svelte';
   import { ResultAsync } from 'neverthrow';
 
   import type { ProjectItem } from '../../../../shared/types';
@@ -147,68 +148,63 @@
 
 <svelte:window onpaste={handlePaste} />
 
-<div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-  <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col overflow-hidden">
-    <div class="p-6 border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center">
-      <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Project' : 'Add New Project'}</h2>
-      <button aria-label="Close modal" onclick={close} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-      </button>
-    </div>
+<Modal
+  title={isEditing ? 'Edit Project' : 'New Project'}
+  maxWidth="3xl"
+  onclose={close}
+>
+  <form id="project-form" onsubmit={handleSave} class="space-y-6">
+    <input type="hidden" name="isNew" value={(!isEditing).toString()} />
     
-    <form onsubmit={handleSave} class="flex-1 overflow-y-auto p-6">
-      <input type="hidden" name="isNew" value={(!isEditing).toString()} />
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="space-y-2">
-          <label for="project-id" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">ID (Unique)</label>
-          <input id="project-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
-        </div>
-        
-        <div class="space-y-2">
-          <label for="project-name" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Name</label>
-          <input id="project-name" type="text" name="name" bind:value={currentItem.name} class="input-field" required />
-        </div>
-        
-        <div class="space-y-2 md:col-span-2">
-          <label for="project-desc" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Description</label>
-          <textarea id="project-desc" name="description" bind:value={currentItem.description} rows="3" class="input-field resize-none"></textarea>
-        </div>
-        
-        <div class="space-y-2 md:col-span-2">
-          <label for="project-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags (comma separated)</label>
-          <input id="project-tags" type="text" name="tags" bind:value={currentItem.tags} class="input-field" placeholder="React, Node.js, Tailwind" />
-        </div>
-        
-        <div class="space-y-2">
-          <label for="project-github" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">GitHub URL</label>
-          <input id="project-github" type="text" name="github" bind:value={currentItem.github} class="input-field" />
-        </div>
-        
-        <div class="space-y-2">
-          <label for="project-url" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Website URL</label>
-          <input id="project-url" type="text" name="url" bind:value={currentItem.url} class="input-field" />
-        </div>
-        
-        <div class="space-y-2">
-          <label for="project-image" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Image (Paste anywhere to upload)</label>
-          <input id="project-image" type="file" name="imageFile" bind:this={fileInput} accept="image/*" class="w-full text-sm text-[oklch(0.7107_0.0351_256.79)] file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20" />
-          <label for="project-image-text" class="sr-only">Image path</label>
-          <input id="project-image-text" type="text" name="image" bind:value={currentItem.image} class="input-field mt-2" placeholder="/projects/image.png" />
-        </div>
-        
-        <div class="space-y-2 flex items-center pt-8">
-          <label class="flex items-center space-x-3 cursor-pointer">
-            <input type="checkbox" name="private" value="true" checked={currentItem.private} class="w-5 h-5 rounded border-[oklch(0.3717_0.0392_257.29)] bg-[oklch(0.2077_0.0398_265.75)] text-blue-500 focus:ring-blue-500 focus:ring-offset-[oklch(0.2795_0.0368_260.03)]" />
-            <span class="text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Private Project</span>
-          </label>
-        </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="space-y-2">
+        <label for="project-id" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">ID (Unique)</label>
+        <input id="project-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
       </div>
       
-      <div class="mt-8 flex justify-end space-x-4 pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]">
-        <button type="button" onclick={close} class="btn-secondary">Cancel</button>
-        <button type="submit" class="btn-primary">Save Project</button>
+      <div class="space-y-2">
+        <label for="project-name" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Name</label>
+        <input id="project-name" type="text" name="name" bind:value={currentItem.name} class="input-field" required />
       </div>
-    </form>
-  </div>
-</div>
+      
+      <div class="space-y-2 md:col-span-2">
+        <label for="project-desc" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Description</label>
+        <textarea id="project-desc" name="description" bind:value={currentItem.description} rows="3" class="input-field resize-none"></textarea>
+      </div>
+      
+      <div class="space-y-2 md:col-span-2">
+        <label for="project-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags (comma separated)</label>
+        <input id="project-tags" type="text" name="tags" bind:value={currentItem.tags} class="input-field" placeholder="React, Node.js, Tailwind" />
+      </div>
+      
+      <div class="space-y-2">
+        <label for="project-github" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">GitHub URL</label>
+        <input id="project-github" type="text" name="github" bind:value={currentItem.github} class="input-field" />
+      </div>
+      
+      <div class="space-y-2">
+        <label for="project-url" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Website URL</label>
+        <input id="project-url" type="text" name="url" bind:value={currentItem.url} class="input-field" />
+      </div>
+      
+      <div class="space-y-2">
+        <label for="project-image" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Image (Paste anywhere to upload)</label>
+        <input id="project-image" type="file" name="imageFile" bind:this={fileInput} accept="image/*" class="w-full text-sm text-[oklch(0.7107_0.0351_256.79)] file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-500/10 file:text-blue-400 hover:file:bg-blue-500/20" />
+        <label for="project-image-text" class="sr-only">Image path</label>
+        <input id="project-image-text" type="text" name="image" bind:value={currentItem.image} class="input-field mt-2" placeholder="/projects/image.png" />
+      </div>
+      
+      <div class="space-y-2 flex items-center pt-8">
+        <label class="flex items-center space-x-3 cursor-pointer">
+          <input type="checkbox" name="private" value="true" checked={currentItem.private} class="w-5 h-5 rounded border-[oklch(0.3717_0.0392_257.29)] bg-[oklch(0.2077_0.0398_265.75)] text-blue-500 focus:ring-blue-500 focus:ring-offset-[oklch(0.2795_0.0368_260.03)]" />
+          <span class="text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Private Project</span>
+        </label>
+      </div>
+    </div>
+  </form>
+
+  {#snippet footer()}
+    <button type="button" onclick={close} class="btn-secondary">Cancel</button>
+    <button type="submit" form="project-form" class="btn-primary">Save Project</button>
+  {/snippet}
+</Modal>
