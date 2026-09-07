@@ -8,6 +8,10 @@ export interface AppNotification {
   title?: string;
   message: string;
   details?: string;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
   timeout: number;
   createdAt: number;
 }
@@ -22,6 +26,16 @@ export class NotificationState {
   initGlobalHandlers() {
     if (this.initialized || typeof window === 'undefined') return;
     this.initialized = true;
+
+    // Handle Vite preload errors (e.g. stale chunks or dev server restarts)
+    window.addEventListener('vite:preloadError', (event) => {
+      event.preventDefault();
+      const lastReload = Number(sessionStorage.getItem('vite_preload_error_reload') || '0');
+      if (Date.now() - lastReload > 10000) {
+        sessionStorage.setItem('vite_preload_error_reload', String(Date.now()));
+        window.location.reload();
+      }
+    });
 
     window.addEventListener('error', (event: ErrorEvent) => {
       const msg = event.message || 'An unexpected runtime error occurred';
@@ -46,6 +60,28 @@ export class NotificationState {
         msg = String(reason);
       }
 
+      // Check for transient dynamic import failures (sleep/wake, network drop, dev server restart)
+      const isDynamicImportError =
+        msg.includes('Failed to fetch dynamically imported module') ||
+        msg.includes('error loading dynamically imported module') ||
+        msg.includes('Importing a module script failed');
+
+      if (isDynamicImportError) {
+        this.warning(
+          'Lost connection to the dev server while loading a component (common after waking from sleep).',
+          {
+            title: 'Connection Interrupted',
+            details,
+            action: {
+              label: 'Reload Page',
+              onClick: () => window.location.reload(),
+            },
+            timeout: 15000,
+          }
+        );
+        return;
+      }
+
       this.error(msg, {
         title: 'Asynchronous Error',
         details,
@@ -58,6 +94,10 @@ export class NotificationState {
     message: string;
     title?: string;
     details?: string;
+    action?: {
+      label: string;
+      onClick: () => void;
+    };
     timeout?: number;
   }): string {
     const id = `notif-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
@@ -70,6 +110,7 @@ export class NotificationState {
       title: options.title,
       message: options.message,
       details: options.details,
+      action: options.action,
       timeout,
       createdAt: Date.now(),
     };
@@ -94,13 +135,19 @@ export class NotificationState {
 
   error(
     message: string,
-    options?: { title?: string; details?: string; timeout?: number }
+    options?: {
+      title?: string;
+      details?: string;
+      action?: { label: string; onClick: () => void };
+      timeout?: number;
+    }
   ): string {
     return this.notify({
       type: 'error',
       message,
       title: options?.title ?? 'Error',
       details: options?.details,
+      action: options?.action,
       timeout: options?.timeout ?? 8000,
     });
   }
@@ -119,13 +166,19 @@ export class NotificationState {
 
   warning(
     message: string,
-    options?: { title?: string; details?: string; timeout?: number }
+    options?: {
+      title?: string;
+      details?: string;
+      action?: { label: string; onClick: () => void };
+      timeout?: number;
+    }
   ): string {
     return this.notify({
       type: 'warning',
       message,
       title: options?.title ?? 'Warning',
       details: options?.details,
+      action: options?.action,
       timeout: options?.timeout ?? 5000,
     });
   }

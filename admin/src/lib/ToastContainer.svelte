@@ -95,6 +95,18 @@
               {/if}
             </div>
           {/if}
+
+          {#if notif.action}
+            <div class="mt-2.5">
+              <button
+                type="button"
+                onclick={notif.action.onClick}
+                class="px-3 py-1 text-xs font-semibold rounded-lg bg-white/10 hover:bg-white/20 active:scale-95 text-white transition-all cursor-pointer border border-white/20"
+              >
+                {notif.action.label}
+              </button>
+            </div>
+          {/if}
         </div>
 
         <!-- Dismiss button -->
