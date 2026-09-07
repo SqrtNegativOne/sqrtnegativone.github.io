@@ -2,6 +2,7 @@
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
+  import PageHeader from '$lib/PageHeader.svelte';
   import QuoteCard from './QuoteCard.svelte';
   import QuoteModal from './QuoteModal.svelte';
 
@@ -81,17 +82,8 @@
   <title>Manage Quotes | Admin</title>
 </svelte:head>
 
-<div class="space-y-6 max-w-7xl mx-auto">
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-      <h1 class="text-3xl font-bold text-white tracking-tight">Quotes</h1>
-      <p class="text-[oklch(0.7107_0.0351_256.79)] mt-2">Manage your collection of quotes.</p>
-    </div>
-    <button onclick={openNew} class="btn-primary flex items-center shadow-lg hover:shadow-xl transition-all">
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-      Add Quote
-    </button>
-  </div>
+<div class="space-y-6">
+  <PageHeader title="Quotes" actionLabel="New Quote" onaction={openNew} />
 
   <div class="flex flex-col sm:flex-row gap-4 bg-[oklch(0.2103_0.0059_285.89)] p-4 rounded-xl border border-[oklch(0.2739_0.0055_286.03)] shadow-sm">
     <div class="flex-1 relative">

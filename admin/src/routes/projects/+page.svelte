@@ -2,6 +2,7 @@
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
+  import PageHeader from '$lib/PageHeader.svelte';
   import ProjectCard from './ProjectCard.svelte';
   import ProjectModal from './ProjectModal.svelte';
 
@@ -92,17 +93,7 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <div class="flex justify-between items-center">
-    <div>
-      <h1 class="text-3xl font-bold text-white tracking-tight">Projects</h1>
-      <p class="text-[oklch(0.7107_0.0351_256.79)] mt-2">Manage your portfolio projects and apps.</p>
-    </div>
-    <button onclick={openNew} class="btn-primary flex items-center">
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-      Add Project
-    </button>
-  </div>
-
+  <PageHeader title="Projects" actionLabel="New Project" onaction={openNew} />
 
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
     {#each data.projects as item (item.name)}

@@ -4,6 +4,7 @@
   import { getRepoRoot } from '$lib/db';
   import { ResultAsync } from 'neverthrow';
   import { notificationState } from '$lib/notificationState.svelte';
+  import PageHeader from '$lib/PageHeader.svelte';
   import BlogCard from './BlogCard.svelte';
   import BlogModal from './BlogModal.svelte';
 
@@ -70,16 +71,7 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <div class="flex justify-between items-center">
-    <div>
-      <h1 class="text-3xl font-bold text-white tracking-tight">Blogs</h1>
-      <p class="text-[oklch(0.7107_0.0351_256.79)] mt-2">Manage your blog posts.</p>
-    </div>
-    <button onclick={openNew} class="btn-primary flex items-center">
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-      Add Blog Post
-    </button>
-  </div>
+  <PageHeader title="Blogs" actionLabel="New Post" onaction={openNew} />
 
   {#if errorMsg}
     <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">

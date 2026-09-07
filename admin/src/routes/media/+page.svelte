@@ -3,6 +3,7 @@
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
   import FilterSort from '../../../../shared/components/FilterSort.svelte';
+  import PageHeader from '$lib/PageHeader.svelte';
   import { MediaState, type MediaItem, type SearchResult } from './mediaState.svelte';
 
   let { data } = $props();
@@ -18,15 +19,9 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <div class="flex justify-between items-center mb-8">
-    <h1 class="text-3xl font-bold text-white">Media Library</h1>
-    <button onclick={() => state.openNew()} class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded shadow transition-colors flex items-center">
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-      Add Media
-    </button>
-  </div>
+  <PageHeader title="Media" actionLabel="New Media" onaction={() => state.openNew()} />
 
-  <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-lg mb-8 p-4 flex flex-col md:flex-row gap-4">
+  <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-lg p-4 flex flex-col md:flex-row gap-4">
     <div class="flex-1 flex gap-4">
       <input type="text" bind:value={state.searchQuery} placeholder="Search media by title or ID..." class="input-field w-full" />
       <div class="h-10">

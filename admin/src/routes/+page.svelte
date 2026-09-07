@@ -1,5 +1,6 @@
 <script lang="ts">
   import { navItems } from '$lib/nav';
+  import PageHeader from '$lib/PageHeader.svelte';
 </script>
 
 <svelte:head>
@@ -7,10 +8,8 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <div>
-    <h1 class="text-3xl font-bold text-white tracking-tight">Dashboard Overview</h1>
-    <p class="text-[oklch(0.7107_0.0351_256.79)] mt-2">Manage your static site content from one place.</p>
-  </div>
+  <PageHeader title="Dashboard" />
+
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     {#each navItems as item (item.href)}

@@ -3,6 +3,7 @@
   import markdownIt from 'markdown-it';
   import { readData, writeData, type NowEntry } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
+  import PageHeader from '$lib/PageHeader.svelte';
 
   let { data } = $props<{ data: { entries: NowEntry[] } }>();
 
@@ -195,27 +196,8 @@
   <title>Manage Now Entries | Admin</title>
 </svelte:head>
 
-<div class="space-y-6 max-w-7xl mx-auto">
-  <!-- Top Header -->
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-      <h1 class="text-3xl font-bold text-white tracking-tight">Now Entries</h1>
-      <p class="text-[oklch(0.7107_0.0351_256.79)] mt-1 text-sm">
-        Manage your daily log snapshots and the /now page timeline.
-      </p>
-    </div>
-
-    <button
-      type="button"
-      onclick={openAddModal}
-      class="btn-primary flex items-center shadow-lg cursor-pointer"
-    >
-      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-      </svg>
-      Add Day Entry
-    </button>
-  </div>
+<div class="space-y-6">
+  <PageHeader title="Now" actionLabel="New Entry" onaction={openAddModal} />
 
   <!-- Search and filter -->
   <div class="flex items-center gap-3">

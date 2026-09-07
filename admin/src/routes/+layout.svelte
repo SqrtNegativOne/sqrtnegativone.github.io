@@ -19,13 +19,14 @@
   <!-- Sidebar -->
   <aside class="w-64 border-r border-[oklch(0.2739_0.0055_286.03)] bg-[oklch(0.2103_0.0059_285.89)] flex flex-col {mobileMenuOpen ? 'fixed inset-y-0 left-0 z-50 shadow-2xl' : 'hidden'} md:flex md:static">
     <div class="p-6 flex justify-between items-center">
-      <div>
-        <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-          Admin Portal
-        </h1>
-        <p class="text-xs text-[oklch(0.7107_0.0351_256.79)] mt-1">sqrtnegativone.github.io</p>
-      </div>
-      <button aria-label="Close mobile menu" class="md:hidden text-[oklch(0.7107_0.0351_256.79)]" onclick={() => mobileMenuOpen = false}>
+      <a href="/" class="text-white hover:text-cyan-400 transition-colors inline-flex items-center" aria-label="Dashboard">
+        <svg class="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 4 21 L 9 21 L 11 17 L 14 25 L 19 8 L 28 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+          <circle cx="4" cy="21" r="1.8" fill="currentColor"/>
+          <circle cx="28" cy="8" r="1.8" fill="currentColor"/>
+        </svg>
+      </a>
+      <button aria-label="Close mobile menu" class="md:hidden text-[oklch(0.7107_0.0351_256.79)] hover:text-white" onclick={() => mobileMenuOpen = false}>
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
     </div>
@@ -56,9 +57,13 @@
   <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
     <!-- Mobile header -->
     <header class="md:hidden flex items-center justify-between p-4 border-b border-[oklch(0.2739_0.0055_286.03)] bg-[oklch(0.2103_0.0059_285.89)]">
-      <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-        Admin
-      </h1>
+      <a href="/" class="text-white hover:text-cyan-400 transition-colors inline-flex items-center" aria-label="Dashboard">
+        <svg class="w-7 h-7" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 4 21 L 9 21 L 11 17 L 14 25 L 19 8 L 28 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" stroke-linejoin="miter"/>
+          <circle cx="4" cy="21" r="1.8" fill="currentColor"/>
+          <circle cx="28" cy="8" r="1.8" fill="currentColor"/>
+        </svg>
+      </a>
       <button aria-label="Open mobile menu" class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1" onclick={() => mobileMenuOpen = true}>
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>

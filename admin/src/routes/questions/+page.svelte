@@ -3,6 +3,7 @@
   import markdownIt from 'markdown-it';
   import { readQuestions, writeQuestions } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
+  import PageHeader from '$lib/PageHeader.svelte';
 
   const md = markdownIt({ html: true, linkify: true, typographer: true });
 
@@ -79,85 +80,76 @@
   <title>Manage Questions | Admin</title>
 </svelte:head>
 
-<div class="h-full flex flex-col space-y-4 max-w-7xl mx-auto">
-  <!-- Header Bar -->
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-      <div class="flex items-center gap-3">
-        <h1 class="text-3xl font-bold text-white tracking-tight">Questions</h1>
-        {#if isDirty}
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-            Unsaved Changes
-          </span>
-        {:else}
-          <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-            Saved
-          </span>
-        {/if}
-      </div>
-      <p class="text-[oklch(0.7107_0.0351_256.79)] text-sm mt-1">
-        Edit open problems and puzzles in free-form Markdown. Prerendered directly into the live site.
-      </p>
-    </div>
+<div class="h-full flex flex-col space-y-6">
+  <PageHeader title="Questions">
+    {#snippet titleSuffix()}
+      {#if isDirty}
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+          Unsaved Changes
+        </span>
+      {:else}
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Saved
+        </span>
+      {/if}
+    {/snippet}
 
-    <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
-      <!-- View mode switch -->
-      <div class="flex bg-[oklch(0.2103_0.0059_285.89)] rounded-lg p-1 border border-[oklch(0.2739_0.0055_286.03)] text-xs font-medium">
-        <button
-          type="button"
-          class="px-2.5 py-1 rounded transition-colors {viewMode === 'edit' ? 'bg-blue-500/20 text-blue-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
-          onclick={() => viewMode = 'edit'}
-        >
-          Editor
-        </button>
-        <button
-          type="button"
-          class="px-2.5 py-1 rounded transition-colors {viewMode === 'split' ? 'bg-blue-500/20 text-blue-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
-          onclick={() => viewMode = 'split'}
-        >
-          Split
-        </button>
-        <button
-          type="button"
-          class="px-2.5 py-1 rounded transition-colors {viewMode === 'preview' ? 'bg-blue-500/20 text-blue-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
-          onclick={() => viewMode = 'preview'}
-        >
-          Preview
-        </button>
-      </div>
-
+    <!-- View mode switch -->
+    <div class="flex bg-[oklch(0.2103_0.0059_285.89)] rounded-lg p-1 border border-[oklch(0.2739_0.0055_286.03)] text-xs font-medium">
       <button
         type="button"
-        onclick={handleDiscard}
-        disabled={!isDirty || isSaving}
-        class="btn-secondary px-3 py-1.5 text-xs disabled:opacity-40 disabled:cursor-not-allowed"
+        class="px-2.5 py-1 rounded transition-colors {viewMode === 'edit' ? 'bg-blue-500/20 text-blue-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
+        onclick={() => viewMode = 'edit'}
       >
-        Discard
+        Editor
       </button>
-
       <button
         type="button"
-        onclick={handleSave}
-        disabled={!isDirty || isSaving}
-        class="btn-primary flex items-center px-4 py-1.5 text-xs shadow-lg disabled:opacity-40 disabled:cursor-not-allowed"
+        class="px-2.5 py-1 rounded transition-colors {viewMode === 'split' ? 'bg-blue-500/20 text-blue-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
+        onclick={() => viewMode = 'split'}
       >
-        {#if isSaving}
-          <svg class="animate-spin -ml-0.5 mr-1.5 h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-          Saving...
-        {:else}
-          <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
-          </svg>
-          Save Changes
-        {/if}
+        Split
+      </button>
+      <button
+        type="button"
+        class="px-2.5 py-1 rounded transition-colors {viewMode === 'preview' ? 'bg-blue-500/20 text-blue-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
+        onclick={() => viewMode = 'preview'}
+      >
+        Preview
       </button>
     </div>
-  </div>
+
+    <button
+      type="button"
+      onclick={handleDiscard}
+      disabled={!isDirty || isSaving}
+      class="btn-secondary px-3 py-1.5 text-xs disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+    >
+      Discard
+    </button>
+
+    <button
+      type="button"
+      onclick={handleSave}
+      disabled={!isDirty || isSaving}
+      class="btn-primary flex items-center px-4 py-1.5 text-xs shadow-lg disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+    >
+      {#if isSaving}
+        <svg class="animate-spin -ml-0.5 mr-1.5 h-3.5 w-3.5 text-white" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Saving...
+      {:else}
+        <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+        </svg>
+        Save Changes
+      {/if}
+    </button>
+  </PageHeader>
 
   {#if isLoading}
     <div class="flex-1 flex items-center justify-center p-12 text-[oklch(0.7107_0.0351_256.79)]">
