@@ -1,6 +1,17 @@
 <script lang="ts">
   import { navItems } from '$lib/nav';
-  import PageHeader from '$lib/PageHeader.svelte';
+  import SearchBar from '$lib/SearchBar.svelte';
+
+  let searchQuery = $state('');
+
+  let filteredNav = $derived(
+    navItems.filter(
+      (i) =>
+        !searchQuery ||
+        i.label.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        i.description.toLowerCase().includes(searchQuery.toLowerCase().trim())
+    )
+  );
 </script>
 
 <svelte:head>
@@ -8,19 +19,18 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <PageHeader title="Dashboard" />
-
+  <SearchBar bind:value={searchQuery} />
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {#each navItems as item (item.href)}
+    {#each filteredNav as item (item.href)}
 <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
       <a href={item.href} class="card p-6 group {item.borderHover} transition-all cursor-pointer relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br {item.bgGradient} to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        <div class="w-12 h-12 rounded-lg {item.iconBg} flex items-center justify-center mb-4 {item.iconColor} group-hover:scale-110 transition-transform">
+        <div class="w-12 h-12 rounded {item.iconBg} flex items-center justify-center mb-4 {item.iconColor} group-hover:scale-110 transition-transform">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">{@html item.path}</svg>
         </div>
         <h2 class="text-xl font-semibold text-white mb-2">{item.label}</h2>
-        <p class="text-[oklch(0.7107_0.0351_256.79)] text-sm">{item.description}</p>
+        <p class="text-[oklch(0.60_0.02_256.79)] text-sm">{item.description}</p>
       </a>
     {/each}
   </div>

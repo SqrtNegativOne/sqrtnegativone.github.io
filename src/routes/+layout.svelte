@@ -34,10 +34,12 @@
     "/questions", "/blog", "/blog-afterdark", "/microblog",
   ];
 
-  const HIDE_PORTRAIT = ["/skills", "/projects", "/microblog", "/colophon"];
+  const PORTFOLIO_INNER_ROUTES = ["/about", "/skills", "/projects"];
+  const HIDE_PORTRAIT = ["/skills", "/projects"];
 
   let isKnown = $derived(KNOWN_ROUTES.includes(currentPath) || currentPath.startsWith('/now/'));
   let isBlog = $derived(currentPath === '/blog' || currentPath.startsWith('/blog/') || currentPath.startsWith('/blog-afterdark'));
+  let isPortfolioInner = $derived(PORTFOLIO_INNER_ROUTES.includes(currentPath));
   let currentView = $derived(currentPath === '/' ? 'home' : currentPath.startsWith('/now/') ? 'now' : currentPath.slice(1));
   let showPortrait = $derived(!HIDE_PORTRAIT.includes(currentPath));
   let contentFill = $derived(currentPath === "/projects" || currentPath === "/skills");
@@ -60,6 +62,10 @@
     {@render children()}
   </div>
   <MenuOverlay view="media-library" />
+{:else if currentPath === "/questions"}
+  <div id="main-content" tabindex="-1">
+    {@render children()}
+  </div>
 {:else if currentPath === "/"}
   <div class="page-content with-frame" id="main-content" tabindex="-1">
     <AsciiBackground />
@@ -70,11 +76,7 @@
     </div>
   </div>
   <MenuOverlay view="home" />
-{:else if currentPath === "/questions"}
-  <div id="main-content" tabindex="-1">
-    {@render children()}
-  </div>
-{:else}
+{:else if isPortfolioInner}
   <div class="page page-content with-frame" class:no-portrait={!showPortrait}>
     <AsciiBackground />
 
@@ -105,6 +107,12 @@
 
   <!-- Menu — hamburger button fixed top-right, opens full-screen bento overlay -->
   <MenuOverlay view={currentView} />
+{:else}
+  <!-- Standalone routes (e.g. /now, /now/[date], /colophon, /microblog, /minis) -->
+  <div class="standalone-layout page-content" id="main-content" tabindex="-1">
+    {@render children()}
+  </div>
+  <MenuOverlay view={currentView} />
 {/if}
 
 <Cursor />
@@ -129,5 +137,21 @@
     top: 1rem;
     outline: 2px solid var(--text);
     outline-offset: 2px;
+  }
+
+  .standalone-layout {
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 5rem 2rem 4rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    .standalone-layout {
+      padding: 4rem 1.25rem 3rem;
+    }
   }
 </style>

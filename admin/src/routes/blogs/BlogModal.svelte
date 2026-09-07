@@ -200,14 +200,14 @@ ${content}
 </script>
 
 <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50">
-  <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-2xl w-full max-w-7xl h-[94vh] flex flex-col overflow-hidden">
+  <div class="bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded shadow-2xl w-full max-w-7xl h-[94vh] flex flex-col overflow-hidden">
     <!-- Modal Header -->
-    <div class="px-6 py-3 border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center bg-[oklch(0.23_0.03_260)]">
+    <div class="px-6 py-3 border-b border-[oklch(0.2739_0.0055_286.03)] flex justify-between items-center bg-[oklch(0.1603_0.0059_285.89)]">
       <div class="flex items-center gap-4">
         <h2 class="text-lg font-semibold text-white">{isEditing ? 'Edit Blog Post' : 'Add New Blog Post'}</h2>
         <button
           type="button"
-          class="text-xs text-[oklch(0.7107_0.0351_256.79)] hover:text-white flex items-center gap-1 px-2 py-1 rounded bg-black/20"
+          class="text-xs text-[oklch(0.7107_0.0351_256.79)] hover:text-white flex items-center gap-1 px-2 py-1 rounded bg-black/40 cursor-pointer"
           onclick={() => showMeta = !showMeta}
         >
           <span>{showMeta ? 'Hide Post Details' : 'Show Post Details'}</span>
@@ -217,31 +217,31 @@ ${content}
 
       <div class="flex items-center gap-3">
         <!-- View mode toggle -->
-        <div class="flex bg-black/30 rounded-lg p-1 border border-[oklch(0.3717_0.0392_257.29)] text-xs font-medium">
+        <div class="flex bg-black/40 rounded p-1 border border-[oklch(0.2739_0.0055_286.03)] text-xs font-medium">
           <button
             type="button"
-            class="px-2.5 py-1 rounded transition-colors {viewMode === 'edit' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+            class="px-2.5 py-1 rounded transition-colors {viewMode === 'edit' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
             onclick={() => viewMode = 'edit'}
           >
             Editor
           </button>
           <button
             type="button"
-            class="px-2.5 py-1 rounded transition-colors {viewMode === 'split' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+            class="px-2.5 py-1 rounded transition-colors {viewMode === 'split' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
             onclick={() => viewMode = 'split'}
           >
             Split
           </button>
           <button
             type="button"
-            class="px-2.5 py-1 rounded transition-colors {viewMode === 'preview' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
+            class="px-2.5 py-1 rounded transition-colors {viewMode === 'preview' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
             onclick={() => viewMode = 'preview'}
           >
             Preview
           </button>
         </div>
 
-        <button aria-label="Close modal" onclick={close} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white ml-2">
+        <button aria-label="Close modal" onclick={close} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white ml-2 cursor-pointer">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
@@ -250,7 +250,7 @@ ${content}
     <form onsubmit={handleSave} class="flex-1 overflow-hidden p-6 flex flex-col gap-4">
       <!-- Collapsible Metadata Grid -->
       {#if showMeta}
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 rounded-xl bg-black/20 border border-[oklch(0.3717_0.0392_257.29)]/50 shrink-0">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 rounded bg-black/20 border border-[oklch(0.2739_0.0055_286.03)] shrink-0">
           <div class="space-y-1">
             <label for="post-id" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Filename (.md)</label>
             <input id="post-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field text-xs {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required placeholder="my-post.md" />
@@ -288,7 +288,7 @@ ${content}
       {/if}
       
       {#if errorMsg}
-        <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-3 rounded-lg text-xs shrink-0">
+        <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-3 rounded text-xs shrink-0">
           {errorMsg}
         </div>
       {/if}
@@ -299,8 +299,8 @@ ${content}
       >
         <!-- Editor Pane -->
         {#if viewMode !== 'preview'}
-          <div class="flex flex-col flex-1 relative border border-[oklch(0.3717_0.0392_257.29)] rounded-xl focus-within:ring-2 focus-within:ring-orange-500/50 focus-within:border-orange-500 transition-all bg-black/20 overflow-hidden">
-            <div class="px-4 py-2 bg-[oklch(0.2077_0.0398_265.75)] border-b border-[oklch(0.3717_0.0392_257.29)] flex justify-between items-center text-xs text-[oklch(0.7107_0.0351_256.79)]">
+          <div class="flex flex-col flex-1 relative border border-[oklch(0.2739_0.0055_286.03)] rounded focus-within:ring-1 focus-within:ring-orange-500/50 focus-within:border-orange-500 transition-all bg-black/20 overflow-hidden">
+            <div class="px-4 py-2 bg-[oklch(0.1603_0.0059_285.89)] border-b border-[oklch(0.2739_0.0055_286.03)] flex justify-between items-center text-xs text-[oklch(0.7107_0.0351_256.79)]">
               <span class="font-medium text-white">Markdown Content</span>
               {#if uploadStatus}
                 <span class="text-xs text-orange-400 font-medium animate-pulse">{uploadStatus}</span>
@@ -314,12 +314,12 @@ ${content}
               name="content"
               bind:value={currentItem.content}
               onpaste={handlePaste}
-              class="w-full bg-transparent text-white placeholder-[oklch(0.7107_0.0351_256.79)] p-4 flex-1 font-mono text-sm leading-relaxed resize-none focus:outline-none overflow-y-auto"
+              class="w-full bg-transparent text-white placeholder-[oklch(0.60_0.02_256.79)] p-4 flex-1 font-mono text-sm leading-relaxed resize-none focus:outline-none overflow-y-auto"
               required
               placeholder="Write your post content in Markdown here... You can paste images directly!"
             ></textarea>
 
-            <div class="bg-[oklch(0.2077_0.0398_265.75)] p-2 flex justify-between items-center rounded-b-lg border-t border-[oklch(0.3717_0.0392_257.29)] shrink-0">
+            <div class="bg-[oklch(0.1603_0.0059_285.89)] p-2 flex justify-between items-center border-t border-[oklch(0.2739_0.0055_286.03)] shrink-0">
               <span class="text-xs text-[oklch(0.7107_0.0351_256.79)] hidden sm:inline-block">Attach image:</span>
               <input type="file" accept="image/*" multiple bind:this={fileInput} onchange={handleFileSelect} class="text-xs text-[oklch(0.7107_0.0351_256.79)] file:mr-2 file:py-1 file:px-3 file:rounded file:border-0 file:text-xs file:font-medium file:bg-orange-500/10 file:text-orange-400 hover:file:bg-orange-500/20 cursor-pointer" />
             </div>
@@ -328,8 +328,8 @@ ${content}
 
         <!-- Live Preview Pane -->
         {#if viewMode !== 'edit'}
-          <div class="flex flex-col flex-1 border border-[oklch(0.3717_0.0392_257.29)] rounded-xl bg-[oklch(0.14_0_0)] overflow-hidden shadow-inner">
-            <div class="px-4 py-2 bg-[oklch(0.18_0_0)] border-b border-[oklch(0.25_0_0)] flex justify-between items-center text-xs text-[oklch(0.7107_0.0351_256.79)]">
+          <div class="flex flex-col flex-1 border border-[oklch(0.2739_0.0055_286.03)] rounded bg-black overflow-hidden shadow-inner">
+            <div class="px-4 py-2 bg-[oklch(0.1603_0.0059_285.89)] border-b border-[oklch(0.2739_0.0055_286.03)] flex justify-between items-center text-xs text-[oklch(0.7107_0.0351_256.79)]">
               <span class="font-medium text-white flex items-center gap-1.5">
                 <svg class="w-3.5 h-3.5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -369,7 +369,7 @@ ${content}
       </div>
       
       <!-- Footer Actions -->
-      <div class="flex justify-end space-x-4 pt-2 border-t border-[oklch(0.3717_0.0392_257.29)] shrink-0">
+      <div class="flex justify-end space-x-4 pt-2 border-t border-[oklch(0.2739_0.0055_286.03)] shrink-0">
         <button type="button" onclick={close} class="btn-secondary">Cancel</button>
         <button type="submit" class="btn-primary">Save Post</button>
       </div>

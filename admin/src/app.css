@@ -19,12 +19,12 @@ body {
 /* Custom scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: oklch(0.7107 0.0351 256.79) transparent;
+  scrollbar-color: oklch(0.2739 0.0055 286.03) transparent;
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -32,30 +32,30 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: oklch(0.7107 0.0351 256.79);
-  border-radius: 4px;
+  background-color: oklch(0.2739 0.0055 286.03);
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: oklch(0.9842 0.0034 247.86);
+  background-color: oklch(0.35 0.005 286);
 }
 
 .input-field {
-  @apply w-full bg-[oklch(0.1408_0.0044_285.82)] border border-[oklch(0.2739_0.0055_286.03)] rounded-lg px-4 py-2 text-[oklch(0.9842_0.0034_247.86)] focus:outline-none focus:ring-2 focus:ring-[oklch(0.6231_0.188_259.81)] transition-all;
+  @apply w-full bg-[oklch(0.1408_0.0044_285.82)] border border-[oklch(0.2739_0.0055_286.03)] rounded px-3.5 py-2 text-[oklch(0.9842_0.0034_247.86)] placeholder-[oklch(0.60_0.02_256.79)] focus:outline-none focus:ring-1 focus:ring-[oklch(0.6231_0.188_259.81)] focus:border-[oklch(0.6231_0.188_259.81)] transition-all;
 }
 
 .btn-primary {
-  @apply bg-[oklch(0.6231_0.188_259.81)] hover:bg-[oklch(0.5461_0.2152_262.88)] text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-lg shadow-blue-500/20;
+  @apply bg-[oklch(0.6231_0.188_259.81)] hover:bg-[oklch(0.5461_0.2152_262.88)] text-white px-3.5 py-2 rounded font-medium transition-colors shadow-md shadow-blue-500/10;
 }
 
 .btn-secondary {
-  @apply bg-[oklch(0.2103_0.0059_285.89)] hover:bg-[oklch(0.2739_0.0055_286.03)] border border-[oklch(0.2739_0.0055_286.03)] text-white px-4 py-2 rounded-lg font-medium transition-colors;
+  @apply bg-[oklch(0.2103_0.0059_285.89)] hover:bg-[oklch(0.2739_0.0055_286.03)] border border-[oklch(0.2739_0.0055_286.03)] text-white px-3.5 py-2 rounded font-medium transition-colors;
 }
 
 .btn-danger {
-  @apply bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 px-4 py-2 rounded-lg font-medium transition-colors;
+  @apply bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 px-3.5 py-2 rounded font-medium transition-colors;
 }
 
 .card {
-  @apply bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded-xl overflow-hidden shadow-xl;
+  @apply bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded overflow-hidden shadow-lg;
 }

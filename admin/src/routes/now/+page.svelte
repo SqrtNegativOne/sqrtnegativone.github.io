@@ -3,16 +3,19 @@
   import markdownIt from 'markdown-it';
   import { readData, writeData, type NowEntry } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
-  import PageHeader from '$lib/PageHeader.svelte';
+  import SearchBar from '$lib/SearchBar.svelte';
   import EmptyState from '$lib/EmptyState.svelte';
-  import SearchInput from '$lib/SearchInput.svelte';
   import Modal from '$lib/Modal.svelte';
+  import { filterAndSortItems, type FilterRule, type SortRule, type FilterProperty } from '$lib/searchUtils';
 
   let { data } = $props<{ data: { entries: NowEntry[] } }>();
 
   const md = markdownIt({ html: true, linkify: true, typographer: true });
 
   let searchQuery = $state('');
+  let filters = $state<FilterRule[]>([]);
+  let sorts = $state<SortRule[]>([]);
+
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   let isSaving = $state(false);
@@ -29,19 +32,22 @@
   let originalDate = $state('');
   let editorViewMode: 'split' | 'edit' | 'preview' = $state('split');
 
+  const filterProperties: FilterProperty[] = [
+    { value: 'date', label: 'Date', type: 'text' },
+    { value: 'title', label: 'Title', type: 'text' }
+  ];
+
   let entries = $derived(
     [...data.entries].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
   );
 
   let filteredEntries = $derived(
-    entries.filter((e) => {
-      const q = searchQuery.toLowerCase().trim();
-      if (!q) return true;
-      return (
-        e.date.toLowerCase().includes(q) ||
-        (e.title && e.title.toLowerCase().includes(q)) ||
-        e.content.toLowerCase().includes(q)
-      );
+    filterAndSortItems<NowEntry>({
+      items: entries,
+      searchQuery,
+      searchFields: ['date', 'title', 'content'],
+      filters,
+      sorts
     })
   );
 
@@ -200,32 +206,32 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <PageHeader title="Now" actionLabel="New Entry" onaction={openAddModal} />
+  <SearchBar
+    bind:value={searchQuery}
+    bind:filters
+    bind:sorts
+    properties={filterProperties}
+    onnew={openAddModal}
+  />
 
-  <!-- Search and filter -->
-  <div class="flex items-center gap-3">
-    <SearchInput
-      bind:value={searchQuery}
-      placeholder="Filter by date, title, or content..."
-      class="max-w-md"
-    />
-    <span class="text-xs text-[oklch(0.7107_0.0351_256.79)]">
-      {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'}
-    </span>
-  </div>
+  {#if searchQuery !== '' || filters.length > 0}
+    <div class="text-xs text-[oklch(0.7107_0.0351_256.79)]">
+      Showing {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'}
+    </div>
+  {/if}
 
   <!-- List of Entries -->
   {#if filteredEntries.length === 0}
     <EmptyState
-      title={searchQuery ? 'No matching entries' : 'No day entries found'}
-      message={searchQuery ? `No entries match "${searchQuery}".` : 'Create your first daily log entry!'}
-      actionLabel={searchQuery ? undefined : 'New Entry'}
-      onaction={searchQuery ? undefined : openAddModal}
+      title={searchQuery || filters.length > 0 ? 'No matching entries' : 'No day entries found'}
+      message={searchQuery || filters.length > 0 ? `No entries match your search/filters.` : 'Create your first daily log entry!'}
+      actionLabel={searchQuery || filters.length > 0 ? undefined : 'New Entry'}
+      onaction={searchQuery || filters.length > 0 ? undefined : openAddModal}
     />
   {:else}
     <div class="grid grid-cols-1 gap-4">
       {#each filteredEntries as item (item.id || item.date)}
-        <div class="card p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group hover:border-[oklch(0.4717_0.0392_257.29)] transition-colors">
+        <div class="card p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 group hover:border-[oklch(0.35_0.01_286)] transition-colors">
           <div class="flex-1 space-y-1">
             <div class="flex items-center gap-3">
               <span class="px-2.5 py-0.5 rounded font-mono text-xs font-semibold bg-teal-500/10 text-teal-400 border border-teal-500/20">
@@ -236,11 +242,11 @@
               {/if}
             </div>
 
-            <p class="text-sm text-[oklch(0.7107_0.0351_256.79)] line-clamp-2 mt-1">
+            <p class="text-sm text-[oklch(0.60_0.02_256.79)] line-clamp-2 mt-1">
               {item.content.replace(/#+/g, '').replace(/[-*]/g, '').trim()}
             </p>
 
-            <div class="flex items-center gap-4 text-xs text-[oklch(0.55_0.02_256.79)] pt-1">
+            <div class="flex items-center gap-4 text-xs text-[oklch(0.50_0.01_286.03)] pt-1">
               <span>{item.content.split(/\s+/).filter(Boolean).length} words</span>
               {#if item.updatedAt}
                 <span>Updated {new Date(item.updatedAt).toLocaleDateString()}</span>
@@ -281,7 +287,7 @@
     <!-- Date and Title fields -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div>
-        <label for="entry-date" class="block text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)] mb-1">
+        <label for="entry-date" class="block text-xs font-semibold uppercase tracking-wider text-[oklch(0.60_0.02_256.79)] mb-1">
           Date (YYYY-MM-DD) *
         </label>
         <input
@@ -294,7 +300,7 @@
       </div>
 
       <div class="md:col-span-2">
-        <label for="entry-title" class="block text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)] mb-1">
+        <label for="entry-title" class="block text-xs font-semibold uppercase tracking-wider text-[oklch(0.60_0.02_256.79)] mb-1">
           Headline / Title (Optional)
         </label>
         <input
@@ -309,11 +315,11 @@
 
     <!-- Editor Toolbar & View Switcher -->
     <div class="flex justify-between items-center pt-2">
-      <label for="entry-content" class="text-xs font-semibold uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)]">
+      <label for="entry-content" class="text-xs font-semibold uppercase tracking-wider text-[oklch(0.60_0.02_256.79)]">
         Content (Markdown) *
       </label>
 
-      <div class="flex bg-[oklch(0.18_0.015_260)] rounded-lg p-0.5 border border-[oklch(0.32_0.02_260)] text-xs">
+      <div class="flex bg-[oklch(0.1803_0.0059_285.89)] rounded p-0.5 border border-[oklch(0.2739_0.0055_286.03)] text-xs">
         <button
           type="button"
           class="px-2.5 py-1 rounded transition-colors {editorViewMode === 'edit' ? 'bg-teal-500/20 text-teal-300 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'}"
@@ -345,14 +351,14 @@
       class:md:grid-cols-2={editorViewMode === 'split'}
     >
       {#if editorViewMode !== 'preview'}
-        <div class="flex flex-col bg-black/40 rounded-lg border border-[oklch(0.32_0.02_260)] overflow-hidden">
+        <div class="flex flex-col bg-black/40 rounded border border-[oklch(0.2739_0.0055_286.03)] overflow-hidden">
           <textarea
             id="entry-content"
             bind:value={currentEntry.content}
             placeholder="Write your day update using standard Markdown... (headings, lists, links)"
             class="w-full flex-1 bg-transparent text-white font-mono text-sm leading-relaxed p-4 focus:outline-none resize-none min-h-[340px]"
           ></textarea>
-          <div class="px-3 py-1.5 bg-[oklch(0.18_0.015_260)] border-t border-[oklch(0.32_0.02_260)] text-[11px] text-[oklch(0.7107_0.0351_256.79)] font-mono flex justify-between">
+          <div class="px-3 py-1.5 bg-[oklch(0.1803_0.0059_285.89)] border-t border-[oklch(0.2739_0.0055_286.03)] text-[11px] text-[oklch(0.7107_0.0351_256.79)] font-mono flex justify-between">
             <span>Ctrl+S to save</span>
             <span>{formStats().lines} lines · {formStats().words} words</span>
           </div>
@@ -360,7 +366,7 @@
       {/if}
 
       {#if editorViewMode !== 'edit'}
-        <div class="flex flex-col bg-black/70 rounded-lg border border-[oklch(0.32_0.02_260)] overflow-y-auto p-5 text-white">
+        <div class="flex flex-col bg-black/70 rounded border border-[oklch(0.2739_0.0055_286.03)] overflow-y-auto p-5 text-white">
           <div class="border-b border-white/10 pb-3 mb-3">
             <span class="text-xs font-mono text-teal-400 font-semibold">{currentEntry.date || 'YYYY-MM-DD'}</span>
             {#if currentEntry.title}

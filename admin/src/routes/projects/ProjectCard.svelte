@@ -5,14 +5,14 @@
 
 <div class="card flex flex-col md:flex-row group relative overflow-hidden">
   <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
-  <div class="w-full md:w-48 h-48 md:h-auto bg-[oklch(0.2077_0.0398_265.75)] shrink-0 border-b md:border-b-0 md:border-r border-[oklch(0.3717_0.0392_257.29)] relative overflow-hidden">
+  <div class="w-full md:w-48 h-48 md:h-auto bg-[oklch(0.1603_0.0059_285.89)] shrink-0 border-b md:border-b-0 md:border-r border-[oklch(0.2739_0.0055_286.03)] relative overflow-hidden">
     {#if item.image}
       <img src={assetState.resolve(item.image)} alt={item.name} class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity group-hover:scale-105 duration-500" />
     {:else}
-      <div class="w-full h-full flex items-center justify-center text-[oklch(0.7107_0.0351_256.79)]">No Image</div>
+      <div class="w-full h-full flex items-center justify-center text-[oklch(0.7107_0.0351_256.79)] text-xs font-mono">No Image</div>
     {/if}
     {#if item.private}
-      <div class="absolute top-2 right-2 bg-rose-500/90 text-white text-xs font-bold px-2 py-1 rounded backdrop-blur shadow-lg">Private</div>
+      <div class="absolute top-2 right-2 bg-rose-500/90 text-white text-[10px] font-bold px-2 py-0.5 rounded backdrop-blur shadow-lg">Private</div>
     {/if}
   </div>
   
@@ -24,11 +24,11 @@
     
     <div class="flex flex-wrap gap-2 mb-4 mt-auto">
       {#each item.tags as tag (tag)}
-        <span class="px-2 py-1 bg-[oklch(0.3717_0.0392_257.29)]/50 text-[oklch(0.9842_0.0034_247.86)] text-xs rounded-md border border-[oklch(0.3717_0.0392_257.29)]">{tag}</span>
+        <span class="px-2 py-0.5 bg-[oklch(0.2739_0.0055_286.03)] text-[oklch(0.9842_0.0034_247.86)] text-xs rounded border border-[oklch(0.35_0.005_286.03)]">{tag}</span>
       {/each}
     </div>
     
-    <div class="flex justify-between items-center pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]/50">
+    <div class="flex justify-between items-center pt-4 border-t border-[oklch(0.2739_0.0055_286.03)]">
       <div class="flex space-x-3">
         {#if item.github}
 <!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
@@ -40,16 +40,16 @@
         {/if}
       </div>
       <div class="flex space-x-2 items-center">
-        <div class="flex items-center space-x-1 mr-2 border-r border-[oklch(0.3717_0.0392_257.29)] pr-3">
-          <button type="button" onclick={() => handleMove(item.id, 'up')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Up">
+        <div class="flex items-center space-x-1 mr-2 border-r border-[oklch(0.2739_0.0055_286.03)] pr-3">
+          <button type="button" onclick={() => handleMove(item.id, 'up')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-white/5 transition-colors cursor-pointer" title="Move Up">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
           </button>
-          <button type="button" onclick={() => handleMove(item.id, 'down')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-[oklch(0.3717_0.0392_257.29)]/50 transition-colors" title="Move Down">
+          <button type="button" onclick={() => handleMove(item.id, 'down')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-white/5 transition-colors cursor-pointer" title="Move Down">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
           </button>
         </div>
-        <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-3 py-1 rounded bg-blue-500/10 font-medium">Edit</button>
-        <button type="button" class="text-red-400 hover:text-red-300 text-sm px-3 py-1 rounded bg-red-500/10 font-medium" onclick={() => handleDelete(item.id)}>Delete</button>
+        <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-3 py-1 rounded bg-blue-500/10 font-medium cursor-pointer">Edit</button>
+        <button type="button" class="text-red-400 hover:text-red-300 text-sm px-3 py-1 rounded bg-red-500/10 font-medium cursor-pointer" onclick={() => handleDelete(item.id)}>Delete</button>
       </div>
     </div>
   </div>

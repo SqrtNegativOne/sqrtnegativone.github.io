@@ -30,11 +30,11 @@
     <div
       role={notif.type === 'error' || notif.type === 'warning' ? 'alert' : 'status'}
       aria-live={notif.type === 'error' ? 'assertive' : 'polite'}
-      class="pointer-events-auto rounded-xl p-4 shadow-2xl backdrop-blur-md border transition-all duration-200 flex flex-col gap-2
-        {notif.type === 'error' ? 'bg-[oklch(0.20_0.03_260)]/95 border-red-500/40 text-red-100 shadow-red-950/40' : ''}
-        {notif.type === 'success' ? 'bg-[oklch(0.20_0.03_260)]/95 border-emerald-500/40 text-emerald-100 shadow-emerald-950/40' : ''}
-        {notif.type === 'warning' ? 'bg-[oklch(0.20_0.03_260)]/95 border-amber-500/40 text-amber-100 shadow-amber-950/40' : ''}
-        {notif.type === 'info' ? 'bg-[oklch(0.20_0.03_260)]/95 border-blue-500/40 text-blue-100 shadow-blue-950/40' : ''}"
+      class="pointer-events-auto rounded p-4 shadow-2xl backdrop-blur-md border transition-all duration-200 flex flex-col gap-2
+        {notif.type === 'error' ? 'bg-[oklch(0.2103_0.0059_285.89)]/95 border-red-500/40 text-red-100 shadow-red-950/40' : ''}
+        {notif.type === 'success' ? 'bg-[oklch(0.2103_0.0059_285.89)]/95 border-emerald-500/40 text-emerald-100 shadow-emerald-950/40' : ''}
+        {notif.type === 'warning' ? 'bg-[oklch(0.2103_0.0059_285.89)]/95 border-amber-500/40 text-amber-100 shadow-amber-950/40' : ''}
+        {notif.type === 'info' ? 'bg-[oklch(0.2103_0.0059_285.89)]/95 border-blue-500/40 text-blue-100 shadow-blue-950/40' : ''}"
     >
       <div class="flex items-start gap-3">
         <!-- Icon -->
@@ -101,7 +101,7 @@
               <button
                 type="button"
                 onclick={notif.action.onClick}
-                class="px-3 py-1 text-xs font-semibold rounded-lg bg-white/10 hover:bg-white/20 active:scale-95 text-white transition-all cursor-pointer border border-white/20"
+                class="px-3 py-1 text-xs font-semibold rounded bg-white/10 hover:bg-white/20 active:scale-95 text-white transition-all cursor-pointer border border-white/20"
               >
                 {notif.action.label}
               </button>
@@ -114,7 +114,7 @@
           type="button"
           aria-label="Dismiss notification"
           onclick={() => notificationState.dismiss(notif.id)}
-          class="shrink-0 text-white/50 hover:text-white p-1 rounded-md hover:bg-white/10 transition-colors"
+          class="shrink-0 text-white/50 hover:text-white p-1 rounded hover:bg-white/10 transition-colors cursor-pointer"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

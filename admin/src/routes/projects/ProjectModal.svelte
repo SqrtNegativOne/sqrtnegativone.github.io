@@ -196,7 +196,7 @@
       
       <div class="space-y-2 flex items-center pt-8">
         <label class="flex items-center space-x-3 cursor-pointer">
-          <input type="checkbox" name="private" value="true" checked={currentItem.private} class="w-5 h-5 rounded border-[oklch(0.3717_0.0392_257.29)] bg-[oklch(0.2077_0.0398_265.75)] text-blue-500 focus:ring-blue-500 focus:ring-offset-[oklch(0.2795_0.0368_260.03)]" />
+          <input type="checkbox" name="private" value="true" checked={currentItem.private} class="w-5 h-5 rounded border-[oklch(0.2739_0.0055_286.03)] bg-[oklch(0.1603_0.0059_285.89)] text-blue-500 focus:ring-blue-500" />
           <span class="text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Private Project</span>
         </label>
       </div>

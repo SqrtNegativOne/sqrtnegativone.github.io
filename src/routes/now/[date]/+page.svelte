@@ -81,10 +81,13 @@
 
 <style>
   .day-page {
+    max-width: 48rem;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;
     padding-bottom: 2.5rem;
+    width: 100%;
   }
 
   .day-top-nav {

@@ -4,8 +4,9 @@
   import { getRepoRoot } from '$lib/db';
   import { ResultAsync } from 'neverthrow';
   import { notificationState } from '$lib/notificationState.svelte';
-  import PageHeader from '$lib/PageHeader.svelte';
+  import SearchBar from '$lib/SearchBar.svelte';
   import EmptyState from '$lib/EmptyState.svelte';
+  import { filterAndSortItems, type FilterRule, type SortRule, type FilterProperty } from '$lib/searchUtils';
   import BlogCard from './BlogCard.svelte';
   import BlogModal from './BlogModal.svelte';
 
@@ -22,6 +23,31 @@
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   let errorMsg = $state('');
+  
+  let searchQuery = $state('');
+  let filters = $state<FilterRule[]>([]);
+  let sorts = $state<SortRule[]>([]);
+
+  let filterProperties = $derived<FilterProperty[]>([
+    { value: 'title', label: 'Title', type: 'text' },
+    { value: 'date', label: 'Date', type: 'text' },
+    {
+      value: 'font',
+      label: 'Font',
+      type: 'select',
+      options: (data.fonts || []).map((f: { name: string }) => ({ value: f.name, label: f.name }))
+    }
+  ]);
+
+  let filteredPosts = $derived(
+    filterAndSortItems<BlogItem>({
+      items: data.posts || [],
+      searchQuery,
+      searchFields: ['title', 'description', 'id', 'tags'],
+      filters,
+      sorts
+    })
+  );
   
   let currentItem: BlogFormItem = $state({
     id: '', title: '', date: '', description: '', content: '', tags: '', font: 'IBM Plex Sans'
@@ -72,25 +98,31 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <PageHeader title="Blogs" actionLabel="New Post" onaction={openNew} />
+  <SearchBar
+    bind:value={searchQuery}
+    bind:filters
+    bind:sorts
+    properties={filterProperties}
+    onnew={openNew}
+  />
 
   {#if errorMsg}
-    <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">
+    <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded">
       {errorMsg}
     </div>
   {/if}
 
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-    {#each data.posts as item (item.id)}
+    {#each filteredPosts as item (item.id)}
       <BlogCard {item} {openEdit} {handleDelete} />
     {/each}
   </div>
-  {#if data.posts.length === 0}
+  {#if filteredPosts.length === 0}
     <EmptyState
-      title="No blog posts found"
-      message="You haven't written any posts yet. Start by creating your first blog post!"
-      actionLabel="New Post"
-      onaction={openNew}
+      title={searchQuery || filters.length > 0 ? "No matching blog posts" : "No blog posts found"}
+      message={searchQuery || filters.length > 0 ? "Try adjusting your search query or filters." : "You haven't written any posts yet. Start by creating your first blog post!"}
+      actionLabel={searchQuery || filters.length > 0 ? undefined : "New Post"}
+      onaction={searchQuery || filters.length > 0 ? undefined : openNew}
     />
   {/if}
 </div>

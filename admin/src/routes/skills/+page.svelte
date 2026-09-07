@@ -3,9 +3,10 @@
   import { readData, writeData } from '$lib/db';
   import { assetState } from '$lib/assetState.svelte';
   import { notificationState } from '$lib/notificationState.svelte';
-  import PageHeader from '$lib/PageHeader.svelte';
+  import SearchBar from '$lib/SearchBar.svelte';
   import EmptyState from '$lib/EmptyState.svelte';
   import Modal from '$lib/Modal.svelte';
+  import { filterAndSortItems, type FilterRule, type SortRule, type FilterProperty } from '$lib/searchUtils';
   import type { SkillItem } from './+page';
 
   interface SkillFormItem extends SkillItem {
@@ -19,6 +20,24 @@
   let currentItem: SkillFormItem = $state({
     name: '', icon: '', logo: '', mono: '', originalName: ''
   });
+
+  let searchQuery = $state('');
+  let filters = $state<FilterRule[]>([]);
+  let sorts = $state<SortRule[]>([]);
+
+  const filterProperties: FilterProperty[] = [
+    { value: 'name', label: 'Name', type: 'text' }
+  ];
+
+  let filteredSkills = $derived(
+    filterAndSortItems<SkillItem>({
+      items: data.skills || [],
+      searchQuery,
+      searchFields: ['name'],
+      filters,
+      sorts
+    })
+  );
 
   function openNew() {
     isEditing = false;
@@ -90,14 +109,20 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <PageHeader title="Skills" actionLabel="New Skill" onaction={openNew} />
+  <SearchBar
+    bind:value={searchQuery}
+    bind:filters
+    bind:sorts
+    properties={filterProperties}
+    onnew={openNew}
+  />
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-    {#each data.skills as item (item.name)}
+    {#each filteredSkills as item (item.name)}
       <div class="card p-4 flex flex-col group relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div class="flex items-center space-x-4 mb-4 relative">
-          <div class="w-12 h-12 bg-[oklch(0.2077_0.0398_265.75)] rounded-lg border border-[oklch(0.3717_0.0392_257.29)] flex items-center justify-center overflow-hidden">
+          <div class="w-12 h-12 bg-[oklch(0.1603_0.0059_285.89)] rounded border border-[oklch(0.2739_0.0055_286.03)] flex items-center justify-center overflow-hidden">
             {#if item.icon}
               <i class="{item.icon} text-2xl text-white"></i>
             {:else if item.logo}
@@ -110,19 +135,19 @@
             <h3 class="font-medium text-white">{item.name}</h3>
           </div>
         </div>
-        <div class="mt-auto flex justify-end space-x-2 border-t border-[oklch(0.3717_0.0392_257.29)] pt-3 relative">
-          <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-2 py-1 rounded bg-blue-500/10">Edit</button>
-          <button onclick={() => handleDelete(item.name)} class="text-red-400 hover:text-red-300 text-sm px-2 py-1 rounded bg-red-500/10">Delete</button>
+        <div class="mt-auto flex justify-end space-x-2 border-t border-[oklch(0.2739_0.0055_286.03)] pt-3 relative">
+          <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-2.5 py-1 rounded bg-blue-500/10 cursor-pointer">Edit</button>
+          <button onclick={() => handleDelete(item.name)} class="text-red-400 hover:text-red-300 text-sm px-2.5 py-1 rounded bg-red-500/10 cursor-pointer">Delete</button>
         </div>
       </div>
     {/each}
   </div>
-  {#if data.skills.length === 0}
+  {#if filteredSkills.length === 0}
     <EmptyState
-      title="No skills found"
-      message="Add technologies and tools to your tech stack."
-      actionLabel="New Skill"
-      onaction={openNew}
+      title={searchQuery || filters.length > 0 ? "No matching skills" : "No skills found"}
+      message={searchQuery || filters.length > 0 ? "Try adjusting your search query." : "Add technologies and tools to your tech stack."}
+      actionLabel={searchQuery || filters.length > 0 ? undefined : "New Skill"}
+      onaction={searchQuery || filters.length > 0 ? undefined : openNew}
     />
   {/if}
 </div>
@@ -135,17 +160,17 @@
   >
     <form id="skill-form" onsubmit={handleSave} class="space-y-4">
       <div class="space-y-2">
-        <label for="skill-name" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Name</label>
+        <label for="skill-name" class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]">Name</label>
         <input id="skill-name" type="text" bind:value={currentItem.name} class="input-field" required />
       </div>
 
       <div class="space-y-2">
-        <label for="skill-logo" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Logo Path</label>
+        <label for="skill-logo" class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]">Logo Path</label>
         <input id="skill-logo" type="text" bind:value={currentItem.logo} class="input-field" />
       </div>
 
       <div class="space-y-2">
-        <label for="skill-mono" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Mono Logo Path</label>
+        <label for="skill-mono" class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]">Mono Logo Path</label>
         <input id="skill-mono" type="text" bind:value={currentItem.mono} class="input-field" />
       </div>
     </form>

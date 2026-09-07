@@ -157,7 +157,7 @@
     </p>
 
     <div class="fonts-stack">
-      {#each fonts as font}
+      {#each fonts as font (font.name)}
         <div class="font-card">
           <div class="font-meta">
             <div class="font-name-wrap">
@@ -194,11 +194,11 @@
     </div>
 
     <div class="tech-grid">
-      {#each techStack as group}
+      {#each techStack as group (group.category)}
         <div class="tech-category-card">
           <h3 class="tech-category-title">{group.category}</h3>
           <ul class="tech-items-list">
-            {#each group.items as item}
+            {#each group.items as item (item.name)}
               <li class="tech-item">
                 <span class="tech-item-name">{item.name}</span>
                 <span class="tech-item-desc">{item.desc}</span>

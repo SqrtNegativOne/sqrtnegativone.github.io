@@ -2,9 +2,9 @@
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
-  import PageHeader from '$lib/PageHeader.svelte';
+  import SearchBar from '$lib/SearchBar.svelte';
   import EmptyState from '$lib/EmptyState.svelte';
-  import SearchInput from '$lib/SearchInput.svelte';
+  import { filterAndSortItems, type FilterRule, type SortRule, type FilterProperty } from '$lib/searchUtils';
   import QuoteCard from './QuoteCard.svelte';
   import QuoteModal from './QuoteModal.svelte';
 
@@ -26,20 +26,31 @@
   let tagsInput = $state('');
 
   let searchQuery = $state('');
-  let selectedTag = $state('');
-
-  let filteredQuotes = $derived((data.quotes || []).filter((q: QuoteItem) => {
-    const s = searchQuery.toLowerCase();
-    const matchesSearch = s === '' || 
-      q.quote?.toLowerCase().includes(s) || 
-      q.source?.toLowerCase().includes(s);
-    
-    const matchesTag = selectedTag === '' || (q.tags && q.tags.includes(selectedTag));
-    
-    return matchesSearch && matchesTag;
-  }));
+  let filters = $state<FilterRule[]>([]);
+  let sorts = $state<SortRule[]>([]);
 
   let allTags = $derived(Array.from(new Set((data.quotes || []).flatMap((q: QuoteItem) => q.tags || []))).sort());
+
+  let filterProperties = $derived<FilterProperty[]>([
+    {
+      value: 'tags',
+      label: 'Tag',
+      type: 'select',
+      options: allTags.map((t: string) => ({ value: t, label: t }))
+    },
+    { value: 'source', label: 'Source', type: 'text' },
+    { value: 'quote', label: 'Quote', type: 'text' }
+  ]);
+
+  let filteredQuotes = $derived(
+    filterAndSortItems<QuoteItem>({
+      items: data.quotes || [],
+      searchQuery,
+      searchFields: ['quote', 'source', 'tags'],
+      filters,
+      sorts
+    })
+  );
 
   function openNew() {
     isEditing = false;
@@ -85,32 +96,17 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <PageHeader title="Quotes" actionLabel="New Quote" onaction={openNew} />
+  <SearchBar
+    bind:value={searchQuery}
+    bind:filters
+    bind:sorts
+    properties={filterProperties}
+    onnew={openNew}
+  />
 
-  <div class="flex flex-col sm:flex-row gap-4 bg-[oklch(0.2103_0.0059_285.89)] p-4 rounded-xl border border-[oklch(0.2739_0.0055_286.03)] shadow-sm">
-    <SearchInput
-      bind:value={searchQuery}
-      placeholder="Search quotes or sources..."
-    />
-    
-    <div class="sm:w-48 relative">
-      <select bind:value={selectedTag} class="input-field appearance-none pr-8 text-sm">
-        <option value="">All Tags</option>
-        {#each allTags as tag (tag)}
-          <option value={tag}>{tag}</option>
-        {/each}
-      </select>
-      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[oklch(0.7107_0.0351_256.79)]">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-      </div>
-    </div>
-  </div>
-
-  {#if searchQuery !== '' || selectedTag !== ''}
-    <div class="text-sm text-[oklch(0.7107_0.0351_256.79)]">
+  {#if searchQuery !== '' || filters.length > 0}
+    <div class="text-xs text-[oklch(0.7107_0.0351_256.79)]">
       Showing {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
-      {#if selectedTag} matching tag <span class="text-white font-medium">"{selectedTag}"</span>{/if}
-      {#if searchQuery}{#if selectedTag} and{/if} matching search <span class="text-white font-medium">"{searchQuery}"</span>{/if}
     </div>
   {/if}
 
@@ -123,10 +119,10 @@
   
   {#if filteredQuotes.length === 0}
     <EmptyState
-      title={searchQuery || selectedTag ? 'No matching quotes' : 'No quotes found'}
-      message={searchQuery || selectedTag ? 'Try adjusting your search query or tag filter.' : 'Start collecting quotes and memorable thoughts.'}
-      actionLabel={searchQuery || selectedTag ? undefined : 'New Quote'}
-      onaction={searchQuery || selectedTag ? undefined : openNew}
+      title={searchQuery || filters.length > 0 ? 'No matching quotes' : 'No quotes found'}
+      message={searchQuery || filters.length > 0 ? 'Try adjusting your search query or filters.' : 'Start collecting quotes and memorable thoughts.'}
+      actionLabel={searchQuery || filters.length > 0 ? undefined : 'New Quote'}
+      onaction={searchQuery || filters.length > 0 ? undefined : openNew}
     />
   {/if}
 </div>

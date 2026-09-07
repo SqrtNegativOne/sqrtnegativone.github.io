@@ -3,7 +3,7 @@
 </script>
 
 <div 
-  class="card !rounded-lg p-5 group relative break-inside-avoid border border-[oklch(0.3717_0.0392_257.29)] hover:border-[oklch(0.7107_0.0351_256.79)] transition-colors cursor-pointer flex flex-col gap-3"
+  class="card !rounded p-5 group relative break-inside-avoid border border-[oklch(0.2739_0.0055_286.03)] hover:border-[oklch(0.35_0.01_286)] transition-colors cursor-pointer flex flex-col gap-3"
   onclick={() => openEdit(item)}
   onkeydown={(e) => e.key === 'Enter' && openEdit(item)}
   role="button"
@@ -12,9 +12,9 @@
   <p class="text-white text-base whitespace-pre-wrap leading-relaxed">{item.quote}</p>
   
   {#if item.source || item.link}
-    <div class="text-sm text-[oklch(0.7107_0.0351_256.79)] border-t border-[oklch(0.3717_0.0392_257.29)] pt-2 mt-2">
+    <div class="text-xs text-[oklch(0.7107_0.0351_256.79)] border-t border-[oklch(0.2739_0.0055_286.03)] pt-2 mt-2">
       {#if item.source}
-        <span class="font-medium">{item.source}</span>
+        <span class="font-medium text-[oklch(0.80_0.01_286)]">{item.source}</span>
       {/if}
       {#if item.source && item.link}
         <span class="mx-1">•</span>
@@ -32,7 +32,7 @@
   {#if item.tags && item.tags.length > 0}
     <div class="flex flex-wrap gap-1.5 mt-auto pt-2">
       {#each item.tags as tag (tag)}
-        <span class="text-xs px-2 py-0.5 rounded-full bg-[oklch(0.3717_0.0392_257.29)] text-[oklch(0.9_0.03_256.79)] border border-[oklch(0.4_0.04_257)]">{tag}</span>
+        <span class="text-xs px-2 py-0.5 rounded bg-[oklch(0.2739_0.0055_286.03)] text-[oklch(0.9_0.01_256.79)] border border-[oklch(0.35_0.005_286.03)]">#{tag}</span>
       {/each}
     </div>
   {/if}
@@ -44,7 +44,7 @@
     <div class="inline" onclick={(e) => e.stopPropagation()}>
       <button 
         type="button" 
-        class="p-1.5 rounded-full bg-red-500/80 text-white hover:bg-red-500 transition-colors shadow-sm" 
+        class="p-1.5 rounded bg-red-500/80 text-white hover:bg-red-500 transition-colors shadow-sm cursor-pointer" 
         onclick={() => handleDelete(item.id)}
         aria-label="Delete quote"
       >

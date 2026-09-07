@@ -11,18 +11,18 @@
   <div class="flex flex-wrap gap-2 mb-4">
     {#if item.tags && item.tags.length > 0}
       {#each item.tags as tag (tag)}
-        <span class="px-2 py-0.5 bg-[oklch(0.3717_0.0392_257.29)]/50 text-[oklch(0.9842_0.0034_247.86)] text-[10px] rounded border border-[oklch(0.3717_0.0392_257.29)]">{tag}</span>
+        <span class="px-2 py-0.5 bg-[oklch(0.2739_0.0055_286.03)] text-[oklch(0.9842_0.0034_247.86)] text-[10px] rounded border border-[oklch(0.35_0.005_286.03)]">#{tag}</span>
       {/each}
     {:else}
-      <span class="px-2 py-0.5 bg-[oklch(0.3717_0.0392_257.29)]/20 text-[oklch(0.7107_0.0351_256.79)] text-[10px] rounded border border-[oklch(0.3717_0.0392_257.29)]/30">untagged</span>
+      <span class="px-2 py-0.5 bg-[oklch(0.2739_0.0055_286.03)]/50 text-[oklch(0.7107_0.0351_256.79)] text-[10px] rounded border border-[oklch(0.2739_0.0055_286.03)]">untagged</span>
     {/if}
   </div>
-  <div class="text-xs font-mono text-[oklch(0.3717_0.0392_257.29)] mb-4">{item.id}</div>
+  <div class="text-xs font-mono text-[oklch(0.60_0.02_256.79)] mb-4">{item.id}</div>
   
-  <div class="flex justify-end items-center pt-4 border-t border-[oklch(0.3717_0.0392_257.29)]/50 mt-auto">
+  <div class="flex justify-end items-center pt-4 border-t border-[oklch(0.2739_0.0055_286.03)] mt-auto">
     <div class="flex space-x-2 items-center">
-      <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-3 py-1 rounded bg-blue-500/10 font-medium">Edit</button>
-      <button class="text-red-400 hover:text-red-300 text-sm px-3 py-1 rounded bg-red-500/10 font-medium" onclick={() => handleDelete(item.id)}>Delete</button>
+      <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-3 py-1 rounded bg-blue-500/10 font-medium cursor-pointer">Edit</button>
+      <button class="text-red-400 hover:text-red-300 text-sm px-3 py-1 rounded bg-red-500/10 font-medium cursor-pointer" onclick={() => handleDelete(item.id)}>Delete</button>
     </div>
   </div>
 </div>

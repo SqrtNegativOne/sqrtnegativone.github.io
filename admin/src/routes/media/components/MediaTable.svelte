@@ -4,7 +4,7 @@
   let { filteredMedia, openEdit } = $props();
 </script>
 
-<div class="card overflow-x-auto bg-[oklch(0.2077_0.0398_265.75)] border border-[oklch(0.3717_0.0392_257.29)] rounded-lg">
+<div class="card overflow-x-auto bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded">
   <div class="ml-table" role="table">
     <div class="ml-table-head" role="row">
       <span role="columnheader" class="ml-col-poster"></span>
@@ -33,11 +33,11 @@
     align-items: center;
     gap: 16px;
     padding: 12px 8px;
-    border-bottom: 1px solid oklch(0.2419 0.0114 285.52);
+    border-bottom: 1px solid oklch(0.2739 0.0055 286.03);
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: oklch(0.5416 0.0154 285.87);
+    color: oklch(0.7107 0.0351 256.79);
     font-family: "IBM Plex Mono", ui-monospace, monospace;
     padding-top: 12px;
     padding-bottom: 12px;

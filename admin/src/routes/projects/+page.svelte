@@ -2,8 +2,9 @@
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
-  import PageHeader from '$lib/PageHeader.svelte';
+  import SearchBar from '$lib/SearchBar.svelte';
   import EmptyState from '$lib/EmptyState.svelte';
+  import { filterAndSortItems, type FilterRule, type SortRule, type FilterProperty } from '$lib/searchUtils';
   import ProjectCard from './ProjectCard.svelte';
   import ProjectModal from './ProjectModal.svelte';
 
@@ -18,6 +19,25 @@
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   
+  let searchQuery = $state('');
+  let filters = $state<FilterRule[]>([]);
+  let sorts = $state<SortRule[]>([]);
+
+  const filterProperties: FilterProperty[] = [
+    { value: 'name', label: 'Name', type: 'text' },
+    { value: 'tags', label: 'Tag', type: 'text' }
+  ];
+
+  let filteredProjects = $derived(
+    filterAndSortItems<ProjectItem>({
+      items: data.projects || [],
+      searchQuery,
+      searchFields: ['name', 'description', 'id', 'tags'],
+      filters,
+      sorts
+    })
+  );
+
   let currentItem: ProjectFormItem = $state({
     id: '', name: '', description: '', tags: '', github: '', url: '', image: '', private: false
   });
@@ -94,19 +114,25 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <PageHeader title="Projects" actionLabel="New Project" onaction={openNew} />
+  <SearchBar
+    bind:value={searchQuery}
+    bind:filters
+    bind:sorts
+    properties={filterProperties}
+    onnew={openNew}
+  />
 
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
-    {#each data.projects as item (item.name)}
+    {#each filteredProjects as item (item.name)}
       <ProjectCard {item} {handleMove} {openEdit} {handleDelete} />
     {/each}
   </div>
-  {#if data.projects.length === 0}
+  {#if filteredProjects.length === 0}
     <EmptyState
-      title="No projects found"
-      message="You haven't added any projects yet. Showcase your work by adding a project!"
-      actionLabel="New Project"
-      onaction={openNew}
+      title={searchQuery || filters.length > 0 ? "No matching projects" : "No projects found"}
+      message={searchQuery || filters.length > 0 ? "Try adjusting your search query or filters." : "You haven't added any projects yet. Showcase your work by adding a project!"}
+      actionLabel={searchQuery || filters.length > 0 ? undefined : "New Project"}
+      onaction={searchQuery || filters.length > 0 ? undefined : openNew}
     />
   {/if}
 </div>

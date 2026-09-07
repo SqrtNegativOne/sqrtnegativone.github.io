@@ -95,10 +95,13 @@
 
 <style>
   .now-container {
+    max-width: 48rem;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;
     padding-bottom: 2rem;
+    width: 100%;
   }
 
   .now-header {

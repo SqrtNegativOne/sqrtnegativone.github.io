@@ -2,8 +2,8 @@
   import MediaTable from './components/MediaTable.svelte';
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
-  import FilterSort from '../../../../shared/components/FilterSort.svelte';
-  import PageHeader from '$lib/PageHeader.svelte';
+  import SearchBar from '$lib/SearchBar.svelte';
+  import mediaProperties from '../../../../static/media/media-properties.json';
   import { MediaState, type MediaItem, type SearchResult } from './mediaState.svelte';
 
   let { data } = $props();
@@ -12,6 +12,12 @@
     state.data = data;
   });
 
+  const filterProperties = [
+    { value: 'type', label: 'Type', type: 'select' as const, options: mediaProperties.types },
+    { value: 'status', label: 'Status', type: 'select' as const, options: mediaProperties.statuses },
+    { value: 'rating', label: 'Rating', type: 'number' as const },
+    { value: 'title', label: 'Title', type: 'text' as const }
+  ];
 </script>
 
 <svelte:head>
@@ -19,19 +25,16 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <PageHeader title="Media" actionLabel="New Media" onaction={() => state.openNew()} />
-
-  <div class="bg-[oklch(0.2795_0.0368_260.03)] border border-[oklch(0.3717_0.0392_257.29)] rounded-xl shadow-lg p-4 flex flex-col md:flex-row gap-4">
-    <div class="flex-1 flex gap-4">
-      <input type="text" bind:value={state.searchQuery} placeholder="Search media by title or ID..." class="input-field w-full" />
-      <div class="h-10">
-        <FilterSort bind:filters={state.filters} bind:sorts={state.sorts} />
-      </div>
-    </div>
-  </div>
+  <SearchBar
+    bind:value={state.searchQuery}
+    bind:filters={state.filters}
+    bind:sorts={state.sorts}
+    properties={filterProperties}
+    onnew={() => state.openNew()}
+  />
 
   {#if state.errorMsg}
-    <div class="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg">
+    <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded">
       {state.errorMsg}
     </div>
   {/if}
