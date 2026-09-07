@@ -2,13 +2,8 @@
   import MenuOverlay from "../components/MenuOverlay.svelte";
   import Cursor from "../components/Cursor.svelte";
   import AsciiBackground from "../components/AsciiBackground.svelte";
+  import PortfolioLayout from "../components/PortfolioLayout.svelte";
 
-
-  import Quote from "../components/Quote.svelte";
-  import HeroName from "../components/HeroName.svelte";
-  import HalftoneImage from "../components/HalftoneImage.svelte";
-
-  import { quoteStore } from "../stores/quote.svelte.js";
   import "../index.css";
   import "../App.css";
   import "@fontsource/inter/400.css";
@@ -34,20 +29,15 @@
     "/questions", "/blog", "/blog-afterdark", "/microblog",
   ];
 
-  const NO_SCROLL_ROUTES = ["/", "/about", "/skills", "/projects"];
-  const PORTFOLIO_INNER_ROUTES = ["/about", "/skills", "/projects"];
-  const HIDE_PORTRAIT = ["/skills", "/projects"];
+  const PORTFOLIO_ROUTES = ["/", "/about", "/skills", "/projects"];
 
-  let isNoScroll = $derived(NO_SCROLL_ROUTES.includes(currentPath));
+  let isPortfolio = $derived(PORTFOLIO_ROUTES.includes(currentPath));
   let isKnown = $derived(KNOWN_ROUTES.includes(currentPath) || currentPath.startsWith('/now/'));
   let isBlog = $derived(currentPath === '/blog' || currentPath.startsWith('/blog/') || currentPath.startsWith('/blog-afterdark'));
-  let isPortfolioInner = $derived(PORTFOLIO_INNER_ROUTES.includes(currentPath));
   let currentView = $derived(currentPath === '/' ? 'home' : currentPath.startsWith('/now/') ? 'now' : currentPath.slice(1));
-  let showPortrait = $derived(!HIDE_PORTRAIT.includes(currentPath));
-  let contentFill = $derived(currentPath === "/projects" || currentPath === "/skills");
 
   $effect(() => {
-    document.body.classList.toggle('no-scroll', isNoScroll);
+    document.body.classList.toggle('no-scroll', isPortfolio);
     return () => {
       document.body.classList.remove('no-scroll');
     };
@@ -61,61 +51,24 @@
     {@render children()}
   </div>
   <MenuOverlay view="blog" />
+{:else if isPortfolio}
+  <PortfolioLayout {currentPath}>
+    {@render children()}
+  </PortfolioLayout>
 {:else if !isKnown}
   <div class="with-frame" id="main-content" tabindex="-1">
     <AsciiBackground />
     {@render children()}
   </div>
 {:else if currentPath === "/media-library"}
-  <div id="main-content" tabindex="-1">
+  <div class="page-content" id="main-content" tabindex="-1">
     {@render children()}
   </div>
   <MenuOverlay view="media-library" />
 {:else if currentPath === "/questions"}
-  <div id="main-content" tabindex="-1">
+  <div class="page-content" id="main-content" tabindex="-1">
     {@render children()}
   </div>
-{:else if currentPath === "/"}
-  <div class="page-content with-frame" id="main-content" tabindex="-1">
-    <AsciiBackground />
-    {@render children()}
-    <div class="home-name-overlay">
-      <HeroName />
-      <Quote displayed={quoteStore.displayed} phase={quoteStore.phase} onCycle={quoteStore.cycleQuote} />
-    </div>
-  </div>
-  <MenuOverlay view="home" />
-{:else if isPortfolioInner}
-  <div class="page page-content with-frame" class:no-portrait={!showPortrait}>
-    <AsciiBackground />
-
-    <!-- Name + Quote group — top-left -->
-    <div class="name-group">
-      <footer class="bottom-bar">
-        <HeroName />
-      </footer>
-      <Quote displayed={quoteStore.displayed} phase={quoteStore.phase} onCycle={quoteStore.cycleQuote} />
-    </div>
-
-    <!-- Portrait — bottom-left (hidden on skills/projects) -->
-    {#if showPortrait}
-      <div class="portrait-column">
-        <HalftoneImage
-          src="/portraits/tower.webp"
-          alt="Ark Malhotra portrait"
-          class="portrait"
-        />
-      </div>
-    {/if}
-
-    <!-- Content — bottom-right, swaps based on route -->
-    <main class="content {contentFill ? 'content--fill' : ''}" id="main-content" tabindex="-1">
-      {@render children()}
-    </main>
-  </div>
-
-  <!-- Menu — hamburger button fixed top-right, opens full-screen bento overlay -->
-  <MenuOverlay view={currentView} />
 {:else}
   <!-- Standalone routes (e.g. /now, /now/[date], /colophon, /microblog, /minis) -->
   <div class="standalone-layout page-content" id="main-content" tabindex="-1">
