@@ -23,18 +23,13 @@
 
   let currentPath = $derived($page.url.pathname.replace(/\/$/, '') || '/');
 
-  const KNOWN_ROUTES = [
-    "/", "/about", "/skills", "/projects",
-    "/now", "/colophon", "/minis", "/media-library",
-    "/questions", "/blog", "/blog-afterdark", "/microblog",
-  ];
-
   const PORTFOLIO_ROUTES = ["/", "/about", "/skills", "/projects"];
+  const STANDALONE_PREFIXES = ["/now", "/colophon", "/microblog", "/minis"];
 
-  let isPortfolio = $derived(PORTFOLIO_ROUTES.includes(currentPath));
-  let isKnown = $derived(KNOWN_ROUTES.includes(currentPath) || currentPath.startsWith('/now/'));
-  let isBlog = $derived(currentPath === '/blog' || currentPath.startsWith('/blog/') || currentPath.startsWith('/blog-afterdark'));
-  let currentView = $derived(currentPath === '/' ? 'home' : currentPath.startsWith('/now/') ? 'now' : currentPath.slice(1));
+  let isPortfolio = $derived(!$page.error && PORTFOLIO_ROUTES.includes(currentPath));
+  let isStandalone = $derived(STANDALONE_PREFIXES.some((prefix) => currentPath.startsWith(prefix)));
+  let showMenu = $derived(!$page.error && currentPath !== "/questions");
+  let currentView = $derived(currentPath === "/" ? "home" : currentPath.slice(1).split("/")[0]);
 
   $effect(() => {
     document.body.classList.toggle('no-scroll', isPortfolio);
@@ -46,35 +41,26 @@
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-{#if isBlog}
-  <div class="page-content" id="main-content" tabindex="-1">
-    {@render children()}
-  </div>
-  <MenuOverlay view="blog" />
-{:else if isPortfolio}
+{#if isPortfolio}
   <PortfolioLayout {currentPath}>
     {@render children()}
   </PortfolioLayout>
-{:else if !isKnown}
-  <div class="with-frame" id="main-content" tabindex="-1">
-    <AsciiBackground />
-    {@render children()}
-  </div>
-{:else if currentPath === "/media-library"}
-  <div class="page-content" id="main-content" tabindex="-1">
-    {@render children()}
-  </div>
-  <MenuOverlay view="media-library" />
-{:else if currentPath === "/questions"}
-  <div class="page-content" id="main-content" tabindex="-1">
-    {@render children()}
-  </div>
 {:else}
-  <!-- Standalone routes (e.g. /now, /now/[date], /colophon, /microblog, /minis) -->
-  <div class="standalone-layout page-content" id="main-content" tabindex="-1">
+  <div
+    class="page-content"
+    class:standalone-layout={isStandalone}
+    class:with-frame={!!$page.error}
+    id="main-content"
+    tabindex="-1"
+  >
+    {#if $page.error}
+      <AsciiBackground />
+    {/if}
     {@render children()}
   </div>
-  <MenuOverlay view={currentView} />
+  {#if showMenu}
+    <MenuOverlay view={currentView} />
+  {/if}
 {/if}
 
 <Cursor />
