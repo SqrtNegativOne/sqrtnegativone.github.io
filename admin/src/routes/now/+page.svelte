@@ -211,14 +211,10 @@
     bind:filters
     bind:sorts
     properties={filterProperties}
+    totalCount={entries.length}
+    filteredCount={filteredEntries.length}
     onnew={openAddModal}
   />
-
-  {#if searchQuery !== '' || filters.length > 0}
-    <div class="text-xs text-[oklch(0.7107_0.0351_256.79)]">
-      Showing {filteredEntries.length} {filteredEntries.length === 1 ? 'entry' : 'entries'}
-    </div>
-  {/if}
 
   <!-- List of Entries -->
   {#if filteredEntries.length === 0}

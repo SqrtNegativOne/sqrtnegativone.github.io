@@ -114,6 +114,8 @@
     bind:filters
     bind:sorts
     properties={filterProperties}
+    totalCount={data.skills?.length || 0}
+    filteredCount={filteredSkills.length}
     onnew={openNew}
   />
 

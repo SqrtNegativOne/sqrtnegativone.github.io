@@ -101,14 +101,10 @@
     bind:filters
     bind:sorts
     properties={filterProperties}
+    totalCount={data.quotes?.length || 0}
+    filteredCount={filteredQuotes.length}
     onnew={openNew}
   />
-
-  {#if searchQuery !== '' || filters.length > 0}
-    <div class="text-xs text-[oklch(0.7107_0.0351_256.79)]">
-      Showing {filteredQuotes.length} {filteredQuotes.length === 1 ? 'quote' : 'quotes'}
-    </div>
-  {/if}
 
   <!-- Google Keep Masonry Layout -->
   <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">

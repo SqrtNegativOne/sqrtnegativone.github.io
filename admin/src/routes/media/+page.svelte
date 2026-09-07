@@ -30,6 +30,8 @@
     bind:filters={state.filters}
     bind:sorts={state.sorts}
     properties={filterProperties}
+    totalCount={data.media?.length || 0}
+    filteredCount={state.filteredMedia.length}
     onnew={() => state.openNew()}
   />
 

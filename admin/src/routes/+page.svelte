@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { navItems } from '$lib/nav';
+  import { navItems, type NavItem } from '$lib/nav';
   import SearchBar from '$lib/SearchBar.svelte';
+  import EmptyState from '$lib/EmptyState.svelte';
+  import { filterAndSortItems } from '$lib/searchUtils';
 
   let searchQuery = $state('');
 
   let filteredNav = $derived(
-    navItems.filter(
-      (i) =>
-        !searchQuery ||
-        i.label.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
-        i.description.toLowerCase().includes(searchQuery.toLowerCase().trim())
-    )
+    filterAndSortItems<NavItem>({
+      items: navItems,
+      searchQuery,
+      searchFields: ['label', 'description', 'href']
+    })
   );
 </script>
 
@@ -19,7 +20,12 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <SearchBar bind:value={searchQuery} />
+  <SearchBar
+    bind:value={searchQuery}
+    placeholder="Search pages (e.g. projects, blogs, media)..."
+    totalCount={navItems.length}
+    filteredCount={filteredNav.length}
+  />
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     {#each filteredNav as item (item.href)}
@@ -34,4 +40,13 @@
       </a>
     {/each}
   </div>
+
+  {#if filteredNav.length === 0}
+    <EmptyState
+      title="No matching pages"
+      message="Try adjusting your search query to find the admin page you're looking for."
+      actionLabel="Clear Search"
+      onaction={() => searchQuery = ''}
+    />
+  {/if}
 </div>

@@ -103,6 +103,8 @@
     bind:filters
     bind:sorts
     properties={filterProperties}
+    totalCount={data.posts?.length || 0}
+    filteredCount={filteredPosts.length}
     onnew={openNew}
   />
 

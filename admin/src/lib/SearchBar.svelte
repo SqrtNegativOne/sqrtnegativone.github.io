@@ -9,6 +9,8 @@
     properties?: FilterProperty[];
     filters?: FilterRule[];
     sorts?: SortRule[];
+    totalCount?: number;
+    filteredCount?: number;
     onnew?: () => void;
     class?: string;
     extra?: Snippet;
@@ -20,12 +22,25 @@
     properties = [],
     filters = $bindable([]),
     sorts = $bindable([]),
+    totalCount,
+    filteredCount,
     onnew,
     class: className = '',
     extra
   }: Props = $props();
 
   let inputEl: HTMLInputElement | undefined = $state();
+
+  function handleInputKeydown(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+      e.stopPropagation();
+      if (value) {
+        value = '';
+      } else {
+        inputEl?.blur();
+      }
+    }
+  }
 
   function handleWindowKeydown(e: KeyboardEvent) {
     const activeEl = document.activeElement;
@@ -64,6 +79,7 @@
       bind:this={inputEl}
       type="text"
       bind:value
+      onkeydown={handleInputKeydown}
       {placeholder}
       class="input-field !pl-10 !pr-10 text-sm"
       style="padding-left: 2.5rem !important; padding-right: 2.5rem !important;"
@@ -88,6 +104,15 @@
       </div>
     {/if}
   </div>
+
+  {#if totalCount !== undefined && filteredCount !== undefined && (value || (filters && filters.length > 0))}
+    <div
+      class="shrink-0 text-xs font-mono px-2.5 py-2 rounded bg-white/5 border border-[oklch(0.2739_0.0055_286.03)] text-[oklch(0.7107_0.0351_256.79)] select-none"
+      title="{filteredCount} results of {totalCount} total"
+    >
+      <span class="text-white font-semibold">{filteredCount}</span>/{totalCount}
+    </div>
+  {/if}
 
   {#if properties && properties.length > 0}
     <div class="shrink-0 flex items-center">

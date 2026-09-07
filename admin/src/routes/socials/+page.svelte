@@ -129,6 +129,8 @@
     bind:filters
     bind:sorts
     properties={filterProperties}
+    totalCount={data.socials?.length || 0}
+    filteredCount={filteredSocials.length}
     onnew={openNew}
   />
 

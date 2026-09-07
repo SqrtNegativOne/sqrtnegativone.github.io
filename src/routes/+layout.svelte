@@ -34,21 +34,30 @@
     "/questions", "/blog", "/blog-afterdark", "/microblog",
   ];
 
+  const NO_SCROLL_ROUTES = ["/", "/about", "/skills", "/projects"];
   const PORTFOLIO_INNER_ROUTES = ["/about", "/skills", "/projects"];
   const HIDE_PORTRAIT = ["/skills", "/projects"];
 
+  let isNoScroll = $derived(NO_SCROLL_ROUTES.includes(currentPath));
   let isKnown = $derived(KNOWN_ROUTES.includes(currentPath) || currentPath.startsWith('/now/'));
   let isBlog = $derived(currentPath === '/blog' || currentPath.startsWith('/blog/') || currentPath.startsWith('/blog-afterdark'));
   let isPortfolioInner = $derived(PORTFOLIO_INNER_ROUTES.includes(currentPath));
   let currentView = $derived(currentPath === '/' ? 'home' : currentPath.startsWith('/now/') ? 'now' : currentPath.slice(1));
   let showPortrait = $derived(!HIDE_PORTRAIT.includes(currentPath));
   let contentFill = $derived(currentPath === "/projects" || currentPath === "/skills");
+
+  $effect(() => {
+    document.body.classList.toggle('no-scroll', isNoScroll);
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  });
 </script>
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 
 {#if isBlog}
-  <div id="main-content" tabindex="-1">
+  <div class="page-content" id="main-content" tabindex="-1">
     {@render children()}
   </div>
   <MenuOverlay view="blog" />
@@ -140,10 +149,7 @@
   }
 
   .standalone-layout {
-    height: 100vh;
-    height: 100dvh;
-    overflow-y: auto;
-    overflow-x: hidden;
+    min-height: 100vh;
     padding: 5rem 2rem 4rem;
     box-sizing: border-box;
     width: 100%;

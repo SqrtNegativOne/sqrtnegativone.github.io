@@ -142,7 +142,7 @@
     padding-left: 3rem;
     padding-top: 2rem;
     overflow-y: auto;
-    max-height: 100vh;
+    max-height: calc(100vh - 8rem);
   }
 
   .blog-home-link {
@@ -275,6 +275,7 @@
     .blog-content {
       padding: 1.5rem 0 0 0;
       max-height: none;
+      overflow-y: visible;
     }
   }
 </style>

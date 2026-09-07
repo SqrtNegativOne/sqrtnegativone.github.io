@@ -1,7 +1,7 @@
 import { Result, ResultAsync, err, ok } from 'neverthrow';
 import { invoke } from '@tauri-apps/api/core';
 import { getRepoRoot, readData, writeData } from '$lib/db';
-import { applyFilters, applySorts } from '../../../../shared/utils/mediaFilters';
+import { filterAndSortItems } from '$lib/searchUtils';
 import { invalidateAll } from '$app/navigation';
 import { notificationState } from '$lib/notificationState.svelte';
 import type { MediaItem } from '../../../../shared/types';
@@ -323,7 +323,13 @@ export class MediaState {
 
   get filteredMedia() {
     if (!this.data?.media) return [];
-    return applySorts(applyFilters(this.data.media, this.filters, this.searchQuery), this.sorts);
+    return filterAndSortItems<MediaItem>({
+      items: this.data.media,
+      searchQuery: this.searchQuery,
+      searchFields: ['title', 'tagline', 'author', 'publisher', 'id'],
+      filters: this.filters,
+      sorts: this.sorts
+    });
   }
 
   openNew() {

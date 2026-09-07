@@ -59,11 +59,16 @@
           <div class="flex flex-col gap-2">
             {#each filters as filter, i (i)}
               <div class="flex items-center gap-2 text-sm bg-black/40 p-2 rounded border border-[oklch(0.2739_0.0055_286.03)]">
-                <select bind:value={filter.property} class="bg-transparent border-none text-zinc-200 outline-none cursor-pointer">
+                <select
+                  bind:value={filter.property}
+                  onchange={() => {
+                    const def = getPropDef(filter.property);
+                    filter.value = def?.options?.[0]?.value ?? (def?.type === 'number' ? 1 : '');
+                  }}
+                  class="bg-transparent border-none text-zinc-200 outline-none cursor-pointer"
+                >
                   {#each properties as prop (prop.value)}
-                    {#if prop.type !== 'text'}
-                      <option value={prop.value} class="bg-[oklch(0.2103_0.0059_285.89)] text-white">{prop.label}</option>
-                    {/if}
+                    <option value={prop.value} class="bg-[oklch(0.2103_0.0059_285.89)] text-white">{prop.label}</option>
                   {/each}
                 </select>
                 

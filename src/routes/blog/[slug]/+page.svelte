@@ -269,4 +269,15 @@
   :global(.post-body .footnote-backref:hover) {
     color: var(--text);
   }
+
+  :global(.post-body pre) {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  @media (max-width: 640px) {
+    .blog-layout {
+      padding: 2.5rem 1.25rem 3rem;
+    }
+  }
 </style>

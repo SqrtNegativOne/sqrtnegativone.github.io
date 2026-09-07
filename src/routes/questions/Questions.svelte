@@ -20,12 +20,9 @@
   background-color: oklch(0 0 0);
   color: oklch(1 0 0);
   min-height: 100vh;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
   padding: 4rem 2rem;
   box-sizing: border-box;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .questions-page,

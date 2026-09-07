@@ -137,10 +137,7 @@
 }
 
 .ml-root {
-  position: fixed;
-  inset: 0;
-  z-index: 5;
-  overflow-y: auto;
+  min-height: 100vh;
   background: oklch(0.1505 0.0042 285.88);
   color: oklch(0.9707 0.0027 286.35);
   font-family: "Inter", system-ui, -apple-system, sans-serif;

@@ -8,6 +8,7 @@
   import ProjectCard from './ProjectCard.svelte';
   import ProjectModal from './ProjectModal.svelte';
 
+  import { page } from '$app/state';
   import type { ProjectItem } from '../../../../shared/types';
   
   interface ProjectFormItem {
@@ -19,9 +20,16 @@
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   
-  let searchQuery = $state('');
+  let searchQuery = $state(page.url.searchParams.get('q') || '');
   let filters = $state<FilterRule[]>([]);
   let sorts = $state<SortRule[]>([]);
+
+  $effect(() => {
+    const q = page.url.searchParams.get('q');
+    if (q !== null && q !== searchQuery) {
+      searchQuery = q;
+    }
+  });
 
   const filterProperties: FilterProperty[] = [
     { value: 'name', label: 'Name', type: 'text' },
@@ -119,6 +127,8 @@
     bind:filters
     bind:sorts
     properties={filterProperties}
+    totalCount={data.projects?.length || 0}
+    filteredCount={filteredProjects.length}
     onnew={openNew}
   />
 
