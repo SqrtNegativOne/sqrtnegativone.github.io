@@ -1,5 +1,7 @@
 <script>
-  let { age = 0 } = $props();
+  const birthDate = new Date("2006-08-03");
+  const msInYear = 1000 * 60 * 60 * 24 * 365.25;
+  const age = ((Date.now() - birthDate.getTime()) / msInYear).toFixed(5);
 </script>
 
 <div class="text-column">
@@ -7,13 +9,10 @@
 
   <div class="bio">
     <p>
-      My name is Ark Malhotra, aged ${age}, and I am currently an
-      undergrad
-      B.Tech student currently pursuing the intellectual
-      enterprises of Computer Science
+      My name is Ark Malhotra, aged {age}, and I am an
+      undergrad B.Tech student in India pursuing Computer Science
       at Netaji Subhas University of Technology (NSUT)
-      (formerly Netaji Subhas Institute of Technology, NSIT),
-      2024-2028.
+      (formerly NSIT), 2024-2028.
     </p>
     <p>
       I have always found myself fascinated with computers and
@@ -42,7 +41,7 @@
     <p>
       Other than programming itself, my hobbies include reading
       books, reading long-form essays on the web, and playing
-      puzzle and story based games.
+      puzzle and story based games. I write things sometimes, but they aren't always good.
     </p>
   </div>
 </div>
