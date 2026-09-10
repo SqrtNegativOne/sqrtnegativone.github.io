@@ -1725,5 +1725,35 @@
     "tags": [],
     "author": "Christopher Nolan",
     "publisher": "Warner Bros. Pictures, Touchstone Pictures, Newmarket Films, Syncopy"
+  },
+  {
+    "id": "valuable_humans_in_transit_and_other_stories",
+    "type": "book",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Valuable Humans in Transit and Other Stories",
+    "tagline": "",
+    "description": "\"[D]elivers a refreshing dose of existential despair at the transhuman condition.\" — Charles Stross qntm has been writing science fiction for most of this millennium. His works start from elegant, deep hypotheticals and wind entire universes around them, pushing science, technology, logic and possibility to breaking point and far beyond. This volume collects the highlights of his short fiction, including \"The Difference\", \"I Don't Know, Timmy, Being God Is a Big Responsibility\" and the acclaimed \"Lena\".",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_valuable_humans_in_transit_and_other_stories",
+    "tags": [],
+    "author": "qntm",
+    "publisher": "qntm"
+  },
+  {
+    "id": "coyote_vs_acme",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Coyote vs. Acme",
+    "tagline": "",
+    "description": "After Acme products fail him one too many times in his dogged pursuit of the Roadrunner, Wile E. Coyote decides to hire a billboard lawyer to sue the Acme Corporation.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_coyote_vs_acme",
+    "tags": [],
+    "author": "Dave Green",
+    "publisher": "Troll Court Entertainment, Keylight Pictures, Warner Animation Group, Warner Bros. Pictures"
   }
 ]
