@@ -212,6 +212,17 @@ fn is_content_path(path: &str) -> bool {
         || (p_norm.ends_with(".json") && (p_norm.starts_with("static/") || p_norm.starts_with("src/data/")))
 }
 
+/// Root directories that contain site content. Everything underneath these is
+/// safe to stage automatically, including newly created or untracked files.
+const CONTENT_ROOTS: &[&str] = &[
+    "src/data",
+    "blog",
+    "static/media",
+    "static/projects",
+    "static/quotes",
+    "static/blog-images",
+];
+
 fn run_git_cmd(repo_root: &str, args: &[&str]) -> Result<(bool, String, String), String> {
     let mut cmd = std::process::Command::new("git");
     cmd.current_dir(repo_root);
@@ -334,6 +345,27 @@ fn git_get_status() -> Result<GitStatusInfo, String> {
 #[tauri::command]
 fn git_commit_content(message: Option<String>) -> Result<String, String> {
     let root = get_repo_root()?;
+    let root_path = Path::new(&root);
+
+    // Stage every content root up front. Using `add -A` on the whole root
+    // (rather than replaying paths parsed from `git status`) guarantees that
+    // brand-new, untracked files such as freshly downloaded posters are picked
+    // up instead of silently left behind.
+    let existing_roots: Vec<&str> = CONTENT_ROOTS
+        .iter()
+        .copied()
+        .filter(|rel| root_path.join(rel).exists())
+        .collect();
+    if existing_roots.is_empty() {
+        return Err("No content roots found".to_string());
+    }
+
+    let mut add_args = vec!["add", "-A", "--"];
+    add_args.extend(existing_roots.iter().copied());
+    let (add_ok, _, add_err) = run_git_cmd(&root, &add_args)?;
+    if !add_ok {
+        return Err(format!("git add failed: {add_err}"));
+    }
 
     let (status_ok, status_out, status_err) = run_git_cmd(
         &root,
@@ -363,15 +395,6 @@ fn git_commit_content(message: Option<String>) -> Result<String, String> {
 
     if content_files.is_empty() {
         return Err("No content changes to commit".to_string());
-    }
-
-    let mut add_args = vec!["add", "--"];
-    for f in &content_files {
-        add_args.push(f.as_str());
-    }
-    let (add_ok, _, add_err) = run_git_cmd(&root, &add_args)?;
-    if !add_ok {
-        return Err(format!("git add failed: {add_err}"));
     }
 
     let commit_msg = match message {

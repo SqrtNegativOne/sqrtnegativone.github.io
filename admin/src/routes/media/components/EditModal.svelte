@@ -1,7 +1,7 @@
 <script lang="ts">
   import mediaProperties from '../../../../../static/media/media-properties.json';
 
-  let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, isSaving, searchError, handleSearch, handlePaste, handleRatingKeydown, handleSave, handleDelete } = $props();
+  let { isModalOpen = $bindable(), isEditing, currentItem = $bindable(), isSearching, isSaving, searchError, handleSearch, handlePaste, handleSave, handleDelete } = $props();
 
   import { untrack } from 'svelte';
   
@@ -33,11 +33,6 @@
       <div class="flex-1 overflow-y-auto p-6 flex flex-col">
         <form id="save-media-form" onsubmit={handleSave}>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="space-y-2">
-            <label for="media-id" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">ID (Unique)</label>
-            <input id="media-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
-          </div>
-          
           <div class="space-y-2">
             <label for="media-type" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Type</label>
             <select id="media-type" name="type" bind:value={currentItem.type} class="input-field">
@@ -131,7 +126,14 @@
           
           <div class="space-y-2">
             <label for="media-rating" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Rating (1-7)</label>
-            <input id="media-rating" type="number" min="1" max="7" name="rating" bind:value={currentItem.rating} onkeydown={handleRatingKeydown} class="input-field" required />
+            <input id="media-rating" type="number" min="1" max="7" step="any" inputmode="decimal" name="rating" bind:value={currentItem.rating} class="input-field" required />
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center h-full pt-6 space-x-2">
+              <input type="checkbox" id="media-hidden" bind:checked={currentItem.hidden} class="rounded border-zinc-700 text-blue-600 focus:ring-blue-500 bg-zinc-800" />
+              <label for="media-hidden" class="text-sm text-[oklch(0.7107_0.0351_256.79)]">Hidden from public library</label>
+            </div>
           </div>
           
           <div class="space-y-2">

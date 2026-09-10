@@ -1,11 +1,16 @@
+<script>
+  let { age = 0 } = $props();
+</script>
+
 <div class="text-column">
   <p>Hi!</p>
 
   <div class="bio">
     <p>
-      My name is Ark Malhotra, and I am currently an undergrad
+      My name is Ark Malhotra, aged ${age}, and I am currently an
+      undergrad
       B.Tech student currently pursuing the intellectual
-      enterprises of Computer Science and Engineering (CSE)
+      enterprises of Computer Science
       at Netaji Subhas University of Technology (NSUT)
       (formerly Netaji Subhas Institute of Technology, NSIT),
       2024-2028.

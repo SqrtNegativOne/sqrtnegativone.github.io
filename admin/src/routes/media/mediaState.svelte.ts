@@ -77,7 +77,7 @@ class BooksSearchProvider implements MediaSearchProvider {
             
             return {
               title: r.trackName || '',
-              tagline: 'Apple Books Edition',
+              tagline: '',
               author: r.artistName || '',
               publisher: '',
               description,
@@ -103,7 +103,7 @@ class BooksSearchProvider implements MediaSearchProvider {
             }
             return {
               title: vol.title || '',
-              tagline: vol.subtitle ? `${vol.subtitle} (Google Books)` : 'Google Books Edition',
+              tagline: vol.subtitle || '',
               author: vol.authors ? vol.authors.join(', ') : '',
               publisher: vol.publisher || '',
               description: vol.description || '',
@@ -305,7 +305,7 @@ export class MediaState {
     id: '', type: 'movie', rating: 4, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
     author: '', publisher: '',
-    tags: []
+    tags: [], hidden: false
   });
   
   isSearching = $state(false);
@@ -339,7 +339,7 @@ export class MediaState {
       id: '', type: 'movie', rating: 4, status: 'wishlist',
       title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
       author: '', publisher: '',
-      tags: []
+      tags: [], hidden: false
     };
     this.isModalOpen = true;
   }
@@ -390,10 +390,7 @@ export class MediaState {
     if (result.description) descParts.push(result.description);
     if (descParts.length > 0) this.currentItem.description = descParts.join('\n\n');
     if (result.coverUrl) this.currentItem.poster_image = result.coverUrl;
-    
-    if (!this.currentItem.id && result.title) {
-      this.currentItem.id = result.title.toLowerCase().replace(/[^a-z0-9_-]/g, "_").replace(/_+/g, "_");
-    }
+
     this.isSearchModalOpen = false;
   }
 
@@ -415,14 +412,22 @@ export class MediaState {
     }
   }
 
-  handleRatingKeydown(e: KeyboardEvent) {
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      this.currentItem.rating = Math.min(7, Math.floor((this.currentItem.rating || 4) + 1));
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      this.currentItem.rating = Math.max(1, Math.ceil((this.currentItem.rating || 4) - 1));
+  private slugify(value: string): string {
+    return value
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_+|_+$/g, '');
+  }
+
+  private generateUniqueId(item: MediaItem, items: MediaItem[]): string {
+    const base = this.slugify(item.title) || this.slugify(item.type) || 'item';
+    const taken = new Set(items.map((i) => i.id));
+    let candidate = base;
+    let suffix = 2;
+    while (taken.has(candidate)) {
+      candidate = `${base}_${suffix++}`;
     }
+    return candidate;
   }
 
   async handleSave(e: Event) {
@@ -430,14 +435,21 @@ export class MediaState {
     this.isSaving = true;
     try {
       this.errorMsg = '';
-      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher } = this.currentItem;
-      let poster_image = this.currentItem.poster_image;
-      
-      if (!id || !title) {
-        this.errorMsg = 'ID and Title are required';
+
+      if (!this.currentItem.title) {
+        this.errorMsg = 'Title is required';
         notificationState.error(this.errorMsg, { title: 'Validation Error' });
         return;
       }
+
+      const items = (await readData<MediaItem>('media')).unwrapOr([] as any[]);
+
+      if (!this.currentItem.id) {
+        this.currentItem.id = this.generateUniqueId(this.currentItem, items);
+      }
+
+      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher, hidden } = this.currentItem;
+      let poster_image = this.currentItem.poster_image;
 
       const rootRes = await ResultAsync.fromPromise(getRepoRoot(), (err) => typeof err === 'string' ? err : String(err));
       if (rootRes.isErr()) {
@@ -504,8 +516,7 @@ export class MediaState {
         poster_image = `${type}_${safeId}`;
       }
 
-      const items = (await readData<MediaItem>('media')).unwrapOr([] as any[]);
-      const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image, tags, author, publisher };
+      const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image, tags, author, publisher, hidden };
       
       if (isNew) {
         if (items.some(i => i.id === id)) {

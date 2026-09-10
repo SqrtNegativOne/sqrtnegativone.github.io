@@ -53,7 +53,6 @@
   searchError={state.searchError}
   handleSearch={() => state.handleSearch()}
   handlePaste={(e: ClipboardEvent) => state.handlePaste(e)}
-  handleRatingKeydown={(e: KeyboardEvent) => state.handleRatingKeydown(e)}
   handleSave={(e: Event) => state.handleSave(e)}
   handleDelete={(id: string) => state.handleDelete(id)}
 />

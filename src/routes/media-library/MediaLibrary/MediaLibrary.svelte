@@ -12,20 +12,21 @@
   import type { MediaItem } from "../../../../shared/types";
   
   const typedMediaData = mediaData as unknown as MediaItem[];
+  const visibleMediaData = typedMediaData.filter((item) => !item.hidden);
 
   let searchQuery = $state("");
   let filters = $state<{ property: string, operator: string, value: any }[]>([]);
   let sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'rating', direction: 'desc' }]);
 
   let carouselsData = $derived((() => {
-    const byRatingDesc = [...typedMediaData].sort((a, b) => ((b.rating as number) || 0) - ((a.rating as number) || 0));
+    const byRatingDesc = [...visibleMediaData].sort((a, b) => ((b.rating as number) || 0) - ((a.rating as number) || 0));
     const goat = byRatingDesc.filter(i => Array.isArray(i.tags) && i.tags.includes('goat'));
     const consuming = byRatingDesc.filter(i => i.status === "consuming");
     return { goat, consuming };
   })());
 
   let libraryData = $derived((() => {
-    const filtered = applyFilters(typedMediaData, filters, searchQuery);
+    const filtered = applyFilters(visibleMediaData, filters, searchQuery);
     const sorted = applySorts(filtered, sorts);
     return sorted.filter(item => item.status !== "consuming");
   })());
@@ -95,7 +96,7 @@
 
   <LibraryTable items={libraryData} {sorts} {toggleSort} {openDetails} {openFullPoster} />
 
-  {#if mediaData.length === 0}
+  {#if visibleMediaData.length === 0}
     <p class="ml-empty">Nothing here yet.</p>
   {/if}
 

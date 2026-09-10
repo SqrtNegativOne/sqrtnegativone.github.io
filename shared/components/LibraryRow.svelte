@@ -33,6 +33,9 @@
       <span class="ml-row-title">{item.title}</span>
       <TypeBadge type={item.type} variant="icon" sizeClass="w-5 h-5" />
       <StatusBadge status={item.status} />
+      {#if item.hidden}
+        <span class="ml-hidden-badge">Hidden</span>
+      {/if}
     </span>
     {#if item.author || item.publisher || item.tagline || item.notes}
       <span class="ml-row-sub">
@@ -101,6 +104,19 @@
     display: flex;
     align-items: center;
     gap: 8px;
+  }
+
+  .ml-hidden-badge {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: oklch(0.82 0.14 85);
+    background: oklch(0.82 0.14 85 / 0.12);
+    border: 1px solid oklch(0.82 0.14 85 / 0.25);
   }
 
 

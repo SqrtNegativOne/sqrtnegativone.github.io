@@ -23,6 +23,7 @@ export interface MediaItem {
   author?: string;
   publisher?: string;
   tags?: string[];
+  hidden?: boolean;
 }
 
 export interface PrivateNoteItem {
@@ -35,6 +36,7 @@ export interface SkillItem {
   icon?: string;
   logo: string;
   mono?: string;
+  hidden?: boolean;
 }
 
 export interface QuoteItem {

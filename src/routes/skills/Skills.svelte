@@ -1,10 +1,13 @@
 <script lang="ts">
   import skills from "../../data/skills.json";
+  import type { SkillItem } from "../../../shared/types";
+
+  const visibleSkills = (skills as SkillItem[]).filter((skill) => !skill.hidden);
 </script>
 
 <div class="skills-page">
   <div class="skills-grid">
-    {#each skills as skill, i (skill.name)}
+    {#each visibleSkills as skill, i (skill.name)}
       <div
         class="skill-item {skill.mono ? 'skill-item--mono' : ''}"
         tabindex="-1"

@@ -18,7 +18,7 @@
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   let currentItem: SkillFormItem = $state({
-    name: '', icon: '', logo: '', mono: '', originalName: ''
+    name: '', icon: '', logo: '', mono: '', originalName: '', hidden: false
   });
 
   let searchQuery = $state('');
@@ -41,7 +41,7 @@
 
   function openNew() {
     isEditing = false;
-    currentItem = { name: '', icon: '', logo: '', mono: '', originalName: '' };
+    currentItem = { name: '', icon: '', logo: '', mono: '', originalName: '', hidden: false };
     isModalOpen = true;
   }
 
