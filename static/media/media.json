@@ -1755,5 +1755,20 @@
     "tags": [],
     "author": "Dave Green",
     "publisher": "Troll Court Entertainment, Keylight Pictures, Warner Animation Group, Warner Bros. Pictures"
+  },
+  {
+    "id": "serial_experiments_lain",
+    "type": "show",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Serial Experiments Lain",
+    "tagline": "",
+    "description": "Lain—driven by the abrupt suicide of a classmate—logs on to the Wired and promptly loses herself in a twisted mass of hallucinations, memories, and interconnected-psyches.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "show_serial_experiments_lain",
+    "tags": [],
+    "author": "",
+    "publisher": "Pioneer LDC, Triangle Staff"
   }
 ]
