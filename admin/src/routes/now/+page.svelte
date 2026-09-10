@@ -31,6 +31,11 @@
 
   let originalDate = $state('');
   let editorViewMode: 'split' | 'edit' | 'preview' = $state('split');
+  let titleInput: HTMLInputElement | undefined = $state();
+
+  $effect(() => {
+    if (isModalOpen) titleInput?.focus();
+  });
 
   const filterProperties: FilterProperty[] = [
     { value: 'date', label: 'Date', type: 'text' },
@@ -72,14 +77,14 @@
     return `${year}-${month}-${day}`;
   }
 
-  function openAddModal() {
+  function openAddModal(initialTitle = '') {
     isEditing = false;
     originalDate = '';
     const today = getTodayString();
     currentEntry = {
       id: today,
       date: today,
-      title: '',
+      title: initialTitle,
       content: '### What I\'m Learning\n- \n\n### What I\'m Building\n- \n\n### What I\'m Reading\n- \n',
       updatedAt: new Date().toISOString()
     };
@@ -302,6 +307,7 @@
         <input
           id="entry-title"
           type="text"
+          bind:this={titleInput}
           bind:value={currentEntry.title}
           placeholder="e.g. Systems Programming & Late-Summer Reading"
           class="input-field text-sm"

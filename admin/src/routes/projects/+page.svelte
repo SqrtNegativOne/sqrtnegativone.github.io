@@ -50,10 +50,10 @@
     id: '', name: '', description: '', tags: '', github: '', url: '', image: '', private: false
   });
 
-  function openNew() {
+  function openNew(initialName = '') {
     isEditing = false;
     currentItem = {
-      id: '', name: '', description: '', tags: '', github: '', url: '', image: '', private: false
+      id: '', name: initialName, description: '', tags: '', github: '', url: '', image: '', private: false
     };
     isModalOpen = true;
   }

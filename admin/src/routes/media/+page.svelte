@@ -3,14 +3,17 @@
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
   import SearchBar from '$lib/SearchBar.svelte';
+  import FullPoster from '$lib/FullPoster.svelte';
   import mediaProperties from '../../../../static/media/media-properties.json';
   import { MediaState, type MediaItem, type SearchResult } from './mediaState.svelte';
 
   let { data } = $props();
-  const state = new MediaState();
+  const media = new MediaState();
   $effect(() => {
-    state.data = data;
+    media.data = data;
   });
+
+  let fullPosterUrl: string | null = $state(null);
 
   const filterProperties = [
     { value: 'type', label: 'Type', type: 'select' as const, options: mediaProperties.types },
@@ -26,39 +29,50 @@
 
 <div class="space-y-6">
   <SearchBar
-    bind:value={state.searchQuery}
-    bind:filters={state.filters}
-    bind:sorts={state.sorts}
+    bind:value={media.searchQuery}
+    bind:filters={media.filters}
+    bind:sorts={media.sorts}
     properties={filterProperties}
     totalCount={data.media?.length || 0}
-    filteredCount={state.filteredMedia.length}
-    onnew={() => state.openNew()}
+    filteredCount={media.filteredMedia.length}
+    onnew={(q) => media.openNew(q)}
   />
 
-  {#if state.errorMsg}
+  {#if media.errorMsg}
     <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded">
-      {state.errorMsg}
+      {media.errorMsg}
     </div>
   {/if}
 
-  <MediaTable filteredMedia={state.filteredMedia} openEdit={(item: MediaItem) => state.openEdit(item)} />
+  <MediaTable
+    filteredMedia={media.filteredMedia}
+    openEdit={(item: MediaItem) => media.openEdit(item)}
+    openFullPoster={(url: string) => fullPosterUrl = url}
+  />
 </div>
 
 <EditModal 
-  bind:isModalOpen={state.isModalOpen}
-  isEditing={state.isEditing}
-  bind:currentItem={state.currentItem}
-  isSearching={state.isSearching}
-  isSaving={state.isSaving}
-  searchError={state.searchError}
-  handleSearch={() => state.handleSearch()}
-  handlePaste={(e: ClipboardEvent) => state.handlePaste(e)}
-  handleSave={(e: Event) => state.handleSave(e)}
-  handleDelete={(id: string) => state.handleDelete(id)}
+  bind:isModalOpen={media.isModalOpen}
+  isEditing={media.isEditing}
+  bind:currentItem={media.currentItem}
+  existingItems={data.media || []}
+  isSearching={media.isSearching}
+  isSaving={media.isSaving}
+  searchError={media.searchError}
+  handleSearch={() => media.handleSearch()}
+  handlePaste={(e: ClipboardEvent) => media.handlePaste(e)}
+  handleSave={(e: Event) => media.handleSave(e)}
+  handleDelete={(id: string) => media.handleDelete(id)}
+  onOpenExisting={(item: MediaItem) => media.openEdit(item)}
+  onOpenPoster={(url: string) => fullPosterUrl = url}
 />
 
 <SearchModal 
-  bind:isSearchModalOpen={state.isSearchModalOpen}
-  searchResults={state.searchResults}
-  selectSearchResult={(r: SearchResult) => state.selectSearchResult(r)}
+  bind:isSearchModalOpen={media.isSearchModalOpen}
+  searchResults={media.searchResults}
+  selectSearchResult={(r: SearchResult) => media.selectSearchResult(r)}
 />
+
+{#if fullPosterUrl}
+  <FullPoster url={fullPosterUrl} onclose={() => fullPosterUrl = null} />
+{/if}

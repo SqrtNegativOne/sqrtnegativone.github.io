@@ -1,5 +1,6 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
+  import { onMount } from 'svelte';
   import { readData, writeData, getRepoRoot } from '$lib/db';
   import { safeInvoke } from '$lib/utils';
   import { notificationState } from '$lib/notificationState.svelte';
@@ -21,6 +22,9 @@
   // svelte-ignore state_referenced_locally
   let currentItem = $state({ ...item });
   let fileInput: HTMLInputElement | undefined = $state();
+  let nameInput: HTMLInputElement | undefined = $state();
+
+  onMount(() => nameInput?.focus());
 
   function handlePaste(e: ClipboardEvent) {
     const items = e.clipboardData?.items;
@@ -164,7 +168,7 @@
       
       <div class="space-y-2">
         <label for="project-name" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Name</label>
-        <input id="project-name" type="text" name="name" bind:value={currentItem.name} class="input-field" required />
+        <input id="project-name" type="text" name="name" bind:this={nameInput} bind:value={currentItem.name} class="input-field" required />
       </div>
       
       <div class="space-y-2 md:col-span-2">

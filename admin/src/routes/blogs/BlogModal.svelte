@@ -1,5 +1,6 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
+  import { onMount } from 'svelte';
   import { invoke } from '@tauri-apps/api/core';
   import { getRepoRoot } from '$lib/db';
   import { ResultAsync, ok, err, type Result } from 'neverthrow';
@@ -23,9 +24,12 @@
   // svelte-ignore state_referenced_locally
   let currentItem = $state({ ...item });
   let fileInput: HTMLInputElement | undefined = $state();
+  let titleInput: HTMLInputElement | undefined = $state();
   let uploadStatus = $state('');
   let viewMode: 'split' | 'edit' | 'preview' = $state('split');
   let showMeta = $state(true);
+
+  onMount(() => titleInput?.focus());
 
   let renderedPreview = $derived(md.render(currentItem.content || '*(No content yet)*'));
   let selectedFontCss = $derived(fonts?.find((f: { name: string; css: string }) => f.name === currentItem.font)?.css || '');
@@ -263,7 +267,7 @@ ${content}
           
           <div class="space-y-1 md:col-span-2">
             <label for="post-title" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Title</label>
-            <input id="post-title" type="text" name="title" bind:value={currentItem.title} class="input-field text-xs" required />
+            <input id="post-title" type="text" name="title" bind:this={titleInput} bind:value={currentItem.title} class="input-field text-xs" required />
           </div>
           
           <div class="space-y-1 md:col-span-2">

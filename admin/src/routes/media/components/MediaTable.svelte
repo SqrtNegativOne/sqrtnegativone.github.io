@@ -1,7 +1,7 @@
 <script lang="ts">
   import { assetState } from '$lib/assetState.svelte';
   import LibraryRow from '../../../../../shared/components/LibraryRow.svelte';
-  let { filteredMedia, openEdit } = $props();
+  let { filteredMedia, openEdit, openFullPoster } = $props();
 </script>
 
 <div class="card overflow-x-auto bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded">
@@ -12,7 +12,7 @@
       <span role="columnheader" class="ml-col-rating">Rating</span>
     </div>
     {#each filteredMedia as item (item.id)}
-      <LibraryRow {item} openDetails={openEdit} resolveAsset={(url) => assetState.resolve(url)} />
+      <LibraryRow {item} openDetails={openEdit} {openFullPoster} resolveAsset={(url) => assetState.resolve(url)} />
     {/each}
     {#if filteredMedia.length === 0}
       <div class="p-8 text-center text-[oklch(0.7107_0.0351_256.79)]">No media found matching your filters.</div>

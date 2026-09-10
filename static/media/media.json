@@ -1830,5 +1830,21 @@
     "tags": [],
     "author": "Robin Hanson",
     "publisher": ""
+  },
+  {
+    "id": "a_good_girl_s_guide_to_murder",
+    "type": "book",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "A Good Girl’s Guide to Murder",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_a_good_girl_s_guide_to_murder",
+    "tags": [],
+    "author": "Holly Jackson & Sabine Schilasky",
+    "publisher": "",
+    "hidden": true
   }
 ]

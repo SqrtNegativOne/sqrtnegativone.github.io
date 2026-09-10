@@ -31,3 +31,9 @@ all = "warn"
 pedantic = "warn"
 nursery = "warn"
 cargo = "warn"
+
+# Keep dev builds quick to compile and reasonably small. Full debug info is
+# what balloons target/debug to tens of GB; we rarely debug the Rust side.
+[profile.dev]
+debug = 0
+incremental = true

@@ -28,6 +28,12 @@ export default ts.config(
 		}
 	},
 	{
+		files: ['**/*.d.ts'],
+		rules: {
+			'@typescript-eslint/triple-slash-reference': 'off'
+		}
+	},
+	{
 		ignores: [
 			'**/build/',
 			'**/.svelte-kit/',
@@ -36,6 +42,7 @@ export default ts.config(
 			'**/docs/',
 			'**/blog/',
 			'**/node_modules/',
+			'src/worker-configuration.d.ts',
             'eslint-report.json',
             'find_unused.js',
             'summarize_lint.js'

@@ -53,11 +53,11 @@
     id: '', title: '', date: '', description: '', content: '', tags: '', font: 'IBM Plex Sans'
   });
 
-  function openNew() {
+  function openNew(initialTitle = '') {
     isEditing = false;
     const today = new Date().toISOString().split('T')[0];
     currentItem = {
-      id: '', title: '', date: today, description: '', content: '', tags: 'post', font: 'IBM Plex Sans'
+      id: '', title: initialTitle, date: today, description: '', content: '', tags: 'post', font: 'IBM Plex Sans'
     };
     isModalOpen = true;
   }

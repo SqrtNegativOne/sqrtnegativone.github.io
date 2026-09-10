@@ -27,6 +27,10 @@ build/
 *.sln
 *.sw?
 
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+
 bash.exe.stackdump
 ideas.md
 .svelte-kit

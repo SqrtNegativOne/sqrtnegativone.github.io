@@ -332,12 +332,12 @@ export class MediaState {
     });
   }
 
-  openNew() {
+  openNew(initialTitle = '') {
     this.isEditing = false;
     this.errorMsg = '';
     this.currentItem = { 
       id: '', type: 'movie', rating: 4, status: 'wishlist',
-      title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
+      title: initialTitle, tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
       author: '', publisher: '',
       tags: [], hidden: false
     };

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
+  import { onMount } from 'svelte';
   import { ResultAsync } from 'neverthrow';
   import { safeUrlParse } from '$lib/utils';
   import { readData, writeData } from '$lib/db';
@@ -22,6 +23,9 @@
   let tagsInput = $state(tagsStr);
   let importUrl = $state('');
   let isFetching = $state(false);
+  let quoteInput: HTMLTextAreaElement | undefined = $state();
+
+  onMount(() => quoteInput?.focus());
 
   async function fetchQuote() {
     if (!importUrl) return;
@@ -159,6 +163,7 @@
     <div>
       <textarea 
         name="quote" 
+        bind:this={quoteInput}
         bind:value={currentQuote.quote} 
         rows="4" 
         class="w-full bg-transparent border-none text-white text-xl focus:ring-0 resize-none placeholder-[oklch(0.60_0.02_256.79)]" 

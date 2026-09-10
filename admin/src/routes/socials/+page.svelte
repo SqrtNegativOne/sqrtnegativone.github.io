@@ -35,9 +35,14 @@
     })
   );
 
-  function openNew() {
+  let nameInput: HTMLInputElement | undefined = $state();
+  $effect(() => {
+    if (isModalOpen) nameInput?.focus();
+  });
+
+  function openNew(initialName = '') {
     isEditing = false;
-    currentItem = { id: '', name: '', url: '', icon: '' };
+    currentItem = { id: '', name: initialName, url: '', icon: '' };
     isModalOpen = true;
   }
 
@@ -192,7 +197,7 @@
       
       <div class="space-y-2">
         <label class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]" for="social-name">Name</label>
-        <input type="text" id="social-name" bind:value={currentItem.name} class="input-field" required />
+        <input type="text" id="social-name" bind:this={nameInput} bind:value={currentItem.name} class="input-field" required />
       </div>
       
       <div class="space-y-2">

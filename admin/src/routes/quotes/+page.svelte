@@ -52,9 +52,9 @@
     })
   );
 
-  function openNew() {
+  function openNew(initialQuote = '') {
     isEditing = false;
-    currentQuote = { id: '', quote: '', source: '', link: '', tags: [] };
+    currentQuote = { id: '', quote: initialQuote, source: '', link: '', tags: [] };
     tagsInput = '';
     isModalOpen = true;
   }

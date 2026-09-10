@@ -39,9 +39,14 @@
     })
   );
 
-  function openNew() {
+  let nameInput: HTMLInputElement | undefined = $state();
+  $effect(() => {
+    if (isModalOpen) nameInput?.focus();
+  });
+
+  function openNew(initialName = '') {
     isEditing = false;
-    currentItem = { name: '', icon: '', logo: '', mono: '', originalName: '', hidden: false };
+    currentItem = { name: initialName, icon: '', logo: '', mono: '', originalName: '', hidden: false };
     isModalOpen = true;
   }
 
@@ -163,7 +168,7 @@
     <form id="skill-form" onsubmit={handleSave} class="space-y-4">
       <div class="space-y-2">
         <label for="skill-name" class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]">Name</label>
-        <input id="skill-name" type="text" bind:value={currentItem.name} class="input-field" required />
+        <input id="skill-name" type="text" bind:this={nameInput} bind:value={currentItem.name} class="input-field" required />
       </div>
 
       <div class="space-y-2">

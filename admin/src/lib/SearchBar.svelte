@@ -11,7 +11,7 @@
     sorts?: SortRule[];
     totalCount?: number;
     filteredCount?: number;
-    onnew?: () => void;
+    onnew?: (initialQuery?: string) => void;
     class?: string;
     extra?: Snippet;
   }
@@ -64,10 +64,11 @@
 
     // Ctrl+N / Cmd+N: Works globally across the view (even when search bar is focused),
     // but blocked while a modal dialog is open so active input isn't discarded.
+    // Whatever is typed in the search bar becomes the new item's primary field.
     if (isKeyN && isCtrlOrMeta && !e.altKey) {
       e.preventDefault();
       if (onnew && !isModalOpen) {
-        onnew();
+        onnew(value);
       }
       return;
     }
@@ -76,7 +77,7 @@
     if (isKeyN && !isCtrlOrMeta && !e.altKey && !e.shiftKey && !isInput && !isModalOpen) {
       if (onnew) {
         e.preventDefault();
-        onnew();
+        onnew(value);
       }
     }
   }
