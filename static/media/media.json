@@ -1846,5 +1846,37 @@
     "author": "Holly Jackson & Sabine Schilasky",
     "publisher": "",
     "hidden": true
+  },
+  {
+    "id": "blood_meridian",
+    "type": "book",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Blood Meridian",
+    "tagline": "",
+    "description": "One of The Atlantic’s “Great American Novels of the Past 100 Years,” now with a new foreword by Marlon James Widely considered one of the finest novels by a living writer, Blood Meridian is an epic tale of the violence and corruption that attended America’s westward expansion, brilliantly subverting the conventions of the Western novel and the mythology of the “Wild West.” Its wounded hero, the Kid, a fourteen-year-old Tennessean, must confront the extraordinary brutality of the Glanton gang, a murderous cadre on an official mission to scalp Indians. Seeming to preside over this nightmarish world is the diabolical Judge Holden, one of the most unforgettable characters in American fiction.Based on historical events that took place on the Texas-Mexico border in the 1850s, Blood Meridian represents a genius vision of the historical West, one whose stature has only grown in the years since its publication.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_blood_meridian",
+    "tags": [],
+    "author": "Cormac McCarthy & Marlon James",
+    "publisher": "",
+    "hidden": false
+  },
+  {
+    "id": "no_country_for_old_men",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "No Country for Old Men",
+    "tagline": "",
+    "description": "Llewelyn Moss stumbles upon dead bodies, $2 million and a hoard of heroin in a Texas desert, but methodical killer Anton Chigurh comes looking for it, with local sheriff Ed Tom Bell hot on his trail. The roles of prey and predator blur as the violent pursuit of money and justice collide.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_no_country_for_old_men",
+    "tags": [],
+    "author": "Joel Coen, Ethan Coen",
+    "publisher": "Miramax, Paramount Vantage, Scott Rudin Productions, Mike Zoss Productions",
+    "hidden": false
   }
 ]
