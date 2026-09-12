@@ -2097,5 +2097,21 @@
     "author": "No.",
     "publisher": "No.",
     "hidden": false
+  },
+  {
+    "id": "memento",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "wishlist",
+    "title": "Memento",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_memento",
+    "tags": [],
+    "author": "Christopher Nolan",
+    "publisher": "Newmarket Films, Summit Entertainment, Team Todd, I Remember Productions",
+    "hidden": false
   }
 ]
