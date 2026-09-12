@@ -90,11 +90,9 @@
 {#if isModalOpen}
   <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true" data-modal="true" tabindex="-1">
     <div class="bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden">
+    
       <div class="p-5 border-b border-[oklch(0.2739_0.0055_286.03)] bg-[oklch(0.1603_0.0059_285.89)] flex justify-between items-center shrink-0">
-        <div>
-          <h2 class="text-xl font-semibold text-white">{isEditing ? 'Edit Media' : 'Add New Media'}</h2>
-          <p class="text-xs text-[oklch(0.7107_0.0351_256.79)] mt-0.5">Track a book, movie, show, or game in your library.</p>
-        </div>
+        <h2 class="text-xl font-semibold text-white">{isEditing ? 'Editing' : 'Adding'}</h2>
         <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white cursor-pointer">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
@@ -107,7 +105,6 @@
             <div class="space-y-6 min-w-0">
               <!-- Identity -->
               <section class="space-y-4">
-                <h3 class="text-[11px] font-mono uppercase tracking-[0.18em] text-[oklch(0.7107_0.0351_256.79)] border-b border-[oklch(0.2739_0.0055_286.03)] pb-2">Identity</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div class="space-y-2">
                     <label for="media-type" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Type</label>
@@ -209,7 +206,6 @@
 
               <!-- Progress & Rating -->
               <section class="space-y-4">
-                <h3 class="text-[11px] font-mono uppercase tracking-[0.18em] text-[oklch(0.7107_0.0351_256.79)] border-b border-[oklch(0.2739_0.0055_286.03)] pb-2">Progress &amp; Rating</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div class="space-y-2">
                     <label for="media-rating" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Rating (1-7)</label>
@@ -238,13 +234,12 @@
 
               <!-- Synopsis & Notes -->
               <section class="space-y-4">
-                <h3 class="text-[11px] font-mono uppercase tracking-[0.18em] text-[oklch(0.7107_0.0351_256.79)] border-b border-[oklch(0.2739_0.0055_286.03)] pb-2">Synopsis &amp; Notes</h3>
                 <div class="space-y-2">
                   <label for="media-desc" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Description</label>
                   <textarea id="media-desc" name="description" bind:value={currentItem.description} class="input-field min-h-[110px] resize-y" placeholder="Synopsis or overview..."></textarea>
                 </div>
                 <div class="space-y-2">
-                  <label for="media-notes" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Notes</label>
+                  <label for="media-notes" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Personal Notes</label>
                   <textarea id="media-notes" name="notes" bind:value={currentItem.notes} class="input-field min-h-[90px] resize-y" placeholder="Your personal notes..."></textarea>
                 </div>
               </section>
@@ -252,8 +247,7 @@
               <!-- Private -->
               <section class="space-y-2 rounded border border-amber-500/20 bg-amber-500/[0.03] p-4">
                 <label for="media-private" class="flex justify-between items-end gap-3 text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">
-                  <span>Private Notes</span>
-                  <span class="text-xs text-amber-500/80 font-mono">🔒 Encrypted / Local only</span>
+                  🔒 Encrypted
                 </label>
                 <textarea id="media-private" name="private_notes" bind:value={currentItem.private_notes} class="input-field min-h-[90px] resize-y border-amber-500/30 focus:border-amber-500 focus:ring-amber-500/20" placeholder="These notes are encrypted securely and never exposed publicly..."></textarea>
               </section>
@@ -261,7 +255,6 @@
 
             <!-- Poster column -->
             <aside class="space-y-3">
-              <h3 class="text-[11px] font-mono uppercase tracking-[0.18em] text-[oklch(0.7107_0.0351_256.79)] border-b border-[oklch(0.2739_0.0055_286.03)] pb-2">Poster</h3>
               {#if posterPreviewSrc}
                 <button
                   type="button"
@@ -280,7 +273,6 @@
                 <label for="media-poster" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Poster Image URL</label>
                 <input id="media-poster" type="text" name="poster_image" bind:value={currentItem.poster_image} onpaste={handlePaste} placeholder="URL or paste image..." class="input-field text-xs" />
               </div>
-              <p class="text-[11px] text-[oklch(0.60_0.02_256.79)] leading-relaxed">Paste an image directly, or use <span class="text-blue-400">Search Metadata</span> to fetch one automatically.</p>
             </aside>
           </div>
         </form>
