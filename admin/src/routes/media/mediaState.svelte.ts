@@ -472,7 +472,7 @@ export class MediaState {
           const filepath = `${postersDir}/${filename}`;
           
           const writeRes = await ResultAsync.fromPromise(
-            invoke('save_base64_image', { path: filepath, base64_content: base64Data }),
+            invoke('save_base64_image', { path: filepath, base64Content: base64Data }),
             (err) => typeof err === 'string' ? err : 'Failed to write image'
           );
           if (writeRes.isErr()) {
