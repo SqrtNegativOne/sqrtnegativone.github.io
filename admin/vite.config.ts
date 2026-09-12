@@ -63,6 +63,11 @@ export default defineConfig({
 	server: {
 		fs: {
 			allow: ['..']
+		},
+		// src-tauri/target holds ~30k Rust build artifacts. Without this, chokidar
+		// recursively watches them and the first request blocks for ~40s.
+		watch: {
+			ignored: ['**/src-tauri/**']
 		}
 	},
 	envDir: '..'
