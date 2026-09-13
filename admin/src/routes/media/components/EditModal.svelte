@@ -12,6 +12,7 @@
     existingItems = [],
     isSearching,
     isSaving,
+    isSearchModalOpen = false,
     searchError,
     handleSearch,
     handlePaste,
@@ -32,6 +33,30 @@
       titleInput?.focus();
     }
   });
+
+  function requestSave() {
+    // Use native requestSubmit so browser validation + onsubmit run.
+    (document.getElementById('save-media-form') as HTMLFormElement | null)?.requestSubmit();
+  }
+
+  function handleKeydown(e: KeyboardEvent) {
+    if (!isModalOpen) return;
+    const isCtrlOrMeta = e.ctrlKey || e.metaKey;
+
+    // Ctrl/Cmd+S or Ctrl/Cmd+Enter: save (works from inside textareas too)
+    if (isCtrlOrMeta && !e.altKey && (e.key === 's' || e.key === 'S' || e.code === 'KeyS' || e.key === 'Enter')) {
+      e.preventDefault();
+      if (!isSaving) requestSave();
+      return;
+    }
+
+    // Escape: close/cancel, but let a nested metadata search modal close first
+    if (e.key === 'Escape') {
+      if (isSearchModalOpen) return;
+      e.preventDefault();
+      isModalOpen = false;
+    }
+  }
 
   function handleTagsInput(e: Event) {
     const val = (e.target as HTMLInputElement).value;
@@ -87,17 +112,11 @@
   });
 </script>
 
+<svelte:window onkeydown={handleKeydown} />
+
 {#if isModalOpen}
   <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true" data-modal="true" tabindex="-1">
     <div class="bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden">
-    
-      <div class="p-5 border-b border-[oklch(0.2739_0.0055_286.03)] bg-[oklch(0.1603_0.0059_285.89)] flex justify-between items-center shrink-0">
-        <h2 class="text-xl font-semibold text-white">{isEditing ? 'Editing' : 'Adding'}</h2>
-        <button aria-label="Close modal" onclick={() => isModalOpen = false} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white cursor-pointer">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
-
       <div class="flex-1 overflow-y-auto">
         <form id="save-media-form" onsubmit={handleSave} class="p-6">
           <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_220px] gap-6">
@@ -107,8 +126,7 @@
               <section class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div class="space-y-2">
-                    <label for="media-type" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Type</label>
-                    <select id="media-type" name="type" bind:value={currentItem.type} class="input-field">
+                    <select id="media-type" name="type" bind:value={currentItem.type} class="input-field" aria-label="Type">
                       {#each mediaProperties.types as type (type)}
                         <option value={type.value}>{type.label}</option>
                       {/each}
@@ -116,8 +134,7 @@
                   </div>
 
                   <div class="space-y-2">
-                    <label for="media-status" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Status</label>
-                    <select id="media-status" name="status" bind:value={currentItem.status} class="input-field">
+                    <select id="media-status" name="status" bind:value={currentItem.status} class="input-field" aria-label="Status">
                       {#each mediaProperties.statuses as status (status)}
                         <option value={status.value}>{status.label}</option>
                       {/each}
@@ -270,14 +287,13 @@
                 </div>
               {/if}
               <div class="space-y-2">
-                <label for="media-poster" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Poster Image URL</label>
-                <input id="media-poster" type="text" name="poster_image" bind:value={currentItem.poster_image} onpaste={handlePaste} placeholder="URL or paste image..." class="input-field text-xs" />
+                <input id="media-poster" type="text" name="poster_image" bind:value={currentItem.poster_image} onpaste={handlePaste} placeholder="URL or paste image..." class="input-field text-xs" aria-label="Poster Image Input"/>
               </div>
             </aside>
           </div>
         </form>
       </div>
-
+    
       <div class="p-5 flex justify-between items-center border-t border-[oklch(0.2739_0.0055_286.03)] bg-[oklch(0.1603_0.0059_285.89)] shrink-0">
         <div>
           {#if isEditing}
@@ -296,7 +312,11 @@
               </svg>
               Saving...
             {:else}
-              Save Media
+              {#if isEditing}
+                Save Changes
+              {:else}
+                Add Media
+              {/if}
             {/if}
           </button>
         </div>

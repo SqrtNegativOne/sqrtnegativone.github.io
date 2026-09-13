@@ -5,6 +5,7 @@
   import { navItems } from '$lib/nav';
   import GitSyncWidget from '$lib/GitSyncWidget.svelte';
   import ToastContainer from '$lib/ToastContainer.svelte';
+  import KeyboardShortcuts from '$lib/KeyboardShortcuts.svelte';
   import { notificationState } from '$lib/notificationState.svelte';
 
   let { children } = $props();
@@ -145,4 +146,5 @@
   </main>
 
   <ToastContainer />
+  <KeyboardShortcuts />
 </div>

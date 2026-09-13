@@ -58,6 +58,7 @@
   existingItems={data.media || []}
   isSearching={media.isSearching}
   isSaving={media.isSaving}
+  isSearchModalOpen={media.isSearchModalOpen}
   searchError={media.searchError}
   handleSearch={() => media.handleSearch()}
   handlePaste={(e: ClipboardEvent) => media.handlePaste(e)}
