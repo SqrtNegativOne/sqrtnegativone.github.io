@@ -5,12 +5,15 @@
     "rating": 7,
     "status": "finished",
     "title": "Deltarune",
-    "description": "",
-    "poster_image": "game_deltarune",
     "tagline": "There's something more important than reaching the end.",
+    "description": "",
+    "private_notes": "",
+    "poster_image": "game_deltarune",
     "tags": [
       "goat"
-    ]
+    ],
+    "author": "Toby Fox",
+    "hidden": false
   },
   {
     "id": "undertale",
@@ -320,10 +323,12 @@
     "rating": 5,
     "status": "finished",
     "title": "Dweller's Empty Path",
+    "tagline": "A game by Temmie Chang.",
     "description": "",
+    "notes": "I feel kind of… guilty for liking this one. It wasn’t that good… but it felt nihilistically profound. The ending was sudden, though, very lacklustre, and I hated the generic “heroes” quest, even if it was meant as satire. But there was something about it... the subtle hopelessness? Treated as... ordinary. I don't know. I felt it just helping me, a bit.",
+    "private_notes": "",
     "poster_image": "game_dweller_s_empty_path",
-    "notes": "I feel kind of… guilty for liking this one. It wasn’t that good… but it felt really good. The ending was sudden, though, very lacklustre, and I hated the generic “heroes” quest, even if it was meant as satire. But there was something about it... the subtle hopelessness? Treated as... ordinary. I don't know. I felt it just helping me, a bit.",
-    "tagline": "A game by Temmie Chang."
+    "hidden": false
   },
   {
     "id": "disco_elysium_-_the_final_cut",
@@ -1019,26 +1024,28 @@
   {
     "id": "b_hubali_2_the_conclusion",
     "type": "movie",
-    "rating": 5,
+    "rating": 4.5,
     "status": "finished",
     "title": "Bāhubali 2: The Conclusion",
     "tagline": "",
     "description": "When Mahendra, the son of Bāhubali, learns about his heritage, he begins to look for answers. His story is juxtaposed with past events that unfolded in the Mahishmati Kingdom.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "movie_b_hubali_2_the_conclusion"
+    "poster_image": "movie_b_hubali_2_the_conclusion",
+    "hidden": false
   },
   {
     "id": "b_hubali_the_beginning",
     "type": "movie",
-    "rating": 5,
+    "rating": 4.5,
     "status": "finished",
     "title": "Bāhubali: The Beginning",
     "tagline": "",
     "description": "The young Shivudu is left as a foundling in a small village by his mother. By the time he’s grown up, it has become apparent that he possesses exceptional gifts. He meets the beautiful warrior princess Avanthika and learns that her queen has been held captive for the last 25 years. Shividu sets off to rescue her, discovering his own origins in the process.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "movie_b_hubali_the_beginning"
+    "poster_image": "movie_b_hubali_the_beginning",
+    "hidden": false
   },
   {
     "id": "chorus",
@@ -1092,9 +1099,10 @@
     "title": "Kill Bill: Vol. 1",
     "tagline": "",
     "description": "An assassin is shot by her ruthless employer, Bill, and other members of their assassination circle – but she lives to plot her vengeance.",
-    "notes": "",
+    "notes": "I was really disappointed to learn that, Kill Bill isn't a double entendre meaning she is both getting a Bill to Kill Bill, but ok",
     "private_notes": "",
-    "poster_image": "movie_kill_bill_vol_1"
+    "poster_image": "movie_kill_bill_vol_1",
+    "hidden": false
   },
   {
     "id": "petscop",
@@ -1237,11 +1245,12 @@
     "rating": 6,
     "status": "finished",
     "title": "Dune: Part Two",
-    "tagline": "",
+    "tagline": "*17th closeup of Chani's face:*",
     "description": "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.",
     "notes": "",
     "private_notes": "",
-    "poster_image": "movie_dune_part_two"
+    "poster_image": "movie_dune_part_two",
+    "hidden": false
   },
   {
     "id": "dune_part_three",
@@ -1362,7 +1371,9 @@
     "description": "Clifford Stoll",
     "notes": "",
     "private_notes": "",
-    "poster_image": "book_the_cuckoo_egg_book"
+    "poster_image": "book_the_cuckoo_egg_book",
+    "author": "Cliff Stoll",
+    "hidden": false
   },
   {
     "id": "kill_bill_vol_2",
@@ -1419,7 +1430,8 @@
     "poster_image": "movie_pathaan",
     "tags": [],
     "author": "Siddharth Anand",
-    "publisher": "Yash Raj Films, Pathaan Productions, Palma Pictures, FPS Productions, NSA Picture, ODU Movies"
+    "publisher": "Yash Raj Films",
+    "hidden": false
   },
   {
     "id": "severance",
@@ -1689,7 +1701,8 @@
     "poster_image": "movie_se7en",
     "tags": [],
     "author": "David Fincher",
-    "publisher": "New Line Cinema, Juno Pix, Arnold Kopelson Productions"
+    "publisher": "",
+    "hidden": false
   },
   {
     "id": "the_girl_with_the_dragon_tattoo",
@@ -1999,7 +2012,7 @@
     "poster_image": "movie_the_equalizer_2",
     "tags": [],
     "author": "Antoine Fuqua",
-    "publisher": "Lonetree Entertainment, Fuqua Films, Escape Artists, ZHIV Productions, Mace Neufeld Productions, Columbia Pictures",
+    "publisher": "",
     "hidden": false
   },
   {
@@ -2025,8 +2038,8 @@
     "status": "shelved",
     "title": "Widdershins (comic)",
     "tagline": "Steampunk magical adventure with a unique magic system. Great flow and story.",
-    "description": "You really need to read about other magic systems to realise how lazy the writing in Harry Potter was.",
-    "notes": "",
+    "description": "",
+    "notes": "You really need to read about other magic systems to realise how lazy the writing in Harry Potter was.\nI read this a long time ago. I wonder if I have, grown out of it, somehow.",
     "private_notes": "",
     "poster_image": "book_widdershins_comic",
     "tags": [],
@@ -2112,6 +2125,86 @@
     "tags": [],
     "author": "Christopher Nolan",
     "publisher": "Newmarket Films, Summit Entertainment, Team Todd, I Remember Productions",
+    "hidden": false
+  },
+  {
+    "id": "iron_lung",
+    "type": "movie",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "Iron Lung",
+    "tagline": "",
+    "description": "In a post-apocalyptic future where an event known as \"The Quiet Rapture\" caused all known stars and habitable planets in the universe to disappear, a convict is sent to search an ocean of blood discovered on a desolate moon, using a small submarine nicknamed the \"Iron Lung\".",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_iron_lung",
+    "tags": [],
+    "author": "Mark Fischbach",
+    "publisher": "Markiplier Studios",
+    "hidden": false
+  },
+  {
+    "id": "backrooms",
+    "type": "movie",
+    "rating": 4.8,
+    "status": "finished",
+    "title": "Backrooms",
+    "tagline": "",
+    "description": "A strange doorway appears in the basement of a furniture showroom.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_backrooms",
+    "tags": [],
+    "author": "Kane Parsons",
+    "publisher": "A24",
+    "hidden": false
+  },
+  {
+    "id": "missing",
+    "type": "movie",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "missing",
+    "tagline": "",
+    "description": "When her mother disappears while on vacation in Colombia with her new boyfriend, June’s search for answers is hindered by international red tape. Stuck thousands of miles away in Los Angeles, June creatively uses all the latest technology at her fingertips to try and find her before it’s too late. But as she digs deeper, her digital sleuthing raises more questions than answers... and when June unravels secrets about her mom, she discovers that she never really knew her at all.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_missing",
+    "tags": [],
+    "author": "Nicholas D. Johnson, Will Merrick",
+    "publisher": "",
+    "hidden": false
+  },
+  {
+    "id": "searching",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "searching",
+    "tagline": "People who say screenlife is the death of cinema should go kill themselves",
+    "description": "After David Kim's 16-year-old daughter goes missing, a local investigation is opened and a detective is assigned to the case. But 37 hours later and without a single lead, David decides to search the one place no one has looked yet, where all secrets are kept today: his daughter's laptop.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_searching",
+    "tags": [],
+    "author": "Aneesh Chaganty",
+    "publisher": "Bazelevs, Timur Bekmambetov Productions",
+    "hidden": false
+  },
+  {
+    "id": "lifehack",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "LifeHack",
+    "tagline": "",
+    "description": "Four teenage slackers attempt a multi-million-dollar Bitcoin heist from their bedrooms, only to spiral into the darkest corners of the internet - and a danger beyond their computer screens.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_lifehack",
+    "tags": [],
+    "author": "Ronan Corrigan",
+    "publisher": "Screenlife Liverpool, Sky Original Productions, The Avenue Entertainment, Highland Film Group, Bazelevs",
     "hidden": false
   }
 ]
