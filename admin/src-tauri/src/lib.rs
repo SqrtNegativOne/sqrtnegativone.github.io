@@ -203,24 +203,30 @@ pub struct GitStatusInfo {
 fn is_content_path(path: &str) -> bool {
     let p = path.trim().trim_matches('"');
     let p_norm = p.replace('\\', "/");
-    p_norm.starts_with("src/data/")
-        || p_norm.starts_with("static/media/")
-        || p_norm.starts_with("static/projects/")
-        || p_norm.starts_with("static/quotes/")
-        || p_norm.starts_with("static/blog-images/")
-        || p_norm.starts_with("blog/")
-        || (p_norm.ends_with(".json") && (p_norm.starts_with("static/") || p_norm.starts_with("src/data/")))
+    p_norm.starts_with("cv/src/data/")
+        || p_norm.starts_with("site/src/data/")
+        || p_norm.starts_with("site/static/media/")
+        || p_norm.starts_with("cv/static/projects/")
+        || p_norm.starts_with("cv/static/quotes/")
+        || p_norm.starts_with("site/static/blog-images/")
+        || p_norm.starts_with("site/blog/")
+        || (p_norm.ends_with(".json")
+            && (p_norm.starts_with("cv/static/")
+                || p_norm.starts_with("site/static/")
+                || p_norm.starts_with("cv/src/data/")
+                || p_norm.starts_with("site/src/data/")))
 }
 
 /// Root directories that contain site content. Everything underneath these is
 /// safe to stage automatically, including newly created or untracked files.
 const CONTENT_ROOTS: &[&str] = &[
-    "src/data",
-    "blog",
-    "static/media",
-    "static/projects",
-    "static/quotes",
-    "static/blog-images",
+    "cv/src/data",
+    "site/src/data",
+    "site/blog",
+    "site/static/media",
+    "cv/static/projects",
+    "cv/static/quotes",
+    "site/static/blog-images",
 ];
 
 fn run_git_cmd(repo_root: &str, args: &[&str]) -> Result<(bool, String, String), String> {
@@ -243,21 +249,24 @@ fn generate_default_commit_message(files: &[String]) -> String {
     use std::collections::BTreeSet;
     let mut types = BTreeSet::new();
     for f in files {
-        if f.starts_with("src/data/projects") || f.starts_with("static/projects") {
+        if f.starts_with("cv/src/data/projects") || f.starts_with("cv/static/projects") {
             types.insert("projects");
-        } else if f.starts_with("static/quotes") {
+        } else if f.starts_with("cv/static/quotes") {
             types.insert("quotes");
-        } else if f.starts_with("static/media") {
+        } else if f.starts_with("site/static/media") {
             types.insert("media");
-        } else if f.starts_with("blog/") || f.starts_with("static/blog-images") {
+        } else if f.starts_with("site/blog/") || f.starts_with("site/static/blog-images") {
             types.insert("blog");
-        } else if f.starts_with("src/data/skills") {
+        } else if f.starts_with("cv/src/data/skills") {
             types.insert("skills");
-        } else if f.starts_with("src/data/socials") {
+        } else if f.starts_with("cv/src/data/socials") {
             types.insert("socials");
-        } else if f.starts_with("src/data/questions") {
+        } else if f.starts_with("site/src/data/questions") {
             types.insert("questions");
-        } else if let Some(rest) = f.strip_prefix("src/data/") {
+        } else if let Some(rest) = f.strip_prefix("site/src/data/") {
+            let name = rest.trim_end_matches(".json").trim_end_matches(".md");
+            types.insert(name);
+        } else if let Some(rest) = f.strip_prefix("cv/src/data/") {
             let name = rest.trim_end_matches(".json").trim_end_matches(".md");
             types.insert(name);
         } else {
@@ -495,45 +504,47 @@ mod tests {
 
     #[test]
     fn test_content_path_detection() {
-        assert!(is_content_path("src/data/quotes.json"));
-        assert!(is_content_path("src/data/questions.md"));
-        assert!(is_content_path("src/data/projects.json"));
-        assert!(is_content_path("src/data/now.json"));
-        assert!(is_content_path("static/media/poster.avif"));
-        assert!(is_content_path("static/media/media.json"));
-        assert!(is_content_path("static/quotes/quotes.json"));
-        assert!(is_content_path("static/blog-images/img.png"));
-        assert!(is_content_path("blog/posts/hello.md"));
+        assert!(is_content_path("cv/src/data/projects.json"));
+        assert!(is_content_path("cv/src/data/skills.json"));
+        assert!(is_content_path("cv/src/data/socials.json"));
+        assert!(is_content_path("site/src/data/now.json"));
+        assert!(is_content_path("site/static/media/poster.avif"));
+        assert!(is_content_path("site/static/media/media.json"));
+        assert!(is_content_path("cv/static/quotes/quotes.json"));
+        assert!(is_content_path("cv/static/projects/hero.png"));
+        assert!(is_content_path("site/static/blog-images/img.png"));
+        assert!(is_content_path("site/blog/posts/hello.md"));
 
         // Code / non-content files must be excluded
-        assert!(!is_content_path("src/routes/+page.svelte"));
+        assert!(!is_content_path("site/src/routes/+page.svelte"));
+        assert!(!is_content_path("cv/src/routes/+page.svelte"));
         assert!(!is_content_path("admin/src/lib/db.ts"));
         assert!(!is_content_path("package.json"));
-        assert!(!is_content_path("src/lib/utils.ts"));
+        assert!(!is_content_path("site/src/lib/utils.ts"));
     }
 
     #[test]
     fn test_default_commit_message_generation() {
         assert_eq!(
-            generate_default_commit_message(&["src/data/questions.md".to_string()]),
+            generate_default_commit_message(&["site/src/data/questions.md".to_string()]),
             "content(questions): update questions"
         );
         assert_eq!(
-            generate_default_commit_message(&["static/quotes/quotes.json".to_string()]),
+            generate_default_commit_message(&["cv/static/quotes/quotes.json".to_string()]),
             "content(quotes): update quotes"
         );
         assert_eq!(
-            generate_default_commit_message(&["static/media/test.avif".to_string()]),
+            generate_default_commit_message(&["site/static/media/test.avif".to_string()]),
             "content(media): update media"
         );
         assert_eq!(
-            generate_default_commit_message(&["src/data/now.json".to_string()]),
+            generate_default_commit_message(&["site/src/data/now.json".to_string()]),
             "content(now): update now"
         );
         assert_eq!(
             generate_default_commit_message(&[
-                "static/quotes/quotes.json".to_string(),
-                "src/data/projects.json".to_string()
+                "cv/static/quotes/quotes.json".to_string(),
+                "cv/src/data/projects.json".to_string()
             ]),
             "content: update projects, quotes"
         );

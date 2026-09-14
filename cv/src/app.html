@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <!-- Site is exclusively dark-themed; both variants match --bg (#0e0e0e from oklch(0.1638 0 0)) -->
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0e0e0e" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0e0e0e" />
+    <title>Ark Malhotra</title>
+    <meta name="description" content="Personal site of Ark Malhotra — CS undergrad, builder, and writer." />
+    <meta name="author" content="Ark Malhotra" />
+    <link rel="canonical" href="https://cv.sqrt.fyi/" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cv.sqrt.fyi/" />
+    <meta property="og:title" content="Ark Malhotra" />
+    <meta property="og:description" content="Personal site of Ark Malhotra — CS undergrad, builder, and writer." />
+    <meta property="og:image" content="https://cv.sqrt.fyi/portraits/og-image.jpg" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ark Malhotra" />
+    <meta name="twitter:description" content="Personal site of Ark Malhotra — CS undergrad, builder, and writer." />
+    <meta name="twitter:image" content="https://cv.sqrt.fyi/portraits/og-image.jpg" />
+
+    <link rel="preconnect" href="https://gc.zgo.at" crossorigin />
+    <script data-goatcounter="https://sqrt.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>

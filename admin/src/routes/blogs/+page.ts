@@ -46,8 +46,8 @@ export const load: PageLoad = async () => {
   }
   
   const root = rootRes.value;
-  const blogDir = `${root}/blog/posts`;
-  const fontsPath = `${root}/blog/_data/fonts.json`;
+  const blogDir = `${root}/site/blog/posts`;
+  const fontsPath = `${root}/site/blog/_data/fonts.json`;
 
   let fonts = [];
   const fontsContentRes = await ResultAsync.fromPromise(invoke<string>('read_file', { path: fontsPath }), e => e);

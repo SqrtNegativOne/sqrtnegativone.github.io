@@ -459,7 +459,7 @@ export class MediaState {
       }
       const root = rootRes.value;
       const safeId = id.replace(/[^A-Za-z0-9_-]/g, "_");
-      const postersDir = `${root}/static/media/media-posters`;
+      const postersDir = `${root}/site/static/media/media-posters`;
       const isNew = !this.isEditing;
 
       await ResultAsync.fromPromise(invoke('mkdir', { path: postersDir, recursive: true }), () => {});
@@ -574,7 +574,7 @@ export class MediaState {
       const rootRes = await ResultAsync.fromPromise(getRepoRoot(), () => '');
       if (rootRes.isOk() && rootRes.value) {
         const root = rootRes.value;
-        const posterBase = `${root}/static/media/media-posters/${itemToDelete.poster_image}`;
+        const posterBase = `${root}/site/static/media/media-posters/${itemToDelete.poster_image}`;
         await ResultAsync.fromPromise(invoke('unlink', { path: `${posterBase}.avif` }), () => {});
         await ResultAsync.fromPromise(invoke('unlink', { path: `${posterBase}.jpg` }), () => {});
       }

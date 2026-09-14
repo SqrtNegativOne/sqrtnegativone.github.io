@@ -4,7 +4,7 @@
   import SearchModal from './components/SearchModal.svelte';
   import SearchBar from '$lib/SearchBar.svelte';
   import FullPoster from '$lib/FullPoster.svelte';
-  import mediaProperties from '../../../../static/media/media-properties.json';
+  import mediaProperties from '../../../../site/static/media/media-properties.json';
   import { MediaState, type MediaItem, type SearchResult } from './mediaState.svelte';
 
   let { data } = $props();

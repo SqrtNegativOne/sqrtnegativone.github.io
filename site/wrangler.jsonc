@@ -1,0 +1,15 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "sqrt-fyi",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2026-09-11",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare"
+	},
+	"routes": [
+		{ "pattern": "sqrt.fyi", "custom_domain": true },
+		{ "pattern": "www.sqrt.fyi", "custom_domain": true }
+	]
+}

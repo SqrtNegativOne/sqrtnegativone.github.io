@@ -12,10 +12,10 @@ All commands should be run using `bun`.
 - **Error Handling**: Use neverthrow over try and catch statements. When working in the admin app, always utilize the centralized `neverthrow` wrappers (`safeInvoke`, `safeJsonParse`, `safeUrlParse`, etc.) exported from `src/lib/utils.ts` to maintain clean, functional `ResultAsync` pipelines.
 - **Data Collections & Publishing**:
   - Always use `readData` and `writeData` from `$lib/db`. Never write raw Tauri `read_file` / `write_file` calls for content collections (this ensures `gitState.refresh()` runs automatically and the path mapping stays consistent).
-  - All site data files are registered in `COLLECTIONS` in `$lib/db.ts` (`projects`, `skills`, `socials`, `quotes`, `media`, `mediaPrivate`, `mediaProperties`). For markdown/raw content documents (e.g. `src/data/questions.md`), use `readQuestions()` / `writeQuestions()` or `readTextFile()` / `writeTextFile()` from `$lib/db.ts` to ensure git tracking refreshes automatically.
+  - All site data files are registered in `COLLECTIONS` in `$lib/db.ts` (`projects`, `skills`, `socials`, `quotes`, `media`, `mediaPrivate`, `mediaProperties`). Paths point into the owning app: CV content lives under `cv/`, site content under `site/`. For markdown/raw content documents (e.g. `site/src/data/questions.md`), use `readQuestions()` / `writeQuestions()` or `readTextFile()` / `writeTextFile()` from `$lib/db.ts` to ensure git tracking refreshes automatically.
   - **Adding a new content page (e.g. `/now`)**:
-    1. Store its data in `src/data/<page>.json` (e.g. `src/data/now.json`) or `src/data/<page>.md`.
-    2. Register it in `COLLECTIONS` in `admin/src/lib/db.ts` (e.g. `now: 'src/data/now.json'`).
+    1. Store its data in the owning app's data dir, `site/src/data/<page>.json` or `cv/src/data/<page>.json` (e.g. `site/src/data/now.json`), or the equivalent `<page>.md`.
+    2. Register it in `COLLECTIONS` in `admin/src/lib/db.ts` (e.g. `now: 'site/src/data/now.json'`).
     3. Use `readData('now')` and `writeData('now', items)` in your admin routes.
-    4. The backend automatically detects `src/data/*.json` and `src/data/*.md` as content, generates `content(<page>): update <page>`, and commits/publishes it seamlessly without any manual git steps.
+    4. The backend automatically detects `site/src/data/*.json`, `cv/src/data/*.json` (and their `.md` siblings) as content, generates `content(<page>): update <page>`, and commits/publishes it seamlessly without any manual git steps.
 
