@@ -3,7 +3,7 @@
 
   import MediaModal from "./MediaModal.svelte";
   import FilterSort from "$shared/components/FilterSort.svelte";
-  import { applyFilters, applySorts } from "$shared/utils/mediaFilters";
+  import { applyFilters, applySorts } from "./mediaFilters";
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   
