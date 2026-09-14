@@ -8,17 +8,33 @@
     expandedDetails[id] = !expandedDetails[id];
   }
 
-  async function copyDetails(notif: AppNotification) {
-    const textToCopy = `${notif.title ? notif.title + ': ' : ''}${notif.message}${notif.details ? '\n\nDetails:\n' + notif.details : ''}`;
+  function notificationText(notif: AppNotification): string {
+    return `${notif.title ? notif.title + ': ' : ''}${notif.message}${notif.details ? '\n\nDetails:\n' + notif.details : ''}`;
+  }
+
+  async function copyToClipboard(notif: AppNotification): Promise<boolean> {
     try {
-      await navigator.clipboard.writeText(textToCopy);
+      await navigator.clipboard.writeText(notificationText(notif));
+      return true;
+    } catch (e) {
+      console.error('Failed to copy to clipboard', e);
+      return false;
+    }
+  }
+
+  async function copyDetails(notif: AppNotification) {
+    if (await copyToClipboard(notif)) {
       copiedId = notif.id;
       setTimeout(() => {
         if (copiedId === notif.id) copiedId = null;
       }, 2000);
-    } catch (e) {
-      console.error('Failed to copy to clipboard', e);
     }
+  }
+
+  // Clicking anywhere on a notification copies it and dismisses it.
+  async function handleNotificationClick(notif: AppNotification) {
+    await copyToClipboard(notif);
+    notificationState.dismiss(notif.id);
   }
 </script>
 
@@ -27,10 +43,14 @@
   aria-label="Notifications"
 >
   {#each notificationState.notifications as notif (notif.id)}
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <div
       role={notif.type === 'error' || notif.type === 'warning' ? 'alert' : 'status'}
       aria-live={notif.type === 'error' ? 'assertive' : 'polite'}
-      class="pointer-events-auto rounded p-4 shadow-2xl backdrop-blur-md border transition-all duration-200 flex flex-col gap-2
+      title="Click to copy and dismiss"
+      onclick={() => handleNotificationClick(notif)}
+      class="pointer-events-auto rounded p-4 shadow-2xl backdrop-blur-md border transition-all duration-200 flex flex-col gap-2 cursor-pointer hover:brightness-110 active:scale-[0.99]
         {notif.type === 'error' ? 'bg-[oklch(0.2103_0.0059_285.89)]/95 border-red-500/40 text-red-100 shadow-red-950/40' : ''}
         {notif.type === 'success' ? 'bg-[oklch(0.2103_0.0059_285.89)]/95 border-emerald-500/40 text-emerald-100 shadow-emerald-950/40' : ''}
         {notif.type === 'warning' ? 'bg-[oklch(0.2103_0.0059_285.89)]/95 border-amber-500/40 text-amber-100 shadow-amber-950/40' : ''}
@@ -74,14 +94,14 @@
               <div class="flex items-center gap-2">
                 <button
                   type="button"
-                  onclick={() => toggleDetails(notif.id)}
+                  onclick={(e) => { e.stopPropagation(); toggleDetails(notif.id); }}
                   class="text-[11px] font-mono text-white/70 hover:text-white underline cursor-pointer"
                 >
                   {expandedDetails[notif.id] ? 'Hide Details' : 'Show Details'}
                 </button>
                 <button
                   type="button"
-                  onclick={() => copyDetails(notif)}
+                  onclick={(e) => { e.stopPropagation(); copyDetails(notif); }}
                   class="text-[11px] font-mono text-white/70 hover:text-white bg-white/5 hover:bg-white/10 px-1.5 py-0.5 rounded cursor-pointer transition-colors"
                 >
                   {copiedId === notif.id ? 'Copied!' : 'Copy Error'}
@@ -100,7 +120,7 @@
             <div class="mt-2.5">
               <button
                 type="button"
-                onclick={notif.action.onClick}
+                onclick={(e) => { e.stopPropagation(); notif.action?.onClick(); }}
                 class="px-3 py-1 text-xs font-semibold rounded bg-white/10 hover:bg-white/20 active:scale-95 text-white transition-all cursor-pointer border border-white/20"
               >
                 {notif.action.label}
@@ -113,7 +133,7 @@
         <button
           type="button"
           aria-label="Dismiss notification"
-          onclick={() => notificationState.dismiss(notif.id)}
+          onclick={(e) => { e.stopPropagation(); notificationState.dismiss(notif.id); }}
           class="shrink-0 text-white/50 hover:text-white p-1 rounded hover:bg-white/10 transition-colors cursor-pointer"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

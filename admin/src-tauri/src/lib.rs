@@ -48,37 +48,44 @@ fn write_file_binary(path: String, content: Vec<u8>) -> Result<(), String> {
     fs::write(path, content).map_err(|e| e.to_string())
 }
 
+/// Walk up from `start` looking for the Git repository root.
+///
+/// The marker is `.git`, *not* `svelte.config.js`: this is a monorepo whose
+/// SvelteKit apps (`site/`, `cv/`, `admin/`) each own a `svelte.config.js`
+/// one level below the repository root. Checking for that file walks straight
+/// past the real root (which has no config of its own) and fails.
+fn find_repo_root_from(mut start: std::path::PathBuf) -> Option<String> {
+    loop {
+        if start.join(".git").exists() {
+            return Some(start.to_string_lossy().to_string());
+        }
+        if !start.pop() {
+            return None;
+        }
+    }
+}
+
 #[tauri::command]
 fn get_repo_root() -> Result<String, String> {
     // Try current_dir first
-    if let Ok(mut current) = std::env::current_dir() {
-        loop {
-            if current.join("svelte.config.js").exists() || current.join("eleventy.config.js").exists() {
-                return Ok(current.to_string_lossy().to_string());
-            }
-            if !current.pop() {
-                break;
-            }
+    if let Ok(current) = std::env::current_dir() {
+        if let Some(root) = find_repo_root_from(current) {
+            return Ok(root);
         }
     }
 
     // Fallback to current_exe
     if let Ok(mut current) = std::env::current_exe() {
         current.pop(); // remove executable name
-        loop {
-            if current.join("svelte.config.js").exists() || current.join("eleventy.config.js").exists() {
-                return Ok(current.to_string_lossy().to_string());
-            }
-            if !current.pop() {
-                break;
-            }
+        if let Some(root) = find_repo_root_from(current) {
+            return Ok(root);
         }
     }
 
     // Absolute fallback for the developer's specific machine in case it's installed globally via MSI
     let hardcoded =
         std::path::Path::new("C:\\Users\\arkma\\Documents\\GitHub\\sqrtnegativone.github.io");
-    if hardcoded.join("svelte.config.js").exists() || hardcoded.join("eleventy.config.js").exists() {
+    if hardcoded.join(".git").exists() {
         return Ok(hardcoded.to_string_lossy().to_string());
     }
 
