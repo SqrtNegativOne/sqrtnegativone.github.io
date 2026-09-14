@@ -1,1 +1,1 @@
-export { getPosterUrl } from '../../shared/utils/getPosterUrl';
+export { getPosterUrl } from '$shared/utils/getPosterUrl';

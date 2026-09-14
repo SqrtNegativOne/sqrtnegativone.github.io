@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Seo from '$lib/components/Seo.svelte';
+  import { SvelteURLSearchParams } from 'svelte/reactivity';
+  import Seo from '$shared/components/Seo.svelte';
 
   interface BskyAuthor {
     did: string;
@@ -85,7 +86,7 @@
   let selectedImage = $state<{ src: string; alt: string } | null>(null);
 
   async function fetchFeed(nextCursor?: string): Promise<{ items: BskyFeedItem[]; nextCursor?: string }> {
-    const params = new URLSearchParams({
+    const params = new SvelteURLSearchParams({
       actor: BSKY_HANDLE,
       limit: '50'
     });
@@ -419,7 +420,7 @@
               class:grid-double={post.embed.images.length === 2}
               class:grid-multi={post.embed.images.length > 2}
             >
-              {#each post.embed.images as img}
+              {#each post.embed.images as img (img.fullsize)}
                 <button
                   type="button"
                   class="image-trigger"

@@ -1,8 +1,7 @@
 <script>
-  import MenuOverlay from "../components/MenuOverlay.svelte";
-  import Cursor from "../components/Cursor.svelte";
-  import AsciiBackground from "../components/AsciiBackground.svelte";
-  import PortfolioLayout from "../components/PortfolioLayout.svelte";
+  import MenuOverlay from "$shared/components/MenuOverlay.svelte";
+  import Cursor from "$shared/components/Cursor.svelte";
+  import AsciiBackground from "$shared/components/AsciiBackground.svelte";
 
   import "../index.css";
   import "../App.css";
@@ -21,30 +20,32 @@
 
   let { children } = $props();
 
+  const NAV_ITEMS = [
+    { key: "blog",          label: "Blog",          path: "/blog",          importance: 3 },
+    { key: "now",           label: "Now",           path: "/now",           importance: 2 },
+    { key: "microblog",     label: "Microblog",     path: "/microblog",     importance: 1 },
+    { key: "minis",         label: "Minis",         path: "/minis",         importance: 1 },
+    { key: "media-library", label: "Media Library", path: "/media-library", importance: 1 },
+    { key: "questions",     label: "Questions",     path: "/questions",     importance: 1 },
+    { key: "colophon",      label: "Colophon",      path: "/colophon",      importance: 1 },
+    { key: "cv",            label: "CV",            path: "https://cv.sqrt.fyi/", importance: 3, external: true }
+  ];
+
   let currentPath = $derived($page.url.pathname.replace(/\/$/, '') || '/');
 
-  const PORTFOLIO_ROUTES = ["/", "/about", "/skills", "/projects"];
   const STANDALONE_PREFIXES = ["/now", "/colophon", "/microblog", "/minis"];
+  const BARE_ROUTES = ["/main"];
 
-  let isPortfolio = $derived(!$page.error && PORTFOLIO_ROUTES.includes(currentPath));
+  let isBare = $derived(BARE_ROUTES.includes(currentPath));
   let isStandalone = $derived(STANDALONE_PREFIXES.some((prefix) => currentPath.startsWith(prefix)));
-  let showMenu = $derived(!$page.error && currentPath !== "/questions");
+  let showMenu = $derived(!$page.error && currentPath !== "/questions" && !isBare);
   let currentView = $derived(currentPath === "/" ? "home" : currentPath.slice(1).split("/")[0]);
-
-  $effect(() => {
-    document.body.classList.toggle('no-scroll', isPortfolio);
-    return () => {
-      document.body.classList.remove('no-scroll');
-    };
-  });
 </script>
 
 <a class="skip-link" href="#main-content">Skip to content</a>
 
-{#if isPortfolio}
-  <PortfolioLayout {currentPath}>
-    {@render children()}
-  </PortfolioLayout>
+{#if isBare}
+  {@render children()}
 {:else}
   <div
     class="page-content"
@@ -59,11 +60,10 @@
     {@render children()}
   </div>
   {#if showMenu}
-    <MenuOverlay view={currentView} />
+    <MenuOverlay items={NAV_ITEMS} view={currentView} />
   {/if}
+  <Cursor />
 {/if}
-
-<Cursor />
 
 <style>
   .skip-link {

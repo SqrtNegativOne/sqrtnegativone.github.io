@@ -1,5 +1,5 @@
 <script>
-  import Seo from '$lib/components/Seo.svelte';
+  import Seo from '$shared/components/Seo.svelte';
   import { formatReadableDate, formatIsoDate } from '$lib/blog';
 
   let { data } = $props();

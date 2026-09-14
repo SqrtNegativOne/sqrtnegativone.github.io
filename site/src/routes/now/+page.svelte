@@ -1,6 +1,6 @@
 <script lang="ts">
   import markdownIt from 'markdown-it';
-  import Seo from '$lib/components/Seo.svelte';
+  import Seo from '$shared/components/Seo.svelte';
   import { formatNowDate, type NowEntry } from '$lib/now';
 
   let { data } = $props<{ data: { entries: NowEntry[]; latest: NowEntry | null } }>();

@@ -2,20 +2,20 @@
   import mediaData from "../../../../static/media/media.json";
 
   import MediaModal from "./MediaModal.svelte";
-  import FilterSort from "../../../../shared/components/FilterSort.svelte";
-  import { applyFilters, applySorts } from "../../../../shared/utils/mediaFilters";
+  import FilterSort from "$shared/components/FilterSort.svelte";
+  import { applyFilters, applySorts } from "$shared/utils/mediaFilters";
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   
   import MediaCarousel from "./MediaCarousel.svelte";
   import LibraryTable from "./LibraryTable.svelte";
-  import type { MediaItem } from "../../../../shared/types";
+  import type { MediaItem } from "$shared/types";
   
   const typedMediaData = mediaData as unknown as MediaItem[];
   const visibleMediaData = typedMediaData.filter((item) => !item.hidden);
 
   let searchQuery = $state("");
-  let filters = $state<{ property: string, operator: string, value: any }[]>([]);
+  let filters = $state<{ property: string, operator: string, value: string | number | boolean }[]>([]);
   let sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'rating', direction: 'desc' }]);
 
   let carouselsData = $derived((() => {

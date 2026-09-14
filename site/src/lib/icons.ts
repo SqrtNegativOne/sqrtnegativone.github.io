@@ -1,1 +1,1 @@
-export { icons } from '../../shared/icons';
+export { icons } from '$shared/icons';

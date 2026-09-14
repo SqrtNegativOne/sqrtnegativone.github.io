@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { TYPE_LABEL } from "../../../../shared/components/constants";
-  import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
+  import { TYPE_LABEL } from "$shared/components/constants";
+  import TypeBadge from "$shared/components/TypeBadge.svelte";
   import { getPosterUrl } from "$lib/utils";
-  import type { MediaItem } from "../../../../shared/types";
+  import type { MediaItem } from "$shared/types";
   
   let { item, openDetails } = $props<{ item: MediaItem; openDetails: (item: MediaItem) => void; }>();
 </script>

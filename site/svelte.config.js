@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-cloudflare';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 export default {
@@ -6,12 +6,11 @@ export default {
 		runes: true
 	},
 	kit: {
+		alias: {
+			$shared: '../shared'
+		},
 		adapter: adapter({
-			pages: 'build',
-			assets: 'build',
-			fallback: '404.html',
-			precompress: false,
-			strict: true
+			platformProxy: { persist: true }
 		}),
 		prerender: {
 			entries: ['*', '/sitemap.xml', '/feed.xml'],

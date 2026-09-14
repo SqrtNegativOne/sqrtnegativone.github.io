@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { TYPE_LABEL } from "../../../../shared/components/constants";
-  import RatingChart from "../../../../shared/components/RatingChart.svelte";
+  import { TYPE_LABEL } from "$shared/components/constants";
+  import RatingChart from "$shared/components/RatingChart.svelte";
 
-  import StatusBadge from "../../../../shared/components/StatusBadge.svelte";
-  import TypeBadge from "../../../../shared/components/TypeBadge.svelte";
+  import StatusBadge from "$shared/components/StatusBadge.svelte";
+  import TypeBadge from "$shared/components/TypeBadge.svelte";
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { getPosterUrl } from "$lib/utils";
-  import type { MediaItem } from "../../../../shared/types";
+  import type { MediaItem } from "$shared/types";
   
   let { item, closeDetails, openFullPoster } = $props<{ item: MediaItem; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
 </script>

@@ -15,10 +15,8 @@ export async function GET() {
     let route = path.replace('/src/routes', '').replace('/+page.svelte', '');
 
     if (route.includes('[') || route.startsWith('/blog')) continue;
-
-    if (route === '') {
-      route = '/';
-    }
+    // '/' is a client-side redirect stub to cv.sqrt.fyi; '/main' is an unlisted page.
+    if (route === '' || route === '/main') continue;
 
     urls.push({ loc: route });
   }

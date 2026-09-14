@@ -90,7 +90,7 @@
         return;
       }
       const repoRoot = repoRootRes.value;
-      const filepath = `${repoRoot}/static/projects/${fileName}`;
+      const filepath = `${repoRoot}/cv/static/projects/${fileName}`;
       
       const writeImgRes = await safeInvoke('write_file_binary', { 
         path: filepath, 

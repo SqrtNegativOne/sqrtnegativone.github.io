@@ -1,6 +1,6 @@
 <script lang="ts">
-  import LibraryRow from "../../../../shared/components/LibraryRow.svelte";
-  import type { MediaItem } from "../../../../shared/types";
+  import LibraryRow from "$shared/components/LibraryRow.svelte";
+  import type { MediaItem } from "$shared/types";
 
   let { items, sorts, toggleSort, openDetails, openFullPoster } = $props<{
     items: MediaItem[];

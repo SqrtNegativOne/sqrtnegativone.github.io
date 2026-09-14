@@ -1,5 +1,5 @@
 <script>
-  import Seo from '$lib/components/Seo.svelte';
+  import Seo from '$shared/components/Seo.svelte';
   import { getAfterdarkPosts, formatReadableDate } from '$lib/blog';
 
   const posts = getAfterdarkPosts();

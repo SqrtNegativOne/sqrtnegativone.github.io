@@ -1,6 +1,6 @@
 <script>
   import Questions from './Questions.svelte';
-  import Seo from '../../lib/components/Seo.svelte';
+  import Seo from '$shared/components/Seo.svelte';
 </script>
 
 <Seo

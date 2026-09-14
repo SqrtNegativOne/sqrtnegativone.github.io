@@ -1,16 +1,15 @@
 # Ark Malhotra (sqrt.fyi)
 
-> Personal site of Ark Malhotra, computer science undergrad at NSUT chasing the joy of building software. Home to his blog, projects, small web toys, and notes on what he is learning and reading.
+> Personal site of Ark Malhotra, computer science undergrad at NSUT chasing the joy of building software. Home to his blog, small web toys, and notes on what he is learning and reading.
+
+- [Curriculum Vitae](https://cv.sqrt.fyi/): Home, projects, skills, and about for Ark Malhotra.
 
 ## Main Pages
 
-- [About](https://sqrt.fyi/about): Who Ark Malhotra is: a computer science undergrad at NSUT chasing the joy of building software.
 - [Blog](https://sqrt.fyi/blog): Essays and writing by Ark Malhotra on programming, games, and whatever else he is thinking about.
-- [Projects](https://sqrt.fyi/projects): Things Ark Malhotra has built: coursework, tools, and experiments.
 - [Now](https://sqrt.fyi/now): What Ark Malhotra is currently learning, building, and reading.
 - [Microblog](https://sqrt.fyi/microblog): Short thoughts, links, and updates fetched live from @sqrt-1.bsky.social on Bluesky.
 - [Colophon](https://sqrt.fyi/colophon): How this site is built: the tools, fonts, and stack behind sqrt.fyi.
-- [Skills](https://sqrt.fyi/skills): The languages, frameworks, and tools in Ark Malhotra's toolkit.
 - [Minis](https://sqrt.fyi/minis): Small experiments and bite-sized web toys by Ark Malhotra.
 - [Questions](https://sqrt.fyi/questions): Open problems and puzzles Ark Malhotra is currently working through.
 

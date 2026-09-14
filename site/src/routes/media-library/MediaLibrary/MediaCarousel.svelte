@@ -1,6 +1,6 @@
 <script lang="ts">
   import HeroCard from "./HeroCard.svelte";
-  import type { MediaItem } from "../../../../shared/types";
+  import type { MediaItem } from "$shared/types";
 
   let { title, items, openDetails } = $props<{
     title: string;

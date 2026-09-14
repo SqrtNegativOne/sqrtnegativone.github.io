@@ -1,6 +1,6 @@
 <script>
   import ComingSoon from '../../components/ComingSoon.svelte';
-  import Seo from '../../lib/components/Seo.svelte';
+  import Seo from '$shared/components/Seo.svelte';
 </script>
 
 <Seo
