@@ -2,7 +2,7 @@
 
 Two static SvelteKit apps in one repo:
 
-- `site/` — deployed to **sqrt.fyi** (blog, feed, microblog, now, minis, questions, media library, colophon).
+- `site/` — deployed to **sqrt.fyi** (blog, feed, microblog, now, questions, media library, colophon).
 - `cv/` — deployed to **cv.sqrt.fyi** (home, about, projects, skills).
 - `shared/` — cross-app components, imported via the `$shared` alias.
 - `admin/` — Tauri desktop dashboard for managing content.

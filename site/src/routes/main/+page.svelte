@@ -8,7 +8,7 @@
   <title>main — Ark Malhotra</title>
 </svelte:head>
 
-<main id="main-content" tabindex="-1" class="use-native-cursor plain-main">
+<main id="main-content" tabindex="-1" class="plain-main">
   <h1 class="title">sqrt.fyi</h1>
 
   <nav aria-label="Pages">
@@ -16,7 +16,6 @@
       <li><a href="/blog">blog</a></li>
       <li><a href="/now">now</a></li>
       <li><a href="/microblog">microblog</a></li>
-      <li><a href="/minis">minis</a></li>
       <li><a href="/media-library">media library</a></li>
       <li><a href="/questions">questions</a></li>
       <li><a href="/colophon">colophon</a></li>

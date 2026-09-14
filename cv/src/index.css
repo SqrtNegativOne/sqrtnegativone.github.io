@@ -12,26 +12,6 @@
     box-sizing: border-box;
   }
 
-  /* Hide cursor globally, EXCEPT for elements (and their children) with .use-native-cursor */
-  *:not(.use-native-cursor):not(.use-native-cursor *) {
-    cursor: none !important;
-  }
-
-  /* Force native cursor on these elements */
-  .use-native-cursor,
-  .use-native-cursor * {
-    cursor: auto !important;
-  }
-
-  /* ── Reduced motion: restore native cursor (custom cursor is disabled in JS) ── */
-  @media (prefers-reduced-motion: reduce) {
-    *:not(.use-native-cursor):not(.use-native-cursor *),
-    *::before,
-    *::after {
-      cursor: auto !important;
-    }
-  }
-
   /* Custom scrollbar for Firefox */
   * {
     scrollbar-width: thin;
@@ -142,12 +122,6 @@ html:has(body.menu-is-open) {
   }
 }
 
-
-
-/* ── Custom Cursor Styles Moved to Cursor.svelte ──────────── */
-@media (hover: none) and (pointer: coarse) {
-  *, *::before, *::after { cursor: auto !important; }
-}
 
 /* ── Text selection — inverted colours ────────── */
 ::selection {

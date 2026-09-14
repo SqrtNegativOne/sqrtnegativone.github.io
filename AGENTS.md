@@ -2,7 +2,7 @@
 
 This repo hosts **two independent SvelteKit apps** plus a Tauri admin dashboard:
 
-- `site/` → **`sqrt.fyi`** — blog, feed, microblog, now, minis, questions, media library, colophon, and the unlisted `/main` page.
+- `site/` → **`sqrt.fyi`** — blog, feed, microblog, now, questions, media library, colophon, and the unlisted `/main` page.
 - `cv/` → **`cv.sqrt.fyi`** — home, `/about`, `/projects`, `/skills`.
 - `shared/` — cross-app code (visual primitives + media helpers), imported via the `$shared` alias in both apps.
 - `admin/` — Tauri + SvelteKit admin dashboard. See `admin/AGENTS.md`.
@@ -16,10 +16,10 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
 - **Package Manager**: **Bun**. Don't use npm.
 
 ## Repository Structure
-- `shared/components/` — `Cursor`, `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, and the media-library components (`FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
+- `shared/components/` — `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, and the media-library components (`FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
   - `Seo.svelte` takes a `base` prop (defaults to `https://sqrt.fyi`; cv passes `https://cv.sqrt.fyi`).
   - `MenuOverlay.svelte` takes an `items` prop; each app defines its own `NAV_ITEMS` and passes them in.
-- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu/cursor — uses a native cursor and a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/minis`, `/questions`, `/questions.md`, `/media-library`, `/colophon`.
+- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/colophon`.
 - `site/blog/posts/` — Markdown posts; `site/blog/_data/` — static data (e.g. `fonts.json`) shared with the admin app.
 - `site/static/` — `media/` (13 MB, never copy elsewhere), `blog-images/`, `velite/`, plus machine-readable files `robots.txt`, `llms.txt`, `.well-known/security.txt`.
 - `cv/src/routes/` — `/`, `/about`, `/projects`, `/skills`, `/sitemap.xml`.
@@ -49,7 +49,7 @@ There is currently **no D1 binding**; both apps are fully static. If a route lat
 - **Rendering**: Each app's `src/routes/+layout.js` sets `prerender = true`; pages are static. A new route that needs the server must opt out with `export const prerender = false`.
 - **Tailwind v4**: Use utility classes and `@theme` in CSS; no `tailwind.config.js`.
 - **Accessibility (a11y)**: Svelte a11y checks are enforced. Keep the skip link targeting `#main-content` and that id on the main content container in **every layout branch of both apps**.
-- **Reduced motion**: Global CSS guard lives in each app's `src/App.css`; gate JS-driven animation (rAF/GSAP) behind `matchMedia('(prefers-reduced-motion: reduce)')` like `AsciiBackground.svelte` / `Cursor.svelte`.
+- **Reduced motion**: Global CSS guard lives in each app's `src/App.css`; gate JS-driven animation (rAF/GSAP) behind `matchMedia('(prefers-reduced-motion: reduce)')` like `AsciiBackground.svelte`.
 - **Component-scoped styling**: For injected HTML (`{@html ...}`), use `:global(.class)` in `<style>`.
 - **Per-page SEO**: Use `$shared/components/Seo.svelte` (title, description, canonical, OG, optional noindex); pass `base` for the cv app. Site-wide defaults live in each app's `src/app.html`.
 - **Cross-app imports**: Use the `$shared` alias. `shared/` is outside each app root, so both `vite.config.js` files need `server.fs.allow: ['..']` for dev.

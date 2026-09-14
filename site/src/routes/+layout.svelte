@@ -1,6 +1,5 @@
 <script>
   import MenuOverlay from "$shared/components/MenuOverlay.svelte";
-  import Cursor from "$shared/components/Cursor.svelte";
   import AsciiBackground from "$shared/components/AsciiBackground.svelte";
 
   import "../index.css";
@@ -24,7 +23,6 @@
     { key: "blog",          label: "Blog",          path: "/blog",          importance: 3 },
     { key: "now",           label: "Now",           path: "/now",           importance: 2 },
     { key: "microblog",     label: "Microblog",     path: "/microblog",     importance: 1 },
-    { key: "minis",         label: "Minis",         path: "/minis",         importance: 1 },
     { key: "media-library", label: "Media Library", path: "/media-library", importance: 1 },
     { key: "questions",     label: "Questions",     path: "/questions",     importance: 1 },
     { key: "colophon",      label: "Colophon",      path: "/colophon",      importance: 1 },
@@ -33,7 +31,7 @@
 
   let currentPath = $derived($page.url.pathname.replace(/\/$/, '') || '/');
 
-  const STANDALONE_PREFIXES = ["/now", "/colophon", "/microblog", "/minis"];
+  const STANDALONE_PREFIXES = ["/now", "/colophon", "/microblog"];
   const BARE_ROUTES = ["/main"];
 
   let isBare = $derived(BARE_ROUTES.includes(currentPath));
@@ -62,7 +60,6 @@
   {#if showMenu}
     <MenuOverlay items={NAV_ITEMS} view={currentView} />
   {/if}
-  <Cursor />
 {/if}
 
 <style>

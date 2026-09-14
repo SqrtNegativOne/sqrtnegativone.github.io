@@ -1,5 +1,4 @@
 <script>
-  import Cursor from "$shared/components/Cursor.svelte";
   import AsciiBackground from "$shared/components/AsciiBackground.svelte";
   import PortfolioLayout from "../components/PortfolioLayout.svelte";
 
@@ -39,8 +38,6 @@
     {@render children()}
   </PortfolioLayout>
 {/if}
-
-<Cursor />
 
 <style>
   .skip-link {

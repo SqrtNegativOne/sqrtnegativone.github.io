@@ -10,7 +10,6 @@
 - [Now](https://sqrt.fyi/now): What Ark Malhotra is currently learning, building, and reading.
 - [Microblog](https://sqrt.fyi/microblog): Short thoughts, links, and updates fetched live from @sqrt-1.bsky.social on Bluesky.
 - [Colophon](https://sqrt.fyi/colophon): How this site is built: the tools, fonts, and stack behind sqrt.fyi.
-- [Minis](https://sqrt.fyi/minis): Small experiments and bite-sized web toys by Ark Malhotra.
 - [Questions](https://sqrt.fyi/questions): Open problems and puzzles Ark Malhotra is currently working through.
 
 ## Feeds & Indexes
