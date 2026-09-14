@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+/* ── Reset ─────────────────────────────────────── */
+/* Wrapped in @layer base so Tailwind utility classes (p-*, m-*, etc.)
+   can properly override it in the cascade. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Hide cursor globally, EXCEPT for elements (and their children) with .use-native-cursor */
+  *:not(.use-native-cursor):not(.use-native-cursor *) {
+    cursor: none !important;
+  }
+
+  /* Force native cursor on these elements */
+  .use-native-cursor,
+  .use-native-cursor * {
+    cursor: auto !important;
+  }
+
+  /* ── Reduced motion: restore native cursor (custom cursor is disabled in JS) ── */
+  @media (prefers-reduced-motion: reduce) {
+    *:not(.use-native-cursor):not(.use-native-cursor *),
+    *::before,
+    *::after {
+      cursor: auto !important;
+    }
+  }
+
+  /* Custom scrollbar for Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-secondary) transparent;
+  }
+
+  /* Custom scrollbar for WebKit */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--text-secondary);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text);
+  }
+}
+
+/* ── Theme (dark only) ───────────────────────── */
+:root {
+  --frame-v: 72px;
+  --bg: oklch(0.1638 0 0);
+  --text: oklch(0.931 0 0);
+  --text-secondary: oklch(0.738 0 0);
+  --text-secondary-rgb: 170, 170, 170;
+  --accent: oklch(0.931 0 0);
+  --glass-bg: oklch(1 0 0 / 0.08);
+  --glass-border: oklch(1 0 0 / 0.15);
+  --glass-shadow: oklch(0 0 0 / 0.3);
+  --quote-color: #fff;
+  --name-color: #fff;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.6s ease, color 0.6s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* No-scroll lock: only active on home, about, projects, skills, or when menu is open */
+body.no-scroll {
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body.menu-is-open {
+  overflow: hidden;
+}
+
+html:has(body.no-scroll),
+html:has(body.menu-is-open) {
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+}
+
+/* ── Viewport border frame (like Keita Yamada) ── */
+/* --frame-v is set by JS when the menu opens so the border snaps to the
+   exact grid height; it resets to the default when the menu closes.      */
+.with-frame::before {
+  content: '';
+  position: fixed;
+  top:    var(--frame-v);
+  bottom: var(--frame-v);
+  left:   40px;
+  right:  40px;
+  border: 1px solid var(--text);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 9999;
+  transition: top 0.42s cubic-bezier(0.22, 0.7, 0.2, 1),
+              bottom 0.42s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+@media (max-width: 1024px) and (min-width: 641px) {
+  :root {
+    --frame-v: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --frame-v: 16px;
+  }
+  .with-frame::before {
+    left:   16px;
+    right:  16px;
+  }
+}
+
+
+
+/* ── Custom Cursor Styles Moved to Cursor.svelte ──────────── */
+@media (hover: none) and (pointer: coarse) {
+  *, *::before, *::after { cursor: auto !important; }
+}
+
+/* ── Text selection — inverted colours ────────── */
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}

@@ -45,20 +45,20 @@ export class GitState {
 
     for (const change of this.status.content_changes) {
       const f = change.path;
-      if (f.startsWith('src/data/projects') || f.startsWith('static/projects')) {
+      if (f.startsWith('cv/src/data/projects') || f.startsWith('cv/static/projects')) {
         addType('projects');
-      } else if (f.startsWith('static/quotes')) {
+      } else if (f.startsWith('cv/static/quotes')) {
         addType('quotes');
-      } else if (f.startsWith('static/media')) {
+      } else if (f.startsWith('site/static/media')) {
         addType('media');
-      } else if (f.startsWith('blog/') || f.startsWith('static/blog-images')) {
+      } else if (f.startsWith('site/blog/') || f.startsWith('site/static/blog-images')) {
         addType('blog');
-      } else if (f.startsWith('src/data/skills')) {
+      } else if (f.startsWith('cv/src/data/skills')) {
         addType('skills');
-      } else if (f.startsWith('src/data/socials')) {
+      } else if (f.startsWith('cv/src/data/socials')) {
         addType('socials');
-      } else if (f.startsWith('src/data/')) {
-        const name = f.replace('src/data/', '').replace('.json', '');
+      } else if (f.startsWith('site/src/data/')) {
+        const name = f.replace('site/src/data/', '').replace('.json', '');
         addType(name);
       } else {
         addType('content');

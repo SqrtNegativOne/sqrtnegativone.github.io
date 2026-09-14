@@ -1,0 +1,6 @@
+docs
+dist
+public
+blog
+.svelte-kit
+src/worker-configuration.d.ts

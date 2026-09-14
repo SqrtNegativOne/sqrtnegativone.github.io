@@ -11,10 +11,19 @@ node_modules
 dist
 .cache
 dist-ssr
-.velite/
-src/lib/content/
 *.local
-build/
+
+# Per-app build/dev artifacts
+site/.svelte-kit/
+site/.velite/
+site/src/lib/content/
+site/build/
+site/.wrangler/
+cv/.svelte-kit/
+cv/.velite/
+cv/src/lib/content/
+cv/build/
+cv/.wrangler/
 
 # Editor directories and files
 .vscode/*

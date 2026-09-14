@@ -1,5 +1,5 @@
 <script lang="ts">
-  import mediaProperties from '../../../../../static/media/media-properties.json';
+  import mediaProperties from '../../../../../site/static/media/media-properties.json';
   import { untrack } from 'svelte';
   import { assetState } from '$lib/assetState.svelte';
   import { getPosterUrl } from '../../../../../shared/utils/getPosterUrl';

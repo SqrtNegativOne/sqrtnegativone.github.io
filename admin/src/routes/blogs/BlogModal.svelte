@@ -57,7 +57,7 @@
     if (rootRes.isErr()) return err(rootRes.error);
     const root = rootRes.value;
     
-    const imagesDir = `${root}/static/blog-images`;
+    const imagesDir = `${root}/site/static/blog-images`;
     const filepath = `${imagesDir}/${fileName}`;
     
     await ResultAsync.fromPromise(invoke('mkdir', { path: imagesDir, recursive: true }), e => String(e));
@@ -173,7 +173,7 @@ ${content}
       return;
     }
     const root = rootRes.value;
-    const filepath = `${root}/blog/posts/${id}`;
+    const filepath = `${root}/site/blog/posts/${id}`;
     
     if (isNew) {
       const accessRes = await ResultAsync.fromPromise(invoke<boolean>('access', { path: filepath }), e => String(e));

@@ -80,7 +80,7 @@
     }
     
     const root = rootRes.value;
-    const filepath = `${root}/blog/posts/${id}`;
+    const filepath = `${root}/site/blog/posts/${id}`;
     const unlinkRes = await ResultAsync.fromPromise(invoke('unlink', { path: filepath }), e => String(e));
     if (unlinkRes.isErr()) {
       errorMsg = unlinkRes.error || 'Could not delete file';

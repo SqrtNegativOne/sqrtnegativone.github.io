@@ -20,15 +20,18 @@ export function safeGetRepoRoot(): ResultAsync<string, Error> {
 }
 
 export const COLLECTIONS = {
-  projects: 'src/data/projects.json',
-  skills: 'src/data/skills.json',
-  socials: 'src/data/socials.json',
-  quotes: 'static/quotes/quotes.json',
-  media: 'static/media/media.json',
-  mediaPrivate: 'static/media/media-private.json',
-  mediaProperties: 'static/media/media-properties.json',
-  now: 'src/data/now.json',
+  projects: 'cv/src/data/projects.json',
+  skills: 'cv/src/data/skills.json',
+  socials: 'cv/src/data/socials.json',
+  quotes: 'cv/static/quotes/quotes.json',
+  media: 'site/static/media/media.json',
+  mediaPrivate: 'site/static/media/media-private.json',
+  mediaProperties: 'site/static/media/media-properties.json',
+  now: 'site/src/data/now.json',
 } as const;
+
+// Plain data files that live in the cv app rather than the site app.
+const CV_DATA_FILES = new Set(['projects.json', 'skills.json', 'socials.json']);
 
 export interface NowEntry {
   id: string;
@@ -45,13 +48,19 @@ export function resolveDataPath(collectionOrPath: CollectionName | (string & {})
     return COLLECTIONS[collectionOrPath as CollectionName];
   }
   if (collectionOrPath.startsWith('../../static/')) {
-    return collectionOrPath.replace('../../', '');
+    return collectionOrPath.replace('../../', 'site/');
   }
-  if (collectionOrPath.startsWith('static/') || collectionOrPath.startsWith('src/')) {
+  if (
+    collectionOrPath.startsWith('site/') ||
+    collectionOrPath.startsWith('cv/') ||
+    collectionOrPath.startsWith('static/') ||
+    collectionOrPath.startsWith('src/')
+  ) {
     return collectionOrPath;
   }
   const cleanFilename = collectionOrPath.endsWith('.json') ? collectionOrPath : `${collectionOrPath}.json`;
-  return `src/data/${cleanFilename}`;
+  const app = CV_DATA_FILES.has(cleanFilename) ? 'cv' : 'site';
+  return `${app}/src/data/${cleanFilename}`;
 }
 
 export function readData<T>(collectionOrPath: CollectionName | (string & {})): ResultAsync<T[], Error> {
@@ -100,11 +109,11 @@ export function writeTextFile(relativePath: string, content: string): ResultAsyn
 }
 
 export function readQuestions(): ResultAsync<string, Error> {
-  return readTextFile('src/data/questions.md');
+  return readTextFile('site/src/data/questions.md');
 }
 
 export function writeQuestions(content: string): ResultAsync<void, Error> {
-  return writeTextFile('src/data/questions.md', content);
+  return writeTextFile('site/src/data/questions.md', content);
 }
 
 
