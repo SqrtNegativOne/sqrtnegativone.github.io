@@ -37,11 +37,12 @@ All commands use `bun` and run **inside `site/` or `cv/`**.
 - `bun run lint` — `eslint` + `oxlint`.
 - `bun run check` — `svelte-kit sync` + `svelte-check` (types + a11y).
 
-**Cloudflare / D1 (site has the `DB` binding; cv does not):**
+**Cloudflare:**
 - `bunx wrangler dev` — run the built Worker locally with emulated bindings.
 - `bunx wrangler deploy` — deploy the Worker + assets.
 - `bunx wrangler types src/worker-configuration.d.ts` — regenerate Worker types after changing `wrangler.jsonc`.
-- `bunx wrangler d1 execute sqrt-fyi --local --file=schema.sql` — apply SQL to local D1 (drop `--local` for remote).
+
+There is currently **no D1 binding**; both apps are fully static. If a route later needs a database, add a `d1_databases` block to `site/wrangler.jsonc`, regenerate types, and re-add `bunx wrangler d1 execute` commands here.
 
 ## Coding Guidelines & Rules
 - **Svelte 5 Syntax**: Use runes (`$state`, `$derived`, `$props`, `$effect`) — not Svelte 4 `export let` or `$:`.
@@ -63,4 +64,4 @@ All commands use `bun` and run **inside `site/` or `cv/`**.
 ## Cloudflare deploy notes
 - Hosting is now **active** on Cloudflare Workers (not GitHub Pages). There is no root `wrangler.jsonc`; each app has its own.
 - `sqrt.fyi/` performs a **client-side** redirect to `cv.sqrt.fyi` — `adapter-cloudflare` serves prerendered assets from `env.ASSETS` and bypasses SvelteKit hooks, so do not convert `/` into a server redirect.
-- Owner-only setup: create the D1 database and paste its `database_id` into `site/wrangler.jsonc`, ensure `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` repo secrets exist, and point the `sqrt.fyi` zone at Cloudflare. Custom domains are created on first `wrangler deploy`.
+- Owner-only setup: ensure `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` repo secrets exist and point the `sqrt.fyi` zone at Cloudflare. Custom domains are created on first `wrangler deploy`. No database setup is needed for the current static deployment.
