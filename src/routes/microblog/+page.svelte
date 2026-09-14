@@ -98,7 +98,7 @@
       throw new Error(`Failed to load posts (Status: ${res.status})`);
     }
 
-    const data = await res.json();
+    const data = (await res.json()) as { feed?: BskyFeedItem[]; cursor?: string };
     return {
       items: data.feed || [],
       nextCursor: data.cursor
