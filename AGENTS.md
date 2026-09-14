@@ -19,7 +19,7 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
 - `shared/components/` — `Cursor`, `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, and the media-library components (`FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
   - `Seo.svelte` takes a `base` prop (defaults to `https://sqrt.fyi`; cv passes `https://cv.sqrt.fyi`).
   - `MenuOverlay.svelte` takes an `items` prop; each app defines its own `NAV_ITEMS` and passes them in.
-- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no menu/cursor), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/minis`, `/questions`, `/questions.md`, `/media-library`, `/colophon`.
+- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu/cursor — uses a native cursor and a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/minis`, `/questions`, `/questions.md`, `/media-library`, `/colophon`.
 - `site/blog/posts/` — Markdown posts; `site/blog/_data/` — static data (e.g. `fonts.json`) shared with the admin app.
 - `site/static/` — `media/` (13 MB, never copy elsewhere), `blog-images/`, `velite/`, plus machine-readable files `robots.txt`, `llms.txt`, `.well-known/security.txt`.
 - `cv/src/routes/` — `/`, `/about`, `/projects`, `/skills`, `/sitemap.xml`.

@@ -12,8 +12,7 @@
     { key: "home",     label: "Home",     path: "/",         importance: 3 },
     { key: "projects", label: "Projects", path: "/projects", importance: 3 },
     { key: "about",    label: "About",    path: "/about",    importance: 2 },
-    { key: "skills",   label: "Skills",   path: "/skills",   importance: 1 },
-    { key: "site",     label: "Blog",     path: "https://sqrt.fyi/", importance: 2, external: true }
+    { key: "skills",   label: "Skills",   path: "/skills",   importance: 1 }
   ];
 
   const HIDE_PORTRAIT = ["/skills", "/projects"];
