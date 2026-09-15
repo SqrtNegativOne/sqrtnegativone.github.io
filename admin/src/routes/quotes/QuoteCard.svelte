@@ -11,23 +11,11 @@
 >
   <p class="text-white text-base whitespace-pre-wrap leading-relaxed">{item.quote}</p>
   
-  {#if item.source || item.link}
-    <div class="text-xs text-[oklch(0.7107_0.0351_256.79)] border-t border-[oklch(0.2739_0.0055_286.03)] pt-2 mt-2">
-      {#if item.source}
-        <span class="font-medium text-[oklch(0.80_0.01_286)]">{item.source}</span>
-      {/if}
-      {#if item.source && item.link}
-        <span class="mx-1">•</span>
-      {/if}
-      {#if item.link}
-<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
-        <a href={item.link} target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline inline-flex items-center" onclick={(e) => e.stopPropagation()}>
-          Link
-          <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-        </a>
-      {/if}
-    </div>
-  {/if}
+    {#if item.source}
+      <div class="text-xs text-[oklch(0.7107_0.0351_256.79)] flex items-end">
+          <span class="font-medium text-[oklch(0.80_0.01_286)]">— {item.source}</span>
+      </div>
+    {/if}
   
   {#if item.tags && item.tags.length > 0}
     <div class="flex flex-wrap gap-1.5 mt-auto pt-2">
