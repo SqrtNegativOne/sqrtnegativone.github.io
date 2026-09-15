@@ -163,6 +163,14 @@
       </li>
     {/each}
   </ul>
+
+  <div class="johnvertisements">
+    <iframe
+      src="https://john.citrons.xyz/embed?ref=sqrt.fyi"
+      title="Johnvertisements"
+      loading="lazy"
+    ></iframe>
+  </div>
 </main>
 
 <style>
@@ -219,6 +227,22 @@
   .buttons img {
     display: block;
     image-rendering: pixelated;
+  }
+
+  .johnvertisements {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .johnvertisements iframe {
+    margin-left: auto;
+    display: block;
+    margin-right: auto;
+    max-width: 732px;
+    width: 100%;
+    height: 94px;
+    border: none;
   }
 
   .compose {
