@@ -68,7 +68,7 @@
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
-    name: 'Contact Ark Malhotra',
+    name: 'Contact Sqrt-1',
     url: 'https://sqrt.fyi/contact'
   };
   const jsonLdHtml = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</` + `script>`;
@@ -79,8 +79,8 @@
 </svelte:head>
 
 <Seo
-  title="Contact — Ark Malhotra"
-  description="Ways to reach Ark Malhotra."
+  title="Contact Sqrt-1"
+  description="Ways to contact Sqrt-1."
   path="/contact"
 />
 
@@ -106,7 +106,7 @@
       name="body"
       rows="8"
       maxlength={MAX_LENGTH}
-      placeholder="Type anything…"
+      placeholder="Type literally anything man. I don't care."
       aria-describedby="compose-status"
       oninput={handleInput}
       bind:value={text}
@@ -130,7 +130,7 @@
         {#if status === 'sending'}
           Sending…
         {:else if status === 'sent'}
-          Sent. Thank you.
+          Thanks for that.
         {:else if status === 'error'}
           {errorMessage}
         {/if}
@@ -260,7 +260,6 @@
     resize: vertical;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 10px;
     color: var(--text);
     font-family: "Inter", sans-serif;
     font-size: 1rem;
@@ -311,7 +310,6 @@
     padding: 0.6rem 1.6rem;
     background: transparent;
     border: 1px solid var(--text);
-    border-radius: 999px;
     color: var(--text);
     font-family: "IBM Plex Mono", monospace;
     font-size: 0.9rem;
