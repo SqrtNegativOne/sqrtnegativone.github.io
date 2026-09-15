@@ -1,0 +1,1 @@
+This is my "CV" site. It's what recruiters are supposed to see, and what goes on my resume. Professional stuff only. Gay stuff, personal stuff goes in /site.

@@ -2206,5 +2206,37 @@
     "author": "Ronan Corrigan",
     "publisher": "Screenlife Liverpool, Sky Original Productions, The Avenue Entertainment, Highland Film Group, Bazelevs",
     "hidden": false
+  },
+  {
+    "id": "moneyball",
+    "type": "movie",
+    "rating": 6.5,
+    "status": "wishlist",
+    "title": "Moneyball",
+    "tagline": "",
+    "description": "The story of Oakland Athletics general manager Billy Beane's successful attempt to put together a baseball team on a budget, by employing computer-generated analysis to draft his players.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_moneyball",
+    "tags": [],
+    "author": "Bennett Miller",
+    "publisher": "Scott Rudin Productions, Michael De Luca Productions, Rachael Horovitz Productions, Columbia Pictures",
+    "hidden": false
+  },
+  {
+    "id": "unsong",
+    "type": "book",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Unsong",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_unsong",
+    "tags": [],
+    "author": "",
+    "publisher": "",
+    "hidden": false
   }
 ]

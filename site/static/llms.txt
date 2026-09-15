@@ -11,6 +11,7 @@
 - [Microblog](https://sqrt.fyi/microblog): Short thoughts, links, and updates fetched live from @sqrt-1.bsky.social on Bluesky.
 - [Colophon](https://sqrt.fyi/colophon): How this site is built: the tools, fonts, and stack behind sqrt.fyi.
 - [Questions](https://sqrt.fyi/questions): Open problems and puzzles Ark Malhotra is currently working through.
+- [Contact](https://sqrt.fyi/contact): Ways to reach Ark Malhotra.
 
 ## Feeds & Indexes
 

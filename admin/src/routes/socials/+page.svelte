@@ -13,7 +13,7 @@
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   let currentItem: SocialItem = $state({
-    id: '', name: '', url: '', icon: ''
+    id: '', name: '', url: '', icon: '', audience: 'both'
   });
 
   let searchQuery = $state('');
@@ -22,14 +22,24 @@
 
   const filterProperties: FilterProperty[] = [
     { value: 'name', label: 'Name', type: 'text' },
-    { value: 'url', label: 'URL', type: 'text' }
+    { value: 'url', label: 'URL', type: 'text' },
+    {
+      value: 'audience',
+      label: 'Audience',
+      type: 'select',
+      options: [
+        { value: 'both', label: 'Both' },
+        { value: 'personal', label: 'Personal' },
+        { value: 'professional', label: 'Professional' }
+      ]
+    }
   ];
 
   let filteredSocials = $derived(
     filterAndSortItems<SocialItem>({
       items: data.socials || [],
       searchQuery,
-      searchFields: ['name', 'id', 'url'],
+      searchFields: ['name', 'id', 'url', 'audience'],
       filters,
       sorts
     })
@@ -42,7 +52,7 @@
 
   function openNew(initialName = '') {
     isEditing = false;
-    currentItem = { id: '', name: initialName, url: '', icon: '' };
+    currentItem = { id: '', name: initialName, url: '', icon: '', audience: 'both' };
     isModalOpen = true;
   }
 
@@ -154,6 +164,7 @@
           <div>
             <h3 class="font-medium text-white">{item.name}</h3>
             <p class="text-xs text-[oklch(0.7107_0.0351_256.79)] truncate w-48">{item.url || 'No URL'}</p>
+            <span class="inline-block mt-1 text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded bg-white/5 text-[oklch(0.7107_0.0351_256.79)]">{item.audience || 'both'}</span>
           </div>
         </div>
         <div class="mt-auto flex justify-between items-center border-t border-[oklch(0.2739_0.0055_286.03)] pt-3 relative">
@@ -205,6 +216,15 @@
         <input type="url" id="social-url" bind:value={currentItem.url} class="input-field" required />
       </div>
       
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]" for="social-audience">Audience</label>
+        <select id="social-audience" bind:value={currentItem.audience} class="input-field">
+          <option value="both">Both (sqrt.fyi + cv.sqrt.fyi)</option>
+          <option value="personal">Personal (sqrt.fyi only)</option>
+          <option value="professional">Professional (cv.sqrt.fyi only)</option>
+        </select>
+      </div>
+
       <div class="space-y-2">
         <label class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]" for="social-icon">Icon (Raw SVG)</label>
         <textarea id="social-icon" bind:value={currentItem.icon} rows="4" class="input-field resize-none font-mono text-xs"></textarea>

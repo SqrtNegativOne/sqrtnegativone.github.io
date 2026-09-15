@@ -22,7 +22,7 @@ export function safeGetRepoRoot(): ResultAsync<string, Error> {
 export const COLLECTIONS = {
   projects: 'cv/src/data/projects.json',
   skills: 'cv/src/data/skills.json',
-  socials: 'cv/src/data/socials.json',
+  socials: 'shared/data/socials.json',
   quotes: 'cv/static/quotes/quotes.json',
   media: 'site/static/media/media.json',
   mediaPrivate: 'site/static/media/media-private.json',
@@ -31,7 +31,11 @@ export const COLLECTIONS = {
 } as const;
 
 // Plain data files that live in the cv app rather than the site app.
-const CV_DATA_FILES = new Set(['projects.json', 'skills.json', 'socials.json']);
+const CV_DATA_FILES = new Set(['projects.json', 'skills.json']);
+
+// Shared data files live in the repo-root shared/ folder and are consumed by
+// both apps.
+const SHARED_DATA_FILES = new Set(['socials.json']);
 
 export interface NowEntry {
   id: string;
@@ -59,6 +63,9 @@ export function resolveDataPath(collectionOrPath: CollectionName | (string & {})
     return collectionOrPath;
   }
   const cleanFilename = collectionOrPath.endsWith('.json') ? collectionOrPath : `${collectionOrPath}.json`;
+  if (SHARED_DATA_FILES.has(cleanFilename)) {
+    return `shared/data/${cleanFilename}`;
+  }
   const app = CV_DATA_FILES.has(cleanFilename) ? 'cv' : 'site';
   return `${app}/src/data/${cleanFilename}`;
 }

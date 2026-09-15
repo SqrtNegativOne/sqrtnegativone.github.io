@@ -47,9 +47,16 @@ export interface QuoteItem {
   tags?: string[];
 }
 
+export type SocialAudience = 'professional' | 'personal' | 'both';
+
 export interface SocialItem {
   id: string;
   name: string;
   url: string;
   icon: string;
+  /**
+   * Which of the two sites the link belongs on. `personal` links are shown on
+   * sqrt.fyi, `professional` links on cv.sqrt.fyi, and `both` on either.
+   */
+  audience: SocialAudience;
 }

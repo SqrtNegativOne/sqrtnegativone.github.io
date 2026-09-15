@@ -55,7 +55,7 @@ export class GitState {
         addType('blog');
       } else if (f.startsWith('cv/src/data/skills')) {
         addType('skills');
-      } else if (f.startsWith('cv/src/data/socials')) {
+      } else if (f.startsWith('shared/data/socials')) {
         addType('socials');
       } else if (f.startsWith('site/src/data/')) {
         const name = f.replace('site/src/data/', '').replace('.json', '');

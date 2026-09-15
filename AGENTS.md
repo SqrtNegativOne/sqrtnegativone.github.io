@@ -4,7 +4,7 @@ This repo hosts **two independent SvelteKit apps** plus a Tauri admin dashboard:
 
 - `site/` → **`sqrt.fyi`** — blog, feed, microblog, now, questions, media library, colophon, and the unlisted `/main` page.
 - `cv/` → **`cv.sqrt.fyi`** — home, `/about`, `/projects`, `/skills`.
-- `shared/` — cross-app code (visual primitives + media helpers), imported via the `$shared` alias in both apps.
+- `shared/` — cross-app code and data (visual primitives, media helpers, and `shared/data/socials.json`), imported via the `$shared` alias in both apps.
 - `admin/` — Tauri + SvelteKit admin dashboard. See `admin/AGENTS.md`.
 
 Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.config.js`, `tsconfig.json`, `wrangler.jsonc`, `.svelte-kit/`, and build output. **Run `bun install` and all commands from inside the app directory.**
@@ -19,7 +19,7 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
 - `shared/components/` — `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, and the media-library components (`FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
   - `Seo.svelte` takes a `base` prop (defaults to `https://sqrt.fyi`; cv passes `https://cv.sqrt.fyi`).
   - `MenuOverlay.svelte` takes an `items` prop; each app defines its own `NAV_ITEMS` and passes them in.
-- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/colophon`.
+- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/colophon`, `/contact`.
 - `site/blog/posts/` — Markdown posts; `site/blog/_data/` — static data (e.g. `fonts.json`) shared with the admin app.
 - `site/static/` — `media/` (13 MB, never copy elsewhere), `blog-images/`, `velite/`, plus machine-readable files `robots.txt`, `llms.txt`, `.well-known/security.txt`.
 - `cv/src/routes/` — `/`, `/about`, `/projects`, `/skills`, `/sitemap.xml`.
@@ -62,6 +62,5 @@ There is currently **no D1 binding**; both apps are fully static. If a route lat
 - **Vendor assets**: self-host third-party CSS/fonts under `static/vendor/`; don't reintroduce CDN links.
 
 ## Cloudflare deploy notes
-- Hosting is now **active** on Cloudflare Workers (not GitHub Pages). There is no root `wrangler.jsonc`; each app has its own.
 - `sqrt.fyi/` performs a **client-side** redirect to `cv.sqrt.fyi` — `adapter-cloudflare` serves prerendered assets from `env.ASSETS` and bypasses SvelteKit hooks, so do not convert `/` into a server redirect.
 - Owner-only setup: ensure `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` repo secrets exist and point the `sqrt.fyi` zone at Cloudflare. Custom domains are created on first `wrangler deploy`. No database setup is needed for the current static deployment.
