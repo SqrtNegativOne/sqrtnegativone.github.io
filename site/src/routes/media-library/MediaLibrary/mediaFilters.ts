@@ -1,38 +1,42 @@
-export function applyFilters<T extends Record<string, any>>(items: T[], filters: { property: string, operator: string, value: any }[], searchQuery: string): T[] {
+type FilterValue = string | number | boolean;
+
+export function applyFilters<T extends object>(items: T[], filters: { property: string, operator: string, value: FilterValue }[], searchQuery: string): T[] {
   return items.filter(item => {
+    const record = item as Record<string, unknown>;
+
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
-      const titleMatch = typeof item.title === 'string' && item.title.toLowerCase().includes(q);
-      const taglineMatch = typeof item.tagline === 'string' && item.tagline.toLowerCase().includes(q);
-      const authorMatch = typeof item.author === 'string' && item.author.toLowerCase().includes(q);
-      const publisherMatch = typeof item.publisher === 'string' && item.publisher.toLowerCase().includes(q);
-      const idMatch = typeof item.id === 'string' && item.id.toLowerCase().includes(q);
+      const titleMatch = typeof record.title === 'string' && record.title.toLowerCase().includes(q);
+      const taglineMatch = typeof record.tagline === 'string' && record.tagline.toLowerCase().includes(q);
+      const authorMatch = typeof record.author === 'string' && record.author.toLowerCase().includes(q);
+      const publisherMatch = typeof record.publisher === 'string' && record.publisher.toLowerCase().includes(q);
+      const idMatch = typeof record.id === 'string' && record.id.toLowerCase().includes(q);
       if (!titleMatch && !taglineMatch && !authorMatch && !publisherMatch && !idMatch) return false;
     }
     
     for (const f of filters) {
-      const val = item[f.property];
+      const val = record[f.property];
       if (f.operator === 'is') {
         if (val != f.value) return false;
       } else if (f.operator === 'is_not') {
         if (val == f.value) return false;
       } else if (f.operator === '>') {
-        if (val <= f.value) return false;
+        if ((val as number) <= (f.value as number)) return false;
       } else if (f.operator === '<') {
-        if (val >= f.value) return false;
+        if ((val as number) >= (f.value as number)) return false;
       }
     }
     return true;
   });
 }
 
-export function applySorts<T extends Record<string, any>>(items: T[], sorts: { property: string, direction: 'asc' | 'desc' }[]): T[] {
+export function applySorts<T extends object>(items: T[], sorts: { property: string, direction: 'asc' | 'desc' }[]): T[] {
   if (sorts.length === 0) return items; // no sorts applied
 
   return [...items].sort((a, b) => {
     for (const s of sorts) {
-      let valA = a[s.property];
-      let valB = b[s.property];
+      let valA = (a as Record<string, unknown>)[s.property];
+      let valB = (b as Record<string, unknown>)[s.property];
       
       // Handle undefined/nulls
       if (valA === undefined || valA === null) valA = '';
@@ -44,8 +48,10 @@ export function applySorts<T extends Record<string, any>>(items: T[], sorts: { p
       } else if (typeof valA === 'number' && typeof valB === 'number') {
         cmp = valA - valB;
       } else {
-        if (valA < valB) cmp = -1;
-        if (valA > valB) cmp = 1;
+        const numA = Number(valA);
+        const numB = Number(valB);
+        if (numA < numB) cmp = -1;
+        if (numA > numB) cmp = 1;
       }
       
       if (cmp !== 0) {

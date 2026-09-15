@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../../shared";
 
 /* ── Reset ─────────────────────────────────────── */
 /* Wrapped in @layer base so Tailwind utility classes (p-*, m-*, etc.)
