@@ -4,7 +4,7 @@ This repo hosts **two independent SvelteKit apps** plus a Tauri admin dashboard:
 
 - `site/` → **`sqrt.fyi`** — blog, feed, microblog, now, questions, media library, colophon, and the unlisted `/main` page.
 - `cv/` → **`cv.sqrt.fyi`** — home, `/about`, `/projects`, `/skills`.
-- `shared/` — cross-app code and data (visual primitives, media helpers, and `shared/data/socials.json`), imported via the `$shared` alias in both apps.
+- `shared/` — cross-app code (visual primitives + media helpers), imported via the `$shared` alias in both apps.
 - `admin/` — Tauri + SvelteKit admin dashboard. See `admin/AGENTS.md`.
 
 Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.config.js`, `tsconfig.json`, `wrangler.jsonc`, `.svelte-kit/`, and build output. **Run `bun install` and all commands from inside the app directory.**
@@ -19,7 +19,7 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
 - `shared/components/` — `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, and the media-library components (`FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
   - `Seo.svelte` takes a `base` prop (defaults to `https://sqrt.fyi`; cv passes `https://cv.sqrt.fyi`).
   - `MenuOverlay.svelte` takes an `items` prop; each app defines its own `NAV_ITEMS` and passes them in.
-- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/colophon`, `/contact`.
+- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/colophon`.
 - `site/blog/posts/` — Markdown posts; `site/blog/_data/` — static data (e.g. `fonts.json`) shared with the admin app.
 - `site/static/` — `media/` (13 MB, never copy elsewhere), `blog-images/`, `velite/`, plus machine-readable files `robots.txt`, `llms.txt`, `.well-known/security.txt`.
 - `cv/src/routes/` — `/`, `/about`, `/projects`, `/skills`, `/sitemap.xml`.
@@ -45,7 +45,7 @@ All commands use `bun` and run **inside `site/` or `cv/`**.
 There is currently **no D1 binding**; both apps are fully static. If a route later needs a database, add a `d1_databases` block to `site/wrangler.jsonc`, regenerate types, and re-add `bunx wrangler d1 execute` commands here.
 
 ## Coding Guidelines & Rules
-- **Svelte 5 Syntax**: Use runes (`$state`, `$derived`, `$props`, `$effect`) — not Svelte 4 `export let` or `$:`.
+- **Svelte 5 Syntax**: Use runes (`$state`, `$derived`, `$props`, `$effect`) instead of Svelte 4 `export let` or `$:`.
 - **Rendering**: Each app's `src/routes/+layout.js` sets `prerender = true`; pages are static. A new route that needs the server must opt out with `export const prerender = false`.
 - **Tailwind v4**: Use utility classes and `@theme` in CSS; no `tailwind.config.js`.
 - **Accessibility (a11y)**: Svelte a11y checks are enforced. Keep the skip link targeting `#main-content` and that id on the main content container in **every layout branch of both apps**.
