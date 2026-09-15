@@ -1,9 +1,69 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import Seo from '$shared/components/Seo.svelte';
   import SocialIcons from '$shared/components/SocialIcons.svelte';
   import buttons from '../../data/buttons.json';
 
   const EMAIL = 'sqrtnegativ1@gmail.com';
+  const MAX_LENGTH = 5000;
+
+  let text = $state('');
+  let honeypot = $state('');
+  let status = $state<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  let errorMessage = $state('');
+
+  // Progressive enhancement: a no-JS submit redirects back with ?sent=1 / ?error=...
+  onMount(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('sent') === '1') status = 'sent';
+    else if (params.has('error')) {
+      status = 'error';
+      errorMessage = params.get('error') === 'empty' ? 'Write something first.' : 'Something went wrong. Please try again.';
+    }
+  });
+
+  async function handleSubmit(event: SubmitEvent) {
+    event.preventDefault();
+    if (status === 'sending') return;
+
+    const value = text.trim();
+    if (value.length === 0) {
+      status = 'error';
+      errorMessage = 'Write something first.';
+      return;
+    }
+
+    status = 'sending';
+    errorMessage = '';
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ body: value, website: honeypot })
+      });
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
+
+      if (!response.ok) {
+        status = 'error';
+        errorMessage = data.error ?? 'Something went wrong. Please try again.';
+        return;
+      }
+
+      text = '';
+      status = 'sent';
+    } catch {
+      status = 'error';
+      errorMessage = 'Network error. Please try again.';
+    }
+  }
+
+  function handleInput() {
+    if (status === 'sent' || status === 'error') {
+      status = 'idle';
+      errorMessage = '';
+    }
+  }
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -38,6 +98,49 @@
   <div class="socials">
     <SocialIcons audience="personal" exclude={['email']} />
   </div>
+
+  <form class="compose" method="POST" action="/api/contact" onsubmit={handleSubmit}>
+    <label class="sr-only" for="message">Your message</label>
+    <textarea
+      id="message"
+      name="body"
+      rows="8"
+      maxlength={MAX_LENGTH}
+      placeholder="Type anything…"
+      aria-describedby="compose-status"
+      oninput={handleInput}
+      bind:value={text}
+    ></textarea>
+
+    <!-- Honeypot: hidden from users, catches bots. -->
+    <div class="hp">
+      <label for="website">Leave this field empty</label>
+      <input
+        id="website"
+        name="website"
+        type="text"
+        tabindex="-1"
+        autocomplete="off"
+        bind:value={honeypot}
+      />
+    </div>
+
+    <div class="compose-footer">
+      <p id="compose-status" class="status" class:error={status === 'error'} role="status" aria-live="polite">
+        {#if status === 'sending'}
+          Sending…
+        {:else if status === 'sent'}
+          Sent. Thank you.
+        {:else if status === 'error'}
+          {errorMessage}
+        {/if}
+      </p>
+      <span class="counter" class:over={text.length >= MAX_LENGTH}>{text.length}/{MAX_LENGTH}</span>
+      <button type="submit" disabled={status === 'sending'}>
+        {status === 'sending' ? 'Sending…' : 'Send'}
+      </button>
+    </div>
+  </form>
 
   <ul class="buttons" aria-label="88 by 31 buttons">
     {#each buttons as button (button.id)}
@@ -116,6 +219,103 @@
   .buttons img {
     display: block;
     image-rendering: pixelated;
+  }
+
+  .compose {
+    width: min(100%, 42rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .compose textarea {
+    width: 100%;
+    min-height: 12rem;
+    box-sizing: border-box;
+    padding: 1rem 1.1rem;
+    resize: vertical;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .compose textarea::placeholder {
+    color: var(--text-secondary);
+  }
+
+  .compose textarea:focus-visible {
+    outline: none;
+    border-color: var(--text);
+    background: oklch(1 0 0 / 0.12);
+  }
+
+  .compose-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .status {
+    flex: 1;
+    margin: 0;
+    min-height: 1.2em;
+    color: var(--text-secondary);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+  }
+
+  .status.error {
+    color: oklch(0.72 0.16 25);
+  }
+
+  .counter {
+    color: var(--text-secondary);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.75rem;
+  }
+
+  .counter.over {
+    color: oklch(0.72 0.16 25);
+  }
+
+  .compose button {
+    padding: 0.6rem 1.6rem;
+    background: transparent;
+    border: 1px solid var(--text);
+    border-radius: 999px;
+    color: var(--text);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .compose button:hover:not(:disabled),
+  .compose button:focus-visible {
+    background: var(--text);
+    color: var(--bg);
+  }
+
+  .compose button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .hp {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {

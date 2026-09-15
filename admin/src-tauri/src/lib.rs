@@ -193,6 +193,61 @@ fn save_base64_image(path: String, base64_content: String) -> Result<(), String>
     Ok(())
 }
 
+/// Run a read or write SQL statement against the remote D1 `sqrt-fyi-messages`
+/// database.
+///
+/// This shells out to the Wrangler CLI from the repository's `site/` folder, so
+/// it reuses the developer's existing `wrangler login` instead of storing a
+/// separate Cloudflare API token. Returns the `results` array of the first
+/// statement in the Wrangler response.
+#[tauri::command]
+fn d1_query(sql: String) -> Result<serde_json::Value, String> {
+    let root = get_repo_root()?;
+    let site_dir = Path::new(&root).join("site");
+
+    let mut cmd = std::process::Command::new("bun");
+    cmd.current_dir(&site_dir);
+    cmd.args([
+        "x",
+        "wrangler",
+        "d1",
+        "execute",
+        "sqrt-fyi-messages",
+        "--remote",
+        "--json",
+        "--command",
+        &sql,
+    ]);
+    // Keep Wrangler from trying to be interactive.
+    cmd.env("CI", "1");
+    cmd.env("NO_COLOR", "1");
+    #[cfg(target_os = "windows")]
+    {
+        use std::os::windows::process::CommandExt;
+        cmd.creation_flags(0x0800_0000); // CREATE_NO_WINDOW
+    }
+
+    let output = cmd
+        .output()
+        .map_err(|e| format!("Failed to run Wrangler (is Bun installed and on PATH?): {e}"))?;
+
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        return Err(format!("Wrangler D1 query failed: {}", stderr.trim()));
+    }
+
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    let parsed: serde_json::Value = serde_json::from_str(stdout.trim())
+        .map_err(|e| format!("Could not parse Wrangler output: {e}"))?;
+
+    Ok(parsed
+        .as_array()
+        .and_then(|entries| entries.first())
+        .and_then(|entry| entry.get("results"))
+        .cloned()
+        .unwrap_or_else(|| serde_json::Value::Array(Vec::new())))
+}
+
 #[derive(serde::Serialize, Clone, Debug)]
 pub struct GitFileChange {
     pub path: String,
@@ -486,6 +541,7 @@ pub fn run() {
             fetch_binary,
             download_and_save_image,
             save_base64_image,
+            d1_query,
             git_get_status,
             git_commit_content,
             git_push,

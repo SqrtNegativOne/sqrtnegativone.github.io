@@ -19,3 +19,9 @@ All commands should be run using `bun`.
     3. Use `readData('now')` and `writeData('now', items)` in your admin routes.
     4. The backend automatically detects `site/src/data/*.json`, `cv/src/data/*.json` (and their `.md` siblings) as content, generates `content(<page>): update <page>`, and commits/publishes it seamlessly without any manual git steps.
 
+## Messages (Remote D1)
+- The `/messages` page is the one admin route that does **not** read local repo files; it reads the live Cloudflare **D1** database behind the site's contact form.
+- It talks to the `d1_query` Tauri command (`admin/src-tauri/src/lib.rs`), which shells out to `bun x wrangler d1 execute sqrt-fyi-messages --remote --json` from `site/`. This deliberately reuses the developer's existing `wrangler login` instead of storing a Cloudflare API token in the app.
+- Use the helpers in `$lib/d1.ts` (`listMessages`, `deleteMessage`, `d1Query`) rather than calling `d1_query` directly. Wrangler/Bun must be on `PATH`; if not, the page reports a backend error.
+- Schema lives in `site/migrations/`; see the root `AGENTS.md` for the D1 binding and migration commands.
+

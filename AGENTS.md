@@ -12,6 +12,7 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
 ## Tech Stack Overview
 - **Apps**: [SvelteKit](https://svelte.dev/) (Svelte 5) + [Tailwind CSS v4](https://tailwindcss.com/).
 - **Hosting**: Two **Cloudflare Workers** with static assets (`@sveltejs/adapter-cloudflare`), deployed by `.github/workflows/deploy-site.yml` and `deploy-cv.yml` on push to `main` (path-filtered).
+- **Database** (site only): **Cloudflare D1** (binding `DB`) stores contact-form submissions. See “Contact Form & D1” below.
 - **Blog Engine** (site only): Markdown via [Velite](https://velite.js.org/), rendered natively through `site/src/routes/blog/`; posts in `site/blog/posts/*.md`.
 - **Package Manager**: **Bun**. Don't use npm.
 
@@ -19,7 +20,9 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
 - `shared/components/` — `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, and the media-library components (`FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
   - `Seo.svelte` takes a `base` prop (defaults to `https://sqrt.fyi`; cv passes `https://cv.sqrt.fyi`).
   - `MenuOverlay.svelte` takes an `items` prop; each app defines its own `NAV_ITEMS` and passes them in.
-- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/colophon`.
+- `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/contact`, `/colophon`.
+- `site/src/routes/api/contact/+server.ts` — non-prerendered `POST` endpoint behind the `/contact` form; writes to the D1 `DB` binding.
+- `site/migrations/` — D1 SQL migrations (applied with `wrangler d1 migrations apply`).
 - `site/blog/posts/` — Markdown posts; `site/blog/_data/` — static data (e.g. `fonts.json`) shared with the admin app.
 - `site/static/` — `media/` (13 MB, never copy elsewhere), `blog-images/`, `velite/`, plus machine-readable files `robots.txt`, `llms.txt`, `.well-known/security.txt`.
 - `cv/src/routes/` — `/`, `/about`, `/projects`, `/skills`, `/sitemap.xml`.
@@ -41,8 +44,14 @@ All commands use `bun` and run **inside `site/` or `cv/`**.
 - `bunx wrangler dev` — run the built Worker locally with emulated bindings.
 - `bunx wrangler deploy` — deploy the Worker + assets.
 - `bunx wrangler types src/worker-configuration.d.ts` — regenerate Worker types after changing `wrangler.jsonc`.
+- `bunx wrangler d1 create sqrt-fyi-messages` — one-time creation; copy the returned `database_id` into the `DB` binding in `site/wrangler.jsonc`.
+- `bunx wrangler d1 migrations apply sqrt-fyi-messages --local` / `--remote` — apply migrations locally / to production.
+- `bunx wrangler d1 execute sqrt-fyi-messages --remote --command "SELECT id, created_at, country, substr(body,1,80) FROM messages ORDER BY id DESC LIMIT 20"` — read recent submissions.
 
-There is currently **no D1 binding**; both apps are fully static. If a route later needs a database, add a `d1_databases` block to `site/wrangler.jsonc`, regenerate types, and re-add `bunx wrangler d1 execute` commands here.
+## Contact Form & D1
+- The `/contact` page is **prerendered** and posts JSON to `/api/contact` (marked `export const prerender = false`), so the form works while the page stays static. A no-JS `<form>` fallback redirects back to `/contact?sent=1`.
+- `site/wrangler.jsonc` declares the `DB` D1 binding; `site/migrations/*.sql` define the `messages` table. The deploy workflow applies migrations before deploying.
+- The handler validates/limits the message (5000 chars), uses a hidden honeypot field, and rate-limits by a **daily-rotating SHA-256 hash** of the client IP (raw IPs are never stored).
 
 ## Coding Guidelines & Rules
 - **Svelte 5 Syntax**: Use runes (`$state`, `$derived`, `$props`, `$effect`) instead of Svelte 4 `export let` or `$:`.
@@ -63,4 +72,4 @@ There is currently **no D1 binding**; both apps are fully static. If a route lat
 
 ## Cloudflare deploy notes
 - `sqrt.fyi/` performs a **client-side** redirect to `cv.sqrt.fyi` — `adapter-cloudflare` serves prerendered assets from `env.ASSETS` and bypasses SvelteKit hooks, so do not convert `/` into a server redirect.
-- Owner-only setup: ensure `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` repo secrets exist and point the `sqrt.fyi` zone at Cloudflare. Custom domains are created on first `wrangler deploy`. No database setup is needed for the current static deployment.
+- Owner-only setup: ensure `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` repo secrets exist and point the `sqrt.fyi` zone at Cloudflare. Custom domains are created on first `wrangler deploy`. For the contact form, also create the `sqrt-fyi-messages` D1 database once and paste its id into `site/wrangler.jsonc`; the workflow then applies `site/migrations/` on each deploy. If you ever remove the D1 binding, drop the migration step from `deploy-site.yml`.

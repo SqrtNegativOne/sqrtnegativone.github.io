@@ -33,6 +33,13 @@ jobs:
         working-directory: site
         run: bun run build
 
+      - name: Apply D1 migrations
+        working-directory: site
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: bunx wrangler d1 migrations apply sqrt-fyi-messages --remote
+
       - name: Deploy to Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:

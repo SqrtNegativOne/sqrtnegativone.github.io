@@ -116,5 +116,18 @@ export const navItems: NavItem[] = [
     navActiveBg: 'bg-teal-500/10',
     navActiveText: 'text-teal-400',
     navActiveBorder: 'border-teal-500/20'
+  },
+  {
+    href: '/messages',
+    label: 'Messages',
+    description: 'Read and moderate contact form submissions.',
+    path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>',
+    bgGradient: 'from-rose-500/5',
+    iconBg: 'bg-rose-500/10',
+    iconColor: 'text-rose-400',
+    borderHover: 'hover:border-rose-500/50',
+    navActiveBg: 'bg-rose-500/10',
+    navActiveText: 'text-rose-400',
+    navActiveBorder: 'border-rose-500/20'
   }
 ];

@@ -37,6 +37,7 @@ export default ts.config(
 		ignores: [
 			'**/build/',
 			'**/.svelte-kit/',
+			'**/.wrangler/',
 			'**/dist/',
 			'**/public/',
 			'**/docs/',
