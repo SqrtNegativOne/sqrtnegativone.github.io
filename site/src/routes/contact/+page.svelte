@@ -176,6 +176,9 @@
       loading="lazy"
     ></iframe>
   </div>
+  <a class="banner" href="https://deltarune.com/code/">
+    <img alt="This site is part of a game glitches and secrets web ring!" class="img-fluid" src="https://deltarune.com/assets/images/secrets-webring.gif">
+  </a>
 </main>
 
 <style>
