@@ -26,22 +26,28 @@
       ]
     },
     {
+      title: 'Editing (any modal)',
+      shortcuts: [
+        { keys: ['Ctrl', 'S'], label: 'Save the open editor' },
+        { keys: ['Ctrl', 'Enter'], label: 'Save from inside any field' },
+        { keys: ['Ctrl', 'K'], label: 'Jump to any field' },
+        { keys: ['Tab'], label: 'Next field' },
+        { keys: ['Shift', 'Tab'], label: 'Previous field' },
+        { keys: ['Esc'], label: 'Cancel / close (asks before discarding)' }
+      ]
+    },
+    {
       title: 'Media editor',
       routes: ['/media'],
       shortcuts: [
-        { keys: ['Ctrl', 'S'], label: 'Save the media item' },
-        { keys: ['Ctrl', 'Enter'], label: 'Save from inside any field' },
         { keys: ['Enter'], label: 'Search metadata (new item, title field)' },
-        { keys: ['Esc'], label: 'Cancel edit / close match results' }
+        { keys: ['Esc'], label: 'Close match results first, then the editor' }
       ]
     },
     {
       title: 'Now entries',
       routes: ['/now'],
-      shortcuts: [
-        { keys: ['Ctrl', 'S'], label: 'Save the day entry' },
-        { keys: ['Esc'], label: 'Close the editor' }
-      ]
+      shortcuts: [{ keys: ['Ctrl', 'S'], label: 'Save the day entry' }]
     },
     {
       title: 'Questions',

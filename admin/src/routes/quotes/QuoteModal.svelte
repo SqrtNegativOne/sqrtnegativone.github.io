@@ -21,6 +21,11 @@
   let currentQuote = $state({ ...item });
   // svelte-ignore state_referenced_locally
   let tagsInput = $state(tagsStr);
+  // svelte-ignore state_referenced_locally
+  let originalSnapshot = $state(JSON.stringify({ ...item, tags: tagsStr }));
+  let isDirty = $derived(
+    JSON.stringify({ ...currentQuote, tags: tagsInput }) !== originalSnapshot
+  );
   let importUrl = $state('');
   let isFetching = $state(false);
   let quoteInput: HTMLTextAreaElement | undefined = $state();
@@ -130,6 +135,7 @@
 <Modal
   title={isEditing ? 'Edit Quote' : 'New Quote'}
   maxWidth="2xl"
+  dirty={isDirty}
   onclose={close}
 >
   <form id="quote-form" onsubmit={handleSave} class="space-y-4">

@@ -130,5 +130,5 @@
 </div>
 
 {#if isModalOpen}
-  <BlogModal {isEditing} item={currentItem} fonts={data.fonts} close={() => isModalOpen = false} />
+  <BlogModal {isEditing} item={currentItem} fonts={data.fonts} existingIds={(data.posts || []).map((p: BlogItem) => p.id)} close={() => isModalOpen = false} />
 {/if}

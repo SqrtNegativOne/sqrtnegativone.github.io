@@ -2,7 +2,7 @@
   import { invalidateAll } from '$app/navigation';
   import { onMount } from 'svelte';
   import { readData, writeData, getRepoRoot } from '$lib/db';
-  import { safeInvoke } from '$lib/utils';
+  import { safeInvoke, uniqueSlug } from '$lib/utils';
   import { notificationState } from '$lib/notificationState.svelte';
   import Modal from '$lib/Modal.svelte';
   import { ResultAsync } from 'neverthrow';
@@ -21,6 +21,9 @@
 
   // svelte-ignore state_referenced_locally
   let currentItem = $state({ ...item });
+  // svelte-ignore state_referenced_locally
+  let originalSnapshot = $state(JSON.stringify(item));
+  let isDirty = $derived(JSON.stringify(currentItem) !== originalSnapshot);
   let fileInput: HTMLInputElement | undefined = $state();
   let nameInput: HTMLInputElement | undefined = $state();
 
@@ -45,7 +48,6 @@
 
   async function handleSave(e: Event) {
     e.preventDefault();
-    const id = currentItem.id;
     const name = currentItem.name;
     const description = currentItem.description;
     const tagsStr = currentItem.tags;
@@ -54,10 +56,19 @@
     let image = currentItem.image;
     const isPrivate = currentItem.private;
     const isNew = !isEditing;
-    
-    if (!id || !name) {
-      notificationState.error('ID and Name are required', { title: 'Validation Error' });
+
+    if (!name) {
+      notificationState.error('Name is required', { title: 'Validation Error' });
       return;
+    }
+
+    const itemsRes = await readData<ProjectItem>('projects.json');
+    const items = itemsRes.unwrapOr([] as any[]);
+
+    let id = currentItem.id;
+    if (isNew || !id) {
+      id = uniqueSlug(name, items.map((i: ProjectItem) => i.id), 'project');
+      currentItem.id = id;
     }
 
     if (fileInput && fileInput.files && fileInput.files.length > 0) {
@@ -103,9 +114,6 @@
       image = `/projects/${fileName}`;
     }
 
-    const itemsRes = await readData<ProjectItem>('projects.json');
-    const items = itemsRes.unwrapOr([] as any[]);
-    
     const tags = tagsStr ? tagsStr.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
     
     const newItem: ProjectItem = { 
@@ -124,10 +132,6 @@
     }
     
     if (isNew) {
-      if (items.some(i => i.id === id)) {
-        notificationState.error('Project ID already exists', { title: 'Duplicate ID' });
-        return;
-      }
       items.push(newItem);
     } else {
       const idx = items.findIndex(i => i.id === id);
@@ -155,18 +159,14 @@
 <Modal
   title={isEditing ? 'Edit Project' : 'New Project'}
   maxWidth="3xl"
+  dirty={isDirty}
   onclose={close}
 >
   <form id="project-form" onsubmit={handleSave} class="space-y-6">
     <input type="hidden" name="isNew" value={(!isEditing).toString()} />
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="space-y-2">
-        <label for="project-id" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">ID (Unique)</label>
-        <input id="project-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
-      </div>
-      
-      <div class="space-y-2">
+      <div class="space-y-2 md:col-span-2">
         <label for="project-name" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Name</label>
         <input id="project-name" type="text" name="name" bind:this={nameInput} bind:value={currentItem.name} class="input-field" required />
       </div>

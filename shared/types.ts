@@ -47,6 +47,12 @@ export interface QuoteItem {
   tags?: string[];
 }
 
+/** An 88x31 link button shown on the contact page. */
+export interface ButtonItem {
+  url: string;
+  image: string;
+}
+
 export type SocialAudience = 'professional' | 'personal' | 'both';
 
 export interface SocialItem {

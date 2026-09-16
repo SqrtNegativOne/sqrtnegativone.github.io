@@ -20,6 +20,15 @@
   let currentItem: SkillFormItem = $state({
     name: '', icon: '', logo: '', mono: '', originalName: '', hidden: false
   });
+  let originalItem: { name: string; icon: string; logo: string; mono: string } = $state({
+    name: '', icon: '', logo: '', mono: ''
+  });
+  let isDirty = $derived(
+    currentItem.name !== originalItem.name ||
+      currentItem.icon !== originalItem.icon ||
+      currentItem.logo !== originalItem.logo ||
+      currentItem.mono !== originalItem.mono
+  );
 
   let searchQuery = $state('');
   let filters = $state<FilterRule[]>([]);
@@ -47,12 +56,14 @@
   function openNew(initialName = '') {
     isEditing = false;
     currentItem = { name: initialName, icon: '', logo: '', mono: '', originalName: '', hidden: false };
+    originalItem = { name: initialName, icon: '', logo: '', mono: '' };
     isModalOpen = true;
   }
 
   function openEdit(item: SkillItem) {
     isEditing = true;
     currentItem = { ...item, originalName: item.name };
+    originalItem = { name: item.name, icon: item.icon || '', logo: item.logo || '', mono: item.mono || '' };
     isModalOpen = true;
   }
 
@@ -163,6 +174,7 @@
   <Modal
     title={isEditing ? 'Edit Skill' : 'New Skill'}
     maxWidth="md"
+    dirty={isDirty}
     onclose={() => isModalOpen = false}
   >
     <form id="skill-form" onsubmit={handleSave} class="space-y-4">

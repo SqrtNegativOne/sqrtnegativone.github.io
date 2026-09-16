@@ -1,5 +1,16 @@
 <script lang="ts">
+  import { popModal, pushModal } from '$lib/modalStack';
+
   let { isSearchModalOpen = $bindable(), searchResults, selectSearchResult } = $props();
+
+  const modalId = Symbol('search-modal');
+
+  $effect(() => {
+    if (isSearchModalOpen) {
+      pushModal(modalId);
+      return () => popModal(modalId);
+    }
+  });
 
   function handleKeydown(e: KeyboardEvent) {
     if (isSearchModalOpen && e.key === 'Escape') {

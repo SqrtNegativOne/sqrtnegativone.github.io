@@ -28,6 +28,7 @@ export const COLLECTIONS = {
   mediaPrivate: 'site/static/media/media-private.json',
   mediaProperties: 'site/static/media/media-properties.json',
   now: 'site/src/data/now.json',
+  buttons: 'site/src/data/buttons.json',
 } as const;
 
 // Plain data files that live in the cv app rather than the site app.

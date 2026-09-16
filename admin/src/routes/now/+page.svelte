@@ -30,8 +30,13 @@
   });
 
   let originalDate = $state('');
+  let originalEntry = $state<NowEntry | null>(null);
   let editorViewMode: 'split' | 'edit' | 'preview' = $state('split');
   let titleInput: HTMLInputElement | undefined = $state();
+
+  let isDirty = $derived(
+    !!originalEntry && JSON.stringify(currentEntry) !== JSON.stringify(originalEntry)
+  );
 
   $effect(() => {
     if (isModalOpen) titleInput?.focus();
@@ -88,6 +93,7 @@
       content: '### What I\'m Learning\n- \n\n### What I\'m Building\n- \n\n### What I\'m Reading\n- \n',
       updatedAt: new Date().toISOString()
     };
+    originalEntry = { ...currentEntry };
     isModalOpen = true;
   }
 
@@ -101,6 +107,7 @@
       content: entry.content || '',
       updatedAt: entry.updatedAt || ''
     };
+    originalEntry = { ...currentEntry };
     isModalOpen = true;
   }
 
@@ -192,19 +199,7 @@
       notificationState.error(saveRes.error.message, { title: 'Delete Failed' });
     }
   }
-
-  function handleKeydown(e: KeyboardEvent) {
-    if (isModalOpen && (e.ctrlKey || e.metaKey) && e.key === 's') {
-      e.preventDefault();
-      handleSave();
-    }
-    if (isModalOpen && e.key === 'Escape') {
-      closeModal();
-    }
-  }
 </script>
-
-<svelte:window onkeydown={handleKeydown} />
 
 <svelte:head>
   <title>Manage Now Entries | Admin</title>
@@ -281,8 +276,10 @@
 {#if isModalOpen}
   <Modal
     title={isEditing ? `Edit Day Entry (${originalDate})` : 'New Day Entry'}
-    subtitle={`Individual day page will be published at /now/${currentEntry.date}`}
     maxWidth="5xl"
+    dirty={isDirty}
+    saving={isSaving}
+    onsave={handleSave}
     onclose={closeModal}
   >
     <!-- Date and Title fields -->

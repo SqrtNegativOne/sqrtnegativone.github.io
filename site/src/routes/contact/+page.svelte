@@ -2,7 +2,11 @@
   import { onMount } from 'svelte';
   import Seo from '$shared/components/Seo.svelte';
   import SocialIcons from '$shared/components/SocialIcons.svelte';
-  import buttons from '../../data/buttons.json';
+  import type { ButtonItem } from '$shared/types';
+  import { buttonLabel } from '$lib/utils';
+  import buttonsData from '../../data/buttons.json';
+
+  const buttons = buttonsData as ButtonItem[];
 
   const EMAIL = 'sqrtnegativ1@gmail.com';
   const MAX_LENGTH = 5000;
@@ -143,17 +147,18 @@
   </form>
 
   <ul class="buttons" aria-label="88 by 31 buttons">
-    {#each buttons as button (button.id)}
+    {#each buttons as button (button.url)}
+      {@const label = buttonLabel(button.url)}
       <li>
         <a
           href={button.url}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={button.name}
+          aria-label={label}
         >
           <img
             src={button.image}
-            alt={button.name}
+            alt={label}
             width="88"
             height="31"
             loading="lazy"

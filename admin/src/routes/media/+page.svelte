@@ -58,6 +58,7 @@
   existingItems={data.media || []}
   isSearching={media.isSearching}
   isSaving={media.isSaving}
+  dirty={media.isDirty}
   isSearchModalOpen={media.isSearchModalOpen}
   searchError={media.searchError}
   handleSearch={() => media.handleSearch()}

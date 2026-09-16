@@ -4,6 +4,7 @@
   import { assetState } from '$lib/assetState.svelte';
   import { getPosterUrl } from '../../../../../shared/utils/getPosterUrl';
   import type { MediaItem } from '../../../../../shared/types';
+  import Modal from '$lib/Modal.svelte';
 
   let {
     isModalOpen = $bindable(),
@@ -12,6 +13,7 @@
     existingItems = [],
     isSearching,
     isSaving,
+    dirty = false,
     isSearchModalOpen = false,
     searchError,
     handleSearch,
@@ -33,30 +35,6 @@
       titleInput?.focus();
     }
   });
-
-  function requestSave() {
-    // Use native requestSubmit so browser validation + onsubmit run.
-    (document.getElementById('save-media-form') as HTMLFormElement | null)?.requestSubmit();
-  }
-
-  function handleKeydown(e: KeyboardEvent) {
-    if (!isModalOpen) return;
-    const isCtrlOrMeta = e.ctrlKey || e.metaKey;
-
-    // Ctrl/Cmd+S or Ctrl/Cmd+Enter: save (works from inside textareas too)
-    if (isCtrlOrMeta && !e.altKey && (e.key === 's' || e.key === 'S' || e.code === 'KeyS' || e.key === 'Enter')) {
-      e.preventDefault();
-      if (!isSaving) requestSave();
-      return;
-    }
-
-    // Escape: close/cancel, but let a nested metadata search modal close first
-    if (e.key === 'Escape') {
-      if (isSearchModalOpen) return;
-      e.preventDefault();
-      isModalOpen = false;
-    }
-  }
 
   function handleTagsInput(e: Event) {
     const val = (e.target as HTMLInputElement).value;
@@ -112,13 +90,16 @@
   });
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
-
-{#if isModalOpen}
-  <div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50" role="dialog" aria-modal="true" data-modal="true" tabindex="-1">
-    <div class="bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded shadow-2xl w-full max-w-4xl max-h-[92vh] flex flex-col overflow-hidden">
-      <div class="flex-1 overflow-y-auto">
-        <form id="save-media-form" onsubmit={handleSave} class="p-6">
+<Modal
+  open={isModalOpen}
+  title={isEditing ? 'Edit Media' : 'New Media'}
+  maxWidth="4xl"
+  saving={isSaving}
+  dirty={dirty}
+  onclose={() => isModalOpen = false}
+  bodyClass="overflow-y-auto p-6"
+>
+  <form id="save-media-form" onsubmit={handleSave}>
           <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_220px] gap-6">
             <!-- Main column -->
             <div class="space-y-6 min-w-0">
@@ -291,36 +272,27 @@
               </div>
             </aside>
           </div>
-        </form>
-      </div>
-    
-      <div class="p-5 flex justify-between items-center border-t border-[oklch(0.2739_0.0055_286.03)] bg-[oklch(0.1603_0.0059_285.89)] shrink-0">
-        <div>
-          {#if isEditing}
-            <button type="button" class="px-4 py-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded transition-all cursor-pointer" onclick={() => handleDelete(currentItem.id)}>
-              Delete
-            </button>
-          {/if}
-        </div>
-        <div class="flex space-x-4">
-          <button type="button" onclick={() => isModalOpen = false} class="btn-secondary">Cancel</button>
-          <button type="submit" form="save-media-form" class="btn-primary flex items-center justify-center gap-2 cursor-pointer" disabled={isSaving}>
-            {#if isSaving}
-              <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Saving...
-            {:else}
-              {#if isEditing}
-                Save Changes
-              {:else}
-                Add Media
-              {/if}
-            {/if}
-          </button>
-        </div>
-      </div>
+  </form>
+
+  {#snippet footer()}
+    <div class="mr-auto">
+      {#if isEditing}
+        <button type="button" class="px-4 py-2 text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded transition-all cursor-pointer" onclick={() => handleDelete(currentItem.id)}>
+          Delete
+        </button>
+      {/if}
     </div>
-  </div>
-{/if}
+    <button type="button" onclick={() => isModalOpen = false} class="btn-secondary">Cancel</button>
+    <button type="submit" form="save-media-form" class="btn-primary flex items-center justify-center gap-2 cursor-pointer" disabled={isSaving}>
+      {#if isSaving}
+        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Saving...
+      {:else}
+        {isEditing ? 'Save Changes' : 'Add Media'}
+      {/if}
+    </button>
+  {/snippet}
+</Modal>

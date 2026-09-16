@@ -1,15 +1,16 @@
 [
   {
-    "id": "pysdf",
-    "name": "pyAMorph",
-    "description": "IIT Madras internship project. Python library implementing signed distance functions (SDFs) for 2D/3D geometry via NumPy, CuPy, AMREX. See website for more details.",
+    "id": "presence",
+    "name": "Presence",
+    "description": "AI-powered attendance system that uses face recognition to automatically mark students present from a single group photo taken after enrollment. DIY-Palantir.",
     "tags": [
       "Python",
-      "NumPy"
+      "Face Recognition",
+      "CV"
     ],
-    "github": null,
-    "url": "https://pyamorph.vercel.app/",
-    "image": "/projects/pysdf-1786104684402.png"
+    "github": "https://github.com/SqrtNegativOne/presence",
+    "url": null,
+    "image": "https://picsum.photos/seed/presence-faces/400/220"
   },
   {
     "id": "floatchat",
@@ -25,6 +26,18 @@
     "github": null,
     "url": null,
     "image": "https://picsum.photos/seed/floatchat-ocean/400/220"
+  },
+  {
+    "id": "pysdf",
+    "name": "pyAMorph",
+    "description": "IIT Madras internship project. Python library implementing signed distance functions (SDFs) for 2D/3D geometry via NumPy, CuPy, AMREX. See website for more details.",
+    "tags": [
+      "Python",
+      "NumPy"
+    ],
+    "github": null,
+    "url": "https://pyamorph.vercel.app/",
+    "image": "/projects/pysdf-1786104684402.png"
   },
   {
     "id": "axiom-web",
@@ -52,19 +65,6 @@
     "github": "https://github.com/SqrtNegativOne/AI-factcheck",
     "url": null,
     "image": "/projects/ai-factcheck-1786104963302.png"
-  },
-  {
-    "id": "presence",
-    "name": "Presence",
-    "description": "AI-powered attendance system that uses face recognition to automatically mark students present from a single group photo taken after enrollment. DIY-Palantir.",
-    "tags": [
-      "Python",
-      "Face Recognition",
-      "CV"
-    ],
-    "github": "https://github.com/SqrtNegativOne/presence",
-    "url": null,
-    "image": "https://picsum.photos/seed/presence-faces/400/220"
   },
   {
     "id": "hand-cricket-mab",

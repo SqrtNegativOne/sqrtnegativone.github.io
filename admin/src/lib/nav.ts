@@ -118,6 +118,19 @@ export const navItems: NavItem[] = [
     navActiveBorder: 'border-teal-500/20'
   },
   {
+    href: '/buttons',
+    label: 'Buttons',
+    description: 'Manage 88x31 link buttons shown on the contact page.',
+    path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V7a1 1 0 011-1zm4 4h8M8 14h4"></path>',
+    bgGradient: 'from-indigo-500/5',
+    iconBg: 'bg-indigo-500/10',
+    iconColor: 'text-indigo-400',
+    borderHover: 'hover:border-indigo-500/50',
+    navActiveBg: 'bg-indigo-500/10',
+    navActiveText: 'text-indigo-400',
+    navActiveBorder: 'border-indigo-500/20'
+  },
+  {
     href: '/messages',
     label: 'Messages',
     description: 'Read and moderate contact form submissions.',

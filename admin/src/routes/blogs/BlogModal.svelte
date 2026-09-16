@@ -3,18 +3,21 @@
   import { onMount } from 'svelte';
   import { invoke } from '@tauri-apps/api/core';
   import { getRepoRoot } from '$lib/db';
+  import { uniqueSlug } from '$lib/utils';
   import { ResultAsync, ok, err, type Result } from 'neverthrow';
   import { notificationState } from '$lib/notificationState.svelte';
   import markdownIt from 'markdown-it';
+  import Modal from '$lib/Modal.svelte';
 
   interface BlogFormItem {
     id: string; title: string; date: string; description: string; content: string; tags: string; font: string;
   }
 
-  let { isEditing, item, fonts, close } = $props<{
+  let { isEditing, item, fonts, existingIds = [], close } = $props<{
     isEditing: boolean;
     item: BlogFormItem;
     fonts: { name: string; css: string }[];
+    existingIds?: string[];
     close: () => void;
   }>();
 
@@ -28,6 +31,10 @@
   let uploadStatus = $state('');
   let viewMode: 'split' | 'edit' | 'preview' = $state('split');
   let showMeta = $state(true);
+
+  // svelte-ignore state_referenced_locally
+  let originalSnapshot = $state(JSON.stringify(item));
+  let isDirty = $derived(JSON.stringify(currentItem) !== originalSnapshot);
 
   onMount(() => titleInput?.focus());
 
@@ -158,10 +165,15 @@ ${content}
     let { id, title, date, description, tags, font, content } = currentItem;
     const isNew = !isEditing;
     
-    if (!id || !title || !date) {
-      errorMsg = 'ID, Title, and Date are required';
+    if (!title || !date) {
+      errorMsg = 'Title and Date are required';
       notificationState.error(errorMsg, { title: 'Validation Error' });
       return;
+    }
+
+    if (isNew || !id) {
+      const taken = existingIds.map((filename: string) => filename.replace(/\.md$/, ''));
+      id = `${uniqueSlug(title, taken, 'post')}.md`;
     }
     
     if (!id.endsWith('.md')) id += '.md';
@@ -203,63 +215,54 @@ ${content}
   }
 </script>
 
-<div class="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50" role="dialog" aria-modal="true" data-modal="true" tabindex="-1">
-  <div class="bg-[oklch(0.2103_0.0059_285.89)] border border-[oklch(0.2739_0.0055_286.03)] rounded shadow-2xl w-full max-w-7xl h-[94vh] flex flex-col overflow-hidden">
-    <!-- Modal Header -->
-    <div class="px-6 py-3 border-b border-[oklch(0.2739_0.0055_286.03)] flex justify-between items-center bg-[oklch(0.1603_0.0059_285.89)]">
-      <div class="flex items-center gap-4">
-        <h2 class="text-lg font-semibold text-white">{isEditing ? 'Edit Blog Post' : 'Add New Blog Post'}</h2>
-        <button
-          type="button"
-          class="text-xs text-[oklch(0.7107_0.0351_256.79)] hover:text-white flex items-center gap-1 px-2 py-1 rounded bg-black/40 cursor-pointer"
-          onclick={() => showMeta = !showMeta}
-        >
-          <span>{showMeta ? 'Hide Post Details' : 'Show Post Details'}</span>
-          <svg class="w-3.5 h-3.5 transition-transform {showMeta ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-        </button>
-      </div>
+<Modal
+  title={isEditing ? 'Edit Blog Post' : 'Add New Blog Post'}
+  maxWidth="7xl"
+  dirty={isDirty}
+  onclose={close}
+  bodyClass="overflow-hidden p-4 flex flex-col"
+>
+  <!-- Toolbar (view switch + metadata toggle) -->
+  <div class="flex items-center justify-between gap-4 pb-3 shrink-0">
+    <button
+      type="button"
+      class="text-xs text-[oklch(0.7107_0.0351_256.79)] hover:text-white flex items-center gap-1 px-2 py-1 rounded bg-black/40 cursor-pointer"
+      onclick={() => showMeta = !showMeta}
+    >
+      <span>{showMeta ? 'Hide Post Details' : 'Show Post Details'}</span>
+      <svg class="w-3.5 h-3.5 transition-transform {showMeta ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+    </button>
 
-      <div class="flex items-center gap-3">
-        <!-- View mode toggle -->
-        <div class="flex bg-black/40 rounded p-1 border border-[oklch(0.2739_0.0055_286.03)] text-xs font-medium">
-          <button
-            type="button"
-            class="px-2.5 py-1 rounded transition-colors {viewMode === 'edit' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
-            onclick={() => viewMode = 'edit'}
-          >
-            Editor
-          </button>
-          <button
-            type="button"
-            class="px-2.5 py-1 rounded transition-colors {viewMode === 'split' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
-            onclick={() => viewMode = 'split'}
-          >
-            Split
-          </button>
-          <button
-            type="button"
-            class="px-2.5 py-1 rounded transition-colors {viewMode === 'preview' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
-            onclick={() => viewMode = 'preview'}
-          >
-            Preview
-          </button>
-        </div>
-
-        <button aria-label="Close modal" onclick={close} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white ml-2 cursor-pointer">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-      </div>
+    <!-- View mode toggle -->
+    <div class="flex bg-black/40 rounded p-1 border border-[oklch(0.2739_0.0055_286.03)] text-xs font-medium">
+      <button
+        type="button"
+        class="px-2.5 py-1 rounded transition-colors {viewMode === 'edit' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
+        onclick={() => viewMode = 'edit'}
+      >
+        Editor
+      </button>
+      <button
+        type="button"
+        class="px-2.5 py-1 rounded transition-colors {viewMode === 'split' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
+        onclick={() => viewMode = 'split'}
+      >
+        Split
+      </button>
+      <button
+        type="button"
+        class="px-2.5 py-1 rounded transition-colors {viewMode === 'preview' ? 'bg-orange-500/20 text-orange-400 font-semibold' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white'} cursor-pointer"
+        onclick={() => viewMode = 'preview'}
+      >
+        Preview
+      </button>
     </div>
-    
-    <form onsubmit={handleSave} class="flex-1 overflow-hidden p-6 flex flex-col gap-4">
+  </div>
+
+  <form id="blog-post-form" onsubmit={handleSave} class="flex-1 overflow-hidden flex flex-col gap-4 min-h-0">
       <!-- Collapsible Metadata Grid -->
       {#if showMeta}
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4 rounded bg-black/20 border border-[oklch(0.2739_0.0055_286.03)] shrink-0">
-          <div class="space-y-1">
-            <label for="post-id" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Filename (.md)</label>
-            <input id="post-id" type="text" name="id" bind:value={currentItem.id} readonly={isEditing} class="input-field text-xs {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required placeholder="my-post.md" />
-          </div>
-          
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded bg-black/20 border border-[oklch(0.2739_0.0055_286.03)] shrink-0">
           <div class="space-y-1">
             <label for="post-date" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)]">Date</label>
             <input id="post-date" type="text" name="date" bind:value={currentItem.date} class="input-field text-xs" required placeholder="YYYY-MM-DD" />
@@ -372,14 +375,13 @@ ${content}
         {/if}
       </div>
       
-      <!-- Footer Actions -->
-      <div class="flex justify-end space-x-4 pt-2 border-t border-[oklch(0.2739_0.0055_286.03)] shrink-0">
-        <button type="button" onclick={close} class="btn-secondary">Cancel</button>
-        <button type="submit" class="btn-primary">Save Post</button>
-      </div>
-    </form>
-  </div>
-</div>
+  </form>
+
+  {#snippet footer()}
+    <button type="button" onclick={close} class="btn-secondary">Cancel</button>
+    <button type="submit" form="blog-post-form" class="btn-primary">Save Post</button>
+  {/snippet}
+</Modal>
 
 <style>
   .preview-post-title {

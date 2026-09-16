@@ -2,6 +2,7 @@
   import { invalidateAll } from '$app/navigation';
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
+  import { uniqueSlug } from '$lib/utils';
   import SearchBar from '$lib/SearchBar.svelte';
   import EmptyState from '$lib/EmptyState.svelte';
   import Modal from '$lib/Modal.svelte';
@@ -15,6 +16,10 @@
   let currentItem: SocialItem = $state({
     id: '', name: '', url: '', icon: '', audience: 'both'
   });
+  let originalItem: SocialItem = $state({
+    id: '', name: '', url: '', icon: '', audience: 'both'
+  });
+  let isDirty = $derived(JSON.stringify(currentItem) !== JSON.stringify(originalItem));
 
   let searchQuery = $state('');
   let filters = $state<FilterRule[]>([]);
@@ -53,30 +58,33 @@
   function openNew(initialName = '') {
     isEditing = false;
     currentItem = { id: '', name: initialName, url: '', icon: '', audience: 'both' };
+    originalItem = { ...currentItem };
     isModalOpen = true;
   }
 
   function openEdit(item: SocialItem) {
     isEditing = true;
     currentItem = { ...item };
+    originalItem = { ...currentItem };
     isModalOpen = true;
   }
 
   async function handleSave(e: SubmitEvent) {
     e.preventDefault();
-    if (!currentItem.id || !currentItem.name) {
-      notificationState.error('ID and Name are required', { title: 'Validation Error' });
+    if (!currentItem.name) {
+      notificationState.error('Name is required', { title: 'Validation Error' });
       return;
     }
 
     const items = (await readData<SocialItem>('socials.json')).unwrapOr([] as SocialItem[]);
+
+    if (!isEditing || !currentItem.id) {
+      currentItem.id = uniqueSlug(currentItem.name, items.map((i) => i.id), 'social');
+    }
+
     const newItem = { ...currentItem };
     
     if (!isEditing) {
-      if (items.some(i => i.id === newItem.id)) {
-        notificationState.error('Social ID already exists', { title: 'Duplicate ID' });
-        return;
-      }
       items.push(newItem);
     } else {
       const idx = items.findIndex(i => i.id === newItem.id);
@@ -198,14 +206,10 @@
   <Modal
     title={isEditing ? 'Edit Social' : 'New Social'}
     maxWidth="md"
+    dirty={isDirty}
     onclose={() => isModalOpen = false}
   >
     <form id="social-form" onsubmit={handleSave} class="space-y-4">
-      <div class="space-y-2">
-        <label class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]" for="social-id">ID (Unique)</label>
-        <input type="text" id="social-id" bind:value={currentItem.id} readonly={isEditing} class="input-field {isEditing ? 'opacity-50 cursor-not-allowed' : ''}" required />
-      </div>
-      
       <div class="space-y-2">
         <label class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]" for="social-name">Name</label>
         <input type="text" id="social-name" bind:this={nameInput} bind:value={currentItem.name} class="input-field" required />

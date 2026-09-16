@@ -53,7 +53,7 @@
   }
 
   function handleKeydown(e: KeyboardEvent) {
-    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+    if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 's' || e.key === 'S' || e.key === 'Enter')) {
       e.preventDefault();
       handleSave();
     }

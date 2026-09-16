@@ -307,6 +307,15 @@ export class MediaState {
     author: '', publisher: '',
     tags: [], hidden: false
   });
+  initialItem: MediaItem = $state({
+    id: '', type: 'movie', rating: 4, status: 'wishlist',
+    title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
+    author: '', publisher: '',
+    tags: [], hidden: false
+  });
+  get isDirty(): boolean {
+    return JSON.stringify(this.currentItem) !== JSON.stringify(this.initialItem);
+  }
   
   isSearching = $state(false);
   searchError = $state('');
@@ -341,6 +350,7 @@ export class MediaState {
       author: '', publisher: '',
       tags: [], hidden: false
     };
+    this.initialItem = { ...this.currentItem };
     this.isModalOpen = true;
   }
 
@@ -348,6 +358,7 @@ export class MediaState {
     this.isEditing = true;
     this.errorMsg = '';
     this.currentItem = { ...item };
+    this.initialItem = { ...this.currentItem };
     this.isModalOpen = true;
   }
 

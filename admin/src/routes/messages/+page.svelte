@@ -3,11 +3,45 @@
   import { listMessages, deleteMessage, type D1Message } from '$lib/d1';
   import { notificationState } from '$lib/notificationState.svelte';
   import PageHeader from '$lib/PageHeader.svelte';
+  import SearchBar from '$lib/SearchBar.svelte';
   import EmptyState from '$lib/EmptyState.svelte';
+  import { filterAndSortItems, type FilterRule, type SortRule, type FilterProperty } from '$lib/searchUtils';
+  import MessageCard from './MessageCard.svelte';
 
   let messages = $state<D1Message[]>([]);
   let isLoading = $state(true);
   let deletingId = $state<number | null>(null);
+
+  let searchQuery = $state('');
+  let filters = $state<FilterRule[]>([]);
+  let sorts = $state<SortRule[]>([]);
+
+  let countries = $derived(
+    Array.from(new Set(messages.map((m) => m.country).filter((c): c is string => !!c))).sort()
+  );
+
+  let filterProperties = $derived<FilterProperty[]>([
+    { value: 'body', label: 'Body', type: 'text' },
+    {
+      value: 'country',
+      label: 'Country',
+      type: 'select',
+      options: countries.map((c) => ({ value: c, label: c }))
+    },
+    { value: 'user_agent', label: 'User agent', type: 'text' },
+    { value: 'created_at', label: 'Received', type: 'text' }
+  ]);
+
+  // Keep newest-first as the stable default; users can override via the sort menu.
+  let filteredMessages = $derived(
+    filterAndSortItems<D1Message>({
+      items: messages,
+      searchQuery,
+      searchFields: ['body', 'country', 'user_agent', 'created_at'],
+      filters,
+      sorts
+    })
+  );
 
   async function loadMessages() {
     isLoading = true;
@@ -30,16 +64,14 @@
     deletingId = null;
   }
 
-  function formatDate(value: string): string {
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return value;
-    return date.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-  }
-
   onMount(() => {
     void loadMessages();
   });
 </script>
+
+<svelte:head>
+  <title>Manage Messages | Admin</title>
+</svelte:head>
 
 <div class="space-y-6">
   <PageHeader title="Messages">
@@ -56,7 +88,7 @@
     </button>
   </PageHeader>
 
-  {#if isLoading}
+  {#if isLoading && messages.length === 0}
     <div class="card p-12 text-center text-[oklch(0.7107_0.0351_256.79)]">Loading messages…</div>
   {:else if messages.length === 0}
     <EmptyState
@@ -64,43 +96,32 @@
       message="Messages submitted through the sqrt.fyi contact form will show up here."
     />
   {:else}
-    <p class="text-sm text-[oklch(0.7107_0.0351_256.79)]">
-      {messages.length} message{messages.length === 1 ? '' : 's'}
-    </p>
+    <SearchBar
+      bind:value={searchQuery}
+      bind:filters
+      bind:sorts
+      properties={filterProperties}
+      placeholder="Search messages…"
+      totalCount={messages.length}
+      filteredCount={filteredMessages.length}
+    />
 
-    <div class="space-y-3">
-      {#each messages as message (message.id)}
-        <article class="card p-5">
-          <div class="flex items-start justify-between gap-4">
-            <div class="min-w-0 flex-1">
-              <p class="whitespace-pre-wrap break-words leading-relaxed text-[oklch(0.9842_0.0034_247.86)]">
-                {message.body}
-              </p>
-
-              <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[oklch(0.7107_0.0351_256.79)]">
-                <time datetime={message.created_at}>{formatDate(message.created_at)}</time>
-                {#if message.country}
-                  <span aria-hidden="true">·</span>
-                  <span>{message.country}</span>
-                {/if}
-                {#if message.ip_hash}
-                  <span aria-hidden="true">·</span>
-                  <span title={message.ip_hash}>ip {message.ip_hash.slice(0, 10)}…</span>
-                {/if}
-              </div>
-            </div>
-
-            <button
-              type="button"
-              class="btn-danger text-sm shrink-0 cursor-pointer"
-              onclick={() => handleDelete(message)}
-              disabled={deletingId === message.id}
-            >
-              {deletingId === message.id ? 'Deleting…' : 'Delete'}
-            </button>
-          </div>
-        </article>
-      {/each}
-    </div>
+    {#if filteredMessages.length === 0}
+      <EmptyState
+        title="No matching messages"
+        message="Try adjusting your search query or filters."
+      />
+    {:else}
+      <div class="space-y-3">
+        {#each filteredMessages as message (message.id)}
+          <MessageCard
+            {message}
+            query={searchQuery}
+            deleting={deletingId === message.id}
+            ondelete={handleDelete}
+          />
+        {/each}
+      </div>
+    {/if}
   {/if}
 </div>
