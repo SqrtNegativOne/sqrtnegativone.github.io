@@ -10,7 +10,7 @@
     'name': 'The Blog of Sqrt-1',
     'description': 'The Blog of Sqrt-1. Nothing particularly special about it.',
     'url': 'https://sqrt.fyi/blog/',
-    'author': { '@type': 'Person', 'name': 'Ark Malhotra', 'url': 'https://sqrt.fyi/' }
+    'author': { '@type': 'Person', 'name': 'Sqrt-1', 'url': 'https://sqrt.fyi/' }
   };
   const jsonLdHtml = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</` + `script>`;
 </script>
@@ -20,7 +20,7 @@
 </svelte:head>
 
 <Seo
-  title="Blog — Ark Malhotra"
+  title="Blog — Sqrt-1"
   description="The Blog of Sqrt-1. Nothing particularly special about it."
   path="/blog/"
 />

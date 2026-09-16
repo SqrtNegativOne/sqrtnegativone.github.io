@@ -6,7 +6,7 @@
 </script>
 
 <Seo
-  title="Colophon — Ark Malhotra"
+  title="Colophon — Sqrt-1"
   description="How sqrt.fyi is built: the type, the stack, and the choices behind it."
   path="/colophon"
 />
@@ -15,7 +15,7 @@
   <h1 class="title">colophon</h1>
 
   <p class="lede">
-    sqrt.fyi is a personal site by Ark Malhotra. A blog, a media log, and
+    sqrt.fyi is a personal site by Sqrt-1. A blog, a media log, and
     assorted things. Built from scratch and kept deliberately small.
   </p>
 
@@ -75,7 +75,7 @@
 
   <footer>
     <p>Engineered in New Delhi, India.</p>
-    <p>&copy; Ark Malhotra</p>
+    <p>&copy; Sqrt-1</p>
   </footer>
 </main>
 

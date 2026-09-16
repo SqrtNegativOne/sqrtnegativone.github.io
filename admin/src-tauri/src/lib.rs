@@ -481,6 +481,79 @@ fn git_commit_content(message: Option<String>) -> Result<String, String> {
     Ok(commit_msg)
 }
 
+/// Fetch, then replay local commits on top of `origin/<branch>` when the remote has
+/// moved on (web edits, another machine, merged PRs) — the case where a bare `git push`
+/// is rejected as a non-fast-forward.
+///
+/// Returns `Ok(Some(reason))` when a rebase was performed, `Ok(None)` when the branch
+/// was already up to date.
+///
+/// `--autostash` is required: the admin app deliberately leaves non-content files
+/// uncommitted (see `is_content_path`), and a rebase refuses to run on a dirty tree.
+/// Any failure is rolled back with `rebase --abort` so the developer is never stranded
+/// mid-rebase in a GUI with no conflict resolution UI.
+fn sync_with_remote(repo_root: &str, branch: &str) -> Result<Option<String>, String> {
+    let remote_ref = format!("origin/{branch}");
+
+    // Offline or credentials unavailable: skip the sync and let the push attempt
+    // surface the real error rather than masking it with a fetch failure.
+    let (fetch_ok, _, _) = run_git_cmd(repo_root, &["fetch", "origin"])?;
+    if !fetch_ok {
+        return Ok(None);
+    }
+
+    // Left count = commits we have that the remote doesn't, right = the reverse.
+    let (counts_ok, counts_out, _) = run_git_cmd(
+        repo_root,
+        &[
+            "rev-list",
+            "--left-right",
+            "--count",
+            &format!("HEAD...{remote_ref}"),
+        ],
+    )?;
+    if !counts_ok {
+        // Remote ref doesn't exist yet (first push) or history is unrelated; let
+        // the push attempt decide.
+        return Ok(None);
+    }
+
+    let mut counts = counts_out.split_whitespace();
+    let ahead: u32 = counts.next().and_then(|v| v.parse().ok()).unwrap_or(0);
+    let behind: u32 = counts.next().and_then(|v| v.parse().ok()).unwrap_or(0);
+
+    if behind == 0 {
+        return Ok(None);
+    }
+
+    let reason = if ahead == 0 {
+        format!("fast-forwarded {behind} commit(s) from {remote_ref}")
+    } else {
+        format!("replayed {ahead} local commit(s) onto {remote_ref} ({behind} incoming)")
+    };
+
+    let (rebase_ok, _, rebase_err) =
+        run_git_cmd(repo_root, &["rebase", "--autostash", &remote_ref])?;
+
+    if !rebase_ok {
+        let (abort_ok, _, abort_err) = run_git_cmd(repo_root, &["rebase", "--abort"])?;
+
+        if !abort_ok {
+            return Err(format!(
+                "could not sync with {remote_ref}: {rebase_err}\n\
+                 The repository is left mid-rebase and needs a manual `git rebase --abort`: {abort_err}"
+            ));
+        }
+
+        return Err(format!(
+            "could not sync with {remote_ref}: {rebase_err}\n\
+             Local branch was restored to its pre-sync state, so nothing was lost."
+        ));
+    }
+
+    Ok(Some(reason))
+}
+
 #[tauri::command]
 fn git_push() -> Result<String, String> {
     let root = get_repo_root()?;
@@ -492,20 +565,23 @@ fn git_push() -> Result<String, String> {
         "main".to_string()
     };
 
+    let synced = sync_with_remote(&root, &branch)?;
+
     let (push_ok, stdout, stderr) = run_git_cmd(&root, &["push", "origin", &branch])?;
     if !push_ok {
         return Err(format!("git push failed: {stderr}"));
     }
 
-    if stdout.is_empty() {
-        if stderr.is_empty() {
-            Ok("Pushed successfully".to_string())
-        } else {
-            Ok(stderr)
+    let push_output = if stdout.is_empty() { stderr } else { stdout };
+
+    Ok(match synced {
+        Some(reason) if push_output.is_empty() => {
+            format!("Pushed successfully ({reason})")
         }
-    } else {
-        Ok(stdout)
-    }
+        Some(reason) => format!("{push_output}\nSynced: {reason}"),
+        None if push_output.is_empty() => "Pushed successfully".to_string(),
+        None => push_output,
+    })
 }
 
 #[tauri::command]

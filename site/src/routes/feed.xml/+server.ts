@@ -17,9 +17,9 @@ export const GET: RequestHandler = () => {
     feedLinks: {
       atom: `${SITE_URL}/feed.xml`
     },
-    copyright: 'Ark Malhotra',
+    copyright: 'Sqrt-1',
     author: {
-      name: 'Ark Malhotra',
+      name: 'Sqrt-1',
       link: `${SITE_URL}/`
     },
     updated: posts.length > 0 ? new Date(posts[0].date) : new Date()

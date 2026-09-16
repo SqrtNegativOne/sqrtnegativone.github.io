@@ -17,8 +17,8 @@
 </script>
 
 <Seo
-  title="Now — Ark Malhotra"
-  description="What Ark Malhotra is currently learning, building, and reading."
+  title="Now — Sqrt-1"
+  description="What Sqrt-1 is currently learning, building, and reading."
   path="/now"
 />
 

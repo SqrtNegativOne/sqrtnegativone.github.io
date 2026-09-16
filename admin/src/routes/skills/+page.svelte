@@ -18,10 +18,10 @@
   let isModalOpen = $state(false);
   let isEditing = $state(false);
   let currentItem: SkillFormItem = $state({
-    name: '', icon: '', logo: '', mono: '', originalName: '', hidden: false
+    name: '', icon: '', logo: '', mono: false, originalName: '', hidden: false
   });
-  let originalItem: { name: string; icon: string; logo: string; mono: string } = $state({
-    name: '', icon: '', logo: '', mono: ''
+  let originalItem: { name: string; icon: string; logo: string; mono: boolean } = $state({
+    name: '', icon: '', logo: '', mono: false
   });
   let isDirty = $derived(
     currentItem.name !== originalItem.name ||
@@ -55,15 +55,15 @@
 
   function openNew(initialName = '') {
     isEditing = false;
-    currentItem = { name: initialName, icon: '', logo: '', mono: '', originalName: '', hidden: false };
-    originalItem = { name: initialName, icon: '', logo: '', mono: '' };
+    currentItem = { name: initialName, icon: '', logo: '', mono: false, originalName: '', hidden: false };
+    originalItem = { name: initialName, icon: '', logo: '', mono: false };
     isModalOpen = true;
   }
 
   function openEdit(item: SkillItem) {
     isEditing = true;
     currentItem = { ...item, originalName: item.name };
-    originalItem = { name: item.name, icon: item.icon || '', logo: item.logo || '', mono: item.mono || '' };
+    originalItem = { name: item.name, icon: item.icon || '', logo: item.logo || '', mono: !!item.mono };
     isModalOpen = true;
   }
 
@@ -78,7 +78,8 @@
       name: currentItem.name,
       icon: currentItem.icon || '',
       logo: currentItem.logo || '',
-      mono: currentItem.mono || ''
+      ...(currentItem.mono ? { mono: true } : {}),
+      ...(currentItem.hidden ? { hidden: true } : {})
     };
     
     if (!isEditing) {
@@ -118,6 +119,29 @@
     notificationState.success(`Deleted skill "${name}"`, { title: 'Skill Deleted' });
     await invalidateAll();
   }
+
+  async function handleMove(name: string, direction: 'up' | 'down') {
+    const items = (await readData<SkillItem>('skills.json')).unwrapOr([] as SkillItem[]);
+    const idx = items.findIndex(i => i.name === name);
+    if (idx === -1) return;
+
+    if (direction === 'up' && idx > 0) {
+      const temp = items[idx - 1];
+      items[idx - 1] = items[idx];
+      items[idx] = temp;
+    } else if (direction === 'down' && idx < items.length - 1) {
+      const temp = items[idx + 1];
+      items[idx + 1] = items[idx];
+      items[idx] = temp;
+    }
+
+    const writeRes = await writeData('skills.json', items);
+    if (writeRes.isErr()) {
+      notificationState.error(writeRes.error.message, { title: 'Failed to reorder skill' });
+      return;
+    }
+    await invalidateAll();
+  }
 </script>
 
 <svelte:head>
@@ -144,7 +168,11 @@
             {#if item.icon}
               <i class="{item.icon} text-2xl text-white"></i>
             {:else if item.logo}
-              <img src={assetState.resolve(item.logo)} alt={item.name} class="w-8 h-8 object-contain" />
+              <span
+                class="skill-logo w-8 h-8 text-white"
+                style="-webkit-mask-image: url({assetState.resolve(item.logo)}); mask-image: url({assetState.resolve(item.logo)});"
+                aria-hidden="true"
+              ></span>
             {:else}
               <span class="text-xl font-bold text-[oklch(0.7107_0.0351_256.79)]">{item.name.charAt(0)}</span>
             {/if}
@@ -153,9 +181,19 @@
             <h3 class="font-medium text-white">{item.name}</h3>
           </div>
         </div>
-        <div class="mt-auto flex justify-end space-x-2 border-t border-[oklch(0.2739_0.0055_286.03)] pt-3 relative">
-          <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-2.5 py-1 rounded bg-blue-500/10 cursor-pointer">Edit</button>
-          <button onclick={() => handleDelete(item.name)} class="text-red-400 hover:text-red-300 text-sm px-2.5 py-1 rounded bg-red-500/10 cursor-pointer">Delete</button>
+        <div class="mt-auto flex justify-between items-center border-t border-[oklch(0.2739_0.0055_286.03)] pt-3 relative">
+          <div class="flex items-center space-x-1">
+            <button onclick={() => handleMove(item.name, 'up')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-white/5 transition-colors cursor-pointer" title="Move Up">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+            </button>
+            <button onclick={() => handleMove(item.name, 'down')} class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 rounded hover:bg-white/5 transition-colors cursor-pointer" title="Move Down">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+          </div>
+          <div class="flex space-x-2">
+            <button onclick={() => openEdit(item)} class="text-blue-400 hover:text-blue-300 text-sm px-2.5 py-1 rounded bg-blue-500/10 cursor-pointer">Edit</button>
+            <button onclick={() => handleDelete(item.name)} class="text-red-400 hover:text-red-300 text-sm px-2.5 py-1 rounded bg-red-500/10 cursor-pointer">Delete</button>
+          </div>
         </div>
       </div>
     {/each}
@@ -188,10 +226,10 @@
         <input id="skill-logo" type="text" bind:value={currentItem.logo} class="input-field" />
       </div>
 
-      <div class="space-y-2">
-        <label for="skill-mono" class="block text-sm font-medium text-[oklch(0.60_0.02_256.79)]">Mono Logo Path</label>
-        <input id="skill-mono" type="text" bind:value={currentItem.mono} class="input-field" />
-      </div>
+      <label class="flex items-center gap-2 text-sm font-medium text-[oklch(0.60_0.02_256.79)]">
+        <input type="checkbox" bind:checked={currentItem.mono} />
+        Monochrome (theme-colored silhouette)
+      </label>
     </form>
 
     {#snippet footer()}
@@ -200,3 +238,18 @@
     {/snippet}
   </Modal>
 {/if}
+
+<style>
+  /* Render skill logos as theme-colored silhouettes, matching the CV site,
+     so brand-colored / plain-black SVGs look consistent on the dark UI. */
+  .skill-logo {
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+</style>

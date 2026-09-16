@@ -4,8 +4,8 @@
 </script>
 
 <Seo
-  title="Media Library — Ark Malhotra"
-  description="A personal tracker for the books, films, and games Ark is consuming and collecting."
+  title="Media Library — Sqrt-1"
+  description="A personal tracker for the books, films, and games Sqrt-1 is consuming and collecting."
   path="/media-library"
   noindex
 />

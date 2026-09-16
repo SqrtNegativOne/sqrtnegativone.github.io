@@ -6,7 +6,7 @@
 </script>
 
 <Seo
-  title="afterdark — Ark Malhotra"
+  title="afterdark — Sqrt-1"
   description="Afterdark posts."
   path="/blog-afterdark/"
   noindex={true}

@@ -16,6 +16,35 @@
     gitState.destroy();
   });
 
+  // Ambient git state, expressed through the button itself (tile tint, icon color,
+  // edge rail) rather than a corner badge. Clean state stays deliberately plain.
+  const gitSignal = $derived.by(() => {
+    if (gitState.hasContentChanges) {
+      const n = gitState.contentChangeCount;
+      return {
+        summary: `${n} uncommitted content ${n === 1 ? 'change' : 'changes'}`,
+        icon: 'text-amber-400',
+        tile: 'bg-amber-400/10 hover:bg-amber-400/20',
+        rail: 'before:bg-amber-400',
+      };
+    }
+    if (gitState.hasUnpushedCommits) {
+      const n = gitState.aheadCount;
+      return {
+        summary: `${n} unpushed ${n === 1 ? 'commit' : 'commits'}`,
+        icon: 'text-cyan-400',
+        tile: 'bg-cyan-400/10 hover:bg-cyan-400/20',
+        rail: 'before:bg-cyan-400',
+      };
+    }
+    return {
+      summary: 'up to date',
+      icon: 'text-[oklch(0.7107_0.0351_256.79)]',
+      tile: 'bg-white/5 hover:bg-white/10',
+      rail: 'before:bg-transparent',
+    };
+  });
+
   function getStatusLabel(status: string): { label: string; class: string } {
     const s = status.trim();
     if (s.includes('M')) return { label: 'MODIFIED', class: 'text-amber-400 bg-amber-400/10 border-amber-400/20' };
@@ -54,19 +83,15 @@
       type="button"
       onclick={handleOpenReview}
       class="flex items-center gap-2.5 min-w-0 text-left cursor-pointer group/btn"
-      title="{gitState.status?.branch || 'main'}: {gitState.hasContentChanges ? `${gitState.contentChangeCount} changes` : gitState.hasUnpushedCommits ? `${gitState.aheadCount} ahead` : 'Up to date'}"
+      aria-label="Git status: {gitState.status?.branch || 'main'}, {gitSignal.summary}"
+      title="{gitState.status?.branch || 'main'}: {gitSignal.summary}"
     >
-      <div class="relative shrink-0 w-8 h-8 rounded flex items-center justify-center text-blue-400 bg-white/5 hover:bg-white/10 transition-colors">
-        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div
+        class="relative shrink-0 w-8 h-8 rounded flex items-center justify-center transition-colors before:content-[''] before:absolute before:left-0 before:inset-y-1.5 before:w-0.5 before:rounded-full {gitSignal.tile} {gitSignal.rail}"
+      >
+        <svg class="w-5 h-5 {gitSignal.icon}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
-        {#if gitState.hasContentChanges}
-          <span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-amber-400 animate-pulse ring-2 ring-[oklch(0.2103_0.0059_285.89)]"></span>
-        {:else if gitState.hasUnpushedCommits}
-          <span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-cyan-400 ring-2 ring-[oklch(0.2103_0.0059_285.89)]"></span>
-        {:else}
-          <span class="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-emerald-400 ring-2 ring-[oklch(0.2103_0.0059_285.89)]"></span>
-        {/if}
       </div>
 
       <!-- Text: hidden when collapsed, smoothly visible on hover/mobile -->
@@ -74,7 +99,7 @@
         <div class="text-xs font-mono font-medium text-white truncate max-w-[100px]">
           {gitState.status?.branch || 'main'}
         </div>
-        <div class="text-[11px] truncate max-w-[100px] {gitState.hasContentChanges ? 'text-amber-400' : gitState.hasUnpushedCommits ? 'text-cyan-400' : 'text-emerald-400'}">
+        <div class="text-[11px] truncate max-w-[100px] {gitState.hasContentChanges ? 'text-amber-400' : gitState.hasUnpushedCommits ? 'text-cyan-400' : 'text-[oklch(0.7107_0.0351_256.79)]'}">
           {gitState.hasContentChanges
             ? `${gitState.contentChangeCount} changes`
             : gitState.hasUnpushedCommits

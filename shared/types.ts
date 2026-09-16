@@ -35,7 +35,7 @@ export interface SkillItem {
   name: string;
   icon?: string;
   logo: string;
-  mono?: string;
+  mono?: boolean;
   hidden?: boolean;
 }
 

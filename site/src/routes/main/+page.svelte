@@ -5,7 +5,7 @@
 
 <svelte:head>
   <meta name="robots" content="noindex" />
-  <title>main — Ark Malhotra</title>
+  <title>main — Sqrt-1</title>
 </svelte:head>
 
 <main id="main-content" tabindex="-1" class="plain-main">

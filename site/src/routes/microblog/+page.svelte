@@ -236,7 +236,7 @@
 </script>
 
 <Seo
-  title="Microblog — Ark Malhotra"
+  title="Microblog — Sqrt-1"
   description="Short thoughts, links, and status updates fetched live from @sqrt-1.bsky.social on Bluesky."
   path="/microblog"
 />

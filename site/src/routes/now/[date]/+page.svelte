@@ -17,8 +17,8 @@
 </script>
 
 <Seo
-  title="{data.entry.title ? `${data.entry.title} — Now (${data.entry.date})` : `Now (${data.entry.date})`} — Ark Malhotra"
-  description="What Ark Malhotra was working on and learning on {formatNowDate(data.entry.date)}."
+  title="{data.entry.title ? `${data.entry.title} — Now (${data.entry.date})` : `Now (${data.entry.date})`} — Sqrt-1"
+  description="What Sqrt-1 was working on and learning on {formatNowDate(data.entry.date)}."
   path="/now/{data.entry.date}"
 />
 

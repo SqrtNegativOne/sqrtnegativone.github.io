@@ -4,8 +4,8 @@
 </script>
 
 <Seo
-  title="Questions — Ark Malhotra"
-  description="Open problems and puzzles Ark Malhotra is currently working through."
+  title="Questions — Sqrt-1"
+  description="Open problems and puzzles Sqrt-1 is currently working through."
   path="/questions"
 />
 

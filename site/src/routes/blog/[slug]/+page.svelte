@@ -24,7 +24,7 @@
     datePublished: formatIsoDate(post.date),
     url: `https://sqrt.fyi/blog/${post.slug}/`,
     mainEntityOfPage: `https://sqrt.fyi/blog/${post.slug}/`,
-    author: { '@type': 'Person', 'name': 'Ark Malhotra', url: 'https://sqrt.fyi/' }
+    author: { '@type': 'Person', 'name': 'Sqrt-1', url: 'https://sqrt.fyi/' }
   });
 
   let jsonLdHtml = $derived(`<script type="application/ld+json">${JSON.stringify(jsonLd)}</` + `script>`);
@@ -35,7 +35,7 @@
 </svelte:head>
 
 <Seo
-  title="{post.title} — Ark Malhotra"
+  title="{post.title} — Sqrt-1"
   description={post.description || post.title}
   path="/blog/{post.slug}/"
   noindex={isAfterdark}
