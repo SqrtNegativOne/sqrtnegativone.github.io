@@ -29,11 +29,6 @@
     "mono": true
   },
   {
-    "name": "PydanticAI",
-    "logo": "/logos/pydantic.svg",
-    "mono": true
-  },
-  {
     "name": "Figma",
     "logo": "/logos/figma-plain.svg"
   },
