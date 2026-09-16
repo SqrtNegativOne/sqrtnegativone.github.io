@@ -101,13 +101,15 @@
     "rating": 6.5,
     "status": "finished",
     "title": "Fight Club",
+    "tagline": "It's only after we've lost everything that we're free to do anything.",
     "description": "",
-    "poster_image": "movie_fight_club",
     "notes": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
-    "tagline": "Self improvement is masturbation. Now self destruction...",
+    "private_notes": "",
+    "poster_image": "movie_fight_club",
     "tags": [
       "goat"
-    ]
+    ],
+    "hidden": false
   },
   {
     "id": "house_of_leaves",
@@ -2253,6 +2255,38 @@
     "tags": [],
     "author": "Greg Daniels",
     "publisher": "Universal Television, Deedle-Dee Productions, Reveille Productions, Shine America, Universal Media Studios",
+    "hidden": false
+  },
+  {
+    "id": "z_a_t_o_i_love_the_world_and_everything_in_it",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Z.A.T.O. // I Love the World and Everything In It",
+    "tagline": "",
+    "description": "USSR, 1986. A girl goes missing in the closed city of Vorkuta-5, yet not a soul seems to be concerned. Uncover the mystery behind her disappearance and transmit your signal to the universe.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "game_z_a_t_o_i_love_the_world_and_everything_in_it",
+    "tags": [],
+    "author": "Ferry // Nopanamaman",
+    "publisher": "Ferry // Nopanamaman",
+    "hidden": false
+  },
+  {
+    "id": "your_turn_to_die_death_game_by_majority",
+    "type": "game",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "Your Turn To Die -Death Game By Majority-",
+    "tagline": "",
+    "description": "Your Turn To Die -Death Game By Majority- is a multi-ending horror adventure game. Sara Chidouin returns home from school late one night to discover that something's gone terribly wrong. When she comes to, she finds herself, her friend Joe, and 9 other people trapped in a mysterious place.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "game_your_turn_to_die_death_game_by_majority",
+    "tags": [],
+    "author": "Nankidai",
+    "publisher": "0UP GAMES",
     "hidden": false
   }
 ]
