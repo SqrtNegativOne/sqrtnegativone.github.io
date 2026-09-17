@@ -516,13 +516,15 @@
   {
     "id": "the_coffin_of_andy_and_leyley",
     "type": "game",
-    "rating": 5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "The Coffin of Andy and Leyley",
     "tagline": "",
-    "description": "Kit9 Studio\nWalk-n-talk adventure with light puzzling. Brother and sister practice cannibalism after witnessing a botched satanic ritual.",
+    "description": "Walk-n-talk adventure with light puzzling. Brother and sister practice cannibalism after witnessing a botched satanic ritual.",
     "notes": "",
-    "poster_image": "game_the_coffin_of_andy_and_leyley"
+    "private_notes": "",
+    "poster_image": "game_the_coffin_of_andy_and_leyley",
+    "hidden": false
   },
   {
     "id": "zero_escape_the_nonary_games",
@@ -1663,7 +1665,8 @@
     "poster_image": "movie_spirited_away",
     "tags": [],
     "author": "Hayao Miyazaki",
-    "publisher": "Studio Ghibli, Tokuma Shoten, Nippon Television Network Corporation, Mitsubishi, dentsu, TFC, The Walt Disney Company (Japan)"
+    "publisher": "Studio Ghibli",
+    "hidden": false
   },
   {
     "id": "my_neighbor_totoro",
@@ -1964,7 +1967,7 @@
     "rating": 6.5,
     "status": "finished",
     "title": "Andor",
-    "tagline": "Surprisingly thoughtful, with just the right amount of pacing.",
+    "tagline": "Surprisingly thoughtful, with just the right pacing.",
     "description": "In an era filled with danger, deception and intrigue, Cassian Andor will discover the difference he can make in the struggle against the tyrannical Galactic Empire. He embarks on a path that is destined to turn him into a rebel hero.",
     "notes": "",
     "private_notes": "",
@@ -2275,7 +2278,7 @@
     "poster_image": "game_z_a_t_o_i_love_the_world_and_everything_in_it",
     "tags": [],
     "author": "Ferry // Nopanamaman",
-    "publisher": "Ferry // Nopanamaman",
+    "publisher": "",
     "hidden": false
   },
   {
