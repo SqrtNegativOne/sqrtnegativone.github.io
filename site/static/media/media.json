@@ -598,13 +598,16 @@
   {
     "id": "frostpunk",
     "type": "game",
-    "rating": 5,
+    "rating": 5.4,
     "status": "finished",
     "title": "Frostpunk",
     "tagline": "A very high bar for any new city-builder.",
-    "description": "11 bit studios\nFrostpunk is the first society survival game. As the ruler of the last city on Earth, it is your duty to manage both its citizens and infrastructure. What decisions will you make to ensure your society's survival? What will you do when pushed to breaking point? Who will you become in the process?",
+    "description": "Frostpunk is the first society survival game. As the ruler of the last city on Earth, it is your duty to manage both its citizens and infrastructure. What decisions will you make to ensure your society's survival? What will you do when pushed to breaking point? Who will you become in the process?",
     "notes": "Steampunk city-builder with soul-stirring soundtrack and challenging gameplay.  Also very addictive.",
-    "poster_image": "game_frostpunk"
+    "private_notes": "c358a37c780c7b205e94b2ff:b00a6b34b91104baadf36894dab52f97:ab248dcca78ae4118b972c5284f4b2e98887e1cda86fc25c1b7972cefc4fd97d1b98fab5b5c7d4ea609810408b25a47fa8",
+    "poster_image": "game_frostpunk",
+    "author": "11-bit studios",
+    "hidden": false
   },
   {
     "id": "dune_book",
@@ -919,9 +922,11 @@
     "status": "wishlist",
     "title": "Death Note Relight 1: Visions of a God",
     "tagline": "",
-    "description": "2007\nWhen rogue shinigami Ryuk leaves his Death Note in the human world, he has no idea how far the one who finds it will take his new-found power. With the Death Note in hand, brilliant high school student Light Yagami vows to rid the world of evil. A recap of Death Note episodes 1–26, with alternate footage.",
+    "description": "When rogue shinigami Ryuk leaves his Death Note in the human world, he has no idea how far the one who finds it will take his new-found power. With the Death Note in hand, brilliant high school student Light Yagami vows to rid the world of evil. A recap of Death Note episodes 1–26, with alternate footage.",
     "notes": "",
-    "poster_image": "movie_death_note_relight_1_visions_of_a_god"
+    "private_notes": "",
+    "poster_image": "movie_death_note_relight_1_visions_of_a_god",
+    "hidden": false
   },
   {
     "id": "into_the_breach",
