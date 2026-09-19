@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev",
+    "prebuild": "node scripts/clean-cloudflare.mjs",
     "build": "vite build",
     "lint": "eslint . && oxlint -c .oxlintrc.json",
     "preview": "vite preview",
