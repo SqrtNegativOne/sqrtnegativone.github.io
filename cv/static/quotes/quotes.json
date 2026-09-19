@@ -2331,7 +2331,7 @@
   },
   {
     "id": "0019ffe8-6c30-4e99-8823-934a6de50605",
-    "quote": "Have you considered how happy you would be if you have up everything you enjoyed?",
+    "quote": "Have you considered how happy you would be if you gave up everything you enjoyed?",
     "source": "@RambleMan51 on Twitter",
     "link": "",
     "tags": [
@@ -2385,15 +2385,6 @@
     "tags": []
   },
   {
-    "id": "0af34402-a5f4-47fc-8c3b-4cefb1a2af27",
-    "quote": "you wanted to read a dystopia? Go no further than real life",
-    "source": "",
-    "link": "",
-    "tags": [
-      "afterdark"
-    ]
-  },
-  {
     "id": "7cd04a7c-f28f-49e5-a372-fd0252c483ea",
     "quote": "The first step of any meaningful pursuit is to severely underestimate its difficulty.",
     "source": "Sara Hooker",
@@ -2426,6 +2417,90 @@
     "quote": "A Finite But Arbitrarily Large Amount Of Jest",
     "source": "me",
     "link": "",
+    "tags": []
+  },
+  {
+    "id": "a188db96-e29a-4330-bca9-ec8e751b7a27",
+    "quote": "no stranger that's strange enough",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "72c6631e-d438-4b87-9463-2f351cf78e4c",
+    "quote": "money doesn't grow on trees anymore",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "317f0ee9-0ba5-40ab-97f5-7e4e0d13290e",
+    "quote": "can't believe how rectangular the screen is right now",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "64078d4f-450a-46d7-a900-1b0870f5216d",
+    "quote": "music is art, and sex can be both",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "2b8c6ce9-7c6a-47fe-81fa-0a182c373aaf",
+    "quote": "i wonder if soap comes from the natural process of evolution or if it was a gift from God?",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "3021182d-8da2-4f07-a209-57282bfc0a21",
+    "quote": "accidentally came to earth. it's weird",
+    "source": "bill wurtz",
+    "link": "https://billwurtz.com/bio.html",
+    "tags": []
+  },
+  {
+    "id": "5e80d49e-00e0-4964-acfe-abce3c194427",
+    "quote": "la de da de da de da de day oh",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "3f7f9021-e3fa-46ff-9ff8-768ed0454dd2",
+    "quote": "have as many times as you can, and see which ones were good",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "98b6cbde-6105-4d64-8e2e-c2fc775cd303",
+    "quote": "it's actual magic, available on earth",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "0d7040f1-eba0-4c82-a6d5-a20220260dd5",
+    "quote": "go to idaho. you do drugs? do it on the way",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "f20f91ac-5cc4-4c9f-bd12-551f43ea422b",
+    "quote": "the hardest thing about building a room is you have to build a room to build the damn room in first. it drives me crazy",
+    "source": "bill wurtz",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "150d9083-6ce0-46c7-b064-0c50592dafb1",
+    "quote": "everything keeps going in and out of shambles",
+    "source": "",
+    "link": "https://billwurtz.com/note202010061024.html",
     "tags": []
   }
 ]

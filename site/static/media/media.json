@@ -2296,5 +2296,37 @@
     "author": "Nankidai",
     "publisher": "0UP GAMES",
     "hidden": false
+  },
+  {
+    "id": "deadpool_wolverine",
+    "type": "movie",
+    "rating": 4,
+    "status": "finished",
+    "title": "Deadpool & Wolverine",
+    "tagline": "",
+    "description": "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat, Wade must reluctantly suit-up again with an even more reluctant Wolverine.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_deadpool_wolverine",
+    "tags": [],
+    "author": "Shawn Levy",
+    "publisher": "Marvel Studios",
+    "hidden": false
+  },
+  {
+    "id": "rage",
+    "type": "book",
+    "rating": 6,
+    "status": "shelved",
+    "title": "Rage",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_rage",
+    "tags": [],
+    "author": "",
+    "publisher": "",
+    "hidden": false
   }
 ]
