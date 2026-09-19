@@ -987,17 +987,6 @@
     "poster_image": "movie_the_social_network"
   },
   {
-    "id": "28_days_later",
-    "type": "movie",
-    "rating": 6,
-    "status": "wishlist",
-    "title": "28 Days Later",
-    "tagline": "",
-    "description": "Twenty-eight days after a killer virus was accidentally unleashed from a British research facility, a small group of London survivors are caught in a desperate struggle to protect themselves from the infected. Carried by animals and humans, the virus turns those it infects into homicidal maniacs -- and it's absolutely impossible to contain.",
-    "notes": "",
-    "poster_image": "movie_28_days_later"
-  },
-  {
     "id": "akira",
     "type": "movie",
     "rating": 6,
@@ -1007,17 +996,6 @@
     "description": "1988\nA secret military project endangers Neo-Tokyo when it turns a biker gang member into a rampaging psychic psychopath that only two teenagers and a group of psychics can stop.",
     "notes": "",
     "poster_image": "movie_akira"
-  },
-  {
-    "id": "andhadhun",
-    "type": "movie",
-    "rating": 6,
-    "status": "wishlist",
-    "title": "Andhadhun",
-    "tagline": "",
-    "description": "A series of mysterious events changes the life of a blind pianist who now must report a crime that was actually never witnessed by him.",
-    "notes": "",
-    "poster_image": "movie_andhadhun"
   },
   {
     "id": "arrival",
@@ -2333,7 +2311,7 @@
     "id": "crime_101",
     "type": "movie",
     "rating": 2.5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "Crime 101",
     "tagline": "This is why you don't trust critics",
     "description": "When an elusive thief whose high-stakes heists unfold along the iconic 101 freeway in Los Angeles eyes the score of a lifetime, with hopes of this being his final job, his path collides with a disillusioned insurance broker who is facing her own crossroads. Determined to crack the case, a relentless detective closes in on the operation, raising the stakes even higher.",
@@ -2342,7 +2320,7 @@
     "poster_image": "movie_crime_101",
     "tags": [],
     "author": "Bart Layton",
-    "publisher": "Working Title, The Story Factory, RAW, Amazon MGM Studios, Wild State",
+    "publisher": "Amazon MGM Studios",
     "hidden": false
   }
 ]
