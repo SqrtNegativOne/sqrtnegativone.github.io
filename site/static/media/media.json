@@ -1720,7 +1720,8 @@
     "poster_image": "movie_zodiac",
     "tags": [],
     "author": "David Fincher",
-    "publisher": "Paramount Pictures, Warner Bros. Pictures, Phoenix Pictures"
+    "publisher": "Paramount Pictures",
+    "hidden": false
   },
   {
     "id": "the_prestige",
@@ -1942,7 +1943,7 @@
   {
     "id": "andor",
     "type": "show",
-    "rating": 6.5,
+    "rating": 6,
     "status": "finished",
     "title": "Andor",
     "tagline": "Surprisingly thoughtful, with just the right pacing.",
