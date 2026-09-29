@@ -137,7 +137,7 @@
   {
     "id": "1bc94029-bbf6-4b50-8e8a-7f661824b312",
     "quote": "I can't hate myself, that'd be homophobic.",
-    "source": "",
+    "source": "me",
     "link": "",
     "tags": [
       "afterdark"
@@ -1322,7 +1322,7 @@
   {
     "id": "67bc6fb6-3331-4aef-bbd0-053f52eaa47b",
     "quote": "apparently I have a soul and it's in a .md file",
-    "source": "",
+    "source": "Claude",
     "link": "",
     "tags": []
   },
@@ -2101,7 +2101,9 @@
     "quote": "Marriage counselling? Did you know that that's the only kind of counselling I've never had?",
     "source": "",
     "link": "",
-    "tags": []
+    "tags": [
+      "afterdark"
+    ]
   },
   {
     "id": "2e8703dc-1804-462c-b7bc-18855e093438",
@@ -2477,7 +2479,7 @@
   },
   {
     "id": "98b6cbde-6105-4d64-8e2e-c2fc775cd303",
-    "quote": "it's actual magic, available on earth",
+    "quote": "actual magic, available on earth",
     "source": "bill wurtz",
     "link": "",
     "tags": []
@@ -2501,6 +2503,41 @@
     "quote": "everything keeps going in and out of shambles",
     "source": "",
     "link": "https://billwurtz.com/note202010061024.html",
+    "tags": []
+  },
+  {
+    "id": "536ecc60-7788-4fca-a5d1-3f42a6508109",
+    "quote": "magic is real and it's called engineering",
+    "source": "",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "1848cf80-2bb7-4451-8454-2d49be4eceec",
+    "quote": "[to myself in the mirror] do a breakthrough. make no mistakes.",
+    "source": "𝓐𝓾𝓫𝓻𝓮𝔂 (@aub.bsky.social)",
+    "link": "https://anisota.net/profile/aub.bsky.social/post/3mwfbhdilw22a",
+    "tags": []
+  },
+  {
+    "id": "a6077ade-3bf2-407a-be32-637bf067dba2",
+    "quote": "the only way to make your dreams come true is to sleep forever",
+    "source": "me",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "544713ba-233a-4036-9884-00013acc8901",
+    "quote": "putting the professional in p zombie",
+    "source": "me",
+    "link": "",
+    "tags": []
+  },
+  {
+    "id": "6873a592-7010-47ba-8e1d-d7b2803a96fc",
+    "quote": "Even if the barbarians never get over your city wall, you still had to build a wall.",
+    "source": "",
+    "link": "",
     "tags": []
   }
 ]
