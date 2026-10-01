@@ -2403,5 +2403,53 @@
     "author": "Bret Easton Ellis",
     "publisher": "",
     "hidden": false
+  },
+  {
+    "id": "shaun_of_the_dead",
+    "type": "movie",
+    "rating": 4,
+    "status": "finished",
+    "title": "Shaun of the Dead",
+    "tagline": "",
+    "description": "Shaun lives a supremely uneventful life, which revolves around his girlfriend, his mother, and, above all, his local pub. This gentle routine is threatened when the dead return to life and make strenuous attempts to snack on ordinary Londoners.",
+    "notes": "Kind of sad actually. Not that funny at all.",
+    "private_notes": "",
+    "poster_image": "movie_shaun_of_the_dead",
+    "tags": [],
+    "author": "Edgar Wright",
+    "publisher": "WT² Productions, Big Talk Studios",
+    "hidden": false
+  },
+  {
+    "id": "zombieland",
+    "type": "movie",
+    "rating": 5,
+    "status": "finished",
+    "title": "Zombieland",
+    "tagline": "",
+    "description": "Columbus has made a habit of running from what scares him. Tallahassee doesn't have fears. If he did, he'd kick their ever-living ass. In a world overrun by zombies, these two are perfectly evolved survivors. But now, they're about to stare down the most terrifying prospect of all: each other.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_zombieland",
+    "tags": [],
+    "author": "Ruben Fleischer",
+    "publisher": "Columbia Pictures",
+    "hidden": false
+  },
+  {
+    "id": "zombieland_double_tap",
+    "type": "movie",
+    "rating": 5,
+    "status": "finished",
+    "title": "Zombieland: Double Tap",
+    "tagline": "",
+    "description": "Columbus, Tallahassee, Wichita, and Little Rock move to the American heartland as they face off against evolved zombies, fellow survivors, and the growing pains of the snarky makeshift family.",
+    "notes": "Didn't Wichita give her real name to Columbus? Why are they still using codenames when their original purpose was to not to get attached, even though they are attached now? And the Zombie Kill of the Century could have had a little more flair if they did it in more slow motion, with more shots, some in 3D and all. ...and Little Rock didn't even get anyone at the end! which was pretty funny.",
+    "private_notes": "",
+    "poster_image": "movie_zombieland_double_tap",
+    "tags": [],
+    "author": "Ruben Fleischer",
+    "publisher": "Columbia Pictures, 2.0 Entertainment, Pariah",
+    "hidden": false
   }
 ]
