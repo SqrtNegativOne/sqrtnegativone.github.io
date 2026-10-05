@@ -426,13 +426,16 @@
   {
     "id": "worm_web_serial",
     "type": "book",
-    "rating": 6,
-    "status": "wishlist",
+    "rating": 5,
+    "status": "consuming",
     "title": "WORM",
     "tagline": "I am a sucker for this sort of thing",
     "description": "",
     "notes": "",
-    "poster_image": "book_worm_web_serial"
+    "private_notes": "",
+    "poster_image": "book_worm_web_serial",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "omori_dreamer",
@@ -1469,8 +1472,8 @@
   {
     "id": "blindsight",
     "type": "book",
-    "rating": 5.5,
-    "status": "consuming",
+    "rating": 3,
+    "status": "shelved",
     "title": "Blindsight",
     "tagline": "",
     "description": "",
@@ -1480,7 +1483,8 @@
     "tags": [],
     "author": "Peter Watts",
     "publisher": "",
-    "hidden": false
+    "hidden": false,
+    "uncertain": true
   },
   {
     "id": "the_night_of",
@@ -1912,22 +1916,6 @@
     "hidden": false
   },
   {
-    "id": "the_three_body_problem",
-    "type": "book",
-    "rating": 5,
-    "status": "wishlist",
-    "title": "The Three-Body Problem",
-    "tagline": "",
-    "description": "",
-    "notes": "",
-    "private_notes": "Recommended by Erik Hoel (The Intrinsic Perspective) highly more than the show. Maybe the guy saying \"characters were better in the show\" was just American.",
-    "poster_image": "book_the_three_body_problem",
-    "tags": [],
-    "author": "Cixin Liu & Ken Liu",
-    "publisher": "",
-    "hidden": false
-  },
-  {
     "id": "rogue_one_a_star_wars_story",
     "type": "movie",
     "rating": 5,
@@ -2171,7 +2159,7 @@
     "id": "searching",
     "type": "movie",
     "rating": 5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "searching",
     "tagline": "People who say screenlife is the death of cinema should go kill themselves",
     "description": "After David Kim's 16-year-old daughter goes missing, a local investigation is opened and a detective is assigned to the case. But 37 hours later and without a single lead, David decides to search the one place no one has looked yet, where all secrets are kept today: his daughter's laptop.",
@@ -2181,7 +2169,8 @@
     "tags": [],
     "author": "Aneesh Chaganty",
     "publisher": "Bazelevs, Timur Bekmambetov Productions",
-    "hidden": false
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "lifehack",
@@ -2459,7 +2448,7 @@
     "id": "the_nice_guys",
     "type": "movie",
     "rating": 4.5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "The Nice Guys",
     "tagline": "Don't say \"and stuff,\" just say, \"dad, there are whores here\"",
     "description": "A private eye investigates the apparent suicide of a fading porn star in 1970s Los Angeles and uncovers a conspiracy.",
@@ -2469,7 +2458,8 @@
     "tags": [],
     "author": "Shane Black",
     "publisher": "Silver Pictures, Waypoint Entertainment",
-    "hidden": false
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "gone_tomorrow",
@@ -2487,5 +2477,22 @@
     "publisher": "",
     "hidden": false,
     "uncertain": true
+  },
+  {
+    "id": "the_brothers_karamazov",
+    "type": "book",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "The Brothers Karamazov",
+    "tagline": "",
+    "description": "Dmitri Karamazov and his father Fyodor are at war over both Dmitri’s inheritance and the affections of the beautiful Grushenka. Into this feud arrive the middle brother Ivan, recently returned from Moscow, and the youngest sibling Alyosha, who has been released into the wider world from the local monastery by the elder monk Zossima. Through a series of accidents of fate and wilful misunderstandings the Karamazovs edge closer to tragedy, while the local townspeople watch on.The Brothers Karamazov was Fyodor Dostoevsky’s final novel, and was originally serialised in The Russian Messenger before being published as a complete novel in 1880. This edition is the well-received 1912 English translation by Constance Garnett. As well as earning wide-spread critical acclaim, the novel has been widely influential in literary and philosophical circles; Franz Kafka and James Joyce admired the emotions that verge on madness in the Karamazovs, while Sigmund Freud and Jean-Paul Satre found inspiration in the themes of patricide and existentialism.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_the_brothers_karamazov",
+    "tags": [],
+    "author": "Fyodor Dostoevsky",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
   }
 ]
