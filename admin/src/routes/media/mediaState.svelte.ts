@@ -302,16 +302,16 @@ export class MediaState {
   errorMsg = $state('');
   
   currentItem: MediaItem = $state({
-    id: '', type: 'movie', rating: 4, status: 'wishlist',
+    id: '', type: 'movie', rating: 3, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
     author: '', publisher: '',
-    tags: [], hidden: false
+    tags: [], hidden: false, uncertain: false
   });
   initialItem: MediaItem = $state({
-    id: '', type: 'movie', rating: 4, status: 'wishlist',
+    id: '', type: 'movie', rating: 3, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
     author: '', publisher: '',
-    tags: [], hidden: false
+    tags: [], hidden: false, uncertain: false
   });
   get isDirty(): boolean {
     return JSON.stringify(this.currentItem) !== JSON.stringify(this.initialItem);
@@ -345,10 +345,10 @@ export class MediaState {
     this.isEditing = false;
     this.errorMsg = '';
     this.currentItem = { 
-      id: '', type: 'movie', rating: 4, status: 'wishlist',
+      id: '', type: 'movie', rating: 3, status: 'wishlist',
       title: initialTitle, tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
       author: '', publisher: '',
-      tags: [], hidden: false
+      tags: [], hidden: false, uncertain: false
     };
     this.initialItem = { ...this.currentItem };
     this.isModalOpen = true;
@@ -459,7 +459,7 @@ export class MediaState {
         this.currentItem.id = this.generateUniqueId(this.currentItem, items);
       }
 
-      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher, hidden } = this.currentItem;
+      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain } = this.currentItem;
       let poster_image = this.currentItem.poster_image;
 
       const rootRes = await ResultAsync.fromPromise(getRepoRoot(), (err) => typeof err === 'string' ? err : String(err));
@@ -527,7 +527,8 @@ export class MediaState {
         poster_image = `${type}_${safeId}`;
       }
 
-      const newItem: MediaItem = { id, type, rating, status, title, tagline, description, notes, private_notes, poster_image, tags, author, publisher, hidden };
+      const parsedRating = typeof rating === 'number' && !isNaN(rating) ? rating : null;
+      const newItem: MediaItem = { id, type, rating: parsedRating, status, title, tagline, description, notes, private_notes, poster_image, tags, author, publisher, hidden, uncertain: Boolean(uncertain) };
       
       if (isNew) {
         if (items.some(i => i.id === id)) {

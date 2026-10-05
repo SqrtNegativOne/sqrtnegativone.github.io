@@ -206,8 +206,14 @@
               <section class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div class="space-y-2">
-                    <label for="media-rating" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Rating (1-7)</label>
-                    <input id="media-rating" type="number" min="1" max="7" step="any" inputmode="decimal" name="rating" bind:value={currentItem.rating} class="input-field" required />
+                    <div class="flex justify-between items-center">
+                      <label for="media-rating" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Rating (0-6)</label>
+                      <label for="media-uncertain" class="flex items-center gap-1.5 cursor-pointer select-none">
+                        <input type="checkbox" id="media-uncertain" bind:checked={currentItem.uncertain} class="rounded border-zinc-700 text-blue-600 focus:ring-blue-500 bg-zinc-800 w-3.5 h-3.5" />
+                        <span class="text-xs text-[oklch(0.7107_0.0351_256.79)]">Uncertain</span>
+                      </label>
+                    </div>
+                    <input id="media-rating" type="number" min="0" max="6" step="any" inputmode="decimal" name="rating" bind:value={currentItem.rating} class="input-field" placeholder="Unrated / 0-6" />
                   </div>
 
                   <div class="space-y-2">

@@ -35,12 +35,15 @@ export function applySorts<T extends object>(items: T[], sorts: { property: stri
 
   return [...items].sort((a, b) => {
     for (const s of sorts) {
-      let valA = (a as Record<string, unknown>)[s.property];
-      let valB = (b as Record<string, unknown>)[s.property];
+      const valA = (a as Record<string, unknown>)[s.property];
+      const valB = (b as Record<string, unknown>)[s.property];
       
       // Handle undefined/nulls
-      if (valA === undefined || valA === null) valA = '';
-      if (valB === undefined || valB === null) valB = '';
+      const isNullA = valA === undefined || valA === null;
+      const isNullB = valB === undefined || valB === null;
+      if (isNullA && isNullB) continue;
+      if (isNullA) return s.direction === 'asc' ? 1 : 1;
+      if (isNullB) return s.direction === 'asc' ? -1 : -1;
 
       let cmp = 0;
       if (typeof valA === 'string' && typeof valB === 'string') {

@@ -2,7 +2,7 @@
   {
     "id": "deltarune",
     "type": "game",
-    "rating": 7,
+    "rating": 6,
     "status": "finished",
     "title": "Deltarune",
     "tagline": "There's something more important than reaching the end.",
@@ -18,7 +18,7 @@
   {
     "id": "undertale",
     "type": "game",
-    "rating": 7,
+    "rating": 6,
     "status": "finished",
     "title": "UNDERTALE",
     "description": "",
@@ -32,7 +32,7 @@
   {
     "id": "portal_2",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Portal 2",
     "description": "",
@@ -43,7 +43,7 @@
   {
     "id": "atomic_habits",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Atomic Habits",
     "description": "",
@@ -54,7 +54,7 @@
   {
     "id": "hollow_knight",
     "type": "game",
-    "rating": 4.5,
+    "rating": 3.5,
     "status": "dropped",
     "title": "Hollow Knight",
     "tagline": "A world you gave to bug and beast as they had never dreamed of.",
@@ -66,7 +66,7 @@
   {
     "id": "project_hail_mary",
     "type": "movie",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "finished",
     "title": "Project: Hail Mary",
     "description": "",
@@ -77,7 +77,7 @@
   {
     "id": "project_hail_mary_book",
     "type": "book",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "finished",
     "title": "Project: Hail Mary",
     "description": "",
@@ -87,7 +87,7 @@
   {
     "id": "hot_fuzz",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Hot Fuzz",
     "description": "",
@@ -98,7 +98,7 @@
   {
     "id": "fight_club",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "Fight Club",
     "tagline": "It's only after we've lost everything that we're free to do anything.",
@@ -114,7 +114,7 @@
   {
     "id": "house_of_leaves",
     "type": "book",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "House of Leaves",
     "tagline": "This is not for you.",
@@ -128,7 +128,7 @@
   {
     "id": "the_martian",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "The Martian",
     "tagline": "How come Aquaman can control whales? They're mammals! Makes no sense.",
@@ -141,7 +141,7 @@
   {
     "id": "the_myth_of_sisyphus_and_other_essays",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "The Myth of Sisyphus",
     "tagline": "",
@@ -153,7 +153,7 @@
   {
     "id": "the_last_of_us_s1",
     "type": "show",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "The Last of Us (S1)",
     "description": "",
@@ -163,7 +163,7 @@
   {
     "id": "the_last_of_us_part_ii_remastered",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "The Last of Us Part II",
     "description": "",
@@ -173,7 +173,7 @@
   {
     "id": "the_handmaid_s_tale",
     "type": "book",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "The Handmaid's Tale",
     "description": "",
@@ -184,7 +184,7 @@
   {
     "id": "outer_wilds",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Outer Wilds",
     "description": "",
@@ -195,7 +195,7 @@
   {
     "id": "of_the_devil",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "of the Devil",
     "description": "",
@@ -206,7 +206,7 @@
   {
     "id": "ena_dream_bbq",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "ENA: Dream BBQ",
     "description": "",
@@ -216,7 +216,7 @@
   {
     "id": "half-life_2",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Half-Life 2",
     "tagline": "Very fun. Should be mandatory for learning game design.",
@@ -229,7 +229,7 @@
   {
     "id": "oneshot",
     "type": "game",
-    "rating": 7,
+    "rating": 6,
     "status": "wishlist",
     "title": "OneShot",
     "description": "",
@@ -239,7 +239,7 @@
   {
     "id": "omori",
     "type": "game",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "OMORI",
     "description": "",
@@ -250,7 +250,7 @@
   {
     "id": "in_stars_and_time",
     "type": "game",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "In Stars And Time",
     "description": "",
@@ -264,7 +264,7 @@
   {
     "id": "inscryption",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Inscryption",
     "description": "",
@@ -275,7 +275,7 @@
   {
     "id": "the_hollow_man",
     "type": "book",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "The Hollow Man",
     "tagline": "Carr's masterpiece",
@@ -289,7 +289,7 @@
   {
     "id": "danganronpa_trigger_happy_havoc",
     "type": "game",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Danganronpa: Trigger Happy Havoc",
     "description": "",
@@ -300,7 +300,7 @@
   {
     "id": "danganronpa_2_goodbye_despair",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Danganronpa 2: Goodbye Despair",
     "description": "",
@@ -311,7 +311,7 @@
   {
     "id": "danganronpa_v3_killing_harmony",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Danganronpa V3: Killing Harmony",
     "description": "",
@@ -322,7 +322,7 @@
   {
     "id": "dweller_s_empty_path",
     "type": "game",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Dweller's Empty Path",
     "tagline": "A game by Temmie Chang.",
@@ -335,7 +335,7 @@
   {
     "id": "disco_elysium_-_the_final_cut",
     "type": "game",
-    "rating": 7,
+    "rating": 6,
     "status": "rewishlist",
     "title": "Disco Elysium",
     "tagline": "A tragicomedy of hope and redemption.",
@@ -347,7 +347,7 @@
   {
     "id": "the_hunger_games",
     "type": "book",
-    "rating": 4,
+    "rating": 3,
     "status": "wishlist",
     "title": "The Hunger Games",
     "description": "",
@@ -358,7 +358,7 @@
   {
     "id": "mindhacker",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "MINDHACKER",
     "tagline": "Useless retro-tech advice, but makes you think.",
@@ -370,7 +370,7 @@
   {
     "id": "harry_potter_and_the_methods_of_rationality",
     "type": "book",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "finished",
     "title": "Harry Potter and the Methods of Rationality",
     "description": "",
@@ -381,7 +381,7 @@
   {
     "id": "foundation",
     "type": "book",
-    "rating": 3,
+    "rating": 2,
     "status": "finished",
     "title": "Foundation",
     "description": "",
@@ -392,7 +392,7 @@
   {
     "id": "a_mind_for_numbers",
     "type": "book",
-    "rating": 2,
+    "rating": 1,
     "status": "finished",
     "title": "A Mind for Numbers",
     "description": "",
@@ -402,7 +402,7 @@
   {
     "id": "the_quantum_thief",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "The Quantum Thief",
     "tagline": "Apparently puts the Hard in Hard Sci-fi.",
@@ -415,7 +415,7 @@
   {
     "id": "the_fifth_science",
     "type": "book",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "shelved",
     "title": "The Fifth Science",
     "description": "",
@@ -426,7 +426,7 @@
   {
     "id": "worm_web_serial",
     "type": "book",
-    "rating": 7,
+    "rating": 6,
     "status": "wishlist",
     "title": "WORM",
     "tagline": "I am a sucker for this sort of thing",
@@ -437,7 +437,7 @@
   {
     "id": "omori_dreamer",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "OMORI: The Dreamer",
     "description": "",
@@ -448,7 +448,7 @@
   {
     "id": "god_of_war",
     "type": "game",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "God of War",
     "description": "",
@@ -459,7 +459,7 @@
   {
     "id": "escape_from_alcatraz",
     "type": "movie",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "Escape from Alcatraz",
     "tagline": "",
@@ -470,7 +470,7 @@
   {
     "id": "pokemon_origin_of_species",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Pokémon: The Origin of Species.",
     "description": "",
@@ -481,7 +481,7 @@
   {
     "id": "va-11_hall-a_cyberpunk_bartender_action",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "VA-11 Hall-A: Cyberpunk Bartender Action",
     "tagline": "",
@@ -492,7 +492,7 @@
   {
     "id": "a_brief_history_of_time",
     "type": "book",
-    "rating": 5,
+    "rating": 4,
     "status": "shelved",
     "title": "A Brief History of Time",
     "tagline": "Only time (whatever that may be) will tell.",
@@ -505,7 +505,7 @@
   {
     "id": "return_of_the_obra_dinn",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Return of the Obra Dinn",
     "tagline": "Who doesn't like detective games?",
@@ -516,7 +516,7 @@
   {
     "id": "the_coffin_of_andy_and_leyley",
     "type": "game",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "wishlist",
     "title": "The Coffin of Andy and Leyley",
     "tagline": "",
@@ -529,7 +529,7 @@
   {
     "id": "zero_escape_the_nonary_games",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Zero Escape: The Nonary Games",
     "tagline": "Danganronpa without the Danganronpa",
@@ -542,7 +542,7 @@
   {
     "id": "mouthwashing",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Mouthwashing",
     "tagline": "",
@@ -553,7 +553,7 @@
   {
     "id": "chants_of_sennaar",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Chants of Sennaar",
     "tagline": "Linguistics? Linguistics.",
@@ -564,7 +564,7 @@
   {
     "id": "children_of_time",
     "type": "book",
-    "rating": 5,
+    "rating": 4,
     "status": "wishlist",
     "title": "Children of Time",
     "tagline": "",
@@ -578,7 +578,7 @@
   {
     "id": "geometry_for_ocelots",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Geometry for Ocelots",
     "tagline": "",
@@ -589,7 +589,7 @@
   {
     "id": "lacuna_a_sci-fi_noir_adventure",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Lacuna – A Sci-Fi Noir Adventure",
     "tagline": "GEM",
@@ -600,7 +600,7 @@
   {
     "id": "frostpunk",
     "type": "game",
-    "rating": 5.4,
+    "rating": 4.4,
     "status": "finished",
     "title": "Frostpunk",
     "tagline": "A very high bar for any new city-builder.",
@@ -614,7 +614,7 @@
   {
     "id": "dune_book",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Dune",
     "tagline": "",
@@ -625,7 +625,7 @@
   {
     "id": "titanfall_2",
     "type": "game",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "Titanfall 2",
     "tagline": "What the game lacks in length, it makes up for with... everything else.",
@@ -637,7 +637,7 @@
   {
     "id": "dune_movie",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Dune: It Begins",
     "tagline": "Fear is the mind-killer.",
@@ -648,7 +648,7 @@
   {
     "id": "steins_gate_1_game",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "STEINS;GATE",
     "tagline": "",
@@ -659,7 +659,7 @@
   {
     "id": "knives_out",
     "type": "movie",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "wishlist",
     "title": "Knives Out",
     "tagline": "The mystery movie that tricks you into thinking it isn't.",
@@ -670,7 +670,7 @@
   {
     "id": "glass_onion_a_knives_out_mystery",
     "type": "movie",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "Glass Onion: A Knives Out Mystery",
     "tagline": "",
@@ -682,7 +682,7 @@
   {
     "id": "wall_e",
     "type": "movie",
-    "rating": 7,
+    "rating": 6,
     "status": "finished",
     "title": "WALL⋅E",
     "tagline": "I don't usually like romance, but...",
@@ -693,7 +693,7 @@
   {
     "id": "lagaan_once_upon_a_time_in_india",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Lagaan: Once Upon a Time in India",
     "tagline": "Unexpectedly good",
@@ -705,7 +705,7 @@
   {
     "id": "puss_in_boots_the_last_wish",
     "type": "movie",
-    "rating": 2,
+    "rating": 1,
     "status": "finished",
     "title": "Puss in Boots: The Last Wish",
     "tagline": "I had high expectations from the ratings and all, but it's just cliche.",
@@ -716,7 +716,7 @@
   {
     "id": "Inception",
     "type": "movie",
-    "rating": 7,
+    "rating": 6,
     "status": "finished",
     "title": "Inception",
     "tagline": "Inception",
@@ -730,7 +730,7 @@
   {
     "id": "tenet",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Tenet",
     "tagline": "If you don't like this movie, then kill yourself. You don't deserve good movies.",
@@ -741,7 +741,7 @@
   {
     "id": "prison_break",
     "type": "show",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Prison Break",
     "tagline": "",
@@ -752,7 +752,7 @@
   {
     "id": "death_note",
     "type": "show",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "Death Note (S1)",
     "tagline": "",
@@ -763,7 +763,7 @@
   {
     "id": "house",
     "type": "show",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "House MD",
     "tagline": "Would you believe me if I said this was philosophical?",
@@ -774,7 +774,7 @@
   {
     "id": "the_godfather",
     "type": "movie",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "The Godfather",
     "tagline": "",
@@ -785,7 +785,7 @@
   {
     "id": "baba_is_you",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "shelved",
     "title": "Baba Is You",
     "tagline": "",
@@ -796,7 +796,7 @@
   {
     "id": "persona_5_royal",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Persona 5 Royal",
     "tagline": "",
@@ -807,7 +807,7 @@
   {
     "id": "papers_please",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Papers, Please",
     "tagline": "Who knew repetitive gameplay isn't actually a bad thing?",
@@ -818,7 +818,7 @@
   {
     "id": "the_truman_show",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "The Truman Show",
     "tagline": "And in case I don't see ya, good afternoon, good evening, and good night!",
@@ -829,7 +829,7 @@
   {
     "id": "the_subtle_art_of_not_giving_a_f_ck",
     "type": "book",
-    "rating": 1.5,
+    "rating": 0.5,
     "status": "dropped",
     "title": "The Subtle Art of Not Giving a F*ck",
     "tagline": "Bought it, read 10 pages, and stopped giving a fuck about this book.",
@@ -840,7 +840,7 @@
   {
     "id": "undertale_yellow",
     "type": "game",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "Undertale Yellow",
     "tagline": "",
@@ -852,7 +852,7 @@
   {
     "id": "dexter_show_1_4",
     "type": "show",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Dexter (S1-S4)",
     "tagline": "I'm a very neat monster.",
@@ -863,7 +863,7 @@
   {
     "id": "crying_suns_demo",
     "type": "game",
-    "rating": 4.5,
+    "rating": 3.5,
     "status": "finished",
     "title": "Crying Suns",
     "tagline": "",
@@ -874,7 +874,7 @@
   {
     "id": "24",
     "type": "show",
-    "rating": 2.5,
+    "rating": 1.5,
     "status": "dropped",
     "title": "24 (S1)",
     "tagline": "Generic, deus ex machina machine that just doesn't work today.",
@@ -886,7 +886,7 @@
   {
     "id": "argo",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Argo",
     "tagline": "I think my story's the only thing between you and a gun to your head.",
@@ -897,7 +897,7 @@
   {
     "id": "celeste",
     "type": "game",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "finished",
     "title": "Celeste",
     "tagline": "Trans People Can Double Jump",
@@ -909,7 +909,7 @@
   {
     "id": "cyberpunk_edgerunners",
     "type": "show",
-    "rating": 7,
+    "rating": 6,
     "status": "wishlist",
     "title": "Cyberpunk: Edgerunners",
     "tagline": "",
@@ -920,7 +920,7 @@
   {
     "id": "death_note_relight_1_visions_of_a_god",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Death Note Relight 1: Visions of a God",
     "tagline": "",
@@ -933,7 +933,7 @@
   {
     "id": "into_the_breach",
     "type": "game",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Into the Breach",
     "tagline": "For All Father Time",
@@ -944,7 +944,7 @@
   {
     "id": "la_la_land",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "La La Land",
     "tagline": "",
@@ -955,7 +955,7 @@
   {
     "id": "loki_show",
     "type": "show",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "Loki",
     "tagline": "",
@@ -966,7 +966,7 @@
   {
     "id": "the_white_tiger",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "The White Tiger",
     "tagline": "Chicken coop ethics",
@@ -978,7 +978,7 @@
   {
     "id": "the_social_network",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "the social network",
     "tagline": "",
@@ -989,7 +989,7 @@
   {
     "id": "akira",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Akira",
     "tagline": "",
@@ -1000,7 +1000,7 @@
   {
     "id": "arrival",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Arrival",
     "tagline": "Linguistics!",
@@ -1011,7 +1011,7 @@
   {
     "id": "b_hubali_2_the_conclusion",
     "type": "movie",
-    "rating": 4.5,
+    "rating": 3.5,
     "status": "finished",
     "title": "Bāhubali 2: The Conclusion",
     "tagline": "",
@@ -1024,7 +1024,7 @@
   {
     "id": "b_hubali_the_beginning",
     "type": "movie",
-    "rating": 4.5,
+    "rating": 3.5,
     "status": "finished",
     "title": "Bāhubali: The Beginning",
     "tagline": "",
@@ -1037,7 +1037,7 @@
   {
     "id": "chorus",
     "type": "game",
-    "rating": 4,
+    "rating": 3,
     "status": "dropped",
     "title": "Chorus",
     "tagline": "The V is pronounced as U.",
@@ -1048,7 +1048,7 @@
   {
     "id": "rage_2",
     "type": "game",
-    "rating": 2.5,
+    "rating": 1.5,
     "status": "finished",
     "title": "RAGE 2",
     "tagline": "Repetitive gameplay, uninspiring story, and game-breaking bugs. Everything else mediocre at best.",
@@ -1059,7 +1059,7 @@
   {
     "id": "playtime",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "PlayTime",
     "tagline": "",
@@ -1070,7 +1070,7 @@
   {
     "id": "journey",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Journey",
     "tagline": "",
@@ -1081,7 +1081,7 @@
   {
     "id": "kill_bill_vol_1",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Kill Bill: Vol. 1",
     "tagline": "",
@@ -1094,7 +1094,7 @@
   {
     "id": "petscop",
     "type": "show",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Petscop",
     "tagline": "What the FUCK?",
@@ -1105,7 +1105,7 @@
   {
     "id": "dude",
     "type": "show",
-    "rating": 1,
+    "rating": 0,
     "status": "finished",
     "title": "Dude",
     "tagline": "",
@@ -1116,7 +1116,7 @@
   {
     "id": "el_camino_a_breaking_bad_movie",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "El Camino: A Breaking Bad Movie",
     "tagline": "",
@@ -1127,7 +1127,7 @@
   {
     "id": "esc_lena_raine",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "ESC",
     "tagline": "by Lena Raine",
@@ -1138,7 +1138,7 @@
   {
     "id": "escaped_chasm",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Escaped Chasm",
     "tagline": "",
@@ -1149,7 +1149,7 @@
   {
     "id": "kentucky_route_zero_pc_edition",
     "type": "game",
-    "rating": 5,
+    "rating": 4,
     "status": "dropped",
     "title": "Kentucky Route Zero",
     "tagline": "",
@@ -1160,7 +1160,7 @@
   {
     "id": "clair_obscur_expedition_33",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Clair Obscur: Expedition 33",
     "tagline": "",
@@ -1171,7 +1171,7 @@
   {
     "id": "mad_max_fury_road",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "Mad Max: Fury Road",
     "tagline": "A chase sequence that just never ends.",
@@ -1182,7 +1182,7 @@
   {
     "id": "minority_report",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "Minority Report",
     "tagline": "Can you see?",
@@ -1194,7 +1194,7 @@
   {
     "id": "mission_impossible_-_fallout",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "Mission: Impossible - Fallout",
     "tagline": "",
@@ -1205,7 +1205,7 @@
   {
     "id": "radio_the_universe",
     "type": "game",
-    "rating": 5,
+    "rating": 4,
     "status": "wishlist",
     "title": "radio the universe",
     "tagline": "",
@@ -1216,7 +1216,7 @@
   {
     "id": "spider-man_brand_new_day",
     "type": "movie",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "wishlist",
     "title": "Spider-Man: Brand New Day",
     "tagline": "",
@@ -1229,7 +1229,7 @@
   {
     "id": "dune_part_two",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Dune: Part Two",
     "tagline": "*17th closeup of Chani's face:*",
@@ -1242,7 +1242,7 @@
   {
     "id": "dune_part_three",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Dune: Part Three",
     "tagline": "",
@@ -1254,7 +1254,7 @@
   {
     "id": "oppenheimer",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "finished",
     "title": "Oppenheimer",
     "tagline": "",
@@ -1266,7 +1266,7 @@
   {
     "id": "there_is_no_antimemetics_division",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "There Is No Antimemetics Division",
     "tagline": "",
@@ -1278,7 +1278,7 @@
   {
     "id": "twin_peaks",
     "type": "show",
-    "rating": 7,
+    "rating": 6,
     "status": "wishlist",
     "title": "Twin Peaks",
     "tagline": "",
@@ -1290,7 +1290,7 @@
   {
     "id": "true_detective",
     "type": "show",
-    "rating": 7,
+    "rating": 6,
     "status": "wishlist",
     "title": "True Detective",
     "tagline": "",
@@ -1302,7 +1302,7 @@
   {
     "id": "influence_new_and_expanded",
     "type": "book",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Influence: Science and Practice",
     "tagline": "",
@@ -1314,7 +1314,7 @@
   {
     "id": "thinking_phy_book",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Thinking Physics",
     "tagline": "",
@@ -1326,7 +1326,7 @@
   {
     "id": "surely_you_re_joking_mr_feynman",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Surely You're Joking Mr Feynman!",
     "tagline": "",
@@ -1338,7 +1338,7 @@
   {
     "id": "moonwalking_with_einstein",
     "type": "book",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "finished",
     "title": "Moonwalking with Einstein",
     "tagline": "Journalism at its best",
@@ -1351,21 +1351,22 @@
   {
     "id": "the_cuckoo_egg_book",
     "type": "book",
-    "rating": 6,
-    "status": "shelved",
+    "rating": 4,
+    "status": "finished",
     "title": "The Cuckoo's Egg",
     "tagline": "",
-    "description": "Clifford Stoll",
-    "notes": "",
+    "description": "",
+    "notes": "\nThe author frequently mentions of feeling out-of-place within the world he got thrusted into.\n\nHe's absolutely right.\n\nHe is _too_ happy in the between of all this. Smelling too many roses in his commute to work. Elliot from Mr. Robot could only afford a dog and a sister he forgot about. Meanwhile this guy has a loving wife and dreams about \"floating through the air on an oak leaf.\" The CIA and NSA should've barred him from receiving any commendation or stepping a foot into their conference chambers for that alone.\n\n> In his 1995 book Silicon Snake Oil and an accompanying article in Newsweek, Stoll called the prospect of e-commerce \"baloney\". Stoll also raised questions about the influence of the Internet on future society, and whether it would be beneficial. He made various predictions in the article, e.g., about e-commerce (calling it nonviable due to a lack of personal contact and secure online funds transfers) and the future of printed news publications (\"no online database will replace your daily newspaper\"). When the article resurfaced on Boing Boing in 2010, Stoll left a self-deprecating comment: \"Of my many mistakes, flubs, and howlers, few have been as public as my 1995 howler ... Now, whenever I think I know what's happening, I temper my thoughts: Might be wrong, Cliff ...\"\n\nA lot of the parts of the book seem like those liberal flourishes writers or filmmakers add to make the story interesting. Martha and her joke about jazz lyric logic, Sandy saying \"be serious\" constantly to Cliff, Maggie Morley's scrabble personality quirk helping to give the protagonist an unlikely clue etc.\n\nUnfortunately there's a lot of tautology, and the story gets a lot boring when the bureacracy gets involved. The hacker also starts seeming less interesting when they don't come up with anything interesting of their own or even start suspecting anything; the \"key jingle\" trick followed by password changes occurs like 5 times, which does make me think it was a computer program doing it all anyway, at least from the inside (can't be that hard to fake some mis-types here and there to throw people off).\n\nAnd—the book repeatedly mentions and expresses bewilderment at the hacker copying password files from computers, and only mentions (without name-dropping) rainbow tables on page 250 out of 344. I find it silly to imagine Dr. Cliff not knowing about them until so late (presumably he knew it from the start and the bewilderment he expresses is dramitization?)\n\nI unfortunately learned a lot less about computer networks as much as I hoped to learn, given that was my whole purpose to begin this book: to procrastinate on learning my _actual_ computer networks course. Over the course of the book it seemed more and more of a love story and I don't dislike the book for that.\n\n---\n\n\"Let's label the account, the 'Strategic Information Network Group,'\"\nI said. \"It's got a great acronym: STING.\"\n\"Naw. He might catch on. Keep it bureaucratic,\" Martha said. \"Use\nSDINET. It'll catch his eye, all right.\"\n\nThings are easier in grad school. Just call everyone with a tie, \"Profes-\nsor,\" and anyone with a beard, \"Dean.\" When in doubt, just say \"Doctor.\"\n\n\"Any system can be insecure. All you have to do is stupidly manage it.\"\n\nI didn't like leaving Berkeley, partly because I missed my\nsweetheart, but also because it left the hacker unwatched.\nI was to talk to the NTISSIC, a governmental organization whose\nacronym has never been decoded. Bob Morris said they set policy for tele-\ncommunications and information security, so I could guess some of the\nletters.\n\nIn a small town, where people never locked their doors, would we\npraise the first burglar for showing the townspeople how foolish it was to\nleave their houses open?\n\n---\n\nstuff I would change for a hollywood adaptation:\n- cliff realising the berkley unix error because he was new to it too; strengthens the hero and villain similarities list\n- have cliff's cubicle look less and less that of an astronomer's as the movie/show goes on\n- have the X-preserve hack occur a lot earlier\n- make cliff unable to attend the halloween party, while making him come to the office while he was wearing his costume.\n- have the pager thing come earlier. make the phone number brute-force to find area codes idea his own instead of his friends'\n- better call saul-esque scene of typing phone numbers into a computer or connecting wires to the teletyper\n- Mire disconnecting their outgoing modems could be more of a betrayal\n- Berkley Opal hint should've come earlier.\n- Minor plot of someone leaking Cliff's work on the hacker and Cliff having to quickly shut it down before the hacker could see it in his terminal.\n- make him figure out the identity of the hacker and his lawyer himself, without the press",
     "private_notes": "",
     "poster_image": "book_the_cuckoo_egg_book",
     "author": "Cliff Stoll",
-    "hidden": false
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "kill_bill_vol_2",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Kill Bill: Vol. 2",
     "tagline": "",
@@ -1377,7 +1378,7 @@
   {
     "id": "12_angry_men",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "12 Angry Men",
     "tagline": "it's over for you, I have already drawn myself as the equanimous Juror #8, and you the pugnacious Juror #3",
@@ -1392,7 +1393,7 @@
   {
     "id": "eternal_sunshine_of_the_spotless_mind",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Eternal Sunshine of the Spotless Mind",
     "tagline": "",
@@ -1407,7 +1408,7 @@
   {
     "id": "pathaan",
     "type": "movie",
-    "rating": 1.5,
+    "rating": 0.5,
     "status": "finished",
     "title": "Pathaan",
     "tagline": "",
@@ -1423,7 +1424,7 @@
   {
     "id": "severance",
     "type": "show",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Severance",
     "tagline": "",
@@ -1438,7 +1439,7 @@
   {
     "id": "corru.observer",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "shelved",
     "title": "corru.observer",
     "tagline": "GELI MAKES ME FEEL WEIRD",
@@ -1453,7 +1454,7 @@
   {
     "id": "the_thing",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "The Thing",
     "tagline": "",
@@ -1468,8 +1469,8 @@
   {
     "id": "blindsight",
     "type": "book",
-    "rating": 6.5,
-    "status": "wishlist",
+    "rating": 5.5,
+    "status": "consuming",
     "title": "Blindsight",
     "tagline": "",
     "description": "",
@@ -1478,12 +1479,13 @@
     "poster_image": "book_blindsight",
     "tags": [],
     "author": "Peter Watts",
-    "publisher": ""
+    "publisher": "",
+    "hidden": false
   },
   {
     "id": "the_night_of",
     "type": "show",
-    "rating": 4.5,
+    "rating": 3.5,
     "status": "finished",
     "title": "The Night Of",
     "tagline": "",
@@ -1498,7 +1500,7 @@
   {
     "id": "awaria",
     "type": "game",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Awaria",
     "tagline": "",
@@ -1513,7 +1515,7 @@
   {
     "id": "casablanca",
     "type": "movie",
-    "rating": 7,
+    "rating": 6,
     "status": "wishlist",
     "title": "Casablanca",
     "tagline": "",
@@ -1528,7 +1530,7 @@
   {
     "id": "gone_girl",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Gone Girl",
     "tagline": "",
@@ -1538,12 +1540,13 @@
     "poster_image": "movie_gone_girl",
     "tags": [],
     "author": "David Fincher",
-    "publisher": "20th Century Fox, Regency Enterprises, TSG Entertainment"
+    "publisher": "20th Century Fox",
+    "hidden": false
   },
   {
     "id": "the_death_of_stalin",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "The Death of Stalin",
     "tagline": "",
@@ -1558,7 +1561,7 @@
   {
     "id": "citizen_kane",
     "type": "movie",
-    "rating": 7,
+    "rating": 6,
     "status": "wishlist",
     "title": "Citizen Kane",
     "tagline": "",
@@ -1573,7 +1576,7 @@
   {
     "id": "harakiri",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Harakiri",
     "tagline": "",
@@ -1588,7 +1591,7 @@
   {
     "id": "paprika",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Paprika",
     "tagline": "",
@@ -1603,7 +1606,7 @@
   {
     "id": "2001_a_space_odyssey",
     "type": "movie",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "finished",
     "title": "2001: A Space Odyssey",
     "tagline": "",
@@ -1618,7 +1621,7 @@
   {
     "id": "person_of_interest",
     "type": "show",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Person of Interest",
     "tagline": "",
@@ -1633,7 +1636,7 @@
   {
     "id": "spirited_away",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Spirited Away",
     "tagline": "",
@@ -1649,7 +1652,7 @@
   {
     "id": "my_neighbor_totoro",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "My Neighbor Totoro",
     "tagline": "",
@@ -1664,7 +1667,7 @@
   {
     "id": "the_killer",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "The Killer",
     "tagline": "",
@@ -1679,7 +1682,7 @@
   {
     "id": "se7en",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Se7en",
     "tagline": "",
@@ -1695,7 +1698,7 @@
   {
     "id": "the_girl_with_the_dragon_tattoo",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "The Girl with the Dragon Tattoo",
     "tagline": "",
@@ -1710,7 +1713,7 @@
   {
     "id": "zodiac",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Zodiac",
     "tagline": "",
@@ -1726,7 +1729,7 @@
   {
     "id": "the_prestige",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "The Prestige",
     "tagline": "",
@@ -1741,7 +1744,7 @@
   {
     "id": "valuable_humans_in_transit_and_other_stories",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Valuable Humans in Transit and Other Stories",
     "tagline": "",
@@ -1756,7 +1759,7 @@
   {
     "id": "coyote_vs_acme",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Coyote vs. Acme",
     "tagline": "",
@@ -1771,7 +1774,7 @@
   {
     "id": "serial_experiments_lain",
     "type": "show",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Serial Experiments Lain",
     "tagline": "",
@@ -1786,7 +1789,7 @@
   {
     "id": "starting_strength",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Starting Strength",
     "tagline": "",
@@ -1801,7 +1804,7 @@
   {
     "id": "what_if_10th_anniversary_edition",
     "type": "book",
-    "rating": 4,
+    "rating": 3,
     "status": "shelved",
     "title": "what if?",
     "tagline": "Not for me I guess.",
@@ -1817,7 +1820,7 @@
   {
     "id": "infinite_jest",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Infinite Jest",
     "tagline": "",
@@ -1832,7 +1835,7 @@
   {
     "id": "the_age_of_em",
     "type": "book",
-    "rating": 7,
+    "rating": 6,
     "status": "wishlist",
     "title": "The Age of Em",
     "tagline": "",
@@ -1847,7 +1850,7 @@
   {
     "id": "a_good_girl_s_guide_to_murder",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "A Good Girl’s Guide to Murder",
     "tagline": "",
@@ -1863,7 +1866,7 @@
   {
     "id": "blood_meridian",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Blood Meridian",
     "tagline": "",
@@ -1879,7 +1882,7 @@
   {
     "id": "no_country_for_old_men",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "No Country for Old Men",
     "tagline": "",
@@ -1895,7 +1898,7 @@
   {
     "id": "crime_and_punishment",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Crime and Punishment",
     "tagline": "",
@@ -1911,7 +1914,7 @@
   {
     "id": "the_three_body_problem",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "The Three-Body Problem",
     "tagline": "",
@@ -1927,7 +1930,7 @@
   {
     "id": "rogue_one_a_star_wars_story",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Rogue One: A Star Wars Story",
     "tagline": "",
@@ -1943,7 +1946,7 @@
   {
     "id": "andor",
     "type": "show",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "Andor",
     "tagline": "Surprisingly thoughtful, with just the right pacing.",
@@ -1959,7 +1962,7 @@
   {
     "id": "star_wars",
     "type": "movie",
-    "rating": 2.5,
+    "rating": 1.5,
     "status": "finished",
     "title": "Star Wars",
     "tagline": "",
@@ -1975,7 +1978,7 @@
   {
     "id": "the_equalizer",
     "type": "movie",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "The Equalizer",
     "tagline": "",
@@ -1991,7 +1994,7 @@
   {
     "id": "the_equalizer_2",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "The Equalizer 2",
     "tagline": "",
@@ -2007,7 +2010,7 @@
   {
     "id": "the_equalizer_3",
     "type": "movie",
-    "rating": 2,
+    "rating": 1,
     "status": "finished",
     "title": "The Equalizer 3",
     "tagline": "Why did this movie get made man",
@@ -2023,7 +2026,7 @@
   {
     "id": "widdershins_comic",
     "type": "book",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "shelved",
     "title": "Widdershins (comic)",
     "tagline": "Steampunk magical adventure with a unique magic system. Great flow and story.",
@@ -2039,7 +2042,7 @@
   {
     "id": "dhurandhar_the_revenge",
     "type": "movie",
-    "rating": 1.6,
+    "rating": 0.6,
     "status": "finished",
     "title": "Dhurandhar: The Revenge",
     "tagline": "",
@@ -2055,7 +2058,7 @@
   {
     "id": "moon_knight",
     "type": "show",
-    "rating": 5.8,
+    "rating": 4.8,
     "status": "finished",
     "title": "Moon Knight",
     "tagline": "Why did Marvel forget about this? Did they think he was black or something?",
@@ -2071,7 +2074,7 @@
   {
     "id": "portal",
     "type": "game",
-    "rating": 2.5,
+    "rating": 1.5,
     "status": "finished",
     "title": "Portal",
     "tagline": "Not needed to play Portal 2 imo.",
@@ -2087,7 +2090,7 @@
   {
     "id": "balatro",
     "type": "game",
-    "rating": 1,
+    "rating": 0,
     "status": "wishlist",
     "title": "Balatro",
     "tagline": "No.",
@@ -2103,7 +2106,7 @@
   {
     "id": "memento",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "Memento",
     "tagline": "",
@@ -2119,7 +2122,7 @@
   {
     "id": "iron_lung",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "wishlist",
     "title": "Iron Lung",
     "tagline": "",
@@ -2135,7 +2138,7 @@
   {
     "id": "backrooms",
     "type": "movie",
-    "rating": 4.8,
+    "rating": 3.8,
     "status": "finished",
     "title": "Backrooms",
     "tagline": "",
@@ -2151,7 +2154,7 @@
   {
     "id": "missing",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "wishlist",
     "title": "missing",
     "tagline": "",
@@ -2167,7 +2170,7 @@
   {
     "id": "searching",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "searching",
     "tagline": "People who say screenlife is the death of cinema should go kill themselves",
@@ -2183,7 +2186,7 @@
   {
     "id": "lifehack",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "LifeHack",
     "tagline": "",
@@ -2199,7 +2202,7 @@
   {
     "id": "moneyball",
     "type": "movie",
-    "rating": 6.5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "Moneyball",
     "tagline": "",
@@ -2215,7 +2218,7 @@
   {
     "id": "unsong",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Unsong",
     "tagline": "",
@@ -2231,7 +2234,7 @@
   {
     "id": "the_office",
     "type": "show",
-    "rating": 5.5,
+    "rating": 4.5,
     "status": "wishlist",
     "title": "The Office",
     "tagline": "",
@@ -2247,7 +2250,7 @@
   {
     "id": "z_a_t_o_i_love_the_world_and_everything_in_it",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Z.A.T.O. // I Love the World and Everything In It",
     "tagline": "",
@@ -2263,7 +2266,7 @@
   {
     "id": "your_turn_to_die_death_game_by_majority",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "Your Turn To Die -Death Game By Majority-",
     "tagline": "",
@@ -2279,7 +2282,7 @@
   {
     "id": "deadpool_wolverine",
     "type": "movie",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "Deadpool & Wolverine",
     "tagline": "",
@@ -2295,7 +2298,7 @@
   {
     "id": "rage",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "shelved",
     "title": "Rage",
     "tagline": "",
@@ -2311,7 +2314,7 @@
   {
     "id": "crime_101",
     "type": "movie",
-    "rating": 2.5,
+    "rating": 1.5,
     "status": "finished",
     "title": "Crime 101",
     "tagline": "This is why you don't trust critics",
@@ -2327,7 +2330,7 @@
   {
     "id": "the_talos_principle",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "The Talos Principle",
     "tagline": "Good music, good story, and good puzzles.",
@@ -2343,7 +2346,7 @@
   {
     "id": "the_talos_principle_2",
     "type": "game",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "The Talos Principle 2",
     "tagline": "",
@@ -2359,7 +2362,7 @@
   {
     "id": "the_amazing_digital_circus",
     "type": "show",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "The Amazing Digital Circus",
     "tagline": "",
@@ -2375,7 +2378,7 @@
   {
     "id": "american_psycho",
     "type": "movie",
-    "rating": 6,
+    "rating": 5,
     "status": "finished",
     "title": "American Psycho",
     "tagline": "",
@@ -2391,7 +2394,7 @@
   {
     "id": "american_psycho_2",
     "type": "book",
-    "rating": 6,
+    "rating": 5,
     "status": "wishlist",
     "title": "American Psycho",
     "tagline": "",
@@ -2407,7 +2410,7 @@
   {
     "id": "shaun_of_the_dead",
     "type": "movie",
-    "rating": 4,
+    "rating": 3,
     "status": "finished",
     "title": "Shaun of the Dead",
     "tagline": "",
@@ -2423,7 +2426,7 @@
   {
     "id": "zombieland",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Zombieland",
     "tagline": "",
@@ -2439,7 +2442,7 @@
   {
     "id": "zombieland_double_tap",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "finished",
     "title": "Zombieland: Double Tap",
     "tagline": "",
@@ -2451,5 +2454,38 @@
     "author": "Ruben Fleischer",
     "publisher": "Columbia Pictures, 2.0 Entertainment, Pariah",
     "hidden": false
+  },
+  {
+    "id": "the_nice_guys",
+    "type": "movie",
+    "rating": 4.5,
+    "status": "wishlist",
+    "title": "The Nice Guys",
+    "tagline": "Don't say \"and stuff,\" just say, \"dad, there are whores here\"",
+    "description": "A private eye investigates the apparent suicide of a fading porn star in 1970s Los Angeles and uncovers a conspiracy.",
+    "notes": "We need a sequel YESTERDAY",
+    "private_notes": "",
+    "poster_image": "movie_the_nice_guys",
+    "tags": [],
+    "author": "Shane Black",
+    "publisher": "Silver Pictures, Waypoint Entertainment",
+    "hidden": false
+  },
+  {
+    "id": "gone_tomorrow",
+    "type": "book",
+    "rating": null,
+    "status": "finished",
+    "title": "Gone Tomorrow",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_gone_tomorrow",
+    "tags": [],
+    "author": "Lee Child",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": true
   }
 ]

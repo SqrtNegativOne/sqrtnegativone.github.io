@@ -88,7 +88,7 @@
                     {/each}
                   </select>
                 {:else if getPropDef(filter.property)?.type === 'number'}
-                  <input type="number" bind:value={filter.value} class="bg-black/30 border border-[oklch(0.2739_0.0055_286.03)] rounded px-2 py-0.5 w-16 text-zinc-200 outline-none" min="1" max="10" />
+                  <input type="number" bind:value={filter.value} class="bg-black/30 border border-[oklch(0.2739_0.0055_286.03)] rounded px-2 py-0.5 w-16 text-zinc-200 outline-none" min="0" max="6" step="any" />
                 {:else}
                   <input type="text" bind:value={filter.value} class="bg-black/30 border border-[oklch(0.2739_0.0055_286.03)] rounded px-2 py-0.5 flex-1 text-zinc-200 outline-none text-xs" placeholder="Value..." />
                 {/if}

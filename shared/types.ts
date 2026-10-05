@@ -12,7 +12,7 @@ export interface ProjectItem {
 export interface MediaItem {
   id: string;
   type: string;
-  rating: number;
+  rating?: number | null;
   status: string;
   title: string;
   tagline: string;
@@ -24,6 +24,7 @@ export interface MediaItem {
   publisher?: string;
   tags?: string[];
   hidden?: boolean;
+  uncertain?: boolean;
 }
 
 export interface PrivateNoteItem {

@@ -56,7 +56,11 @@
     {/if}
   </span>
   <span role="cell" class="ml-col-rating">
-    <RatingChart rating={item.rating as number} expected={['wishlist', 'next up', 'waiting for'].includes(item.status as string)} />
+    <RatingChart
+      rating={item.rating as number | null | undefined}
+      expected={['wishlist', 'next up', 'waiting for'].includes(item.status as string)}
+      uncertain={Boolean(item.uncertain)}
+    />
   </span>
 </div>
 

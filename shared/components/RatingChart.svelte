@@ -1,6 +1,17 @@
 <script lang="ts">
-  let { rating, expected = false }: { rating: number, expected?: boolean } = $props();
+  let {
+    rating,
+    expected = false,
+    uncertain = false
+  }: {
+    rating?: number | null;
+    expected?: boolean;
+    uncertain?: boolean;
+  } = $props();
   const uid = $props.id();
+
+  const isUnrated = $derived(rating == null);
+  const isHatched = $derived(expected || uncertain);
 
   const TILE_ANGLES = [0, 60, 120, 180, 240, 300];
   // Petal outline in local (unrotated) coordinates, shared by every petal.
@@ -21,20 +32,21 @@
 
   // Rating palette as oklch anchors [rating, L, C, H]. Interpolating between
   // them keeps the exact same colours at every half step while giving
-  // fractional ratings (1.6, 4.8, 5.4, 5.8, …) a colour of their own instead of
+  // fractional ratings (0.6, 3.8, 4.4, 4.8, …) a colour of their own instead of
   // snapping down to the band below.
   const RAMP: [number, number, number, number][] = [
-    [1.0, 0.500, 0.204, 28.59], [1.5, 0.530, 0.192, 32.18],
-    [2.0, 0.560, 0.176, 37.70], [2.5, 0.590, 0.150, 48.38],
-    [3.0, 0.620, 0.131, 63.37], [3.5, 0.650, 0.117, 75.82],
-    [4.0, 0.680, 0.110, 90.66], [4.5, 0.710, 0.115, 106.32],
-    [5.0, 0.740, 0.127, 119.15], [5.5, 0.770, 0.138, 124.73],
-    [6.0, 0.800, 0.151, 129.59], [6.5, 0.830, 0.155, 143.11],
-    [7.0, 0.860, 0.150, 151.90]
+    [0.0, 0.500, 0.204, 28.59], [0.5, 0.530, 0.192, 32.18],
+    [1.0, 0.560, 0.176, 37.70], [1.5, 0.590, 0.150, 48.38],
+    [2.0, 0.620, 0.131, 63.37], [2.5, 0.650, 0.117, 75.82],
+    [3.0, 0.680, 0.110, 90.66], [3.5, 0.710, 0.115, 106.32],
+    [4.0, 0.740, 0.127, 119.15], [4.5, 0.770, 0.138, 124.73],
+    [5.0, 0.800, 0.151, 129.59], [5.5, 0.830, 0.155, 143.11],
+    [6.0, 0.860, 0.150, 151.90]
   ];
 
   let color = $derived.by(() => {
-    const r = Math.max(1, Math.min(7, rating));
+    if (isUnrated) return GHOST_STROKE;
+    const r = Math.max(0, Math.min(6, rating as number));
     let i = 0;
     while (i < RAMP.length - 2 && r > RAMP[i + 1][0]) i++;
     const a = RAMP[i];
@@ -44,8 +56,8 @@
     return `oklch(${lerp(a[1], b[1])} ${lerp(a[2], b[2])} ${lerp(a[3], b[3])})`;
   });
 
-  // Rating 1 corresponds to 0 filled petals; rating 7 fills all 6.
-  let total = $derived(Math.max(0, Math.min(6, rating - 1)));
+  // Rating 0 corresponds to 0 filled petals; rating 6 fills all 6.
+  let total = $derived(isUnrated ? 0 : Math.max(0, Math.min(6, rating as number)));
   let full = $derived(Math.floor(total + 1e-9));
   let partial = $derived(total - full);
   let hasPartial = $derived(partial > 0.02);
@@ -80,7 +92,7 @@
   <div
     class="relative w-[44px] h-[44px] flex items-center justify-center shrink-0"
     role="img"
-    aria-label="{expected ? 'Expected rating' : 'Rating'} {rating} out of 7"
+    aria-label={isUnrated ? 'Unrated' : uncertain ? `Tentative rating ${rating} out of 6` : `${expected ? 'Expected rating' : 'Rating'} ${rating} out of 6`}
   >
     <svg class="w-full h-full" style="color: {color}" viewBox="-162 -162 324 324" fill="none" shape-rendering="geometricPrecision">
       <defs>
@@ -91,8 +103,8 @@
           <stop offset="60%" stop-color="currentColor" stop-opacity="0.28" />
           <stop offset="100%" stop-color="currentColor" stop-opacity="0.42" />
         </linearGradient>
-        {#if expected}
-          <!-- Anticipated ratings are hatched instead of filled. The -angle
+        {#if isHatched}
+          <!-- Anticipated or tentative ratings are hatched instead of filled. The -angle
                counter-rotation keeps every petal's lines parallel in screen
                space rather than fanning around the centre. -->
           {#each TILE_ANGLES as angle, i}
@@ -112,7 +124,7 @@
         {#each TILE_ANGLES as angle, i}
           {@const isFull = i < full}
           {@const isPartial = i === full && hasPartial}
-          {@const paint = expected ? `url(#${uid}-hatch-${i})` : `url(#${uid}-fill)`}
+          {@const paint = isHatched ? `url(#${uid}-hatch-${i})` : `url(#${uid}-fill)`}
           <g transform="rotate({angle})">
             {#if isPartial}
               <!-- dashed ghost of the whole petal; the solid wedge covers the filled half -->
@@ -120,16 +132,32 @@
               <!-- two stacked wide strokes = cheap bloom, no SVG filter needed -->
               <polygon points={partialPoints} fill="none" stroke="currentColor" stroke-width="14" opacity="0.10" />
               <polygon points={partialPoints} fill="none" stroke="currentColor" stroke-width="7" opacity="0.12" />
-              <polygon points={partialPoints} fill={paint} stroke="currentColor" stroke-width="5" stroke-dasharray={expected ? '12 7' : undefined} />
+              <polygon points={partialPoints} fill={paint} stroke="currentColor" stroke-width="5" stroke-dasharray={isHatched ? '12 7' : undefined} />
             {:else if isFull}
               <polygon points={PETAL_POINTS} fill="none" stroke="currentColor" stroke-width="14" opacity="0.10" />
               <polygon points={PETAL_POINTS} fill="none" stroke="currentColor" stroke-width="7" opacity="0.12" />
-              <polygon points={PETAL_POINTS} fill={paint} stroke="currentColor" stroke-width="5" stroke-dasharray={expected ? '12 7' : undefined} />
+              <polygon points={PETAL_POINTS} fill={paint} stroke="currentColor" stroke-width="5" stroke-dasharray={isHatched ? '12 7' : undefined} />
             {:else}
               <polygon points={PETAL_POINTS} fill="none" stroke={GHOST_STROKE} stroke-width="4" stroke-dasharray="10 8" opacity="0.4" />
             {/if}
           </g>
         {/each}
+        {#if isUnrated || uncertain}
+          <text
+            x="0"
+            y="0"
+            text-anchor="middle"
+            dominant-baseline="central"
+            fill="currentColor"
+            stroke="oklch(0.1505 0.0042 285.88)"
+            stroke-width="14"
+            paint-order="stroke fill"
+            font-family="'IBM Plex Mono', ui-monospace, monospace"
+            font-size="88"
+            font-weight="700"
+            opacity={isUnrated ? '0.6' : '0.9'}
+          >?</text>
+        {/if}
       </g>
     </svg>
   </div>

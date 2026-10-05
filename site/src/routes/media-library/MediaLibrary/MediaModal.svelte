@@ -48,7 +48,11 @@
             <TypeBadge type={item.type} variant="icon" sizeClass="w-[18px] h-[18px]" />
             <StatusBadge status={item.status} />
           </div>
-          <RatingChart rating={item.rating as number} expected={['wishlist', 'next up', 'waiting for'].includes(item.status as string)} />
+          <RatingChart
+            rating={item.rating}
+            expected={['wishlist', 'next up', 'waiting for'].includes(item.status as string)}
+            uncertain={Boolean(item.uncertain)}
+          />
         </div>
         {#if item.description}
           <div class="ml-modal-description">

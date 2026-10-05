@@ -19,7 +19,7 @@
   let sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'rating', direction: 'desc' }]);
 
   let carouselsData = $derived((() => {
-    const byRatingDesc = [...visibleMediaData].sort((a, b) => ((b.rating as number) || 0) - ((a.rating as number) || 0));
+    const byRatingDesc = [...visibleMediaData].sort((a, b) => ((b.rating ?? -1) as number) - ((a.rating ?? -1) as number));
     const goat = byRatingDesc.filter(i => Array.isArray(i.tags) && i.tags.includes('goat'));
     const consuming = byRatingDesc.filter(i => i.status === "consuming");
     return { goat, consuming };
