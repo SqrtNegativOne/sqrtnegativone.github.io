@@ -55,7 +55,6 @@
       <h3 class="ml-card-title">{item.title}</h3>
       <div class="ml-card-sub">
         <TypeBadge type={item.type as string} variant="icon" sizeClass="w-4 h-4" />
-        <span class="ml-card-type">{TYPE_LABEL[item.type as string] || item.type}</span>
         <StatusBadge status={item.status as string} />
       </div>
       {#if item.author || item.publisher}
@@ -88,7 +87,6 @@
     display: block;
     aspect-ratio: 2 / 3;
     width: 100%;
-    border-radius: 8px;
     overflow: hidden;
     background: oklch(0.2329 0.0095 285.64);
     box-shadow: 0 1px 0 oklch(1 0 0 / 0.04) inset;
@@ -125,7 +123,7 @@
 
   .ml-card:hover .ml-card-img,
   .ml-card:focus-visible .ml-card-img {
-    transform: scale(1.05);
+    transform: scale(1.01);
   }
 
   /* ---------- Hover-revealed meta panel ---------- */
@@ -182,15 +180,6 @@
     align-items: center;
     gap: 7px;
     margin-top: 5px;
-  }
-
-  .ml-card-type {
-    font-family: "IBM Plex Mono", ui-monospace, monospace;
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: oklch(0.84 0.012 286);
-    white-space: nowrap;
   }
 
   .ml-card-author {

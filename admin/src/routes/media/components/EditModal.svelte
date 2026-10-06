@@ -263,13 +263,13 @@
                 <button
                   type="button"
                   onclick={() => onOpenPoster?.(posterPreviewSrc)}
-                  class="group relative block w-full aspect-[2/3] rounded overflow-hidden bg-black/40 border border-[oklch(0.2739_0.0055_286.03)] cursor-zoom-in"
+                  class="group relative block w-full aspect-2/3 rounded overflow-hidden bg-black/40 border border-[oklch(0.2739_0.0055_286.03)] cursor-zoom-in"
                   aria-label="Open full poster"
                 >
-                  <img src={posterPreviewSrc} alt="Poster preview" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <img src={posterPreviewSrc} alt="Poster preview" class="w-full h-full object-cover group-hover:scale-101 transition-transform duration-300" />
                 </button>
               {:else}
-                <div class="w-full aspect-[2/3] rounded bg-black/40 border border-[oklch(0.2739_0.0055_286.03)] flex items-center justify-center text-xs text-[oklch(0.60_0.02_256.79)]">
+                <div class="w-full aspect-2/3 rounded bg-black/40 border border-[oklch(0.2739_0.0055_286.03)] flex items-center justify-center text-xs text-[oklch(0.60_0.02_256.79)]">
                   No poster
                 </div>
               {/if}

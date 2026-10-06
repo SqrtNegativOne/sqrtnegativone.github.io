@@ -348,12 +348,15 @@
     "id": "the_hunger_games",
     "type": "book",
     "rating": 3,
-    "status": "wishlist",
+    "status": "finished",
     "title": "The Hunger Games",
+    "tagline": "PUBG with romance, on a metaphorical and literal level.",
     "description": "",
-    "poster_image": "book_the_hunger_games",
     "notes": "It has its moments, but I thought the ending, with the corny romance and all, was boring. I had also played Disco Elysium side-by-side so the drastic drop in writing quality was more apparent, I guess.",
-    "tagline": "PUBG with romance, on a metaphorical and literal level."
+    "private_notes": "",
+    "poster_image": "book_the_hunger_games",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "mindhacker",
@@ -1199,11 +1202,14 @@
     "type": "movie",
     "rating": 5.5,
     "status": "finished",
-    "title": "Mission: Impossible - Fallout",
+    "title": "Mission: Impossible — Fallout",
     "tagline": "",
     "description": "When an IMF mission ends badly, the world is faced with dire consequences. As Ethan Hunt takes it upon himself to fulfill his original briefing, the CIA begin to question his loyalty and his motives. The IMF team find themselves in a race against time, hunted by assassins while trying to prevent a global catastrophe.",
     "notes": "",
-    "poster_image": "movie_mission_impossible_-_fallout"
+    "private_notes": "",
+    "poster_image": "movie_mission_impossible_-_fallout",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "radio_the_universe",
@@ -2494,5 +2500,56 @@
     "publisher": "",
     "hidden": false,
     "uncertain": false
+  },
+  {
+    "id": "algorithms_to_live_by",
+    "type": "book",
+    "rating": 3,
+    "status": "wishlist",
+    "title": "Algorithms to Live By",
+    "tagline": "",
+    "description": "An exploration of how computer algorithms can be applied to our everyday lives to solve common decision-making problems and illuminate the  workings of the human mind.   What should we do, or leave undone, in a day or a lifetime? How much messiness should we accept? What balance of the new and familiar is the most fulfilling? These may seem like uniquely human quandaries, but they are not. Computers, like us, confront limited space and time, so computer scientists have been grappling with similar problems for decades. And the solutions they’ve found have much to teach us.In a dazzlingly interdisciplinary work, Brian Christian and Tom Griffiths show how algorithms developed for computers also untangle very human questions. They explain how to have better hunches and when to leave things to chance, how to deal with overwhelming choices and how best to connect with others. From finding a spouse to finding a parking spot, from organizing one’s inbox to peering into the future, Algorithms to Live By transforms the wisdom of computer science into strategies for human living.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_algorithms_to_live_by",
+    "tags": [],
+    "author": "Brian Christian & Tom Griffiths",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "inferno",
+    "type": "book",
+    "rating": null,
+    "status": "finished",
+    "title": "Inferno",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_inferno",
+    "tags": [],
+    "author": "Dan Brown",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": true
+  },
+  {
+    "id": "the_da_vinci_code",
+    "type": "book",
+    "rating": null,
+    "status": "finished",
+    "title": "The Da Vinci Code",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_the_da_vinci_code",
+    "tags": [],
+    "author": "Dan Brown",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": true
   }
 ]
