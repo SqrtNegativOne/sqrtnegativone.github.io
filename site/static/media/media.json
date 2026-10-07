@@ -430,7 +430,7 @@
     "id": "worm_web_serial",
     "type": "book",
     "rating": 5,
-    "status": "consuming",
+    "status": "shelved",
     "title": "WORM",
     "tagline": "I am a sucker for this sort of thing",
     "description": "",
@@ -990,7 +990,11 @@
     "tagline": "",
     "description": "In 2003, Harvard undergrad and computer programmer Mark Zuckerberg begins work on a new concept that eventually turns into the global social network known as Facebook. Six years later, Mark is one of the youngest billionaires ever, but his unprecedented success leads to both personal and legal complications when he ends up on the receiving end of two lawsuits, one involving his former friend.",
     "notes": "I like the actor.",
-    "poster_image": "movie_the_social_network"
+    "private_notes": "",
+    "poster_image": "movie_the_social_network",
+    "author": "David Fincher",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "akira",
@@ -1337,12 +1341,15 @@
     "type": "book",
     "rating": 5,
     "status": "finished",
-    "title": "Surely You're Joking Mr Feynman!",
+    "title": "\"Surely You're Joking, Mr. Feynman!\"",
     "tagline": "",
-    "description": "Richard P Feynman\nIn this warm, insightful portrait of the Winner of the Nobel Prize for Physics in 1965, we see the wisdom, humour and curiosity of Richard Feynman through a series of conversations with his friend Ralph Leighton. Winner of the Nobel Prize for Physics in 1965, Richard Feynman was one of the world's greatest theoretical physicists, but he was also a man who fell, often jumped, into adventure. An artist, safecracker, practical joker and storyteller, Feynman's life was a series of combustible combinations made possible by his unique mixture of high intelligence, unquenchable curiosity and eternal scepticism. Over a period of years, Feynman's conversations with his friend Ralph Leighton were first taped and then set down as they appear here, little changed from their spoken form, giving a wise, funny, passionate and totally honest self-portrait of one of the greatest men of our age.",
+    "description": "",
     "notes": "Really loved reading this during JEE days.",
     "private_notes": "",
-    "poster_image": "book_surely_you_re_joking_mr_feynman"
+    "poster_image": "book_surely_you_re_joking_mr_feynman",
+    "author": "Richard P. Feynman & Ralph Leighton",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "moonwalking_with_einstein",
@@ -1505,7 +1512,9 @@
     "poster_image": "show_the_night_of",
     "tags": [],
     "author": "Richard Price, Steven Zaillian",
-    "publisher": "Film Rites, Bad Wolf, BBC Worldwide Productions, HBO"
+    "publisher": "HBO",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "awaria",
@@ -1672,7 +1681,9 @@
     "poster_image": "movie_my_neighbor_totoro",
     "tags": [],
     "author": "Hayao Miyazaki",
-    "publisher": "Studio Ghibli, Tokuma Shoten"
+    "publisher": "Studio Ghibli",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "the_killer",
@@ -1749,7 +1760,9 @@
     "poster_image": "movie_the_prestige",
     "tags": [],
     "author": "Christopher Nolan",
-    "publisher": "Warner Bros. Pictures, Touchstone Pictures, Newmarket Films, Syncopy"
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "valuable_humans_in_transit_and_other_stories",
@@ -1902,8 +1915,9 @@
     "poster_image": "movie_no_country_for_old_men",
     "tags": [],
     "author": "Joel Coen, Ethan Coen",
-    "publisher": "Miramax, Paramount Vantage, Scott Rudin Productions, Mike Zoss Productions",
-    "hidden": false
+    "publisher": "Miramax",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "crime_and_punishment",
@@ -2056,14 +2070,15 @@
     "status": "finished",
     "title": "Moon Knight",
     "tagline": "Why did Marvel forget about this? Did they think he was black or something?",
-    "description": "When Steven Grant, a mild-mannered gift-shop employee, becomes plagued with blackouts and memories of another life, he discovers he has dissociative identity disorder and shares a body with mercenary Marc Spector. As Steven/Marc’s enemies converge upon them, they must navigate their complex identities while thrust into a deadly mystery among the powerful gods of Egypt.",
+    "description": "When Steven Grant, a mild-mannered gift-shop employee, becomes plagued with blackouts and memories of another life, he discovers he has dissociative identity disorder and shares a body with mercenary Marc Spector.",
     "notes": "",
     "private_notes": "",
     "poster_image": "show_moon_knight",
     "tags": [],
     "author": "Jeremy Slater",
-    "publisher": "Marvel Studios, Kevin Feige Productions",
-    "hidden": false
+    "publisher": "Marvel Studios",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "portal",
@@ -2239,8 +2254,9 @@
     "poster_image": "show_the_office",
     "tags": [],
     "author": "Greg Daniels",
-    "publisher": "Universal Television, Deedle-Dee Productions, Reveille Productions, Shine America, Universal Media Studios",
-    "hidden": false
+    "publisher": "Universal Television",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "z_a_t_o_i_love_the_world_and_everything_in_it",
@@ -2335,8 +2351,9 @@
     "poster_image": "game_the_talos_principle",
     "tags": [],
     "author": "Croteam",
-    "publisher": "Devolver Digital, Croteam",
-    "hidden": false
+    "publisher": "Devolver Digital",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "the_talos_principle_2",
@@ -2447,8 +2464,9 @@
     "poster_image": "movie_zombieland_double_tap",
     "tags": [],
     "author": "Ruben Fleischer",
-    "publisher": "Columbia Pictures, 2.0 Entertainment, Pariah",
-    "hidden": false
+    "publisher": "Columbia Pictures",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "the_nice_guys",
@@ -2551,5 +2569,73 @@
     "publisher": "",
     "hidden": false,
     "uncertain": true
+  },
+  {
+    "id": "bullet_train",
+    "type": "movie",
+    "rating": 5,
+    "status": "finished",
+    "title": "Bullet Train",
+    "tagline": "",
+    "description": "Unlucky assassin Ladybug is determined to do his job peacefully after one too many gigs gone off the rails. Fate, however, may have other plans, as Ladybug's latest mission puts him on a collision course with lethal adversaries from around the globe—all with connected, yet conflicting, objectives—on the world's fastest train.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_bullet_train",
+    "tags": [],
+    "author": "David Leitch",
+    "publisher": "Columbia Pictures",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "g_del_escher_bach",
+    "type": "book",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "Gödel, Escher, Bach",
+    "tagline": "",
+    "description": "Winner of the Pulitzer PrizeA metaphorical fugue on minds and machines in the spirit of Lewis CarrollDouglas Hofstadter's book is concerned directly with the nature of \"maps\" or links between formal systems. However, according to Hofstadter, the formal system that underlies all mental activity transcends the system that supports it. If life can grow out of the formal chemical substrate of the cell, if consciousness can emerge out of a formal system of firing neurons, then so too will computers attain human intelligence.&#xa0;Gödel, Escher, Bach&#xa0;is a wonderful exploration of fascinating ideas at the heart of cognitive science: meaning, reduction, recursion, and much more.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_g_del_escher_bach",
+    "tags": [],
+    "author": "Douglas R. Hofstadter",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "chaos",
+    "type": "book",
+    "rating": 4.5,
+    "status": "wishlist",
+    "title": "Chaos",
+    "tagline": "",
+    "description": "The blockbuster modern science classic that, two decades ago, introduced the butterfly effect to the world and became an international sensation—now updated with video and modern graphicsIn the 1960s, a small group of radical thinkers upset the rigid foundation of modern scientific thinking by placing new importance on the tiny experimental irregularities that scientists had long learned to ignore. Miniscule differences in data, they said, would eventually produce massive ones—and complex systems like the weather, economics, and human behavior suddenly became clearer and more beautiful than they had ever been before.&#xa0;In this updated version of his seminal work, James Gleick lays out that new vision of a chaotic universe. Interviews with leading theoreticians, a video introduction from the author, and motion graphics depicting concepts such as the famous Lorenz attractor—the concept that birthed chaos theory—complement Gleick’s elegant prose. Never before has chaos been so easy to grasp.&#xa0;“Beautifully lucid . . . Gleick has a novelist’s touch for describing his scientists and their settings, an eye for the apt analogy, and a sense of the dramatic and the poetic.”—San Francisco Chronicle&#xa0;“There is a teleological grandeur about this new math that gives the imagination wings.”—Vogue&#xa0;“Gleick's Chaos is not only enthralling and precise, but full of beautifully strange and strangely beautiful ideas.”—Douglas Hofstadter, author of Gödel, Escher, Bach&#xa0;Born in New York City in 1954, James Gleick is one of the nation’s preeminent science writers. Upon graduating from Harvard in 1976, he founded Metropolis, a weekly Minneapolis newspaper, and spent the next decade working at the New York Times. Gleick’s prominent works include Genius: The Life and Science of Richard Feynman, Isaac Newton, and Chaos: Making a New Science, all of which were shortlisted for the Pulitzer Prize. His latest book, The Information: A History, a Theory, a Flood,was published in March 2011. He lives and works in New York.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_chaos",
+    "tags": [],
+    "author": "James Gleick",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "the_ultimate_hitchhiker_s_guide_to_the_galaxy",
+    "type": "book",
+    "rating": 3,
+    "status": "dropped",
+    "title": "The Ultimate Hitchhiker's Guide to the Galaxy",
+    "tagline": "",
+    "description": "stopped being funny kinda and they kept getting lucky and all. I think I stopped reading around the time the engine itself gets lost to an island or something",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_the_ultimate_hitchhiker_s_guide_to_the_galaxy",
+    "tags": [],
+    "author": "Douglas Adams",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
   }
 ]
