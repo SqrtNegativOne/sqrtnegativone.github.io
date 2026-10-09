@@ -2637,5 +2637,22 @@
     "publisher": "",
     "hidden": false,
     "uncertain": false
+  },
+  {
+    "id": "phoenix_wright_ace_attorney_trilogy",
+    "type": "game",
+    "rating": 5,
+    "status": "wishlist",
+    "title": "Phoenix Wright: Ace Attorney Trilogy",
+    "tagline": "I have played this one before, but I have forgotten everything. Need to go through it again.",
+    "description": "Become Phoenix Wright and experience the thrill of battle as you fight to save your innocent clients in a court of law. Play all 14 episodes, spanning the first three games, in one gorgeous collection.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "game_phoenix_wright_ace_attorney_trilogy",
+    "tags": [],
+    "author": "CAPCOM Co., Ltd.",
+    "publisher": "CAPCOM Co., Ltd.",
+    "hidden": false,
+    "uncertain": false
   }
 ]
