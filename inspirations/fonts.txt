@@ -17,3 +17,5 @@ https://github.com/rektdeckard/departure-mono/releases/tag/v1.500 amazing font f
 https://joefatula.com/twoslice.html 2 pixel tall font for secrets
 
 https://datagoblin.itch.io/monogram great font, very cute.
+
+https://fonts.google.com/specimen/DotGothic16
