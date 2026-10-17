@@ -3,6 +3,12 @@
   import Seo from '$shared/components/Seo.svelte';
   import SocialIcons from '$shared/components/SocialIcons.svelte';
   import type { ButtonItem } from '$shared/types';
+  import {
+    contactMethods,
+    defaultContactMethodId,
+    getContactMethod,
+    type ContactMethodId
+  } from '$shared/data/contactMethods';
   import { buttonLabel } from '$lib/utils';
   import buttonsData from '../../data/buttons.json';
 
@@ -12,9 +18,13 @@
   const MAX_LENGTH = 5000;
 
   let text = $state('');
+  let contactMethod = $state<ContactMethodId>(defaultContactMethodId);
+  let contactHandle = $state('');
   let honeypot = $state('');
   let status = $state<'idle' | 'sending' | 'sent' | 'error'>('idle');
   let errorMessage = $state('');
+
+  let activeMethod = $derived(getContactMethod(contactMethod) ?? contactMethods[0]);
 
   // Progressive enhancement: a no-JS submit redirects back with ?sent=1 / ?error=...
   onMount(() => {
@@ -44,7 +54,12 @@
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ body: value, website: honeypot })
+        body: JSON.stringify({
+          body: value,
+          contact_method: contactMethod,
+          contact_handle: contactHandle.trim(),
+          website: honeypot
+        })
       });
       const data = (await response.json().catch(() => ({}))) as { error?: string };
 
@@ -55,6 +70,7 @@
       }
 
       text = '';
+      contactHandle = '';
       status = 'sent';
     } catch {
       status = 'error';
@@ -129,7 +145,45 @@
       />
     </div>
 
-    <div class="compose-footer">
+    <div class="reply">
+      <div class="method">
+        <span class="method-icon" aria-hidden="true">
+          <svg viewBox={activeMethod.viewBox} fill="currentColor">{@html activeMethod.icon}</svg>
+        </span>
+        <label class="sr-only" for="contact-method">How should I reach you back?</label>
+        <select
+          id="contact-method"
+          name="contact_method"
+          bind:value={contactMethod}
+          onchange={handleInput}
+        >
+          {#each contactMethods as method (method.id)}
+            <option value={method.id}>{method.label}</option>
+          {/each}
+        </select>
+        <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </div>
+
+      <label class="sr-only" for="contact-handle">{activeMethod.label} so I can reply back</label>
+      <input
+        id="contact-handle"
+        name="contact_handle"
+        type="text"
+        maxlength="200"
+        inputmode={activeMethod.inputMode}
+        autocomplete={activeMethod.id === 'email' ? 'email' : 'off'}
+        placeholder={activeMethod.placeholder}
+        aria-describedby="compose-status"
+        oninput={handleInput}
+        bind:value={contactHandle}
+      />
+
+      <button type="submit" disabled={status === 'sending'}>
+        {status === 'sending' ? 'Sending…' : 'Send'}
+      </button>
+    </div>
+
+    <div class="compose-meta">
       <p id="compose-status" class="status" class:error={status === 'error'} role="status" aria-live="polite">
         {#if status === 'sending'}
           Sending…
@@ -140,9 +194,6 @@
         {/if}
       </p>
       <span class="counter" class:over={text.length >= MAX_LENGTH}>{text.length}/{MAX_LENGTH}</span>
-      <button type="submit" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Sending…' : 'Send'}
-      </button>
     </div>
   </form>
 
@@ -285,9 +336,100 @@
     background: oklch(1 0 0 / 0.12);
   }
 
-  .compose-footer {
+  .reply {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .method {
+    position: relative;
     display: flex;
     align-items: center;
+    gap: 0.45rem;
+    padding: 0 0.35rem 0 0.7rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .method:focus-within,
+  .method:hover {
+    border-color: var(--text);
+    color: var(--text);
+  }
+
+  .method-icon {
+    display: flex;
+    width: 1.05rem;
+    height: 1.05rem;
+    flex: none;
+  }
+
+  .method-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .method select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+    padding: 0.6rem 1.05rem 0.6rem 0;
+    cursor: pointer;
+  }
+
+  .method select:focus-visible {
+    outline: none;
+  }
+
+  .method select option {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .chevron {
+    position: absolute;
+    right: 0.35rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    pointer-events: none;
+  }
+
+  .reply input {
+    flex: 1 1 12rem;
+    min-width: 0;
+    padding: 0.6rem 0.9rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text);
+    font-family: "Inter", sans-serif;
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .reply input::placeholder {
+    color: var(--text-secondary);
+  }
+
+  .reply input:focus-visible {
+    outline: none;
+    border-color: var(--text);
+    background: oklch(1 0 0 / 0.12);
+  }
+
+  .compose-meta {
+    display: flex;
+    align-items: baseline;
     gap: 1rem;
   }
 
@@ -334,6 +476,16 @@
   .compose button:disabled {
     opacity: 0.5;
     cursor: default;
+  }
+
+  @media (max-width: 30rem) {
+    .method {
+      flex: 1 1 auto;
+    }
+
+    .compose button {
+      flex: 1 1 100%;
+    }
   }
 
   .hp {

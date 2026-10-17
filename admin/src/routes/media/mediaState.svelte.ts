@@ -338,9 +338,10 @@ export class MediaState {
   searchResults: SearchResult[] = $state([]);
 
   searchQuery = $state("");
-  // Default view: everything except the not-yet-consumed / dormant shelves.
+  // Admin default: the backlog I still need to consume (plus rewishlist, which
+  // is already consumed but queued for another pass, and anything in progress).
   filters = $state<{ property: string, operator: string, value: any }[]>([
-    { property: 'status', operator: 'is', value: ['finished', 'dropped', 'shelved', 'rewishlist', 'consuming'] }
+    { property: 'status', operator: 'is', value: ['wishlist', 'next up', 'waiting for', 'rewishlist', 'consuming'] }
   ]);
   sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'title', direction: 'asc' }]);
 
@@ -353,7 +354,7 @@ export class MediaState {
     return filterAndSortItems<MediaItem>({
       items: this.data.media,
       searchQuery: this.searchQuery,
-      searchFields: ['title', 'tagline', 'author', 'publisher', 'id'],
+      searchFields: ['title', 'tagline', 'author', 'publisher', 'id', 'tags'],
       filters: this.filters,
       sorts: this.sorts
     });
@@ -376,7 +377,7 @@ export class MediaState {
   openEdit(item: MediaItem) {
     this.isEditing = true;
     this.errorMsg = '';
-    this.currentItem = { ...item };
+    this.currentItem = { ...item, tags: item.tags || [] };
     this.initialItem = { ...this.currentItem };
     this.isModalOpen = true;
   }

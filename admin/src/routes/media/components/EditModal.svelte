@@ -1,10 +1,10 @@
 <script lang="ts">
   import mediaProperties from '../../../../../site/static/media/media-properties.json';
-  import { untrack } from 'svelte';
   import { assetState } from '$lib/assetState.svelte';
   import { getPosterUrl } from '../../../../../shared/utils/getPosterUrl';
   import type { MediaItem } from '../../../../../shared/types';
   import Modal from '$lib/Modal.svelte';
+  import TagInput from '$lib/TagInput.svelte';
 
   let {
     isModalOpen = $bindable(),
@@ -24,23 +24,18 @@
     onOpenPoster
   } = $props();
 
-  let tagsInput = $state('');
   let titleInput: HTMLInputElement | undefined = $state();
   let titleFocused = $state(false);
 
+  let allTags = $derived(
+    Array.from(new Set((existingItems as MediaItem[]).flatMap((i) => i.tags || []))).sort()
+  );
+
   $effect(() => {
-    const id = currentItem.id;
-    if (isModalOpen && id !== undefined) {
-      tagsInput = untrack(() => currentItem.tags?.join(', ') || '');
+    if (isModalOpen && currentItem.id !== undefined) {
       titleInput?.focus();
     }
   });
-
-  function handleTagsInput(e: Event) {
-    const val = (e.target as HTMLInputElement).value;
-    tagsInput = val;
-    currentItem.tags = val.split(',').map((s) => s.trim()).filter(Boolean);
-  }
 
   function normalize(value: string | undefined): string {
     return (value || '').toLowerCase().trim();
@@ -196,8 +191,8 @@
                   </div>
 
                   <div class="space-y-2 sm:col-span-2">
-                    <label for="media-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags <span class="text-[oklch(0.60_0.02_256.79)] font-normal">(comma separated)</span></label>
-                    <input id="media-tags" type="text" name="tags" value={tagsInput} oninput={handleTagsInput} class="input-field" placeholder="e.g. goat, favorites" />
+                    <label for="media-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags</label>
+                    <TagInput bind:tags={currentItem.tags} suggestions={allTags} placeholder="e.g. goat, favorites" />
                   </div>
                 </div>
               </section>

@@ -5,6 +5,7 @@
   import { safeInvoke, uniqueSlug } from '$lib/utils';
   import { notificationState } from '$lib/notificationState.svelte';
   import Modal from '$lib/Modal.svelte';
+  import TagInput from '$lib/TagInput.svelte';
   import { ResultAsync } from 'neverthrow';
 
   import type { ProjectItem } from '../../../../shared/types';
@@ -13,17 +14,24 @@
     id: string; name: string; description: string; tags: string; github: string; url: string; image: string; private: boolean;
   }
 
-  let { isEditing, item, close } = $props<{
+  let { isEditing, item, suggestions = [], close } = $props<{
     isEditing: boolean;
     item: ProjectFormItem;
+    suggestions?: string[];
     close: () => void;
   }>();
+
+  function parseTags(str: string): string[] {
+    return (str || '').split(',').map((t) => t.trim()).filter(Boolean);
+  }
 
   // svelte-ignore state_referenced_locally
   let currentItem = $state({ ...item });
   // svelte-ignore state_referenced_locally
-  let originalSnapshot = $state(JSON.stringify(item));
-  let isDirty = $derived(JSON.stringify(currentItem) !== originalSnapshot);
+  let tags = $state<string[]>(parseTags(item.tags));
+  // svelte-ignore state_referenced_locally
+  let originalSnapshot = $state(JSON.stringify({ ...item, tags: parseTags(item.tags) }));
+  let isDirty = $derived(JSON.stringify({ ...currentItem, tags }) !== originalSnapshot);
   let fileInput: HTMLInputElement | undefined = $state();
   let nameInput: HTMLInputElement | undefined = $state();
 
@@ -50,7 +58,6 @@
     e.preventDefault();
     const name = currentItem.name;
     const description = currentItem.description;
-    const tagsStr = currentItem.tags;
     const github = currentItem.github;
     const url = currentItem.url;
     let image = currentItem.image;
@@ -114,13 +121,13 @@
       image = `/projects/${fileName}`;
     }
 
-    const tags = tagsStr ? tagsStr.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
+    const finalTags = Array.from(new Set(tags.map((t: string) => t.trim()).filter(Boolean)));
     
     const newItem: ProjectItem = { 
       id, 
       name, 
       description, 
-      tags, 
+      tags: finalTags, 
       github: github || null, 
       url: url || null, 
       image: image !== '(Auto-named on save)' ? image : '',
@@ -177,8 +184,8 @@
       </div>
       
       <div class="space-y-2 md:col-span-2">
-        <label for="project-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags (comma separated)</label>
-        <input id="project-tags" type="text" name="tags" bind:value={currentItem.tags} class="input-field" placeholder="React, Node.js, Tailwind" />
+        <label for="project-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags</label>
+        <TagInput bind:tags {suggestions} placeholder="React, Node.js, Tailwind" />
       </div>
       
       <div class="space-y-2">

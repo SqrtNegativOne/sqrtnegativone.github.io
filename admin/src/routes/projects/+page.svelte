@@ -46,6 +46,10 @@
     })
   );
 
+  let allTags = $derived(
+    Array.from(new Set((data.projects || []).flatMap((p: ProjectItem) => p.tags || []))).sort()
+  );
+
   let currentItem: ProjectFormItem = $state({
     id: '', name: '', description: '', tags: '', github: '', url: '', image: '', private: false
   });
@@ -148,5 +152,5 @@
 </div>
 
 {#if isModalOpen}
-  <ProjectModal {isEditing} item={currentItem} close={() => isModalOpen = false} />
+  <ProjectModal {isEditing} item={currentItem} suggestions={allTags} close={() => isModalOpen = false} />
 {/if}

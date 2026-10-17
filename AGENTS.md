@@ -52,6 +52,7 @@ All commands use `bun` and run **inside `site/` or `cv/`**.
 - The `/contact` page is **prerendered** and posts JSON to `/api/contact` (marked `export const prerender = false`), so the form works while the page stays static. A no-JS `<form>` fallback redirects back to `/contact?sent=1`.
 - `site/wrangler.jsonc` declares the `DB` D1 binding; `site/migrations/*.sql` define the `messages` table. The deploy workflow applies migrations before deploying.
 - The handler validates/limits the message (5000 chars), uses a hidden honeypot field, and rate-limits by a **daily-rotating SHA-256 hash** of the client IP (raw IPs are never stored).
+- **Reply channel** (optional): below the textarea the form renders `[method select][handle input][Send]`. Method ids, labels, icons, placeholders and link builders live in `shared/data/contactMethods.ts` (`email`, `whatsapp`, `phone`, `sms`, `discord`, `linkedin`, `steam`; first entry is the default) and are shared with the admin messages view. The API rejects unknown ids, stores them as `messages.contact_method`, and stores the trimmed handle (`contact_handle`, max 200 chars) or `NULL` when empty — both added by `site/migrations/0002_add_contact_details.sql`. Add a method there (plus a migration if the storage shape changes), not inline in the page.
 
 ## Coding Guidelines & Rules
 - **Svelte 5 Syntax**: Use runes (`$state`, `$derived`, `$props`, `$effect`) instead of Svelte 4 `export let` or `$:`.

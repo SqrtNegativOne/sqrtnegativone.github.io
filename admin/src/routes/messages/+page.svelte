@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { listMessages, deleteMessage, type D1Message } from '$lib/d1';
   import { notificationState } from '$lib/notificationState.svelte';
+  import { messageReadState } from '$lib/messageReadState.svelte';
   import PageHeader from '$lib/PageHeader.svelte';
   import SearchBar from '$lib/SearchBar.svelte';
   import EmptyState from '$lib/EmptyState.svelte';
@@ -37,7 +38,7 @@
     filterAndSortItems<D1Message>({
       items: messages,
       searchQuery,
-      searchFields: ['body', 'country', 'user_agent', 'created_at'],
+      searchFields: ['body', 'country', 'user_agent', 'created_at', 'contact_handle'],
       filters,
       sorts
     })
@@ -46,7 +47,12 @@
   async function loadMessages() {
     isLoading = true;
     const result = await listMessages();
-    if (result.isOk()) messages = result.value;
+    if (result.isOk()) {
+      messages = result.value;
+      // The list renders full bodies, so viewing this page counts as reading it.
+      const newestId = messages.reduce((max, m) => (m.id > max ? m.id : max), 0);
+      if (newestId > 0) messageReadState.markRead(newestId);
+    }
     isLoading = false;
   }
 

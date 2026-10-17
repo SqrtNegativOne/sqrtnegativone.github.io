@@ -7,9 +7,13 @@
   import ToastContainer from '$lib/ToastContainer.svelte';
   import KeyboardShortcuts from '$lib/KeyboardShortcuts.svelte';
   import { notificationState } from '$lib/notificationState.svelte';
+  import { messageReadState } from '$lib/messageReadState.svelte';
 
   let { children } = $props();
   let mobileMenuOpen = $state(false);
+
+  /** `99+` keeps the collapsed-sidebar badge from overflowing. */
+  let unreadLabel = $derived(messageReadState.unreadCount > 99 ? '99+' : String(messageReadState.unreadCount));
 
   function handleGlobalKeydown(e: KeyboardEvent) {
     if ((e.ctrlKey || e.metaKey) && !e.altKey && (e.key === 'n' || e.key === 'N' || e.code === 'KeyN')) {
@@ -19,6 +23,22 @@
 
   onMount(() => {
     notificationState.initGlobalHandlers();
+    if (!page.url.pathname.startsWith('/messages')) {
+      void messageReadState.refresh(true);
+    }
+
+    // Re-check when the window regains focus (throttled inside the store) so a
+    // message that arrived while the app sat in the background still surfaces.
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') void messageReadState.refresh();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', onVisible);
+
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', onVisible);
+    };
   });
 </script>
 
@@ -56,15 +76,23 @@
         </a>
         {#each navItems as item (item.href)}
           {@const active = page.url.pathname.startsWith(item.href)}
+          {@const unread = item.href === '/messages' ? messageReadState.unreadCount : 0}
           <a
             href={item.href}
             class="flex items-center h-10 px-2.5 rounded transition-colors {active ? 'bg-[oklch(0.1408_0.0044_285.82)] text-white font-medium' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white hover:bg-white/5'}"
-            title={item.label}
+            title={unread > 0 ? `${item.label} — ${unread} unread` : item.label}
           >
             <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">{@html item.path}</svg>
             <span class="ml-3 text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200 group-hover:delay-75">
               {item.label}
             </span>
+            {#if unread > 0}
+              <span
+                class="ml-auto min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-rose-500 text-white text-[10px] font-semibold leading-none shrink-0"
+                aria-hidden="true"
+              >{unreadLabel}</span>
+              <span class="sr-only">{unread} unread {unread === 1 ? 'message' : 'messages'}</span>
+            {/if}
           </a>
         {/each}
       </nav>
@@ -108,12 +136,21 @@
         </a>
         {#each navItems as item (item.href)}
           {@const active = page.url.pathname.startsWith(item.href)}
+          {@const unread = item.href === '/messages' ? messageReadState.unreadCount : 0}
           <a
             href={item.href}
             class="flex items-center h-10 px-3 rounded transition-colors {active ? 'bg-[oklch(0.1408_0.0044_285.82)] text-white font-medium' : 'text-[oklch(0.7107_0.0351_256.79)] hover:text-white hover:bg-white/5'}"
+            title={unread > 0 ? `${item.label} — ${unread} unread` : item.label}
           >
             <svg class="w-5 h-5 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">{@html item.path}</svg>
             {item.label}
+            {#if unread > 0}
+              <span
+                class="ml-auto min-w-5 h-5 px-1 flex items-center justify-center rounded-full bg-rose-500 text-white text-[10px] font-semibold leading-none shrink-0"
+                aria-hidden="true"
+              >{unreadLabel}</span>
+              <span class="sr-only">{unread} unread {unread === 1 ? 'message' : 'messages'}</span>
+            {/if}
           </a>
         {/each}
       </nav>
@@ -133,8 +170,12 @@
           <circle cx="28" cy="8" r="1.8" fill="currentColor"/>
         </svg>
       </a>
-      <button aria-label="Open mobile menu" class="text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 cursor-pointer" onclick={() => mobileMenuOpen = true}>
+      <button aria-label="Open mobile menu" class="relative text-[oklch(0.7107_0.0351_256.79)] hover:text-white p-1 cursor-pointer" onclick={() => mobileMenuOpen = true}>
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        {#if messageReadState.unreadCount > 0}
+          <span class="absolute top-0.5 right-0.5 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-[oklch(0.2103_0.0059_285.89)]" aria-hidden="true"></span>
+          <span class="sr-only">{messageReadState.unreadCount} unread {messageReadState.unreadCount === 1 ? 'message' : 'messages'}</span>
+        {/if}
       </button>
     </div>
 

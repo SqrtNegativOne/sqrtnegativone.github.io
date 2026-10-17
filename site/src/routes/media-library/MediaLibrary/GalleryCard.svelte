@@ -3,6 +3,7 @@
   import TypeBadge from "$shared/components/TypeBadge.svelte";
   import StatusBadge from "$shared/components/StatusBadge.svelte";
   import RatingChart from "$shared/components/RatingChart.svelte";
+  import { ratingColor } from "$shared/utils/ratingColor";
   import { getPosterUrl } from "$lib/utils";
   import type { MediaItem } from "$shared/types";
 
@@ -15,6 +16,30 @@
     ['wishlist', 'next up', 'waiting for'].includes(item.status as string)
   );
 
+  const ratingColorValue = $derived(
+    item.rating != null ? ratingColor(item.rating) : null
+  );
+
+  const isUncertain = $derived(Boolean(item.uncertain));
+
+  // Border + glow are driven by CSS custom properties so the card's own hover
+  // shadow (defined in <style>) can keep working without being overridden.
+  const cardStyle = $derived.by(() => {
+    if (isUncertain) {
+      return '--card-border-style: solid; --card-border-color: transparent; --card-glow: transparent;';
+    }
+    const style = expected ? 'dashed' : 'solid';
+    if (ratingColorValue) {
+      const glow = `${ratingColorValue.slice(0, -1)} / 0.35)`;
+      return `--card-border-style: ${style}; --card-border-color: ${ratingColorValue}; --card-glow: ${glow};`;
+    }
+    if (expected) {
+      // Not yet consumed and unrated: dashed outline, no colour glow.
+      return '--card-border-style: dashed; --card-border-color: oklch(0.5416 0.0154 285.87 / 0.55); --card-glow: transparent;';
+    }
+    return '--card-border-style: solid; --card-border-color: transparent; --card-glow: transparent;';
+  });
+
   function handleKeydown(event: KeyboardEvent) {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
@@ -25,6 +50,7 @@
 
 <div
   class="ml-card"
+  style={cardStyle}
   role="button"
   tabindex="0"
   aria-label={`${item.title}${item.author ? ` by ${item.author}` : ''}`}
@@ -89,7 +115,10 @@
     width: 100%;
     overflow: hidden;
     background: oklch(0.2329 0.0095 285.64);
-    box-shadow: 0 1px 0 oklch(1 0 0 / 0.04) inset;
+    border: 1px var(--card-border-style, solid) var(--card-border-color, transparent);
+    box-shadow:
+      0 0 14px var(--card-glow, transparent),
+      0 1px 0 oklch(1 0 0 / 0.04) inset;
     cursor: pointer;
     outline: none;
     transition:
@@ -100,7 +129,9 @@
   .ml-card:hover,
   .ml-card:focus-visible {
     transform: translateY(-4px);
-    box-shadow: 0 20px 44px oklch(0 0 0 / 0.6);
+    box-shadow:
+      0 0 22px var(--card-glow, transparent),
+      0 20px 44px oklch(0 0 0 / 0.6);
   }
 
   .ml-card:focus-visible {

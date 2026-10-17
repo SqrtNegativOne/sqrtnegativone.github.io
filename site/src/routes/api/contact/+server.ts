@@ -1,15 +1,23 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { contactMethodIds, type ContactMethodId } from '$shared/data/contactMethods';
 
 // This route needs the worker (D1), so it must not be prerendered.
 export const prerender = false;
 
 const MAX_BODY_LENGTH = 5000;
+const MAX_HANDLE_LENGTH = 200;
 const RATE_LIMIT_WINDOW_MINUTES = 10;
 const RATE_LIMIT_MAX = 5;
 
+const ALLOWED_METHODS = new Set<string>(contactMethodIds);
+
 type Payload = {
 	body?: unknown;
+	/** Optional reply channel: `whatsapp`, `email`, `discord`, … */
+	contact_method?: unknown;
+	/** Optional handle/address on that channel. */
+	contact_handle?: unknown;
 	/** Honeypot: real users never fill this in. */
 	website?: unknown;
 };
@@ -26,6 +34,8 @@ async function readPayload(request: Request): Promise<Payload> {
 		const form = await request.formData();
 		return {
 			body: form.get('body')?.toString(),
+			contact_method: form.get('contact_method')?.toString(),
+			contact_handle: form.get('contact_handle')?.toString(),
 			website: form.get('website')?.toString()
 		};
 	}
@@ -72,6 +82,23 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		);
 	}
 
+	// Reply details are optional: keep only a known method and a bounded handle.
+	const rawMethod = typeof payload.contact_method === 'string' ? payload.contact_method.trim() : '';
+	const contactMethod = ALLOWED_METHODS.has(rawMethod) ? (rawMethod as ContactMethodId) : null;
+	const rawHandle = typeof payload.contact_handle === 'string' ? payload.contact_handle.trim() : '';
+
+	if (rawHandle.length > MAX_HANDLE_LENGTH) {
+		return json(
+			{
+				ok: false,
+				error: `Contact details are too long (max ${MAX_HANDLE_LENGTH} characters).`
+			},
+			{ status: 413 }
+		);
+	}
+
+	const contactHandle = rawHandle.length > 0 ? rawHandle : null;
+
 	const ip = request.headers.get('cf-connecting-ip') ?? getClientAddress();
 	const ipHash = ip ? await hashIp(ip) : null;
 
@@ -94,12 +121,16 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 	}
 
 	await db
-		.prepare('INSERT INTO messages (body, ip_hash, country, user_agent) VALUES (?, ?, ?, ?)')
+		.prepare(
+			'INSERT INTO messages (body, ip_hash, country, user_agent, contact_method, contact_handle) VALUES (?, ?, ?, ?, ?, ?)'
+		)
 		.bind(
 			text,
 			ipHash,
 			request.headers.get('cf-ipcountry'),
-			request.headers.get('user-agent')?.slice(0, 512) ?? null
+			request.headers.get('user-agent')?.slice(0, 512) ?? null,
+			contactHandle ? contactMethod : null,
+			contactHandle
 		)
 		.run();
 

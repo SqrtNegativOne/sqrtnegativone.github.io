@@ -6,25 +6,26 @@
   import { readData, writeData } from '$lib/db';
   import { notificationState } from '$lib/notificationState.svelte';
   import Modal from '$lib/Modal.svelte';
+  import TagInput from '$lib/TagInput.svelte';
   import { findQuoteProvider, quoteProviders } from './providers';
 
   import type { QuoteItem } from '../../../../shared/types';
 
-  let { isEditing, item, tagsStr, close } = $props<{
+  let { isEditing, item, suggestions = [], close } = $props<{
     isEditing: boolean;
     item: QuoteItem;
-    tagsStr: string;
+    suggestions?: string[];
     close: () => void;
   }>();
 
   // svelte-ignore state_referenced_locally
   let currentQuote = $state({ ...item });
   // svelte-ignore state_referenced_locally
-  let tagsInput = $state(tagsStr);
+  let tags = $state<string[]>([...(item.tags || [])]);
   // svelte-ignore state_referenced_locally
-  let originalSnapshot = $state(JSON.stringify({ ...item, tags: tagsStr }));
+  let originalSnapshot = $state(JSON.stringify({ ...item, tags: item.tags || [] }));
   let isDirty = $derived(
-    JSON.stringify({ ...currentQuote, tags: tagsInput }) !== originalSnapshot
+    JSON.stringify({ ...currentQuote, tags }) !== originalSnapshot
   );
   let importUrl = $state('');
   let isFetching = $state(false);
@@ -91,9 +92,7 @@
     const quote = (currentQuote.quote || '').trim();
     const source = (currentQuote.source || '').trim();
     const link = (currentQuote.link || '').trim();
-    const tagsStrParsed = tagsInput || '';
-    
-    const tags = Array.from(new Set(tagsStrParsed.split(',').map((t: string) => t.trim()).filter((t: string) => t)));
+    const finalTags = Array.from(new Set(tags.map((t: string) => t.trim()).filter(Boolean)));
 
     if (!quote) {
       notificationState.error('Quote cannot be empty', { title: 'Validation Error' });
@@ -104,11 +103,11 @@
     const quotes = quotesRes.isOk() ? quotesRes.value : [];
     
     if (isNew) {
-      quotes.push({ id: crypto.randomUUID(), quote, source, link, tags });
+      quotes.push({ id: crypto.randomUUID(), quote, source, link, tags: finalTags });
     } else {
       const index = quotes.findIndex((q: any) => q.id === id);
       if (index !== -1) {
-        quotes[index] = { id, quote, source, link, tags };
+        quotes[index] = { id, quote, source, link, tags: finalTags };
       } else {
         notificationState.error('Original quote not found', { title: 'Save Failed' });
         return;
@@ -190,8 +189,8 @@
     </div>
     
     <div>
-      <label for="tags" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)] mb-1 uppercase tracking-wider">Tags (comma separated)</label>
-      <input type="text" id="tags" name="tags" bind:value={tagsInput} class="input-field w-full text-sm" placeholder="e.g. prefix, afterdark, funny" />
+      <label for="tags" class="block text-xs font-medium text-[oklch(0.7107_0.0351_256.79)] mb-1 uppercase tracking-wider">Tags</label>
+      <TagInput bind:tags {suggestions} placeholder="e.g. prefix, afterdark, funny" />
     </div>
   </form>
 

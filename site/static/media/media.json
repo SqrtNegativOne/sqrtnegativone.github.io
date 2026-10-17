@@ -2261,18 +2261,22 @@
   {
     "id": "z_a_t_o_i_love_the_world_and_everything_in_it",
     "type": "game",
-    "rating": 5,
-    "status": "wishlist",
+    "rating": 5.5,
+    "status": "consuming",
     "title": "Z.A.T.O. // I Love the World and Everything In It",
     "tagline": "",
     "description": "USSR, 1986. A girl goes missing in the closed city of Vorkuta-5, yet not a soul seems to be concerned. Uncover the mystery behind her disappearance and transmit your signal to the universe.",
     "notes": "",
     "private_notes": "",
     "poster_image": "game_z_a_t_o_i_love_the_world_and_everything_in_it",
-    "tags": [],
+    "tags": [
+      "philosophical",
+      "psychological"
+    ],
     "author": "Ferry // Nopanamaman",
     "publisher": "",
-    "hidden": false
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "your_turn_to_die_death_game_by_majority",
@@ -2688,5 +2692,61 @@
     "publisher": "A24, Blow Out Productions, To Be Formed",
     "hidden": false,
     "uncertain": false
+  },
+  {
+    "id": "how_to_live",
+    "type": "book",
+    "rating": 5,
+    "status": "finished",
+    "title": "How to Live",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_how_to_live",
+    "tags": [
+      "philosophical"
+    ],
+    "author": "Derek Sivers",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false,
+    "creation_date": "2026-10-17"
+  },
+  {
+    "id": "anything_you_want",
+    "type": "book",
+    "rating": 5,
+    "status": "finished",
+    "title": "Anything You Want",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_anything_you_want",
+    "tags": [],
+    "author": "",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false,
+    "creation_date": "2026-10-17"
+  },
+  {
+    "id": "how_to_win_friends_and_influence_people",
+    "type": "book",
+    "rating": 1.5,
+    "status": "dropped",
+    "title": "How to Win Friends and Influence People",
+    "tagline": "",
+    "description": "",
+    "notes": "While reading the book, I tried to compare the ideal behaviour Carnegie prescribes to that of my friends. Beside the trivial similarities there just wasn't any connection. Perhaps we live in different worlds...",
+    "private_notes": "",
+    "poster_image": "book_how_to_win_friends_and_influence_people",
+    "tags": [],
+    "author": "Dale Carnegie",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false,
+    "creation_date": "2026-10-17"
   }
 ]

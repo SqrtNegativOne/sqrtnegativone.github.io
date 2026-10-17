@@ -4,6 +4,7 @@
   import SearchModal from './components/SearchModal.svelte';
   import SearchBar from '$lib/SearchBar.svelte';
   import FullPoster from '$lib/FullPoster.svelte';
+  import MediaInfo from '../../../../shared/components/MediaInfo.svelte';
   import mediaProperties from '../../../../site/static/media/media-properties.json';
   import { MediaState, type MediaItem, type SearchResult } from './mediaState.svelte';
 
@@ -15,12 +16,17 @@
 
   let fullPosterUrl: string | null = $state(null);
 
-  const filterProperties = [
+  const allTags = $derived(
+    Array.from(new Set((data.media || []).flatMap((m: MediaItem) => m.tags || []))).sort()
+  );
+
+  const filterProperties = $derived([
     { value: 'type', label: 'Type', type: 'select' as const, options: mediaProperties.types },
     { value: 'status', label: 'Status', type: 'select' as const, options: mediaProperties.statuses },
+    { value: 'tags', label: 'Tag', type: 'select' as const, options: allTags.map((t) => ({ value: t, label: t })) },
     { value: 'rating', label: 'Rating', type: 'number' as const },
     { value: 'title', label: 'Title', type: 'text' as const }
-  ];
+  ]);
 </script>
 
 <svelte:head>
@@ -28,15 +34,20 @@
 </svelte:head>
 
 <div class="space-y-6">
-  <SearchBar
-    bind:value={media.searchQuery}
-    bind:filters={media.filters}
-    bind:sorts={media.sorts}
-    properties={filterProperties}
-    totalCount={data.media?.length || 0}
-    filteredCount={media.filteredMedia.length}
-    onnew={(q) => media.openNew(q)}
-  />
+  <div class="flex items-start gap-3">
+    <div class="flex-1 min-w-0">
+      <SearchBar
+        bind:value={media.searchQuery}
+        bind:filters={media.filters}
+        bind:sorts={media.sorts}
+        properties={filterProperties}
+        totalCount={data.media?.length || 0}
+        filteredCount={media.filteredMedia.length}
+        onnew={(q) => media.openNew(q)}
+      />
+    </div>
+    <MediaInfo />
+  </div>
 
   {#if media.errorMsg}
     <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded">

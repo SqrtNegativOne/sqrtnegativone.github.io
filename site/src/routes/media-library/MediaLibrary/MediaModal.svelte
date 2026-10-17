@@ -31,14 +31,16 @@
       <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
     <div class="ml-modal-grid">
-      <!-- svelte-ignore a11y_click_events_have_key_events -->
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
-      <div class="ml-modal-poster {openFullPoster && item.poster_image ? 'is-interactive' : ''}" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(getPosterUrl(item.poster_image as string)); } }} style={openFullPoster && item.poster_image ? 'cursor: pointer;' : ''}>
-        {#if item.poster_image}
-          <img src={getPosterUrl(item.poster_image as string)} alt="" />
-        {:else}
-          <div class="ml-poster-fallback"><span>{TYPE_LABEL[item.type] || item.type}</span></div>
-        {/if}
+      <div class="ml-modal-poster-sticky">
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <div class="ml-modal-poster {openFullPoster && item.poster_image ? 'is-interactive' : ''}" onclick={(e) => { if(openFullPoster) { e.stopPropagation(); openFullPoster(getPosterUrl(item.poster_image as string)); } }} style={openFullPoster && item.poster_image ? 'cursor: pointer;' : ''}>
+          {#if item.poster_image}
+            <img src={getPosterUrl(item.poster_image as string)} alt="" />
+          {:else}
+            <div class="ml-poster-fallback"><span>{TYPE_LABEL[item.type] || item.type}</span></div>
+          {/if}
+        </div>
       </div>
       <div class="ml-modal-info">
         <h2 class="ml-modal-title">
@@ -135,8 +137,17 @@
   .ml-modal-grid {
     display: grid;
     grid-template-columns: minmax(220px, 38%) 1fr;
-    align-items: center;
+    align-items: start;
     gap: 32px;
+  }
+
+  /* Keep the poster pinned to the vertical centre of the visible modal while
+     the description/notes column scrolls beside it. */
+  .ml-modal-poster-sticky {
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+    align-self: start;
   }
 
   .ml-modal-poster {
@@ -249,7 +260,12 @@
       grid-template-columns: 1fr;
       gap: 24px;
     }
-    
+
+    .ml-modal-poster-sticky {
+      position: static;
+      transform: none;
+    }
+
     .ml-modal-poster {
       width: 140px;
     }

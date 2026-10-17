@@ -1,5 +1,5 @@
 import { errAsync, type ResultAsync } from 'neverthrow';
-import { safeInvoke } from '$lib/utils';
+import { safeInvoke, type SafeInvokeOptions } from '$lib/utils';
 
 export interface D1Message {
   id: number;
@@ -8,6 +8,10 @@ export interface D1Message {
   country: string | null;
   user_agent: string | null;
   ip_hash: string | null;
+  /** Reply channel picked on the contact form (`email`, `discord`, …). */
+  contact_method: string | null;
+  /** Handle/address on that channel. */
+  contact_handle: string | null;
 }
 
 /**
@@ -15,15 +19,26 @@ export interface D1Message {
  * database. Backed by the `d1_query` Tauri command, which reuses the
  * developer's existing Wrangler login.
  */
-export function d1Query<T = Record<string, unknown>>(sql: string): ResultAsync<T[], Error> {
-  return safeInvoke<T[]>('d1_query', { sql }, { title: 'D1 request failed' });
+export function d1Query<T = Record<string, unknown>>(
+  sql: string,
+  options?: SafeInvokeOptions
+): ResultAsync<T[], Error> {
+  return safeInvoke<T[]>('d1_query', { sql }, { title: 'D1 request failed', ...options });
 }
 
 /** Fetch the most recent contact messages, newest first. */
 export function listMessages(limit = 200): ResultAsync<D1Message[], Error> {
   const safeLimit = Math.min(Math.max(Math.floor(limit) || 0, 1), 1000);
+  // `SELECT *` keeps this working before the contact_method/handle migration
+  // has been applied to the remote database (the fields just read as null).
   return d1Query<D1Message>(
-    `SELECT id, body, created_at, country, user_agent, ip_hash FROM messages ORDER BY id DESC LIMIT ${safeLimit}`
+    `SELECT * FROM messages ORDER BY id DESC LIMIT ${safeLimit}`
+  ).map((rows) =>
+    rows.map((row) => ({
+      ...row,
+      contact_method: row.contact_method ?? null,
+      contact_handle: row.contact_handle ?? null
+    }))
   );
 }
 

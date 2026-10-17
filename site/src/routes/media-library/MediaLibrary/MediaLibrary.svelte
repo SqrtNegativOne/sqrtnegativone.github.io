@@ -1,8 +1,10 @@
 <script lang="ts">
   import mediaData from "../../../../static/media/media.json";
+  import mediaProperties from "../../../../static/media/media-properties.json";
 
   import MediaModal from "./MediaModal.svelte";
   import FilterSort from "$shared/components/FilterSort.svelte";
+  import MediaInfo from "$shared/components/MediaInfo.svelte";
   import { applyFilters, applySorts } from "./mediaFilters";
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
@@ -16,8 +18,22 @@
   const typedMediaData = mediaData as unknown as MediaItem[];
   const visibleMediaData = typedMediaData.filter((item) => !item.hidden);
 
+  // Tags that actually exist across the visible library, used for the tag filter.
+  const allTags = $derived(
+    Array.from(new Set(visibleMediaData.flatMap((item) => item.tags || []))).sort()
+  );
+
+  const filterProperties = $derived([
+    { value: 'type', label: 'Type', type: 'select' as const, options: mediaProperties.types },
+    { value: 'status', label: 'Status', type: 'select' as const, options: mediaProperties.statuses },
+    { value: 'tags', label: 'Tag', type: 'select' as const, options: allTags.map((t) => ({ value: t, label: t })) },
+    { value: 'rating', label: 'Rating', type: 'number' as const },
+    { value: 'title', label: 'Title', type: 'text' as const }
+  ]);
+
   let searchQuery = $state("");
-  // Default view: everything except the not-yet-consumed / dormant shelves.
+  // Public site: show the consumed library (finished/dropped/shelved/consuming)
+  // plus rewishlist, which belongs to both the consumed and to-consume groups.
   const DEFAULT_STATUS_FILTER = ['finished', 'dropped', 'shelved', 'rewishlist', 'consuming'];
   let filters = $state<{ property: string, operator: string, value: string | number | boolean | string[] }[]>([
     { property: 'status', operator: 'is', value: [...DEFAULT_STATUS_FILTER] }
@@ -118,7 +134,8 @@
   <div class="ml-filters-container">
     <div class="ml-filters">
       <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
-      <FilterSort bind:filters bind:sorts />
+      <FilterSort bind:filters bind:sorts properties={filterProperties} />
+      <MediaInfo />
       <div class="ml-view-toggle" role="group" aria-label="View mode">
         <button
           type="button"

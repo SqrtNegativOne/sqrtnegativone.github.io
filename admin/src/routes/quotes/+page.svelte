@@ -22,8 +22,6 @@
     link: '',
     tags: [] as string[]
   });
-  
-  let tagsInput = $state('');
 
   let searchQuery = $state('');
   let filters = $state<FilterRule[]>([]);
@@ -55,14 +53,12 @@
   function openNew(initialQuote = '') {
     isEditing = false;
     currentQuote = { id: '', quote: initialQuote, source: '', link: '', tags: [] };
-    tagsInput = '';
     isModalOpen = true;
   }
 
   function openEdit(q: QuoteItem) {
     isEditing = true;
-    currentQuote = { ...q };
-    tagsInput = q.tags?.join(', ') || '';
+    currentQuote = { ...q, tags: q.tags || [] };
     isModalOpen = true;
   }
 
@@ -124,5 +120,5 @@
 </div>
 
 {#if isModalOpen}
-  <QuoteModal {isEditing} item={currentQuote} tagsStr={tagsInput} close={() => isModalOpen = false} />
+  <QuoteModal {isEditing} item={currentQuote} suggestions={allTags} close={() => isModalOpen = false} />
 {/if}
