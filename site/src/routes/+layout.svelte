@@ -1,5 +1,5 @@
 <script>
-  import MenuOverlay from "$shared/components/MenuOverlay.svelte";
+  import NavSidebar from "$lib/components/NavSidebar.svelte";
   import AsciiBackground from "$shared/components/AsciiBackground.svelte";
 
   import "../index.css";
@@ -38,7 +38,6 @@
   let isBare = $derived(BARE_ROUTES.includes(currentPath));
   let isStandalone = $derived(STANDALONE_PREFIXES.some((prefix) => currentPath.startsWith(prefix)));
   let showMenu = $derived(!$page.error && currentPath !== "/questions" && !isBare);
-  let currentView = $derived(currentPath === "/" ? "home" : currentPath.slice(1).split("/")[0]);
 </script>
 
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -59,7 +58,7 @@
     {@render children()}
   </div>
   {#if showMenu}
-    <MenuOverlay items={NAV_ITEMS} view={currentView} />
+    <NavSidebar items={NAV_ITEMS} path={currentPath} />
   {/if}
 {/if}
 

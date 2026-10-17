@@ -35,11 +35,6 @@
   transition: opacity 0.28s ease;
 }
 
-body.menu-is-open .page-content {
-  opacity: 0;
-  pointer-events: none;
-}
-
 @media (max-width: 640px) {
   .home-name-overlay {
     top: 2rem;
