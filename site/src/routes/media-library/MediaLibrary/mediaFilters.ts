@@ -1,4 +1,4 @@
-type FilterValue = string | number | boolean;
+type FilterValue = string | number | boolean | (string | number | boolean)[];
 
 export function applyFilters<T extends object>(items: T[], filters: { property: string, operator: string, value: FilterValue }[], searchQuery: string): T[] {
   return items.filter(item => {
@@ -16,6 +16,18 @@ export function applyFilters<T extends object>(items: T[], filters: { property: 
     
     for (const f of filters) {
       const val = record[f.property];
+      const targets = Array.isArray(f.value) ? f.value : null;
+
+      if (targets) {
+        // Multi-select value: "is" = any of, "is not" = none of.
+        // An empty selection is inactive and matches everything.
+        if (targets.length === 0) continue;
+        const matched = targets.some((t) => val == t);
+        if (f.operator === 'is' && !matched) return false;
+        if (f.operator === 'is_not' && matched) return false;
+        continue;
+      }
+
       if (f.operator === 'is') {
         if (val != f.value) return false;
       } else if (f.operator === 'is_not') {

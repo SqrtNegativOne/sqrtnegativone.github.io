@@ -2654,5 +2654,39 @@
     "publisher": "CAPCOM Co., Ltd.",
     "hidden": false,
     "uncertain": false
+  },
+  {
+    "id": "digger",
+    "type": "movie",
+    "rating": 4.5,
+    "status": "wishlist",
+    "title": "Digger",
+    "tagline": "Every guy has a differing opinion. Gotta see it to find out",
+    "description": "The most powerful man in the world embarks on a frantic mission to prove he is humanity's savior before the disaster he's unleashed destroys everything.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_digger",
+    "tags": [],
+    "author": "Alejandro G. Iñárritu",
+    "publisher": "Warner Bros. Pictures",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "you_can_see_everything",
+    "type": "movie",
+    "rating": 6,
+    "status": "wishlist",
+    "title": "You Can See Everything",
+    "tagline": "",
+    "description": "Thirty-four days before she's sent to prison, notorious Silicon Valley founder Elizabeth Holmes invites a skeptical film crew to document her every move. What begins as an intimate portrait of an enigmatic felon becomes a mind-bending three-year journey into the abyss.",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "movie_you_can_see_everything",
+    "tags": [],
+    "author": "Nathan Fielder, Lance Oppenheim",
+    "publisher": "A24, Blow Out Productions, To Be Formed",
+    "hidden": false,
+    "uncertain": false
   }
 ]

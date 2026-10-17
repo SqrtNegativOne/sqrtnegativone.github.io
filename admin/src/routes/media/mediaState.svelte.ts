@@ -27,6 +27,19 @@ export interface MediaSearchProvider {
   search(title: string, type: string, context: MediaSearchContext): Promise<Result<SearchResult[], string>>;
 }
 
+/** Local `YYYY-MM-DD` date used when stamping a newly added item. */
+function todayIsoDate(): string {
+  const d = new Date();
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+/** Empty date inputs come back as `''`; store `null` instead. */
+function normalizeDate(value: string | null | undefined): string | null {
+  const v = typeof value === 'string' ? value.trim() : '';
+  return v ? v : null;
+}
+
 let cachedTmdbApiKey: string | null = null;
 let cachedBooksApiKey: string | null = null;
 let envLoaded = false;
@@ -305,13 +318,15 @@ export class MediaState {
     id: '', type: 'movie', rating: 3, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
     author: '', publisher: '',
-    tags: [], hidden: false, uncertain: false
+    tags: [], hidden: false, uncertain: false,
+    completion_date: '', creation_date: ''
   });
   initialItem: MediaItem = $state({
     id: '', type: 'movie', rating: 3, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
     author: '', publisher: '',
-    tags: [], hidden: false, uncertain: false
+    tags: [], hidden: false, uncertain: false,
+    completion_date: '', creation_date: ''
   });
   get isDirty(): boolean {
     return JSON.stringify(this.currentItem) !== JSON.stringify(this.initialItem);
@@ -323,7 +338,10 @@ export class MediaState {
   searchResults: SearchResult[] = $state([]);
 
   searchQuery = $state("");
-  filters = $state<{ property: string, operator: string, value: any }[]>([]);
+  // Default view: everything except the not-yet-consumed / dormant shelves.
+  filters = $state<{ property: string, operator: string, value: any }[]>([
+    { property: 'status', operator: 'is', value: ['finished', 'dropped', 'shelved', 'rewishlist', 'consuming'] }
+  ]);
   sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'title', direction: 'asc' }]);
 
   data: any = $state(null);
@@ -348,7 +366,8 @@ export class MediaState {
       id: '', type: 'movie', rating: 3, status: 'wishlist',
       title: initialTitle, tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
       author: '', publisher: '',
-      tags: [], hidden: false, uncertain: false
+      tags: [], hidden: false, uncertain: false,
+      completion_date: '', creation_date: ''
     };
     this.initialItem = { ...this.currentItem };
     this.isModalOpen = true;
@@ -444,6 +463,7 @@ export class MediaState {
   async handleSave(e: Event) {
     e.preventDefault();
     this.isSaving = true;
+    const isNew = !this.isEditing;
     try {
       this.errorMsg = '';
 
@@ -459,7 +479,7 @@ export class MediaState {
         this.currentItem.id = this.generateUniqueId(this.currentItem, items);
       }
 
-      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain } = this.currentItem;
+      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain, completion_date, creation_date } = this.currentItem;
       let poster_image = this.currentItem.poster_image;
 
       const rootRes = await ResultAsync.fromPromise(getRepoRoot(), (err) => typeof err === 'string' ? err : String(err));
@@ -471,7 +491,6 @@ export class MediaState {
       const root = rootRes.value;
       const safeId = id.replace(/[^A-Za-z0-9_-]/g, "_");
       const postersDir = `${root}/site/static/media/media-posters`;
-      const isNew = !this.isEditing;
 
       await ResultAsync.fromPromise(invoke('mkdir', { path: postersDir, recursive: true }), () => {});
 
@@ -529,6 +548,11 @@ export class MediaState {
 
       const parsedRating = typeof rating === 'number' && !isNaN(rating) ? rating : null;
       const newItem: MediaItem = { id, type, rating: parsedRating, status, title, tagline, description, notes, private_notes, poster_image, tags, author, publisher, hidden, uncertain: Boolean(uncertain) };
+      // Dates are optional; existing items without them stay untouched.
+      const completionDate = normalizeDate(completion_date);
+      if (completionDate) newItem.completion_date = completionDate;
+      const creationDate = normalizeDate(creation_date) ?? (isNew ? todayIsoDate() : null);
+      if (creationDate) newItem.creation_date = creationDate;
       
       if (isNew) {
         if (items.some(i => i.id === id)) {

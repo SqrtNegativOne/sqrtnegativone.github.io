@@ -25,6 +25,10 @@ export interface MediaItem {
   tags?: string[];
   hidden?: boolean;
   uncertain?: boolean;
+  /** ISO date (`YYYY-MM-DD`) the item was finished / consumed. */
+  completion_date?: string | null;
+  /** ISO date (`YYYY-MM-DD`) the item was added to the library. */
+  creation_date?: string | null;
 }
 
 export interface PrivateNoteItem {

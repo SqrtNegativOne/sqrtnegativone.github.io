@@ -224,6 +224,14 @@
                     </div>
                   </div>
 
+                  <div class="space-y-2">
+                    <label for="media-completion-date" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Completion date <span class="text-[oklch(0.60_0.02_256.79)] font-normal">(optional)</span></label>
+                    <input id="media-completion-date" type="date" name="completion_date" bind:value={currentItem.completion_date} class="input-field [color-scheme:dark]" />
+                    {#if currentItem.creation_date}
+                      <p class="text-[11px] font-mono uppercase tracking-[0.12em] text-[oklch(0.60_0.02_256.79)]">Added {currentItem.creation_date}</p>
+                    {/if}
+                  </div>
+
                   <label for="media-completed" class="flex items-center gap-3 cursor-pointer select-none">
                     <input type="checkbox" id="media-completed" bind:checked={currentItem.completed} class="rounded border-zinc-700 text-blue-600 focus:ring-blue-500 bg-zinc-800" />
                     <span class="text-sm text-[oklch(0.7107_0.0351_256.79)]">Completed</span>

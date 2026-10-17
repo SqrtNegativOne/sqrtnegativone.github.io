@@ -10,6 +10,15 @@
   import type { MediaItem } from "$shared/types";
   
   let { item, closeDetails, openFullPoster } = $props<{ item: MediaItem; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
+
+  /** Formats a stored `YYYY-MM-DD` date without any timezone shifting. */
+  function formatDate(value: string | null | undefined): string {
+    if (!value) return '';
+    const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(value);
+    if (!match) return value;
+    const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
 </script>
 
 
@@ -54,6 +63,16 @@
             uncertain={Boolean(item.uncertain)}
           />
         </div>
+        {#if item.creation_date || item.completion_date}
+          <div class="ml-modal-dates">
+            {#if item.creation_date}
+              <span>Added <span class="ml-date-value">{formatDate(item.creation_date)}</span></span>
+            {/if}
+            {#if item.completion_date}
+              <span>Finished <span class="ml-date-value">{formatDate(item.completion_date)}</span></span>
+            {/if}
+          </div>
+        {/if}
         {#if item.description}
           <div class="ml-modal-description">
             {item.description}
@@ -200,6 +219,24 @@
     font-size: 15px;
     line-height: 1.6;
     white-space: pre-wrap;
+  }
+
+  .ml-modal-dates {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 20px;
+    margin: 0 0 20px;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: oklch(0.5416 0.0154 285.87);
+  }
+
+  .ml-date-value {
+    color: oklch(0.8622 0.0068 286.26);
+    letter-spacing: 0.04em;
   }
 
 

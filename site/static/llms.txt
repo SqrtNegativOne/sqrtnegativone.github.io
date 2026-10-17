@@ -11,6 +11,7 @@
 - [Microblog](https://sqrt.fyi/microblog): Short thoughts, links, and updates fetched live from @sqrt-1.bsky.social on Bluesky.
 - [Colophon](https://sqrt.fyi/colophon): How this site is built: the tools, fonts, and stack behind sqrt.fyi.
 - [Questions](https://sqrt.fyi/questions): Open problems and puzzles Sqrt-1 is currently working through.
+- [Bookmarks](https://sqrt.fyi/bookmarks): Favourite articles and websites Sqrt-1 keeps coming back to.
 - [Contact](https://sqrt.fyi/contact): Ways to reach Sqrt-1.
 
 ## Feeds & Indexes

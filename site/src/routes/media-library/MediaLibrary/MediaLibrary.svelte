@@ -17,7 +17,11 @@
   const visibleMediaData = typedMediaData.filter((item) => !item.hidden);
 
   let searchQuery = $state("");
-  let filters = $state<{ property: string, operator: string, value: string | number | boolean }[]>([]);
+  // Default view: everything except the not-yet-consumed / dormant shelves.
+  const DEFAULT_STATUS_FILTER = ['finished', 'dropped', 'shelved', 'rewishlist', 'consuming'];
+  let filters = $state<{ property: string, operator: string, value: string | number | boolean | string[] }[]>([
+    { property: 'status', operator: 'is', value: [...DEFAULT_STATUS_FILTER] }
+  ]);
   let sorts = $state<{ property: string, direction: 'asc' | 'desc' }[]>([{ property: 'rating', direction: 'desc' }]);
 
   let carouselsData = $derived((() => {

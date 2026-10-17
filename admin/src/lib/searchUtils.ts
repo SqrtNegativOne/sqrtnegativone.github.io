@@ -114,6 +114,16 @@ function isDateLike(v: unknown): v is string {
 }
 
 function evaluateFilter(val: unknown, operator: string, targetVal: unknown): boolean {
+  // Multi-select value: "is" = any of, "is not" = none of.
+  // An empty selection is inactive and matches everything.
+  if (Array.isArray(targetVal)) {
+    if (targetVal.length === 0) return true;
+    const matched = targetVal.some(target => evaluateFilter(val, 'is', target));
+    if (operator === 'is') return matched;
+    if (operator === 'is_not') return !matched;
+    return matched;
+  }
+
   // If value is an array (e.g. tags)
   if (Array.isArray(val)) {
     const targetStr = String(targetVal).trim().toLowerCase();
