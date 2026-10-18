@@ -6,6 +6,7 @@
       "name": "site",
       "dependencies": {
         "@fontsource/datatype": "^5.3.0",
+        "@fontsource/dotgothic16": "^5.3.1",
         "@fontsource/ibm-plex-mono": "^5.3.0",
         "@fontsource/instrument-serif": "^5.3.0",
         "@fontsource/inter": "^5.3.0",
@@ -134,6 +135,8 @@
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.7.2", "", { "dependencies": { "@eslint/core": "^1.2.1", "levn": "^0.4.1" } }, "sha512-+CNAzxglkrpNf/kKywqQfk74QjtceuOE7Qm+AF8miRvPF/wmmK5+OJOgVh3AVTT3RP2mH3+FOaxlE5v72owk0A=="],
 
     "@fontsource/datatype": ["@fontsource/datatype@5.3.0", "", {}, "sha512-pQsHHbzefu+CdB81cVdImEbCONdKrS//rGn+A9KEvREY616Pw75cC6RIW+N9UZU5DosOmmaRjgqWr+c/aVBQ/w=="],
+
+    "@fontsource/dotgothic16": ["@fontsource/dotgothic16@5.3.1", "", {}, "sha512-alvxJchrFDFohce0s8YfHsFiRm2zUM+FrwEeWtLyc14WIl3heSG1/8BPD7Sm001YuVPL1bU14UmM5P2KO5/gnQ=="],
 
     "@fontsource/ibm-plex-mono": ["@fontsource/ibm-plex-mono@5.3.0", "", {}, "sha512-eTgnZjZEGk1QtD3ZstF+Vclo2HLAni8YMy34/DxllwZvyz1lR/1RF/xTiAquOBO7MvqBx8D2Ig2WCPMVfdZu7Q=="],
 

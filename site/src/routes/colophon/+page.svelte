@@ -36,9 +36,9 @@
   <section>
     <h2>type</h2>
     <p>
-      The pixel fonts you are reading now, Silkscreen and VT323, set the tone
-      on this page and on the unlisted <a href="/main">/main</a> index. The
-      rest of the site uses Inter, Instrument Serif, IBM Plex Mono, and PT
+      The pixel fonts on this site — Silkscreen, VT323, and DotGothic16 — set
+      the tone on this page and on the unlisted <a href="/main">/main</a> index.
+      The rest of the site uses Inter, Instrument Serif, IBM Plex Mono, and PT
       Sans Narrow, all bundled locally.
     </p>
   </section>

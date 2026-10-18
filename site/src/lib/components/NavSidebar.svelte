@@ -1,30 +1,63 @@
 <script>
+  import { onDestroy } from "svelte";
   import { goto } from "$app/navigation";
 
-  let { items = [], path = "" } = $props();
+  let {
+    items = [],
+    path = "",
+    /** Keep the pane open instead of hover-revealing it. */
+    pinned = false,
+    open = $bindable(false)
+  } = $props();
 
-  let open = $state(false);
   let sidebarEl = $state();
+  let leaving = $state(false);
+  let navTimer;
+  let leaveTimer;
 
   /** Distance (px) from the left viewport edge that reveals the panel. */
   const EDGE_ZONE = 8;
   /** How far past the panel's right edge the pointer may drift before it hides. */
   const CLOSE_MARGIN = 120;
+  /** Above this width a pinned pane is a permanent column, not a drawer. */
+  const PINNED_QUERY = "(min-width: 900px)";
+
   /** Max panel width — must match the CSS `--nav-w`. */
   function panelWidth() {
     return Math.min(320, window.innerWidth * 0.82);
   }
 
+  function isPinnedHere() {
+    return pinned && window.matchMedia(PINNED_QUERY).matches;
+  }
+
+  function navDelay() {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 450;
+  }
+
   function openMenu() {
     if (open) return;
+    clearTimeout(leaveTimer);
+    leaving = false;
     open = true;
   }
 
-  function closeMenu() {
+  /**
+   * Slide the panel shut. Exported so pages can close it before following a
+   * link that lives outside the sidebar.
+   */
+  export function collapse() {
     if (!open) return;
     const hadFocus = sidebarEl?.contains(document.activeElement);
     open = false;
+    leaving = true;
+    clearTimeout(leaveTimer);
+    leaveTimer = setTimeout(() => { leaving = false; }, 1400);
     if (hadFocus) document.getElementById("main-content")?.focus();
+  }
+
+  function closeMenu() {
+    collapse();
   }
 
   function isActive(item) {
@@ -36,18 +69,26 @@
 
   function handleNav(item) {
     if (!item) return;
-    closeMenu();
-    setTimeout(() => {
-      if (item.external) window.open(item.path, "_blank", "noopener,noreferrer");
-      else {
-        goto(item.path);
-      }
-    }, 120);
+
+    if (item.external) {
+      // Open synchronously so popup blockers still see the user gesture.
+      window.open(item.path, "_blank", "noopener,noreferrer");
+      // On /main the pane is pinned; there is no page transition to hide.
+      if (!pinned) collapse();
+      return;
+    }
+
+    collapse();
+    clearTimeout(navTimer);
+    navTimer = setTimeout(() => goto(item.path), navDelay());
   }
 
   function onMouseMove(e) {
     // Hover reveal is for precise pointers (mouse/trackpad), not touch.
     if (!window.matchMedia("(pointer: fine)").matches) return;
+    // A pinned pane is permanent: don't hide it when the pointer drifts away.
+    if (pinned && open) return;
+    if (leaving) return;
 
     if (!open) {
       if (e.clientX <= EDGE_ZONE) openMenu();
@@ -60,6 +101,9 @@
   }
 
   function onPointerDown(e) {
+    // A pinned pane on a wide screen is never dismissed by clicking around it.
+    if (isPinnedHere()) return;
+
     // Touch/pen: tap the extreme-left strip to reveal, tap anywhere else to hide.
     if (e.pointerType === "mouse") {
       if (open && !sidebarEl?.contains(e.target)) closeMenu();
@@ -74,7 +118,8 @@
 
   function onGlobalKeydown(e) {
     if (e.key === "Escape" || e.code === "Escape") {
-      if (open) {
+      // Escape may dismiss the mobile drawer, but not the permanent column.
+      if (open && !isPinnedHere()) {
         e.preventDefault();
         closeMenu();
       }
@@ -89,6 +134,10 @@
     }
   }
 
+  onDestroy(() => {
+    clearTimeout(navTimer);
+    clearTimeout(leaveTimer);
+  });
 </script>
 
 <svelte:window
@@ -129,10 +178,6 @@
 </nav>
 
 <style>
-.nav-sidebar {
-  --nav-w: min(320px, 82vw);
-}
-
 /* ── Sidebar pane ──────────────────────────────── */
 .nav-sidebar {
   position: fixed;
@@ -140,10 +185,10 @@
   left: 0;
   bottom: 0;
   z-index: 901;
-  width: var(--nav-w);
+  width: var(--nav-w, min(320px, 82vw));
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 5rem 2.5rem 3rem;
   background: oklch(0.13 0 0 / 0.98);
   border-right: 1px solid oklch(1 0 0 / 0.12);
@@ -160,7 +205,8 @@
 
 .nav-list {
   list-style: none;
-  margin: 0;
+  /* auto margins centre the list but collapse when it needs to scroll */
+  margin: auto 0;
   padding: 0;
   display: flex;
   flex-direction: column;

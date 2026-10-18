@@ -42,6 +42,8 @@
 /* ── Theme (dark only) ───────────────────────── */
 :root {
   --frame-v: 72px;
+  /* Shared width of the left navigation pane. */
+  --nav-w: min(320px, 82vw);
   --bg: oklch(0.1638 0 0);
   --text: oklch(0.931 0 0);
   --text-secondary: oklch(0.738 0 0);

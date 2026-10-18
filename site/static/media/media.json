@@ -769,13 +769,17 @@
   {
     "id": "house",
     "type": "show",
-    "rating": 5.5,
+    "rating": 5,
     "status": "finished",
     "title": "House MD",
     "tagline": "Would you believe me if I said this was philosophical?",
     "description": "Dr. Gregory House, a drug-addicted, unconventional, misanthropic medical genius, leads a team of diagnosticians at the fictional Princeton–Plainsboro Teaching Hospital in New Jersey.",
     "notes": "Some of the episodes are.... literally the best stories I have seen in my life. Guess they hit harder once you expect the same formula every episode.",
-    "poster_image": "show_house"
+    "private_notes": "",
+    "poster_image": "show_house",
+    "tags": [],
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "the_godfather",
@@ -1339,7 +1343,7 @@
   {
     "id": "surely_you_re_joking_mr_feynman",
     "type": "book",
-    "rating": 5,
+    "rating": 4.2,
     "status": "finished",
     "title": "\"Surely You're Joking, Mr. Feynman!\"",
     "tagline": "",
@@ -1347,6 +1351,7 @@
     "notes": "Really loved reading this during JEE days.",
     "private_notes": "",
     "poster_image": "book_surely_you_re_joking_mr_feynman",
+    "tags": [],
     "author": "Richard P. Feynman & Ralph Leighton",
     "hidden": false,
     "uncertain": false
@@ -1625,7 +1630,7 @@
   {
     "id": "2001_a_space_odyssey",
     "type": "movie",
-    "rating": 4.5,
+    "rating": 4.4,
     "status": "finished",
     "title": "2001: A Space Odyssey",
     "tagline": "",
@@ -1635,7 +1640,9 @@
     "poster_image": "movie_2001_a_space_odyssey",
     "tags": [],
     "author": "Stanley Kubrick",
-    "publisher": "Stanley Kubrick Productions, Metro-Goldwyn-Mayer"
+    "publisher": "Stanley Kubrick Productions, Metro-Goldwyn-Mayer",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "person_of_interest",
@@ -2262,7 +2269,7 @@
     "id": "z_a_t_o_i_love_the_world_and_everything_in_it",
     "type": "game",
     "rating": 5.5,
-    "status": "consuming",
+    "status": "finished",
     "title": "Z.A.T.O. // I Love the World and Everything In It",
     "tagline": "",
     "description": "USSR, 1986. A girl goes missing in the closed city of Vorkuta-5, yet not a soul seems to be concerned. Uncover the mystery behind her disappearance and transmit your signal to the universe.",
@@ -2276,7 +2283,8 @@
     "author": "Ferry // Nopanamaman",
     "publisher": "",
     "hidden": false,
-    "uncertain": false
+    "uncertain": false,
+    "completion_date": "2026-10-17"
   },
   {
     "id": "your_turn_to_die_death_game_by_majority",

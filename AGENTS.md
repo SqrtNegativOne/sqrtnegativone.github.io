@@ -7,6 +7,8 @@ This repo hosts **two independent SvelteKit apps** plus a Tauri admin dashboard:
 - `shared/` — cross-app code (visual primitives + media helpers), imported via the `$shared` alias in both apps.
 - `admin/` — Tauri + SvelteKit admin dashboard. See `admin/AGENTS.md`.
 
+The `site/` is the personal website, for my friends and all. `cv/` is the version of the website that goes on my resume and linkedin, among other professional pages. `admin/` is a personal application for personal use, that allows the user to non-programmatically modify site content, and also display information that pertains to the user and no-one but the user.
+
 Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.config.js`, `tsconfig.json`, `wrangler.jsonc`, `.svelte-kit/`, and build output. **Run `bun install` and all commands from inside the app directory.**
 
 ## Tech Stack Overview
