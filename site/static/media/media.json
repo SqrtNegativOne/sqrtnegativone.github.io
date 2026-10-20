@@ -7,7 +7,6 @@
     "title": "Deltarune",
     "tagline": "There's something more important than reaching the end.",
     "description": "",
-    "private_notes": "",
     "poster_image": "game_deltarune",
     "tags": [
       "goat"
@@ -60,7 +59,6 @@
     "tagline": "A world you gave to bug and beast as they had never dreamed of.",
     "description": "",
     "notes": "Didn't like how the save points were so far away from most bosses. Made the game less fun because you had to go through a boring walk of humiliation to defeat the boss again. As far as I have played, the lore was rather sparse, contrary to what I believed about the game.",
-    "private_notes": "",
     "poster_image": "game_hollow_knight"
   },
   {
@@ -104,7 +102,6 @@
     "tagline": "It's only after we've lost everything that we're free to do anything.",
     "description": "",
     "notes": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
-    "private_notes": "",
     "poster_image": "movie_fight_club",
     "tags": [
       "goat"
@@ -119,7 +116,6 @@
     "title": "House of Leaves",
     "tagline": "This is not for you.",
     "description": "",
-    "private_notes": "",
     "poster_image": "book_house_of_leaves",
     "tags": [
       "goat"
@@ -134,7 +130,6 @@
     "tagline": "How come Aquaman can control whales? They're mammals! Makes no sense.",
     "description": "Apple Books Edition\n\n#1 NEW YORK TIMES BESTSELLER • NOW A MAJOR MOTION PICTUREA mission to Mars. A freak accident. One man’s struggle to survive. From the author of Project Hail Mary comes “a hugely entertaining novel that reads like a rocket ship afire” (Chicago Tribune).“Brilliant . . . a celebration of human ingenuity [and] the purest example of real-science sci-fi for many years . . . utterly compelling.”—The Wall Street JournalSix days ago, astronaut Mark Watney became one of the first people to walk on Mars. Now, he’s sure he’ll be the first person to die there.After a dust storm nearly kills him and forces his crew to evacuate while thinking him dead, Mark finds himself stranded and completely alone with no way to even signal Earth that he’s alive—and even if he could get word out, his supplies would be gone long before a rescue could arrive. Chances are, though, he won’t have time to starve to death. The damaged machinery, unforgiving environment, or plain-old “human error” are much more likely to kill him first. But Mark isn’t ready to give up yet. Drawing on his ingenuity, his engineering skills—and a relentless, dogged refusal to quit—he steadfastly confronts one seemingly insurmountable obstacle after the next. Will his resourcefulness be enough to overcome the impossible odds against him? NAMED ONE OF PASTE’S BEST NOVELS OF THE DECADE“As gripping as they come . . . You’ll be rooting for Watney the whole way, groaning at every setback and laughing at his pitchblack humor. Utterly nail-biting and memorable.”—Financial Times",
     "notes": "Science Guy Solves Science Puzzles... In Space! also he's really funny\n\nMy favourite was when the main character had to hide out in his car away from his hub because of a chemical reaction gone awry, and when he rides through craters dust storm with no satellite.",
-    "private_notes": "",
     "poster_image": "book_the_martian",
     "author": "Andy Weir"
   },
@@ -146,7 +141,6 @@
     "title": "The Myth of Sisyphus",
     "tagline": "",
     "description": "A Nobel Prize-winning author delivers one of the most influential works of the twentieth century, showing a way out of despair and reaffirming the value of existence.Influenced by works such as Don Juan and the novels of Kafka, these essays begin with a meditation on suicide—the question of living or not living in a universe devoid of order or meaning. With lyric eloquence, Albert Camus brilliantly presents a crucial exposition of existentialist thought.",
-    "private_notes": "",
     "poster_image": "book_the_myth_of_sisyphus_and_other_essays",
     "author": "Albert Camus"
   },
@@ -206,12 +200,15 @@
   {
     "id": "ena_dream_bbq",
     "type": "game",
-    "rating": 5,
+    "rating": 3,
     "status": "wishlist",
     "title": "ENA: Dream BBQ",
+    "tagline": "Strange",
     "description": "",
     "poster_image": "game_ena_dream_bbq",
-    "tagline": ""
+    "tags": [],
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "half-life_2",
@@ -222,7 +219,6 @@
     "tagline": "Very fun. Should be mandatory for learning game design.",
     "description": "",
     "notes": "Really makes you realise why HL3 believers are as mentally ill as they are.",
-    "private_notes": "",
     "poster_image": "game_half-life_2",
     "hidden": false
   },
@@ -281,7 +277,6 @@
     "tagline": "Carr's masterpiece",
     "description": "The murderer of Dr Grimauld walked through a locked door, shot his victim and vanished. He killed his second victim in the middle of an empty street, with watchers at each end, yet nobody saw him, and he left no footprints in the snow. And so it is up to the irrepressible, larger-than-life Dr Gideon Fell to solve this most famous and taxing of locked-room mysteries.",
     "notes": "Too unfair. But deserves a shelf in a murder mystery fan's basement for its excellent dissection of the locked room.",
-    "private_notes": "",
     "poster_image": "book_the_hollow_man",
     "author": "John Dickson Carr",
     "publisher": "Hachette UK"
@@ -328,7 +323,6 @@
     "tagline": "A game by Temmie Chang.",
     "description": "",
     "notes": "I feel kind of… guilty for liking this one. It wasn’t that good… but it felt nihilistically profound. The ending was sudden, though, very lacklustre, and I hated the generic “heroes” quest, even if it was meant as satire. But there was something about it... the subtle hopelessness? Treated as... ordinary. I don't know. I felt it just helping me, a bit.",
-    "private_notes": "",
     "poster_image": "game_dweller_s_empty_path",
     "hidden": false
   },
@@ -341,7 +335,6 @@
     "tagline": "A tragicomedy of hope and redemption.",
     "description": "",
     "notes": "Interrogate unforgettable characters, crack murders or take bribes. Become a hero or an absolute disaster of a human being.",
-    "private_notes": "",
     "poster_image": "game_disco_elysium_-_the_final_cut"
   },
   {
@@ -353,7 +346,6 @@
     "tagline": "PUBG with romance, on a metaphorical and literal level.",
     "description": "",
     "notes": "It has its moments, but I thought the ending, with the corny romance and all, was boring. I had also played Disco Elysium side-by-side so the drastic drop in writing quality was more apparent, I guess.",
-    "private_notes": "",
     "poster_image": "book_the_hunger_games",
     "hidden": false,
     "uncertain": false
@@ -367,7 +359,6 @@
     "tagline": "Useless retro-tech advice, but makes you think.",
     "description": "",
     "notes": "I get nostalgic for times that were stolen from me a lot. ...Remind me to add this feature soon, I want to add here an excerpt from my diary.",
-    "private_notes": "27357fe8a79ca51659f8684b:d1a8045b820d2b222fac032219818c62:968cf19c43baaac1c1184a36dabbbabd02d35dadfef15c03df2a9536c1a85b8637f0c5133294ce14d436fd939efcd367c63d3f4f6edffe32146880fddbd9b2fbb933f8d9040b3445a5668c94acf6450e6238dfc2113ef3b1f38349d5de5393a3e4e759730d11c7a8085333e2386a1aaccf077a65492154bd4eeeb5",
     "poster_image": "book_mindhacker"
   },
   {
@@ -411,7 +402,6 @@
     "tagline": "Apparently puts the Hard in Hard Sci-fi.",
     "description": "Apple Books Edition\n\n\"A stellar debut\" with \"elegant worldbuilding,\" this sci-fi fantasy features a hunted thief challenged to complete a heist on Mars (Publishers Weekly, starred review).\n   Jean le Flambeur is a post-human criminal, mind burglar, confidence artist, and trickster. His origins are shrouded in mystery, but his exploits are known throughout the Heterarchy—from breaking into the vast Zeusbrains of the Inner System to stealing rare Earth antiques from the aristocrats of Mars. Now he's confined inside the Dilemma Prison, where every day he has to get up and kill himself before his other self can kill him.\n   \n   Rescued by the mysterious Mieli and her flirtatious spacecraft, Jean is taken to the Oubliette, the Moving City of Mars, where time is currency, memories are treasures, and a moon-turned singularity lights the night. What Mieli offers is the chance to win back his freedom and the powers of his old self-in exchange for finishing the one heist he never quite managed.\n   \n   As Jean undertakes a series of capers on behalf of Mieli and her mysterious masters, elsewhere in the Oubliette investigator Isidore Beautrelet is called in to investigate the murder of a chocolatier, and finds himself on the trail of an arch-criminal, a man named le Flambeur.&#xa0;.&#xa0;.&#xa0;. \n   \n   Hannu Rajaniemi's The Quantum Thief is a crazy joyride through the solar system several centuries hence. But for all its wonders, it is also a story powered by very human motives of betrayal, revenge, and jealousy. It is a stunning debut.\n   \n   \"The next big thing in hard SF.\" —Charles Stross, Hugo Award–winning author of the Laundry Files series\n   \n   \"Brilliant.\" —John Clute",
     "notes": "Highly recommended by Gwern.",
-    "private_notes": "",
     "poster_image": "book_the_quantum_thief",
     "author": "Hannu Rajaniemi"
   },
@@ -435,7 +425,6 @@
     "tagline": "I am a sucker for this sort of thing",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_worm_web_serial",
     "hidden": false,
     "uncertain": false
@@ -481,7 +470,6 @@
     "title": "Pokémon: The Origin of Species.",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_pokemon_origin_of_species"
   },
   {
@@ -504,7 +492,6 @@
     "tagline": "Only time (whatever that may be) will tell.",
     "description": "A landmark volume in science writing by one of the great minds of our time, Stephen Hawking’s book explores such profound questions as: How did the universe begin—and what made its start possible? Does time always flow forward? Is the universe unending—or are there boundaries? Are there other dimensions in space? What will happen when it all ends?Told in language we all can understand,&#xa0;A Brief History of Time&#xa0;plunges into the exotic realms of black holes and quarks, of antimatter and “arrows of time,” of the big bang and a bigger God—where the possibilities are wondrous and unexpected. With exciting images and profound imagination, Stephen Hawking brings us closer to the ultimate secrets at the very heart of creation.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_a_brief_history_of_time",
     "author": "Stephen Hawking"
   },
@@ -528,7 +515,6 @@
     "tagline": "",
     "description": "Walk-n-talk adventure with light puzzling. Brother and sister practice cannibalism after witnessing a botched satanic ritual.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_the_coffin_of_andy_and_leyley",
     "hidden": false
   },
@@ -541,7 +527,6 @@
     "tagline": "Danganronpa without the Danganronpa",
     "description": "Spike Chunsoft Co., Ltd.\n\nKidnapped and taken to an unfamiliar location, nine people find themselves forced to participate in a diabolical Nonary Game by an enigmatic mastermind called Zero. Why were they there? Why were they chosen to put their lives on the line? And more importantly, who can be trusted?",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_zero_escape_the_nonary_games",
     "hidden": false
   },
@@ -576,7 +561,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_children_of_time",
     "author": "Adrian Tchaikovsky",
     "hidden": false
@@ -612,7 +596,6 @@
     "tagline": "A very high bar for any new city-builder.",
     "description": "Frostpunk is the first society survival game. As the ruler of the last city on Earth, it is your duty to manage both its citizens and infrastructure. What decisions will you make to ensure your society's survival? What will you do when pushed to breaking point? Who will you become in the process?",
     "notes": "Steampunk city-builder with soul-stirring soundtrack and challenging gameplay.  Also very addictive.",
-    "private_notes": "c358a37c780c7b205e94b2ff:b00a6b34b91104baadf36894dab52f97:ab248dcca78ae4118b972c5284f4b2e98887e1cda86fc25c1b7972cefc4fd97d1b98fab5b5c7d4ea609810408b25a47fa8",
     "poster_image": "game_frostpunk",
     "author": "11-bit studios",
     "hidden": false
@@ -637,7 +620,6 @@
     "tagline": "What the game lacks in length, it makes up for with... everything else.",
     "description": "Respawn Entertainment\n\nRespawn Entertainment gives you the most advanced titan technology in its new, single player campaign &amp; multiplayer experience. Combine &amp; conquer with new titans &amp; pilots, deadlier weapons, &amp; customization and progression systems that help you and your titan flow as one unstoppable killing force.",
     "notes": "WHY IS THERE NO TITANFALL 3. WE ARE GETTING GTAVI BEFORE TITANFALL3 WHAT",
-    "private_notes": "",
     "poster_image": "game_titanfall_2"
   },
   {
@@ -682,7 +664,6 @@
     "tagline": "",
     "description": "World-famous detective Benoit Blanc heads to Greece to peel back the layers of a mystery surrounding a tech billionaire and his eclectic crew of friends.",
     "notes": "The weakest in the trilogy right now IMO. For one: all the evil characters don't meet their comeuppance!",
-    "private_notes": "",
     "poster_image": "movie_glass_onion_a_knives_out_mystery"
   },
   {
@@ -705,7 +686,6 @@
     "tagline": "Unexpectedly good",
     "description": "The year is 1893 and India is under British occupation. In a small village, the tyrannical Captain Russell has imposed an unprecedented land tax on its citizens. Outraged, Bhuvan, a rebellious farmer, rallies the villagers to publicly oppose the tax. Russell offers a novel way to settle the dispute: he challenges Bhuvan and his men to a game of cricket, a sport completely foreign to India. If Bhuvan and his men can defeat Russell's team, the tax will be repealed.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_lagaan_once_upon_a_time_in_india"
   },
   {
@@ -775,7 +755,6 @@
     "tagline": "Would you believe me if I said this was philosophical?",
     "description": "Dr. Gregory House, a drug-addicted, unconventional, misanthropic medical genius, leads a team of diagnosticians at the fictional Princeton–Plainsboro Teaching Hospital in New Jersey.",
     "notes": "Some of the episodes are.... literally the best stories I have seen in my life. Guess they hit harder once you expect the same formula every episode.",
-    "private_notes": "",
     "poster_image": "show_house",
     "tags": [],
     "hidden": false,
@@ -890,7 +869,6 @@
     "tagline": "Generic, deus ex machina machine that just doesn't work today.",
     "description": "Counterterrorism agent Jack Bauer fights the bad guys of the world, a day at a time. With each week's episode unfolding in real-time, \"24\" covers a single day in the life of Bauer each season.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_24"
   },
   {
@@ -913,7 +891,6 @@
     "tagline": "Trans People Can Double Jump",
     "description": "Maddy Makes Games Inc.\n\nHelp Madeline survive her inner demons on her journey to the top of Celeste Mountain, in this super-tight platformer from the creators of TowerFall. Brave hundreds of hand-crafted challenges, uncover devious secrets, and piece together the mystery of the mountain.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_celeste"
   },
   {
@@ -936,7 +913,6 @@
     "tagline": "",
     "description": "When rogue shinigami Ryuk leaves his Death Note in the human world, he has no idea how far the one who finds it will take his new-found power. With the Death Note in hand, brilliant high school student Light Yagami vows to rid the world of evil. A recap of Death Note episodes 1–26, with alternate footage.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_death_note_relight_1_visions_of_a_god",
     "hidden": false
   },
@@ -982,7 +958,6 @@
     "tagline": "Chicken coop ethics",
     "description": "An ambitious Indian driver uses his wit and cunning to escape from poverty and rise to the top. An epic journey based on the New York Times bestseller.",
     "notes": "I have talked about movies which suffer from great, hype start, but end badly. This movie's really good start kept on being good until a very long time, until it suddenly hit an end? They skipped over the part where he actually uses any cunning to become a businessman? He was... pouring his heart out in this autobiography he was writing to a Chinese politician?",
-    "private_notes": "",
     "poster_image": "movie_the_white_tiger"
   },
   {
@@ -994,7 +969,6 @@
     "tagline": "",
     "description": "In 2003, Harvard undergrad and computer programmer Mark Zuckerberg begins work on a new concept that eventually turns into the global social network known as Facebook. Six years later, Mark is one of the youngest billionaires ever, but his unprecedented success leads to both personal and legal complications when he ends up on the receiving end of two lawsuits, one involving his former friend.",
     "notes": "I like the actor.",
-    "private_notes": "",
     "poster_image": "movie_the_social_network",
     "author": "David Fincher",
     "hidden": false,
@@ -1031,7 +1005,6 @@
     "tagline": "",
     "description": "When Mahendra, the son of Bāhubali, learns about his heritage, he begins to look for answers. His story is juxtaposed with past events that unfolded in the Mahishmati Kingdom.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_b_hubali_2_the_conclusion",
     "hidden": false
   },
@@ -1044,7 +1017,6 @@
     "tagline": "",
     "description": "The young Shivudu is left as a foundling in a small village by his mother. By the time he’s grown up, it has become apparent that he possesses exceptional gifts. He meets the beautiful warrior princess Avanthika and learns that her queen has been held captive for the last 25 years. Shividu sets off to rescue her, discovering his own origins in the process.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_b_hubali_the_beginning",
     "hidden": false
   },
@@ -1101,7 +1073,6 @@
     "tagline": "",
     "description": "An assassin is shot by her ruthless employer, Bill, and other members of their assassination circle – but she lives to plot her vengeance.",
     "notes": "I was really disappointed to learn that, Kill Bill isn't a double entendre meaning she is both getting a Bill to Kill Bill, but ok",
-    "private_notes": "",
     "poster_image": "movie_kill_bill_vol_1",
     "hidden": false
   },
@@ -1202,7 +1173,6 @@
     "tagline": "Can you see?",
     "description": "John Anderton is a top 'Precrime' cop in the late-21st century, when technology can predict crimes before they're committed. But Anderton becomes the quarry when another investigator targets him for a murder charge.",
     "notes": "Can't believe I sat on this one for so long...",
-    "private_notes": "",
     "poster_image": "movie_minority_report"
   },
   {
@@ -1214,7 +1184,6 @@
     "tagline": "",
     "description": "When an IMF mission ends badly, the world is faced with dire consequences. As Ethan Hunt takes it upon himself to fulfill his original briefing, the CIA begin to question his loyalty and his motives. The IMF team find themselves in a race against time, hunted by assassins while trying to prevent a global catastrophe.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_mission_impossible_-_fallout",
     "hidden": false,
     "uncertain": false
@@ -1239,7 +1208,6 @@
     "tagline": "",
     "description": "Fighting crime full-time as Spider-Man in a world that doesn't remember him—and the pressure of seeing his old friends move on without him—sparks a change in Peter Parker he may not have the power to control. But that transformation might also be the only thing that can stop a shocking new threat to the city and those he loves - a powerful villain no one can even see.",
     "notes": "Unfortunately, I saw this movie in a shitty theatre, without my glasses and in the back row so everything was blurry, wearing 3D glasses which made every colour look as dab as it looks in England, on a 3D screen that made me dizzy, with an audience that inspires you to do a mass shooting, and all for a... Hindi dub. So yeah my review might be a bit biased",
-    "private_notes": "",
     "poster_image": "movie_spider-man_brand_new_day",
     "hidden": false
   },
@@ -1252,7 +1220,6 @@
     "tagline": "*17th closeup of Chani's face:*",
     "description": "Follow the mythic journey of Paul Atreides as he unites with Chani and the Fremen while on a path of revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the known universe, Paul endeavors to prevent a terrible future only he can foresee.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_dune_part_two",
     "hidden": false
   },
@@ -1265,7 +1232,6 @@
     "tagline": "",
     "description": "Emperor Paul Atreides faces the fallout from his ascent to power as political plots and a galaxy-wide holy war endanger the future only he can see.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_dune_part_three"
   },
   {
@@ -1277,7 +1243,6 @@
     "tagline": "",
     "description": "The story of J. Robert Oppenheimer's role in the development of the atomic bomb during World War II.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_oppenheimer"
   },
   {
@@ -1289,7 +1254,6 @@
     "tagline": "",
     "description": "Explore the new SCP miniseries, where you'll journey alongside Marion Wheeler, the director of the SCP Foundation's Antimemetics Division, as she confronts an eternal and un-killable idea.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_there_is_no_antimemetics_division"
   },
   {
@@ -1301,7 +1265,6 @@
     "tagline": "",
     "description": "The body of Laura Palmer is washed up on a beach near the small Washington state town of Twin Peaks. FBI Special Agent Dale Cooper is called in to investigate her strange demise only to uncover a web of mystery that ultimately leads him deep into the heart of the surrounding woodland and his very own soul.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_twin_peaks"
   },
   {
@@ -1313,7 +1276,6 @@
     "tagline": "",
     "description": "An American anthology police detective series utilizing multiple timelines in which investigations seem to unearth personal and professional secrets of those involved, both within or outside the law.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_true_detective"
   },
   {
@@ -1325,7 +1287,6 @@
     "tagline": "",
     "description": "Robert B Cialdini\n\"In this highly acclaimed New York Times bestseller, Dr. Robert B. Cialdini-the seminal expert in the field of influence and persuasion-explains the psychology of why people say yes and how to apply these principles ethically in business and everyday situations\"--",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_influence_new_and_expanded"
   },
   {
@@ -1337,7 +1298,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_thinking_phy_book"
   },
   {
@@ -1349,7 +1309,6 @@
     "tagline": "",
     "description": "",
     "notes": "Really loved reading this during JEE days.",
-    "private_notes": "",
     "poster_image": "book_surely_you_re_joking_mr_feynman",
     "tags": [],
     "author": "Richard P. Feynman & Ralph Leighton",
@@ -1365,7 +1324,6 @@
     "tagline": "Journalism at its best",
     "description": "Moonwalking with Einstein recounts Joshua Foer's yearlong quest to improve his memory under the tutelage of top \"mental athletes.\" He draws on cutting-edge research, a surprising cultural history of remembering, and venerable tricks of the mentalist's trade to transform our understanding of human memory. From the United States Memory Championship to deep within the author's own mind, this is an electrifying work of journalism that reminds us that, in every way that matters, we are the sum of our memories.",
     "notes": "Fun read",
-    "private_notes": "",
     "poster_image": "book_moonwalking_with_einstein",
     "author": "Joshua Foer"
   },
@@ -1378,7 +1336,6 @@
     "tagline": "",
     "description": "",
     "notes": "\nThe author frequently mentions of feeling out-of-place within the world he got thrusted into.\n\nHe's absolutely right.\n\nHe is _too_ happy in the between of all this. Smelling too many roses in his commute to work. Elliot from Mr. Robot could only afford a dog and a sister he forgot about. Meanwhile this guy has a loving wife and dreams about \"floating through the air on an oak leaf.\" The CIA and NSA should've barred him from receiving any commendation or stepping a foot into their conference chambers for that alone.\n\n> In his 1995 book Silicon Snake Oil and an accompanying article in Newsweek, Stoll called the prospect of e-commerce \"baloney\". Stoll also raised questions about the influence of the Internet on future society, and whether it would be beneficial. He made various predictions in the article, e.g., about e-commerce (calling it nonviable due to a lack of personal contact and secure online funds transfers) and the future of printed news publications (\"no online database will replace your daily newspaper\"). When the article resurfaced on Boing Boing in 2010, Stoll left a self-deprecating comment: \"Of my many mistakes, flubs, and howlers, few have been as public as my 1995 howler ... Now, whenever I think I know what's happening, I temper my thoughts: Might be wrong, Cliff ...\"\n\nA lot of the parts of the book seem like those liberal flourishes writers or filmmakers add to make the story interesting. Martha and her joke about jazz lyric logic, Sandy saying \"be serious\" constantly to Cliff, Maggie Morley's scrabble personality quirk helping to give the protagonist an unlikely clue etc.\n\nUnfortunately there's a lot of tautology, and the story gets a lot boring when the bureacracy gets involved. The hacker also starts seeming less interesting when they don't come up with anything interesting of their own or even start suspecting anything; the \"key jingle\" trick followed by password changes occurs like 5 times, which does make me think it was a computer program doing it all anyway, at least from the inside (can't be that hard to fake some mis-types here and there to throw people off).\n\nAnd—the book repeatedly mentions and expresses bewilderment at the hacker copying password files from computers, and only mentions (without name-dropping) rainbow tables on page 250 out of 344. I find it silly to imagine Dr. Cliff not knowing about them until so late (presumably he knew it from the start and the bewilderment he expresses is dramitization?)\n\nI unfortunately learned a lot less about computer networks as much as I hoped to learn, given that was my whole purpose to begin this book: to procrastinate on learning my _actual_ computer networks course. Over the course of the book it seemed more and more of a love story and I don't dislike the book for that.\n\n---\n\n\"Let's label the account, the 'Strategic Information Network Group,'\"\nI said. \"It's got a great acronym: STING.\"\n\"Naw. He might catch on. Keep it bureaucratic,\" Martha said. \"Use\nSDINET. It'll catch his eye, all right.\"\n\nThings are easier in grad school. Just call everyone with a tie, \"Profes-\nsor,\" and anyone with a beard, \"Dean.\" When in doubt, just say \"Doctor.\"\n\n\"Any system can be insecure. All you have to do is stupidly manage it.\"\n\nI didn't like leaving Berkeley, partly because I missed my\nsweetheart, but also because it left the hacker unwatched.\nI was to talk to the NTISSIC, a governmental organization whose\nacronym has never been decoded. Bob Morris said they set policy for tele-\ncommunications and information security, so I could guess some of the\nletters.\n\nIn a small town, where people never locked their doors, would we\npraise the first burglar for showing the townspeople how foolish it was to\nleave their houses open?\n\n---\n\nstuff I would change for a hollywood adaptation:\n- cliff realising the berkley unix error because he was new to it too; strengthens the hero and villain similarities list\n- have cliff's cubicle look less and less that of an astronomer's as the movie/show goes on\n- have the X-preserve hack occur a lot earlier\n- make cliff unable to attend the halloween party, while making him come to the office while he was wearing his costume.\n- have the pager thing come earlier. make the phone number brute-force to find area codes idea his own instead of his friends'\n- better call saul-esque scene of typing phone numbers into a computer or connecting wires to the teletyper\n- Mire disconnecting their outgoing modems could be more of a betrayal\n- Berkley Opal hint should've come earlier.\n- Minor plot of someone leaking Cliff's work on the hacker and Cliff having to quickly shut it down before the hacker could see it in his terminal.\n- make him figure out the identity of the hacker and his lawyer himself, without the press",
-    "private_notes": "",
     "poster_image": "book_the_cuckoo_egg_book",
     "author": "Cliff Stoll",
     "hidden": false,
@@ -1393,7 +1350,6 @@
     "tagline": "",
     "description": "The Bride unwaveringly continues on her roaring rampage of revenge against the band of assassins who had tried to kill her and her unborn child. She visits each of her former associates one-by-one, checking off the victims on her Death List Five until there's nothing left to do … but kill Bill.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_kill_bill_vol_2"
   },
   {
@@ -1405,7 +1361,6 @@
     "tagline": "it's over for you, I have already drawn myself as the equanimous Juror #8, and you the pugnacious Juror #3",
     "description": "The defense and the prosecution have rested and the jury is filing into the jury room to decide if a young Spanish-American is guilty or innocent of murdering his father. What begins as an open and shut case soon becomes a mini-drama of each of the jurors' prejudices and preconceptions about the trial, the accused, and each other.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_12_angry_men",
     "tags": [],
     "author": "Sidney Lumet",
@@ -1420,7 +1375,6 @@
     "tagline": "",
     "description": "Joel Barish, heartbroken that his girlfriend underwent a procedure to erase him from her memory, decides to do the same. However, as he watches his memories of her fade away, he realises that he still loves her, and may be too late to correct his mistake.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_eternal_sunshine_of_the_spotless_mind",
     "tags": [],
     "author": "Michel Gondry",
@@ -1435,7 +1389,6 @@
     "tagline": "",
     "description": "A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_pathaan",
     "tags": [],
     "author": "Siddharth Anand",
@@ -1451,7 +1404,6 @@
     "tagline": "",
     "description": "Mark leads a team of office workers whose memories have been surgically divided between their work and personal lives. When a mysterious colleague appears outside of work, it begins a journey to discover the truth about their jobs.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_severance",
     "tags": [],
     "author": "Dan Erickson",
@@ -1466,7 +1418,6 @@
     "tagline": "GELI MAKES ME FEEL WEIRD",
     "description": "",
     "notes": "the interloper is hot honestly. lesbians <3",
-    "private_notes": "",
     "poster_image": "game_corru_observer",
     "tags": [],
     "author": "corru.works",
@@ -1481,7 +1432,6 @@
     "tagline": "",
     "description": "A research team in Antarctica is hunted by a shape-shifting alien that assumes the appearance of its victims.",
     "notes": "",
-    "private_notes": "Recommended by Adit",
     "poster_image": "movie_the_thing",
     "tags": [],
     "author": "John Carpenter",
@@ -1496,7 +1446,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_blindsight",
     "tags": [],
     "author": "Peter Watts",
@@ -1513,7 +1462,6 @@
     "tagline": "",
     "description": "After a night of partying with a female stranger, a man wakes up to find her stabbed to death and is charged with her murder.",
     "notes": "Very slow; could be more interesting. Some arcs don't make any sense. But I liked the grittyness.",
-    "private_notes": "",
     "poster_image": "show_the_night_of",
     "tags": [],
     "author": "Richard Price, Steven Zaillian",
@@ -1530,7 +1478,6 @@
     "tagline": "",
     "description": "Awaria is a short game about working in haunted maintenance tunnels.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_awaria",
     "tags": [],
     "author": "vanripper",
@@ -1545,7 +1492,6 @@
     "tagline": "",
     "description": "In Casablanca, Morocco in December 1941, a cynical American expatriate meets a former lover, with unforeseen complications.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_casablanca",
     "tags": [],
     "author": "Michael Curtiz",
@@ -1560,7 +1506,6 @@
     "tagline": "",
     "description": "With his wife's disappearance having become the focus of an intense media circus, a man sees the spotlight turned on him when it's suspected that he may not be innocent.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_gone_girl",
     "tags": [],
     "author": "David Fincher",
@@ -1576,7 +1521,6 @@
     "tagline": "",
     "description": "When dictator Joseph Stalin dies, his parasitic cronies square off in a frantic power struggle to become the next Soviet leader. As they bumble, brawl and back-stab their way to the top, the question remains — just who is running the government?",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_the_death_of_stalin",
     "tags": [],
     "author": "Armando Iannucci",
@@ -1591,7 +1535,6 @@
     "tagline": "",
     "description": "Newspaper magnate Charles Foster Kane is taken from his mother as a boy and made the ward of a rich industrialist. As a result, every well-meaning, tyrannical or self-destructive move he makes for the rest of his life appears in some way to be a reaction to that deeply wounding event.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_citizen_kane",
     "tags": [],
     "author": "Orson Welles",
@@ -1606,7 +1549,6 @@
     "tagline": "",
     "description": "Down-on-his-luck veteran Tsugumo Hanshirō enters the courtyard of the prosperous House of Iyi. Unemployed, and with no family, he hopes to find a place to commit seppuku—and a worthy second to deliver the coup de grâce in his suicide ritual. The senior counselor for the Iyi clan questions the ronin’s resolve and integrity, suspecting Hanshirō of seeking charity rather than an honorable end. What follows is a pair of interlocking stories which lay bare the difference between honor and respect, and promises to examine the legendary foundations of the Samurai code.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_harakiri",
     "tags": [],
     "author": "Masaki Kobayashi",
@@ -1621,7 +1563,6 @@
     "tagline": "",
     "description": "Dr. Atsuko Chiba is a research psychologist who uses a device called the DC Mini to enter her patients' dreams, wherein she adopts the alter-ego \"Paprika\". When the device is stolen, she must stop rogue elements from merging the dream and waking worlds.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_paprika",
     "tags": [],
     "author": "Satoshi Kon",
@@ -1636,7 +1577,6 @@
     "tagline": "",
     "description": "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_2001_a_space_odyssey",
     "tags": [],
     "author": "Stanley Kubrick",
@@ -1653,7 +1593,6 @@
     "tagline": "",
     "description": "John Reese, former CIA paramilitary operative, is presumed dead and teams up with reclusive billionaire Finch to prevent violent crimes in New York City by initiating their own type of justice. With the special training that Reese has had in Covert Operations and Finch's genius software inventing mind, the two are a perfect match for the job that they have to complete. With the help of surveillance equipment, they work \"outside the law\" and get the right criminal behind bars. ",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_person_of_interest",
     "tags": [],
     "author": "Jonathan Nolan",
@@ -1668,7 +1607,6 @@
     "tagline": "",
     "description": "A young girl, Chihiro, becomes trapped in a strange new world of spirits. When her parents undergo a mysterious transformation, she must call upon the courage she never knew she had to free her family.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_spirited_away",
     "tags": [],
     "author": "Hayao Miyazaki",
@@ -1684,7 +1622,6 @@
     "tagline": "",
     "description": "Two sisters move to the country with their father in order to be closer to their hospitalized mother, and discover the surrounding trees are inhabited by Totoros, magical spirits of the forest. When the youngest runs away from home, the older sister seeks help from the spirits to find her.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_my_neighbor_totoro",
     "tags": [],
     "author": "Hayao Miyazaki",
@@ -1701,7 +1638,6 @@
     "tagline": "",
     "description": "After a fateful miss, an assassin battles his employers, and himself, on an international manhunt he insists isn't personal.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_the_killer",
     "tags": [],
     "author": "David Fincher",
@@ -1716,7 +1652,6 @@
     "tagline": "",
     "description": "Two homicide detectives are on a desperate hunt for a serial killer whose crimes are based on the \"seven deadly sins\" in this dark and haunting film that takes viewers from the tortured remains of one victim to the next. The seasoned Det. Somerset researches each sin in an effort to get inside the killer's mind, while his novice partner, Mills, scoffs at his efforts to unravel the case.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_se7en",
     "tags": [],
     "author": "David Fincher",
@@ -1732,7 +1667,6 @@
     "tagline": "",
     "description": "Disgraced journalist Mikael Blomkvist investigates the disappearance of a weary patriarch's niece from 40 years ago. He is aided by the pierced, tattooed, punk computer hacker named Lisbeth Salander. As they work together in the investigation, Blomkvist and Salander uncover immense corruption beyond anything they have ever imagined.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_the_girl_with_the_dragon_tattoo",
     "tags": [],
     "author": "David Fincher",
@@ -1747,7 +1681,6 @@
     "tagline": "",
     "description": "Over the course of a decade, editors of the San Francisco Chronicle entice themselves in the murders of the Zodiac Killer. However, as time runs its course, interest in the case dwindles in the eyes of the professionals. The Killer stops interacting with the public. However, believing he has the answers, an amateur cartoonist from the initial sightings races against time to prevent what he believes is another murder.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_zodiac",
     "tags": [],
     "author": "David Fincher",
@@ -1763,7 +1696,6 @@
     "tagline": "",
     "description": "A mysterious story of two magicians whose intense rivalry leads them on a life-long battle for supremacy — full of obsession, deceit and jealousy with dangerous and deadly consequences.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_the_prestige",
     "tags": [],
     "author": "Christopher Nolan",
@@ -1780,7 +1712,6 @@
     "tagline": "",
     "description": "\"[D]elivers a refreshing dose of existential despair at the transhuman condition.\" — Charles Stross qntm has been writing science fiction for most of this millennium. His works start from elegant, deep hypotheticals and wind entire universes around them, pushing science, technology, logic and possibility to breaking point and far beyond. This volume collects the highlights of his short fiction, including \"The Difference\", \"I Don't Know, Timmy, Being God Is a Big Responsibility\" and the acclaimed \"Lena\".",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_valuable_humans_in_transit_and_other_stories",
     "tags": [],
     "author": "qntm",
@@ -1795,7 +1726,6 @@
     "tagline": "",
     "description": "After Acme products fail him one too many times in his dogged pursuit of the Roadrunner, Wile E. Coyote decides to hire a billboard lawyer to sue the Acme Corporation.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_coyote_vs_acme",
     "tags": [],
     "author": "Dave Green",
@@ -1810,7 +1740,6 @@
     "tagline": "",
     "description": "Lain—driven by the abrupt suicide of a classmate—logs on to the Wired and promptly loses herself in a twisted mass of hallucinations, memories, and interconnected-psyches.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_serial_experiments_lain",
     "tags": [],
     "author": "",
@@ -1825,7 +1754,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_starting_strength",
     "tags": [],
     "author": "Mark Rippetoe",
@@ -1840,7 +1768,6 @@
     "tagline": "Not for me I guess.",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_what_if_10th_anniversary_edition",
     "tags": [],
     "author": "Randall Munroe",
@@ -1856,7 +1783,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_infinite_jest",
     "tags": [],
     "author": "David Foster Wallace",
@@ -1871,7 +1797,6 @@
     "tagline": "",
     "description": "Robots may one day rule the world, but what is a robot-ruled Earth like?\n \n Many think the first truly smart robots will be brain emulations or ems. Scan a human brain, then run a model with the same connections on a fast computer, and you have a robot brain, but recognizably human.\n \n Train an em to do some job and copy it a million times: an army of workers is at your disposal. When they can be made cheaply, within perhaps a century, ems will displace humans in most jobs. In this new economic era, the world economy may double in size every few weeks.\n \n Some say we can't know the future, especially following such a disruptive new technology, but Professor Robin Hanson sets out to prove them wrong. Applying decades of expertise in physics, computer science, and economics, he uses standard theories to paint a detailed picture of a world dominated by ems.\n \n While human lives don't change greatly in the em era, em lives are as different from ours as our lives are from those of our farmer and forager ancestors. Ems make us question common assumptions of moral progress, because they reject many of the values we hold dear.\n \n Read about em mind speeds, body sizes, job training and career paths, energy use and cooling infrastructure, virtual reality, aging and retirement, death and immortality, security, wealth inequality, religion, teleportation, identity, cities, politics, law, war, status, friendship and love.\n \n This book shows you just how strange your descendants may be, though ems are no stranger than we would appear to our ancestors. To most ems, it seems good to be an em.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_the_age_of_em",
     "tags": [],
     "author": "Robin Hanson",
@@ -1886,7 +1811,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_a_good_girl_s_guide_to_murder",
     "tags": [],
     "author": "Holly Jackson & Sabine Schilasky",
@@ -1902,7 +1826,6 @@
     "tagline": "",
     "description": "One of The Atlantic’s “Great American Novels of the Past 100 Years,” now with a new foreword by Marlon James Widely considered one of the finest novels by a living writer, Blood Meridian is an epic tale of the violence and corruption that attended America’s westward expansion, brilliantly subverting the conventions of the Western novel and the mythology of the “Wild West.” Its wounded hero, the Kid, a fourteen-year-old Tennessean, must confront the extraordinary brutality of the Glanton gang, a murderous cadre on an official mission to scalp Indians. Seeming to preside over this nightmarish world is the diabolical Judge Holden, one of the most unforgettable characters in American fiction.Based on historical events that took place on the Texas-Mexico border in the 1850s, Blood Meridian represents a genius vision of the historical West, one whose stature has only grown in the years since its publication.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_blood_meridian",
     "tags": [],
     "author": "Cormac McCarthy & Marlon James",
@@ -1918,7 +1841,6 @@
     "tagline": "",
     "description": "Llewelyn Moss stumbles upon dead bodies, $2 million and a hoard of heroin in a Texas desert, but methodical killer Anton Chigurh comes looking for it, with local sheriff Ed Tom Bell hot on his trail. The roles of prey and predator blur as the violent pursuit of money and justice collide.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_no_country_for_old_men",
     "tags": [],
     "author": "Joel Coen, Ethan Coen",
@@ -1935,7 +1857,6 @@
     "tagline": "",
     "description": "Fyodor Dostoevsky’s intense novel uses the trappings of a taut thriller to excavate some of the darkest moral questions of the human experience. Impoverished ex–law student Rodion Raskolnikov is at odds with himself. He’s wildly intelligent but can’t seem to outwit his own desperate circumstances. That is, until he decides to rob and murder an underhanded pawnbroker. After all, he thinks, by ridding the world of her cruelty, he’s committed a benevolent act.But even as Raskolnikov is justifying himself in the grandest terms, the true moral weight of his actions is already stalking him through the shadowy streets of Saint Petersburg—and his own tortured subconscious. Grimy and enthralling, Crime and Punishment pits reason against principle, rationality against heart.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_crime_and_punishment",
     "tags": [],
     "author": "Fyodor Dostoyevsky",
@@ -1951,7 +1872,6 @@
     "tagline": "",
     "description": "A rogue band of resistance fighters unite for a mission to steal the Death Star plans and bring a new hope to the galaxy.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_rogue_one_a_star_wars_story",
     "tags": [],
     "author": "Gareth Edwards",
@@ -1967,7 +1887,6 @@
     "tagline": "Surprisingly thoughtful, with just the right pacing.",
     "description": "In an era filled with danger, deception and intrigue, Cassian Andor will discover the difference he can make in the struggle against the tyrannical Galactic Empire. He embarks on a path that is destined to turn him into a rebel hero.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_andor",
     "tags": [],
     "author": "Tony Gilroy",
@@ -1983,7 +1902,6 @@
     "tagline": "",
     "description": "Princess Leia is captured and held hostage by the evil Imperial forces in their effort to take over the galactic Empire. Venturesome Luke Skywalker and dashing captain Han Solo team together with the loveable robot duo R2-D2 and C-3PO to rescue the beautiful princess and restore peace and justice in the Empire.",
     "notes": "This movie did not age well with time. I liked the moon scene but nothing after that honestly.",
-    "private_notes": "",
     "poster_image": "movie_star_wars",
     "tags": [],
     "author": "George Lucas",
@@ -1999,7 +1917,6 @@
     "tagline": "",
     "description": "McCall believes he has put his mysterious past behind him and dedicated himself to beginning a new, quiet life. But when he meets Teri, a young girl under the control of ultra-violent Russian gangsters, he can’t stand idly by – he has to help her. Armed with hidden skills that allow him to serve vengeance against anyone who would brutalize the helpless, McCall comes out of his self-imposed retirement and finds his desire for justice reawakened. If someone has a problem, if the odds are stacked against them, if they have nowhere else to turn, McCall will help. He is The Equalizer.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_the_equalizer",
     "tags": [],
     "author": "Antoine Fuqua",
@@ -2015,7 +1932,6 @@
     "tagline": "",
     "description": "Robert McCall, who serves an unflinching justice for the exploited and oppressed, embarks on a relentless, globe-trotting quest for vengeance when his former partner is murdered.",
     "notes": "The ending fight arena was extremely cinematic. I hope video games and future movies can emulate that sort of vibe. Some tricks were also incredibly clever, and you never realise how well some of the ideas (like knife fight in car scene) were executed until you see them butchered in another movie (Dhurandhar 1).",
-    "private_notes": "",
     "poster_image": "movie_the_equalizer_2",
     "tags": [],
     "author": "Antoine Fuqua",
@@ -2031,7 +1947,6 @@
     "tagline": "Why did this movie get made man",
     "description": "Robert McCall finds himself at home in Southern Italy but he discovers his friends are under the control of local crime bosses. As events turn deadly, McCall knows what he has to do: become his friends' protector by taking on the mafia.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_the_equalizer_3",
     "tags": [],
     "author": "Antoine Fuqua",
@@ -2047,7 +1962,6 @@
     "tagline": "Steampunk magical adventure with a unique magic system. Great flow and story.",
     "description": "",
     "notes": "You really need to read about other magic systems to realise how lazy the writing in Harry Potter was.\nI read this a long time ago. I wonder if I have, grown out of it, somehow.",
-    "private_notes": "",
     "poster_image": "book_widdershins_comic",
     "tags": [],
     "author": "",
@@ -2063,7 +1977,6 @@
     "tagline": "",
     "description": "As rival gangs, corrupt officials and a ruthless Major Iqbal close in, Hamza's mission for his country spirals into a bloody personal war where the line between patriot and monster disappears in the streets of Lyari.",
     "notes": "I like to think that I can mentally decouple politics from a media, and believe me when I say have consumed my fair share of... nationalist media, say. I do not lie when I say that this movie is the worst of that genre.\n\nYou could argue the movie has above average visuals / soundtrack but both will falter because it's confused about what it wants to be. Contact me if you want a full write-up / change my mind or whatever. And if I hear anything about \"peak detailing\" I am gonna lower this rating down by 0.1 points again lmao",
-    "private_notes": "",
     "poster_image": "movie_dhurandhar_the_revenge",
     "tags": [],
     "author": "Aditya Dhar",
@@ -2079,7 +1992,6 @@
     "tagline": "Why did Marvel forget about this? Did they think he was black or something?",
     "description": "When Steven Grant, a mild-mannered gift-shop employee, becomes plagued with blackouts and memories of another life, he discovers he has dissociative identity disorder and shares a body with mercenary Marc Spector.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_moon_knight",
     "tags": [],
     "author": "Jeremy Slater",
@@ -2096,7 +2008,6 @@
     "tagline": "Not needed to play Portal 2 imo.",
     "description": "Portal™ is a new single player game from Valve. Set in the mysterious Aperture Science Laboratories, Portal has been called one of the most innovative new games on the horizon and will offer gamers hours of unique gameplay.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_portal",
     "tags": [],
     "author": "Valve",
@@ -2112,7 +2023,6 @@
     "tagline": "No.",
     "description": "Please no.",
     "notes": "Just no.",
-    "private_notes": "",
     "poster_image": "game_balatro",
     "tags": [],
     "author": "No.",
@@ -2128,7 +2038,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_memento",
     "tags": [],
     "author": "Christopher Nolan",
@@ -2144,7 +2053,6 @@
     "tagline": "",
     "description": "In a post-apocalyptic future where an event known as \"The Quiet Rapture\" caused all known stars and habitable planets in the universe to disappear, a convict is sent to search an ocean of blood discovered on a desolate moon, using a small submarine nicknamed the \"Iron Lung\".",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_iron_lung",
     "tags": [],
     "author": "Mark Fischbach",
@@ -2160,7 +2068,6 @@
     "tagline": "",
     "description": "A strange doorway appears in the basement of a furniture showroom.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_backrooms",
     "tags": [],
     "author": "Kane Parsons",
@@ -2176,7 +2083,6 @@
     "tagline": "",
     "description": "When her mother disappears while on vacation in Colombia with her new boyfriend, June’s search for answers is hindered by international red tape. Stuck thousands of miles away in Los Angeles, June creatively uses all the latest technology at her fingertips to try and find her before it’s too late. But as she digs deeper, her digital sleuthing raises more questions than answers... and when June unravels secrets about her mom, she discovers that she never really knew her at all.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_missing",
     "tags": [],
     "author": "Nicholas D. Johnson, Will Merrick",
@@ -2192,7 +2098,6 @@
     "tagline": "People who say screenlife is the death of cinema should go kill themselves",
     "description": "After David Kim's 16-year-old daughter goes missing, a local investigation is opened and a detective is assigned to the case. But 37 hours later and without a single lead, David decides to search the one place no one has looked yet, where all secrets are kept today: his daughter's laptop.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_searching",
     "tags": [],
     "author": "Aneesh Chaganty",
@@ -2209,7 +2114,6 @@
     "tagline": "",
     "description": "Four teenage slackers attempt a multi-million-dollar Bitcoin heist from their bedrooms, only to spiral into the darkest corners of the internet - and a danger beyond their computer screens.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_lifehack",
     "tags": [],
     "author": "Ronan Corrigan",
@@ -2225,7 +2129,6 @@
     "tagline": "",
     "description": "The story of Oakland Athletics general manager Billy Beane's successful attempt to put together a baseball team on a budget, by employing computer-generated analysis to draft his players.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_moneyball",
     "tags": [],
     "author": "Bennett Miller",
@@ -2241,7 +2144,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_unsong",
     "tags": [],
     "author": "",
@@ -2257,7 +2159,6 @@
     "tagline": "",
     "description": "The everyday lives of office employees in the Scranton, Pennsylvania branch of the fictional Dunder Mifflin Paper Company.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "show_the_office",
     "tags": [],
     "author": "Greg Daniels",
@@ -2274,7 +2175,6 @@
     "tagline": "",
     "description": "USSR, 1986. A girl goes missing in the closed city of Vorkuta-5, yet not a soul seems to be concerned. Uncover the mystery behind her disappearance and transmit your signal to the universe.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_z_a_t_o_i_love_the_world_and_everything_in_it",
     "tags": [
       "philosophical",
@@ -2283,8 +2183,7 @@
     "author": "Ferry // Nopanamaman",
     "publisher": "",
     "hidden": false,
-    "uncertain": false,
-    "completion_date": "2026-10-17"
+    "uncertain": false
   },
   {
     "id": "your_turn_to_die_death_game_by_majority",
@@ -2295,7 +2194,6 @@
     "tagline": "",
     "description": "Your Turn To Die -Death Game By Majority- is a multi-ending horror adventure game. Sara Chidouin returns home from school late one night to discover that something's gone terribly wrong. When she comes to, she finds herself, her friend Joe, and 9 other people trapped in a mysterious place.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_your_turn_to_die_death_game_by_majority",
     "tags": [],
     "author": "Nankidai",
@@ -2311,7 +2209,6 @@
     "tagline": "",
     "description": "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat, Wade must reluctantly suit-up again with an even more reluctant Wolverine.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_deadpool_wolverine",
     "tags": [],
     "author": "Shawn Levy",
@@ -2327,7 +2224,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_rage",
     "tags": [],
     "author": "",
@@ -2343,7 +2239,6 @@
     "tagline": "This is why you don't trust critics",
     "description": "When an elusive thief whose high-stakes heists unfold along the iconic 101 freeway in Los Angeles eyes the score of a lifetime, with hopes of this being his final job, his path collides with a disillusioned insurance broker who is facing her own crossroads. Determined to crack the case, a relentless detective closes in on the operation, raising the stakes even higher.",
     "notes": "This is the most stereotypical hollywood movie ever made man",
-    "private_notes": "",
     "poster_image": "movie_crime_101",
     "tags": [],
     "author": "Bart Layton",
@@ -2359,7 +2254,6 @@
     "tagline": "Good music, good story, and good puzzles.",
     "description": "The Talos Principle is a first-person puzzle game in the tradition of philosophical science fiction. Made by Croteam and written by Tom Jubert (FTL, The Swapper) and Jonas Kyratzes (The Sea Will Claim Everything).",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_the_talos_principle",
     "tags": [],
     "author": "Croteam",
@@ -2376,7 +2270,6 @@
     "tagline": "",
     "description": "The Talos Principle 2 is a thought-provoking first-person puzzle experience that greatly expands on the first game's philosophical themes and stunning environments with increasingly mind-bending challenges.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_the_talos_principle_2",
     "tags": [],
     "author": "Croteam",
@@ -2392,7 +2285,6 @@
     "tagline": "",
     "description": "A woman finds herself trapped in a virtual circus where she and five other humans are subject to the whims of a wacky AI ringmaster. In this digital purgatory they must face frightening NPCs and cope with their own personal traumas.",
     "notes": "The first few episodes were amazing, but it devolved to a lot more, therapy-speak? Pulled me out of my experience imo.",
-    "private_notes": "",
     "poster_image": "show_the_amazing_digital_circus",
     "tags": [],
     "author": "Gooseworx",
@@ -2408,7 +2300,6 @@
     "tagline": "",
     "description": "A wealthy New York investment banking executive hides his alternate psychopathic ego from his co-workers and friends as he escalates deeper into his illogical, gratuitous fantasies.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_american_psycho",
     "tags": [],
     "author": "Mary Harron",
@@ -2424,7 +2315,6 @@
     "tagline": "",
     "description": "Patrick Bateman moves among the young and trendy in 1980s Manhattan. Young, handsome, and well educated, Bateman earns his fortune on Wall Street by day while spending his nights in ways we cannot begin to fathom. Expressing his true self through torture and murder, Bateman prefigures an apocalyptic horror that no society could bear to confront.“A masterful satire and a ferocious, hilarious, ambitious, inspiring piece of writing.... An important book.” —Katherine Dunn, bestselling author of Geek Love",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_american_psycho_2",
     "tags": [],
     "author": "Bret Easton Ellis",
@@ -2440,7 +2330,6 @@
     "tagline": "",
     "description": "Shaun lives a supremely uneventful life, which revolves around his girlfriend, his mother, and, above all, his local pub. This gentle routine is threatened when the dead return to life and make strenuous attempts to snack on ordinary Londoners.",
     "notes": "Kind of sad actually. Not that funny at all.",
-    "private_notes": "",
     "poster_image": "movie_shaun_of_the_dead",
     "tags": [],
     "author": "Edgar Wright",
@@ -2456,7 +2345,6 @@
     "tagline": "",
     "description": "Columbus has made a habit of running from what scares him. Tallahassee doesn't have fears. If he did, he'd kick their ever-living ass. In a world overrun by zombies, these two are perfectly evolved survivors. But now, they're about to stare down the most terrifying prospect of all: each other.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_zombieland",
     "tags": [],
     "author": "Ruben Fleischer",
@@ -2472,7 +2360,6 @@
     "tagline": "",
     "description": "Columbus, Tallahassee, Wichita, and Little Rock move to the American heartland as they face off against evolved zombies, fellow survivors, and the growing pains of the snarky makeshift family.",
     "notes": "Didn't Wichita give her real name to Columbus? Why are they still using codenames when their original purpose was to not to get attached, even though they are attached now? And the Zombie Kill of the Century could have had a little more flair if they did it in more slow motion, with more shots, some in 3D and all. ...and Little Rock didn't even get anyone at the end! which was pretty funny.",
-    "private_notes": "",
     "poster_image": "movie_zombieland_double_tap",
     "tags": [],
     "author": "Ruben Fleischer",
@@ -2489,7 +2376,6 @@
     "tagline": "Don't say \"and stuff,\" just say, \"dad, there are whores here\"",
     "description": "A private eye investigates the apparent suicide of a fading porn star in 1970s Los Angeles and uncovers a conspiracy.",
     "notes": "We need a sequel YESTERDAY",
-    "private_notes": "",
     "poster_image": "movie_the_nice_guys",
     "tags": [],
     "author": "Shane Black",
@@ -2506,7 +2392,6 @@
     "tagline": "",
     "description": "Jack Reacher",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_gone_tomorrow",
     "tags": [],
     "author": "Lee Child",
@@ -2523,7 +2408,6 @@
     "tagline": "",
     "description": "Dmitri Karamazov and his father Fyodor are at war over both Dmitri’s inheritance and the affections of the beautiful Grushenka. Into this feud arrive the middle brother Ivan, recently returned from Moscow, and the youngest sibling Alyosha, who has been released into the wider world from the local monastery by the elder monk Zossima. Through a series of accidents of fate and wilful misunderstandings the Karamazovs edge closer to tragedy, while the local townspeople watch on.The Brothers Karamazov was Fyodor Dostoevsky’s final novel, and was originally serialised in The Russian Messenger before being published as a complete novel in 1880. This edition is the well-received 1912 English translation by Constance Garnett. As well as earning wide-spread critical acclaim, the novel has been widely influential in literary and philosophical circles; Franz Kafka and James Joyce admired the emotions that verge on madness in the Karamazovs, while Sigmund Freud and Jean-Paul Satre found inspiration in the themes of patricide and existentialism.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_the_brothers_karamazov",
     "tags": [],
     "author": "Fyodor Dostoevsky",
@@ -2540,7 +2424,6 @@
     "tagline": "",
     "description": "An exploration of how computer algorithms can be applied to our everyday lives to solve common decision-making problems and illuminate the  workings of the human mind.   What should we do, or leave undone, in a day or a lifetime? How much messiness should we accept? What balance of the new and familiar is the most fulfilling? These may seem like uniquely human quandaries, but they are not. Computers, like us, confront limited space and time, so computer scientists have been grappling with similar problems for decades. And the solutions they’ve found have much to teach us.In a dazzlingly interdisciplinary work, Brian Christian and Tom Griffiths show how algorithms developed for computers also untangle very human questions. They explain how to have better hunches and when to leave things to chance, how to deal with overwhelming choices and how best to connect with others. From finding a spouse to finding a parking spot, from organizing one’s inbox to peering into the future, Algorithms to Live By transforms the wisdom of computer science into strategies for human living.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_algorithms_to_live_by",
     "tags": [],
     "author": "Brian Christian & Tom Griffiths",
@@ -2557,7 +2440,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_inferno",
     "tags": [],
     "author": "Dan Brown",
@@ -2574,7 +2456,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_the_da_vinci_code",
     "tags": [],
     "author": "Dan Brown",
@@ -2591,7 +2472,6 @@
     "tagline": "",
     "description": "Unlucky assassin Ladybug is determined to do his job peacefully after one too many gigs gone off the rails. Fate, however, may have other plans, as Ladybug's latest mission puts him on a collision course with lethal adversaries from around the globe—all with connected, yet conflicting, objectives—on the world's fastest train.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_bullet_train",
     "tags": [],
     "author": "David Leitch",
@@ -2608,7 +2488,6 @@
     "tagline": "",
     "description": "Winner of the Pulitzer PrizeA metaphorical fugue on minds and machines in the spirit of Lewis CarrollDouglas Hofstadter's book is concerned directly with the nature of \"maps\" or links between formal systems. However, according to Hofstadter, the formal system that underlies all mental activity transcends the system that supports it. If life can grow out of the formal chemical substrate of the cell, if consciousness can emerge out of a formal system of firing neurons, then so too will computers attain human intelligence.&#xa0;Gödel, Escher, Bach&#xa0;is a wonderful exploration of fascinating ideas at the heart of cognitive science: meaning, reduction, recursion, and much more.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_g_del_escher_bach",
     "tags": [],
     "author": "Douglas R. Hofstadter",
@@ -2625,7 +2504,6 @@
     "tagline": "",
     "description": "The blockbuster modern science classic that, two decades ago, introduced the butterfly effect to the world and became an international sensation—now updated with video and modern graphicsIn the 1960s, a small group of radical thinkers upset the rigid foundation of modern scientific thinking by placing new importance on the tiny experimental irregularities that scientists had long learned to ignore. Miniscule differences in data, they said, would eventually produce massive ones—and complex systems like the weather, economics, and human behavior suddenly became clearer and more beautiful than they had ever been before.&#xa0;In this updated version of his seminal work, James Gleick lays out that new vision of a chaotic universe. Interviews with leading theoreticians, a video introduction from the author, and motion graphics depicting concepts such as the famous Lorenz attractor—the concept that birthed chaos theory—complement Gleick’s elegant prose. Never before has chaos been so easy to grasp.&#xa0;“Beautifully lucid . . . Gleick has a novelist’s touch for describing his scientists and their settings, an eye for the apt analogy, and a sense of the dramatic and the poetic.”—San Francisco Chronicle&#xa0;“There is a teleological grandeur about this new math that gives the imagination wings.”—Vogue&#xa0;“Gleick's Chaos is not only enthralling and precise, but full of beautifully strange and strangely beautiful ideas.”—Douglas Hofstadter, author of Gödel, Escher, Bach&#xa0;Born in New York City in 1954, James Gleick is one of the nation’s preeminent science writers. Upon graduating from Harvard in 1976, he founded Metropolis, a weekly Minneapolis newspaper, and spent the next decade working at the New York Times. Gleick’s prominent works include Genius: The Life and Science of Richard Feynman, Isaac Newton, and Chaos: Making a New Science, all of which were shortlisted for the Pulitzer Prize. His latest book, The Information: A History, a Theory, a Flood,was published in March 2011. He lives and works in New York.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_chaos",
     "tags": [],
     "author": "James Gleick",
@@ -2642,7 +2520,6 @@
     "tagline": "",
     "description": "stopped being funny kinda and they kept getting lucky and all. I think I stopped reading around the time the engine itself gets lost to an island or something",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_the_ultimate_hitchhiker_s_guide_to_the_galaxy",
     "tags": [],
     "author": "Douglas Adams",
@@ -2659,7 +2536,6 @@
     "tagline": "I have played this one before, but I have forgotten everything. Need to go through it again.",
     "description": "Become Phoenix Wright and experience the thrill of battle as you fight to save your innocent clients in a court of law. Play all 14 episodes, spanning the first three games, in one gorgeous collection.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "game_phoenix_wright_ace_attorney_trilogy",
     "tags": [],
     "author": "CAPCOM Co., Ltd.",
@@ -2676,7 +2552,6 @@
     "tagline": "Every guy has a differing opinion. Gotta see it to find out",
     "description": "The most powerful man in the world embarks on a frantic mission to prove he is humanity's savior before the disaster he's unleashed destroys everything.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_digger",
     "tags": [],
     "author": "Alejandro G. Iñárritu",
@@ -2693,7 +2568,6 @@
     "tagline": "",
     "description": "Thirty-four days before she's sent to prison, notorious Silicon Valley founder Elizabeth Holmes invites a skeptical film crew to document her every move. What begins as an intimate portrait of an enigmatic felon becomes a mind-bending three-year journey into the abyss.",
     "notes": "",
-    "private_notes": "",
     "poster_image": "movie_you_can_see_everything",
     "tags": [],
     "author": "Nathan Fielder, Lance Oppenheim",
@@ -2710,7 +2584,6 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_how_to_live",
     "tags": [
       "philosophical"
@@ -2718,8 +2591,7 @@
     "author": "Derek Sivers",
     "publisher": "",
     "hidden": false,
-    "uncertain": false,
-    "creation_date": "2026-10-17"
+    "uncertain": false
   },
   {
     "id": "anything_you_want",
@@ -2730,14 +2602,12 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_anything_you_want",
     "tags": [],
     "author": "",
     "publisher": "",
     "hidden": false,
-    "uncertain": false,
-    "creation_date": "2026-10-17"
+    "uncertain": false
   },
   {
     "id": "how_to_win_friends_and_influence_people",
@@ -2748,14 +2618,12 @@
     "tagline": "",
     "description": "",
     "notes": "While reading the book, I tried to compare the ideal behaviour Carnegie prescribes to that of my friends. Beside the trivial similarities there just wasn't any connection. Perhaps we live in different worlds...",
-    "private_notes": "",
     "poster_image": "book_how_to_win_friends_and_influence_people",
     "tags": [],
     "author": "Dale Carnegie",
     "publisher": "",
     "hidden": false,
-    "uncertain": false,
-    "creation_date": "2026-10-17"
+    "uncertain": false
   },
   {
     "id": "the_chronicles_of_narnia_complete_7_book_collection",
@@ -2766,13 +2634,11 @@
     "tagline": "",
     "description": "",
     "notes": "",
-    "private_notes": "",
     "poster_image": "book_the_chronicles_of_narnia_complete_7_book_collection",
     "tags": [],
     "author": "C. S. Lewis",
     "publisher": "",
     "hidden": false,
-    "uncertain": true,
-    "creation_date": "2026-10-20"
+    "uncertain": true
   }
 ]
