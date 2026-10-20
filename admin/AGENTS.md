@@ -32,6 +32,11 @@ All commands should be run using `bun`.
 - The admin nav labels the route **Now** (not “Arcs”; that’s the data model). The keyboard cheat sheet calls it “Save the current entry”. The CV site deliberately never uses the word “arc” in visible copy (it says “focus areas”), so do not leak that label into CV-facing data or UI.
 - `shared/data` is included in `is_content_path()` and `CONTENT_ROOTS` in `admin/src-tauri/src/lib.rs`, so changes to `shared/data/now.json` and `shared/data/socials.json` are visible as content and staged by `git_commit_content`. Default commit messages map them to `content(arcs): update arcs` and `content(socials): update socials`. Add any new shared data file/directory to both Rust lists as well as `COLLECTIONS`.
 
+## Media (`/media`)
+- The media list uses the shared `MediaGallery` (default) and `MediaTable` views, toggled by `MediaViewToggle`; the choice persists in `localStorage` under `admin-media-view-mode`.
+- Both views group results by `type` through `groupMediaByType()` from `shared/lib/mediaLibrary.ts` (Book → Movie → Show → Game, matching `media-properties.json`). Groups are collapsible and start collapsed; item order within an expanded group follows the active filters/sorts.
+- Clicking a gallery card or table row opens `EditModal`; clicking a table poster opens `FullPoster`. Keep these views in `shared/` rather than duplicating them here.
+
 ## Messages (Remote D1)
 - The `/messages` page is the one admin route that does **not** read local repo files; it reads the live Cloudflare **D1** database behind the site's contact form.
 - It talks to the `d1_query` Tauri command (`admin/src-tauri/src/lib.rs`), which shells out to `bun x wrangler d1 execute sqrt-fyi-messages --remote --json` from `site/`. This deliberately reuses the developer's existing `wrangler login` instead of storing a Cloudflare API token in the app.

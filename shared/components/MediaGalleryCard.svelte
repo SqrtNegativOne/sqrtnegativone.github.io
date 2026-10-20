@@ -1,15 +1,21 @@
 <script lang="ts">
-  import { TYPE_LABEL } from "$shared/components/constants";
-  import TypeBadge from "$shared/components/TypeBadge.svelte";
-  import StatusBadge from "$shared/components/StatusBadge.svelte";
-  import RatingChart from "$shared/components/RatingChart.svelte";
-  import { ratingColor } from "$shared/utils/ratingColor";
-  import { getPosterUrl } from "$lib/utils";
-  import type { MediaItem } from "$shared/types";
+  import { TYPE_LABEL } from './constants';
+  import TypeBadge from './TypeBadge.svelte';
+  import StatusBadge from './StatusBadge.svelte';
+  import RatingChart from './RatingChart.svelte';
+  import { ratingColor } from '../utils/ratingColor';
+  import { getPosterUrl } from '../utils/getPosterUrl';
+  import type { MediaItem } from '../types';
 
-  let { item, openDetails } = $props<{
+  let {
+    item,
+    openDetails,
+    // Maps a web path (`/media/...`) to a URL the host app can load.
+    resolveAsset = (url: string) => url
+  } = $props<{
     item: MediaItem;
     openDetails: (item: MediaItem) => void;
+    resolveAsset?: (url: string) => string;
   }>();
 
   const expected = $derived(
@@ -23,7 +29,7 @@
   const isUncertain = $derived(Boolean(item.uncertain));
 
   // Border + glow are driven by CSS custom properties so the card's own hover
-  // shadow (defined in <style>) can keep working without being overridden.
+  // shadow can keep working without being overridden.
   const cardStyle = $derived.by(() => {
     if (isUncertain) {
       return '--card-border-style: solid; --card-border-color: transparent; --card-glow: transparent;';
@@ -40,8 +46,12 @@
     return '--card-border-style: solid; --card-border-color: transparent; --card-glow: transparent;';
   });
 
+  const posterUrl = $derived(
+    item.poster_image ? resolveAsset(getPosterUrl(item.poster_image as string)) : ''
+  );
+
   function handleKeydown(event: KeyboardEvent) {
-    if (event.key === "Enter" || event.key === " ") {
+    if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       openDetails(item);
     }
@@ -58,13 +68,8 @@
   onkeydown={handleKeydown}
 >
   <div class="ml-card-poster">
-    {#if item.poster_image}
-      <img
-        class="ml-card-img"
-        src={getPosterUrl(item.poster_image as string)}
-        alt=""
-        loading="lazy"
-      />
+    {#if posterUrl}
+      <img class="ml-card-img" src={posterUrl} alt="" loading="lazy" />
     {:else}
       <div class="ml-poster-fallback">
         <span>{TYPE_LABEL[item.type as string] || item.type}</span>

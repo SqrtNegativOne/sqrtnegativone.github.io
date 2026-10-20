@@ -1,10 +1,14 @@
 <script lang="ts">
-  import MediaTable from './components/MediaTable.svelte';
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
   import SearchBar from '$lib/SearchBar.svelte';
   import FullPoster from '$lib/FullPoster.svelte';
+  import { assetState } from '$lib/assetState.svelte';
   import MediaInfo from '../../../../shared/components/MediaInfo.svelte';
+  import MediaGallery from '../../../../shared/components/MediaGallery.svelte';
+  import MediaTable from '../../../../shared/components/MediaTable.svelte';
+  import MediaViewToggle from '../../../../shared/components/MediaViewToggle.svelte';
+  import { groupMediaByType, type MediaViewMode } from '../../../../shared/lib/mediaLibrary';
   import mediaProperties from '../../../../site/static/media/media-properties.json';
   import { MediaState, type MediaItem, type SearchResult } from './mediaState.svelte';
 
@@ -15,6 +19,9 @@
   });
 
   let fullPosterUrl: string | null = $state(null);
+  let viewMode = $state<MediaViewMode>('gallery');
+
+  const groups = $derived(groupMediaByType(media.filteredMedia));
 
   const allTags = $derived(
     Array.from(new Set((data.media || []).flatMap((m: MediaItem) => m.tags || []))).sort()
@@ -27,6 +34,8 @@
     { value: 'rating', label: 'Rating', type: 'number' as const },
     { value: 'title', label: 'Title', type: 'text' as const }
   ]);
+
+  const resolveAsset = (url: string) => assetState.resolve(url);
 </script>
 
 <svelte:head>
@@ -46,6 +55,7 @@
         onnew={(q) => media.openNew(q)}
       />
     </div>
+    <MediaViewToggle bind:viewMode storageKey="admin-media-view-mode" />
     <MediaInfo />
   </div>
 
@@ -55,11 +65,26 @@
     </div>
   {/if}
 
-  <MediaTable
-    filteredMedia={media.filteredMedia}
-    openEdit={(item: MediaItem) => media.openEdit(item)}
-    openFullPoster={(url: string) => fullPosterUrl = url}
-  />
+  {#if media.filteredMedia.length === 0}
+    <div class="card p-8 text-center text-[oklch(0.7107_0.0351_256.79)]">
+      No media found matching your filters.
+    </div>
+  {:else if viewMode === 'gallery'}
+    <MediaGallery
+      groups={groups}
+      openDetails={(item: MediaItem) => media.openEdit(item)}
+      {resolveAsset}
+    />
+  {:else}
+    <MediaTable
+      groups={groups}
+      sorts={media.sorts}
+      toggleSort={(column: string) => media.toggleSort(column)}
+      openDetails={(item: MediaItem) => media.openEdit(item)}
+      openFullPoster={(url: string) => fullPosterUrl = url}
+      {resolveAsset}
+    />
+  {/if}
 </div>
 
 <EditModal 

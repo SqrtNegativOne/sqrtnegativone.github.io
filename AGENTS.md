@@ -19,11 +19,13 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
 - **Package Manager**: **Bun**. Don't use npm.
 
 ## Repository Structure
-- `shared/components/` — `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, `NowBook`, and the media-library components (`FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
+- `shared/components/` — `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, `NowBook`, and the media-library components (`MediaGallery`, `MediaGalleryCard`, `MediaGroupHeading`, `MediaTable`, `MediaViewToggle`, `FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
+  - The grouped gallery/table views live in `shared/` so the site and admin render the same media UI; each page owns only its filters, modals, and data loading.
   - `Seo.svelte` takes a `base` prop (defaults to `https://sqrt.fyi`; cv passes `https://cv.sqrt.fyi`).
   - `MenuOverlay.svelte` takes an `items` prop; each app defines its own `NAV_ITEMS` and passes them in.
   - `NowBook.svelte` is the bookmark-tab selector used by both `/now` pages; it takes pre-rendered HTML so each app keeps its own Markdown renderer.
 - `shared/lib/arcs.ts` — the `Arc` model, date parsing, ongoing filtering, and date formatting for `/now`.
+- `shared/lib/mediaLibrary.ts` — `MediaViewMode`, `groupMediaByType()` (groups library items by `type` in `media-properties.json` order; both apps use it for their default grouped views, with groups collapsed until expanded), and `toggleSort()` for sortable table headers.
 - `shared/data/now.json` — the cross-app arc data consumed by both the site and cv `/now` pages (and the admin app).
 - `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/contact`, `/colophon`.
 - `site/src/routes/api/contact/+server.ts` — non-prerendered `POST` endpoint behind the `/contact` form; writes to the D1 `DB` binding.

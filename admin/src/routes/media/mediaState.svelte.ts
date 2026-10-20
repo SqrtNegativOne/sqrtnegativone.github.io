@@ -2,6 +2,7 @@ import { Result, ResultAsync, err, ok } from 'neverthrow';
 import { invoke } from '@tauri-apps/api/core';
 import { getRepoRoot, readData, writeData } from '$lib/db';
 import { filterAndSortItems } from '$lib/searchUtils';
+import { toggleSort as toggleMediaSort } from '../../../../shared/lib/mediaLibrary';
 import { invalidateAll } from '$app/navigation';
 import { notificationState } from '$lib/notificationState.svelte';
 import type { MediaItem } from '../../../../shared/types';
@@ -358,6 +359,11 @@ export class MediaState {
       filters: this.filters,
       sorts: this.sorts
     });
+  }
+
+  /** Clicking a sortable table header cycles/creates that sort rule. */
+  toggleSort(column: string) {
+    this.sorts = toggleMediaSort(this.sorts, column);
   }
 
   openNew(initialTitle = '') {
