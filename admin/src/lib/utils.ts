@@ -1,6 +1,17 @@
 import { invoke } from '@tauri-apps/api/core';
-import { Result, ResultAsync } from 'neverthrow';
+import { Result, ResultAsync, errAsync } from 'neverthrow';
 import { notificationState } from '$lib/notificationState.svelte';
+
+const TAURI_UNAVAILABLE_MESSAGE =
+  'Backend unavailable: this page is not running inside the Tauri app. Launch it with admin.bat.';
+
+/** True when the SvelteKit page is loaded in the Tauri webview, not a browser tab. */
+export function isTauri(): boolean {
+  if (typeof window === 'undefined') return false;
+  const internals = (window as Window & { __TAURI_INTERNALS__?: { invoke?: unknown } })
+    .__TAURI_INTERNALS__;
+  return typeof internals?.invoke === 'function';
+}
 
 export const safeJsonParse = Result.fromThrowable(JSON.parse, (e) => e instanceof Error ? e : new Error(String(e)));
 
@@ -35,8 +46,14 @@ export const safeInvoke = <T>(
   cmd: string, 
   args?: Record<string, unknown>, 
   options?: SafeInvokeOptions
-) => 
-  ResultAsync.fromPromise(
+) => {
+  if (!isTauri()) {
+    // Browsers don't get Tauri's IPC bridge; fail without spamming a toast.
+    // The layout shows a persistent browser-preview banner instead.
+    return errAsync<T, Error>(new Error(TAURI_UNAVAILABLE_MESSAGE));
+  }
+
+  return ResultAsync.fromPromise(
     invoke<T>(cmd, args), 
     (e) => {
       const message = String(e);
@@ -47,6 +64,7 @@ export const safeInvoke = <T>(
       return err;
     }
   );
+};
 
 export function notifyOnError<T, E extends { message?: string }>(result: Result<T, E>, title?: string): Result<T, E> {
   if (result.isErr()) {

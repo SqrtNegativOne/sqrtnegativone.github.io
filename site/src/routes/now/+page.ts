@@ -1,11 +1,18 @@
-import { getAllNowEntries } from '$lib/now';
+import markdownIt from 'markdown-it';
+import { getOngoingArcs, type NowBookItem } from '$shared/lib/arcs';
 
 export const prerender = true;
 
-export function load() {
-  const entries = getAllNowEntries();
-  return {
-    entries,
-    latest: entries[0] || null
-  };
+const md = markdownIt({ html: true, linkify: true, typographer: true });
+
+export function load(): { items: NowBookItem[] } {
+  const items = getOngoingArcs('personal').map((arc) => ({
+    id: arc.id,
+    title: arc.title,
+    startDate: arc.startDate,
+    endDate: arc.endDate,
+    html: md.render(arc.description)
+  }));
+
+  return { items };
 }

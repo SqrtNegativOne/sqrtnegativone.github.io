@@ -1,8 +1,8 @@
-import { readData, type NowEntry } from '$lib/db';
+import { readData, type NowArc } from '$lib/db';
 
 export const load = async () => {
-  const res = await readData<NowEntry>('now');
+  const res = await readData<NowArc>('now');
   return {
-    entries: res.unwrapOr([])
+    arcs: res.unwrapOr([])
   };
 };

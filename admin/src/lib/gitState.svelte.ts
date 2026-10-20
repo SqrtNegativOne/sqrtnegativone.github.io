@@ -57,6 +57,8 @@ export class GitState {
         addType('skills');
       } else if (f.startsWith('shared/data/socials')) {
         addType('socials');
+      } else if (f.startsWith('shared/data/now')) {
+        addType('arcs');
       } else if (f.startsWith('site/src/data/')) {
         const name = f.replace('site/src/data/', '').replace('.json', '');
         addType(name);

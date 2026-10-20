@@ -107,7 +107,7 @@ export const navItems: NavItem[] = [
   {
     href: '/now',
     label: 'Now',
-    description: 'Manage daily now entries and day logs.',
+    description: 'Manage the arcs shown on your /now pages and who sees them.',
     path: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
     bgGradient: 'from-teal-500/5',
     iconBg: 'bg-teal-500/10',

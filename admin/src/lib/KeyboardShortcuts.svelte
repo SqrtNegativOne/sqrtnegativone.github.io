@@ -45,9 +45,9 @@
       ]
     },
     {
-      title: 'Now entries',
+      title: 'Now',
       routes: ['/now'],
-      shortcuts: [{ keys: ['Ctrl', 'S'], label: 'Save the day entry' }]
+      shortcuts: [{ keys: ['Ctrl', 'S'], label: 'Save the current entry' }]
     },
     {
       title: 'Questions',

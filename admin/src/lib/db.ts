@@ -27,7 +27,7 @@ export const COLLECTIONS = {
   media: 'site/static/media/media.json',
   mediaPrivate: 'site/static/media/media-private.json',
   mediaProperties: 'site/static/media/media-properties.json',
-  now: 'site/src/data/now.json',
+  now: 'shared/data/now.json',
   buttons: 'site/src/data/buttons.json',
 } as const;
 
@@ -36,13 +36,19 @@ const CV_DATA_FILES = new Set(['projects.json', 'skills.json']);
 
 // Shared data files live in the repo-root shared/ folder and are consumed by
 // both apps.
-const SHARED_DATA_FILES = new Set(['socials.json']);
+const SHARED_DATA_FILES = new Set(['socials.json', 'now.json']);
 
-export interface NowEntry {
+export type ArcAudience = 'professional' | 'personal';
+
+/** A dated arc shown on /now; shared by sqrt.fyi and cv.sqrt.fyi. */
+export interface NowArc {
   id: string;
-  date: string;
-  title?: string;
-  content: string;
+  title: string;
+  startDate: string;
+  /** Omit for an open-ended arc that is ongoing until further notice. */
+  endDate?: string;
+  audience: ArcAudience[];
+  description: string;
   updatedAt?: string;
 }
 

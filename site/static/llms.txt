@@ -7,7 +7,7 @@
 ## Main Pages
 
 - [Blog](https://sqrt.fyi/blog): Essays and writing by Sqrt-1 on programming, games, and whatever else he is thinking about.
-- [Now](https://sqrt.fyi/now): What Sqrt-1 is currently learning, building, and reading.
+- [Now](https://sqrt.fyi/now): The arcs Sqrt-1 is currently living through, with dates and a description of each.
 - [Microblog](https://sqrt.fyi/microblog): Short thoughts, links, and updates fetched live from @sqrt-1.bsky.social on Bluesky.
 - [Colophon](https://sqrt.fyi/colophon): How this site is built: the tools, fonts, and stack behind sqrt.fyi.
 - [Questions](https://sqrt.fyi/questions): Open problems and puzzles Sqrt-1 is currently working through.

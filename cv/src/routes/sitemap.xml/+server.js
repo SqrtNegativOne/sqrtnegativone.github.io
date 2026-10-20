@@ -2,7 +2,7 @@ export const prerender = true;
 
 const SITE_URL = 'https://cv.sqrt.fyi';
 
-const ROUTES = ['/', '/about', '/projects', '/skills'];
+const ROUTES = ['/', '/about', '/projects', '/skills', '/now'];
 
 export async function GET() {
   const urls = ROUTES.map((loc) => ({ loc }));

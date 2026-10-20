@@ -1,5 +1,6 @@
 use std::fs;
 use std::path::Path;
+use tauri::Manager;
 
 #[tauri::command]
 fn read_file(path: String) -> Result<String, String> {
@@ -267,6 +268,7 @@ fn is_content_path(path: &str) -> bool {
     let p_norm = p.replace('\\', "/");
     p_norm.starts_with("cv/src/data/")
         || p_norm.starts_with("site/src/data/")
+        || p_norm.starts_with("shared/data/")
         || p_norm.starts_with("site/static/media/")
         || p_norm.starts_with("cv/static/projects/")
         || p_norm.starts_with("cv/static/quotes/")
@@ -284,6 +286,7 @@ fn is_content_path(path: &str) -> bool {
 const CONTENT_ROOTS: &[&str] = &[
     "cv/src/data",
     "site/src/data",
+    "shared/data",
     "site/blog",
     "site/static/media",
     "cv/static/projects",
@@ -321,14 +324,19 @@ fn generate_default_commit_message(files: &[String]) -> String {
             types.insert("blog");
         } else if f.starts_with("cv/src/data/skills") {
             types.insert("skills");
-        } else if f.starts_with("cv/src/data/socials") {
+        } else if f.starts_with("shared/data/socials") {
             types.insert("socials");
+        } else if f.starts_with("shared/data/now") {
+            types.insert("arcs");
         } else if f.starts_with("site/src/data/questions") {
             types.insert("questions");
         } else if let Some(rest) = f.strip_prefix("site/src/data/") {
             let name = rest.trim_end_matches(".json").trim_end_matches(".md");
             types.insert(name);
         } else if let Some(rest) = f.strip_prefix("cv/src/data/") {
+            let name = rest.trim_end_matches(".json").trim_end_matches(".md");
+            types.insert(name);
+        } else if let Some(rest) = f.strip_prefix("shared/data/") {
             let name = rest.trim_end_matches(".json").trim_end_matches(".md");
             types.insert(name);
         } else {
@@ -624,12 +632,21 @@ pub fn run() {
             git_publish
         ])
         .setup(|app| {
-            if cfg!(debug_assertions) {
-                app.handle().plugin(
-                    tauri_plugin_log::Builder::default()
-                        .level(log::LevelFilter::Info)
-                        .build(),
-                )?;
+            if let Some(window) = app.get_webview_window("main") {
+                // Make sure the window is actually presented, even if a previous
+                // run left it hidden/minimized or the OS restored a stale state.
+                let _ = window.show();
+                let _ = window.unminimize();
+                let _ = window.set_focus();
+                if let Err(err) = window.is_visible() {
+                    eprintln!(
+                        "[admin] WebView2 is not responding ({err:?}). Check \
+                         Microsoft-Windows-CodeIntegrity/Operational for injected DLLs \
+                         blocked from msedgewebview2.exe (e.g. Windhawk)."
+                    );
+                }
+            } else {
+                eprintln!("[admin] main webview window was not created");
             }
             Ok(())
         })
@@ -645,8 +662,8 @@ mod tests {
     fn test_content_path_detection() {
         assert!(is_content_path("cv/src/data/projects.json"));
         assert!(is_content_path("cv/src/data/skills.json"));
-        assert!(is_content_path("cv/src/data/socials.json"));
-        assert!(is_content_path("site/src/data/now.json"));
+        assert!(is_content_path("shared/data/socials.json"));
+        assert!(is_content_path("shared/data/now.json"));
         assert!(is_content_path("site/static/media/poster.avif"));
         assert!(is_content_path("site/static/media/media.json"));
         assert!(is_content_path("cv/static/quotes/quotes.json"));
@@ -677,8 +694,12 @@ mod tests {
             "content(media): update media"
         );
         assert_eq!(
-            generate_default_commit_message(&["site/src/data/now.json".to_string()]),
-            "content(now): update now"
+            generate_default_commit_message(&["shared/data/now.json".to_string()]),
+            "content(arcs): update arcs"
+        );
+        assert_eq!(
+            generate_default_commit_message(&["shared/data/socials.json".to_string()]),
+            "content(socials): update socials"
         );
         assert_eq!(
             generate_default_commit_message(&[

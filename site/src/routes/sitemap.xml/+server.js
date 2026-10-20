@@ -1,5 +1,4 @@
 import { getPublicPosts, formatIsoDate } from '$lib/blog';
-import { getAllNowEntries } from '$lib/now';
 
 export const prerender = true;
 
@@ -27,12 +26,6 @@ export async function GET() {
   const posts = getPublicPosts();
   for (const post of posts) {
     urls.push({ loc: `/blog/${post.slug}/`, lastmod: formatIsoDate(post.date) });
-  }
-
-  // 3. Process Now day routes
-  const nowEntries = getAllNowEntries();
-  for (const entry of nowEntries) {
-    urls.push({ loc: `/now/${entry.date}/`, lastmod: entry.date });
   }
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

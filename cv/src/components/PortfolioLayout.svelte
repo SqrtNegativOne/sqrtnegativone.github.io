@@ -12,10 +12,11 @@
     { key: "home",     label: "Home",     path: "/",         importance: 3 },
     { key: "projects", label: "Projects", path: "/projects", importance: 3 },
     { key: "about",    label: "About",    path: "/about",    importance: 2 },
+    { key: "now",      label: "Now",      path: "/now",      importance: 2 },
     { key: "skills",   label: "Skills",   path: "/skills",   importance: 1 }
   ];
 
-  const HIDE_PORTRAIT = ["/skills", "/projects"];
+  const HIDE_PORTRAIT = ["/skills", "/projects", "/now"];
 
   let currentView = $derived(currentPath === "/" ? "home" : currentPath.slice(1));
   let showPortrait = $derived(!HIDE_PORTRAIT.includes(currentPath));

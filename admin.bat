@@ -1,5 +1,15 @@
 @echo off
 cd admin
+
+rem WebView2 155 requires its user-data folder to be Low integrity. Tauri
+rem creates %LOCALAPPDATA%\com.sqrtnegativone.admin as Medium, which makes
+rem WebView2 fail with "The requested resource is in use" and no child
+rem processes. Ensure the folder exists and is Low on every launch.
+set "ADMIN_APP_DATA=%LOCALAPPDATA%\com.sqrtnegativone.admin"
+if not exist "%ADMIN_APP_DATA%" mkdir "%ADMIN_APP_DATA%"
+icacls "%ADMIN_APP_DATA%" /setintegritylevel "(OI)(CI)Low" >nul 2>&1
+if errorlevel 1 echo WARNING: Could not set the WebView2 data folder to Low integrity.
+
 echo Checking if app is compiled and up-to-date...
 bun run check_build.ts
 

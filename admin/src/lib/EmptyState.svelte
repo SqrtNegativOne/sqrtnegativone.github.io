@@ -34,7 +34,7 @@
   {#if actionLabel && onaction}
     <button
       type="button"
-      onclick={onaction}
+      onclick={() => onaction?.()}
       class="btn-primary text-sm flex items-center gap-2 cursor-pointer mt-2"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

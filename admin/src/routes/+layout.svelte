@@ -8,9 +8,13 @@
   import KeyboardShortcuts from '$lib/KeyboardShortcuts.svelte';
   import { notificationState } from '$lib/notificationState.svelte';
   import { messageReadState } from '$lib/messageReadState.svelte';
+  import { isTauri } from '$lib/utils';
 
   let { children } = $props();
   let mobileMenuOpen = $state(false);
+  // The admin app is a Tauri desktop app; opening the Vite URL in a browser
+  // leaves the IPC bridge unavailable. Warn instead of throwing invoke errors.
+  let tauriAvailable = $state(isTauri());
 
   /** `99+` keeps the collapsed-sidebar badge from overflowing. */
   let unreadLabel = $derived(messageReadState.unreadCount > 99 ? '99+' : String(messageReadState.unreadCount));
@@ -22,8 +26,10 @@
   }
 
   onMount(() => {
+    // Re-check after mount in case the Tauri bridge was injected slightly later.
+    tauriAvailable = isTauri();
     notificationState.initGlobalHandlers();
-    if (!page.url.pathname.startsWith('/messages')) {
+    if (tauriAvailable && !page.url.pathname.startsWith('/messages')) {
       void messageReadState.refresh(true);
     }
 
@@ -43,6 +49,16 @@
 </script>
 
 <svelte:window onkeydown={handleGlobalKeydown} />
+
+{#if !tauriAvailable}
+  <div
+    class="fixed inset-x-0 top-0 z-[200] bg-amber-400 px-4 py-2 text-center text-xs font-semibold text-black shadow-lg"
+    role="status"
+  >
+    Browser preview — file, git, and message actions are disabled. Open the native
+    app with admin.bat.
+  </div>
+{/if}
 
 <div class="flex h-screen bg-[oklch(0.1408_0.0044_285.82)] text-[oklch(0.9842_0.0034_247.86)] overflow-hidden">
   <!-- Desktop Collapsible Sidebar (w-16 placeholder so content doesn't shift, with aside animating out over content) -->
@@ -97,7 +113,9 @@
         {/each}
       </nav>
 
-      <GitSyncWidget />
+      {#if tauriAvailable}
+        <GitSyncWidget />
+      {/if}
     </aside>
   </div>
 
@@ -155,7 +173,9 @@
         {/each}
       </nav>
 
-      <GitSyncWidget isMobile={true} />
+      {#if tauriAvailable}
+        <GitSyncWidget isMobile={true} />
+      {/if}
     </aside>
   {/if}
 
