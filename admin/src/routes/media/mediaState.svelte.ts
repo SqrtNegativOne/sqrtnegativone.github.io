@@ -5,6 +5,7 @@ import { filterAndSortItems } from '$lib/searchUtils';
 import { toggleSort as toggleMediaSort } from '../../../../shared/lib/mediaLibrary';
 import { invalidateAll } from '$app/navigation';
 import { notificationState } from '$lib/notificationState.svelte';
+import { mediaLogState } from './mediaLogState.svelte';
 import type { MediaItem } from '../../../../shared/types';
 export type { MediaItem };
 
@@ -26,19 +27,6 @@ export interface MediaSearchProvider {
   name: string;
   supports(type: string): boolean;
   search(title: string, type: string, context: MediaSearchContext): Promise<Result<SearchResult[], string>>;
-}
-
-/** Local `YYYY-MM-DD` date used when stamping a newly added item. */
-function todayIsoDate(): string {
-  const d = new Date();
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
-
-/** Empty date inputs come back as `''`; store `null` instead. */
-function normalizeDate(value: string | null | undefined): string | null {
-  const v = typeof value === 'string' ? value.trim() : '';
-  return v ? v : null;
 }
 
 let cachedTmdbApiKey: string | null = null;
@@ -319,15 +307,13 @@ export class MediaState {
     id: '', type: 'movie', rating: 3, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
     author: '', publisher: '',
-    tags: [], hidden: false, uncertain: false,
-    completion_date: '', creation_date: ''
+    tags: [], hidden: false, uncertain: false
   });
   initialItem: MediaItem = $state({
     id: '', type: 'movie', rating: 3, status: 'wishlist',
     title: '', tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
     author: '', publisher: '',
-    tags: [], hidden: false, uncertain: false,
-    completion_date: '', creation_date: ''
+    tags: [], hidden: false, uncertain: false
   });
   get isDirty(): boolean {
     return JSON.stringify(this.currentItem) !== JSON.stringify(this.initialItem);
@@ -373,8 +359,7 @@ export class MediaState {
       id: '', type: 'movie', rating: 3, status: 'wishlist',
       title: initialTitle, tagline: '', description: '', notes: '', poster_image: '', private_notes: '',
       author: '', publisher: '',
-      tags: [], hidden: false, uncertain: false,
-      completion_date: '', creation_date: ''
+      tags: [], hidden: false, uncertain: false
     };
     this.initialItem = { ...this.currentItem };
     this.isModalOpen = true;
@@ -486,7 +471,7 @@ export class MediaState {
         this.currentItem.id = this.generateUniqueId(this.currentItem, items);
       }
 
-      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain, completion_date, creation_date } = this.currentItem;
+      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain } = this.currentItem;
       let poster_image = this.currentItem.poster_image;
 
       const rootRes = await ResultAsync.fromPromise(getRepoRoot(), (err) => typeof err === 'string' ? err : String(err));
@@ -554,13 +539,10 @@ export class MediaState {
       }
 
       const parsedRating = typeof rating === 'number' && !isNaN(rating) ? rating : null;
-      const newItem: MediaItem = { id, type, rating: parsedRating, status, title, tagline, description, notes, private_notes, poster_image, tags, author, publisher, hidden, uncertain: Boolean(uncertain) };
-      // Dates are optional; existing items without them stay untouched.
-      const completionDate = normalizeDate(completion_date);
-      if (completionDate) newItem.completion_date = completionDate;
-      const creationDate = normalizeDate(creation_date) ?? (isNew ? todayIsoDate() : null);
-      if (creationDate) newItem.creation_date = creationDate;
-      
+      // `private_notes` deliberately never enters media.json: that file is
+      // public. It is stored separately in admin/data/media-private.json.
+      const newItem: MediaItem = { id, type, rating: parsedRating, status, title, tagline, description, notes, poster_image, tags, author, publisher, hidden, uncertain: Boolean(uncertain) };
+
       if (isNew) {
         if (items.some(i => i.id === id)) {
           this.errorMsg = 'ID already exists';
@@ -597,6 +579,10 @@ export class MediaState {
         notificationState.error(this.errorMsg, { title: 'Save Private Notes Failed' });
         return;
       }
+
+      // A new item gets a private `add` event so the log knows it exists,
+      // without leaking the date onto the public site.
+      if (isNew) await mediaLogState.recordAdd(id);
 
       notificationState.success(`Saved "${newItem.title}" successfully!`, { title: 'Media Saved' });
       this.isModalOpen = false;
@@ -641,7 +627,10 @@ export class MediaState {
           return;
         }
     }
-    
+
+    // Cascade the log so a deleted item cannot leave orphaned events behind.
+    await mediaLogState.removeForMedia(id);
+
     notificationState.success(`Deleted media "${id}"`, { title: 'Media Deleted' });
     this.isModalOpen = false;
     await invalidateAll();

@@ -25,11 +25,23 @@ export const COLLECTIONS = {
   socials: 'shared/data/socials.json',
   quotes: 'cv/static/quotes/quotes.json',
   media: 'site/static/media/media.json',
-  mediaPrivate: 'site/static/media/media-private.json',
+  /**
+   * Private notes live outside the site source tree: the repository is public
+   * and `site/static/` is served verbatim, so private data must not go there.
+   */
+  mediaPrivate: 'admin/data/media-private.json',
   mediaProperties: 'site/static/media/media-properties.json',
+  /** Public projection of the media log; the only log file the site sees. */
+  mediaLog: 'site/src/data/media-log.json',
   now: 'shared/data/now.json',
   buttons: 'site/src/data/buttons.json',
 } as const;
+
+/**
+ * Full media log, including private events. Gitignored and read with
+ * `readTextFile` / `writeTextFile`, never through `readData` / `writeData`.
+ */
+export const MEDIA_LOG_MASTER = 'admin/data/media-log.json';
 
 // Plain data files that live in the cv app rather than the site app.
 const CV_DATA_FILES = new Set(['projects.json', 'skills.json']);
@@ -104,10 +116,13 @@ export function writeData<T>(collectionOrPath: CollectionName | (string & {}), d
     });
 }
 
-export function readTextFile(relativePath: string): ResultAsync<string, Error> {
+export function readTextFile(
+  relativePath: string,
+  options?: { silent?: boolean }
+): ResultAsync<string, Error> {
   return safeGetRepoRoot().andThen((root) => {
     const filePath = `${root}/${relativePath}`;
-    return safeInvoke<string>('read_file', { path: filePath });
+    return safeInvoke<string>('read_file', { path: filePath }, options);
   });
 }
 

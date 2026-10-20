@@ -36,6 +36,10 @@ cv/.wrangler/
 *.sln
 *.sw?
 
+# Private admin data (media log master, private notes). Never commit: the
+# repository is public, so "private" has to mean "not in git".
+admin/data/
+
 # Cloudflare / Wrangler
 .wrangler/
 .dev.vars

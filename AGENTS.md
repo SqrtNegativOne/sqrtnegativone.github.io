@@ -26,12 +26,13 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
   - `NowBook.svelte` is the bookmark-tab selector used by both `/now` pages; it takes pre-rendered HTML so each app keeps its own Markdown renderer.
 - `shared/lib/arcs.ts` — the `Arc` model, date parsing, ongoing filtering, and date formatting for `/now`.
 - `shared/lib/mediaLibrary.ts` — `MediaViewMode`, `groupMediaByType()` (groups library items by `type` in `media-properties.json` order; both apps use it for their default grouped views, with groups collapsed until expanded), and `toggleSort()` for sortable table headers.
+- `shared/lib/mediaLog.ts` — event model helpers for the media log: date parsing/formatting in local wall time, `checkpoint` formatting, history derivation, month grouping, and the per-type default progress unit.
 - `shared/data/now.json` — the cross-app arc data consumed by both the site and cv `/now` pages (and the admin app).
 - `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/contact`, `/colophon`.
 - `site/src/routes/api/contact/+server.ts` — non-prerendered `POST` endpoint behind the `/contact` form; writes to the D1 `DB` binding.
 - `site/migrations/` — D1 SQL migrations (applied with `wrangler d1 migrations apply`).
 - `site/blog/posts/` — Markdown posts; `site/blog/_data/` — static data (e.g. `fonts.json`) shared with the admin app.
-- `site/static/` — `media/` (13 MB, never copy elsewhere), `blog-images/`, `velite/`, plus machine-readable files `robots.txt`, `llms.txt`, `.well-known/security.txt`.
+- `site/static/` — `media/` (13 MB, never copy elsewhere), `blog-images/`, `velite/`, plus machine-readable files `robots.txt`, `llms.txt`, `.well-known/security.txt`. **Everything here is served verbatim**: never put private data under `static/`.
 - `cv/src/routes/` — `/`, `/about`, `/projects`, `/skills`, `/now`, `/sitemap.xml`.
 - `cv/static/` — cv-only assets (`portraits/`, `projects/`, `quotes/`, `logos/`, `thomas-test.html`).
 - Both apps duplicate a small set of design-system static assets: `fonts/`, `fonts.css`, `vendor/`, `favicon*`, `apple-touch-icon.png`, `manifest.webmanifest`, `.well-known/security.txt`.
@@ -69,6 +70,16 @@ All commands use `bun` and run **inside `site/` or `cv/`**.
 - **Never use the word “arc” in visible cv copy.** The CV page calls them “focus areas” and labels the tab strip `Focus areas`; `NowBook.svelte` takes its accessible label as a prop for this reason.
 - `shared/components/NowBook.svelte` renders the selector (vertical bookmarks on desktop, a horizontal scroll strip on mobile) plus the description panel. It uses Svelte scoped CSS only (cv’s `index.css` does not scan `shared/` for Tailwind classes).
 - The admin `/now` page edits the same file through `readData('now')` / `writeData('now', …)`; keep its validation aligned with the model (valid dates, end ≥ start, at least one audience, non-empty Markdown description).
+
+## Media Library & Log
+- `site/static/media/media.json` is the public shelf: metadata, rating, status, notes, hidden. It is served at `/media/media.json` and imported into the client bundle, so **never store private data there**. Dates are no longer stored on items; start/finish/checkpoint come from the log.
+- `site/src/data/media-log.json` is the **public projection**: only `visibility: "public"` events. `add` events are included so the modal can show the Added date, but the Log timeline filters them out.
+- `admin/data/media-log.json` is the **master log**, including private events. It is gitignored and read only by the admin through `readTextFile`/`writeTextFile` (`MEDIA_LOG_MASTER` in `admin/src/lib/db.ts`). Never move it into `site/` or `shared/`.
+- Events: `add | start | checkpoint | finish | drop | shelve | resume | note`. `at` is local wall time (`YYYY-MM-DD` or `YYYY-MM-DDTHH:mm`) so grouping does not shift under a UTC build. `round` supports rewatches; a checkpoint carries optional `unit` (`episode|season|page|chapter|hour|percent`), `value`, and `total`. The per-type default unit lives in `shared/lib/mediaLog.ts`.
+- Visibility is **private by default**. The admin writes the master and the projection on every save; a public event reaches the site only after commit + rebuild.
+- Admin `/media` has `Library | Log` tabs. Quick capture logs an event, can set the date/time, and optionally nudges the item's status (`start/checkpoint/resume` → consuming, `finish` → finished, `drop`/`shelve` → dropped/shelved). The EditModal shows read-only history.
+- Site `/media-library` has `Library | Log` tabs; the Log tab and the item modal only ever see public events. The media library is `noindex`.
+- Private notes live in `admin/data/media-private.json` (gitignored), not under `site/static/media/`. The old `site/static/media/media-private.json` was removed because `static/` is served verbatim; it remains in git history and at the old URL until the next deploy/history rewrite.
 
 ## Coding Guidelines & Rules
 - **Svelte 5 Syntax**: Use runes (`$state`, `$derived`, `$props`, `$effect`) instead of Svelte 4 `export let` or `$:`.

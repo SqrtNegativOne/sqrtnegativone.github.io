@@ -7,18 +7,25 @@
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { getPosterUrl } from "$lib/utils";
-  import type { MediaItem } from "$shared/types";
-  
+  import { deriveMediaHistory, formatCheckpoint, formatLogDate, LOG_KIND_LABEL } from "$shared/lib/mediaLog";
+  import type { MediaItem, MediaLogEvent } from "$shared/types";
+  import logData from "../../../data/media-log.json";
+
   let { item, closeDetails, openFullPoster } = $props<{ item: MediaItem; closeDetails: () => void; openFullPoster?: (url: string) => void }>();
 
-  /** Formats a stored `YYYY-MM-DD` date without any timezone shifting. */
-  function formatDate(value: string | null | undefined): string {
-    if (!value) return '';
-    const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(value);
-    if (!match) return value;
-    const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
-    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-  }
+  // The projection only contains public events, but filter again so a private
+  // entry can never surface through the modal.
+  const itemLog = $derived(
+    (logData as unknown as MediaLogEvent[])
+      .filter((event) => event.visibility === 'public' && event.media_id === item.id)
+      .sort((a, b) => a.at.localeCompare(b.at))
+  );
+
+  const history = $derived(deriveMediaHistory(itemLog));
+  // `add` is shelf bookkeeping, not a diary entry worth repeating in the list,
+  // but its date is the item's "Added" date.
+  const addedAt = $derived(itemLog.find((event) => event.kind === 'add')?.at ?? null);
+  const diary = $derived(itemLog.filter((event) => event.kind !== 'add'));
 </script>
 
 
@@ -65,14 +72,34 @@
             uncertain={Boolean(item.uncertain)}
           />
         </div>
-        {#if item.creation_date || item.completion_date}
+        {#if addedAt || history.startedAt || history.finishedAt || history.lastCheckpoint}
           <div class="ml-modal-dates">
-            {#if item.creation_date}
-              <span>Added <span class="ml-date-value">{formatDate(item.creation_date)}</span></span>
+            {#if addedAt}
+              <span>Added <span class="ml-date-value">{formatLogDate(addedAt)}</span></span>
             {/if}
-            {#if item.completion_date}
-              <span>Finished <span class="ml-date-value">{formatDate(item.completion_date)}</span></span>
+            {#if history.startedAt}
+              <span>Started <span class="ml-date-value">{formatLogDate(history.startedAt)}</span></span>
             {/if}
+            {#if history.finishedAt}
+              <span>Finished <span class="ml-date-value">{formatLogDate(history.finishedAt)}</span></span>
+            {/if}
+            {#if history.lastCheckpoint && !history.finishedAt}
+              <span>{formatCheckpoint(history.lastCheckpoint)} <span class="ml-date-value">as of {formatLogDate(history.lastCheckpoint.at)}</span></span>
+            {/if}
+          </div>
+        {/if}
+        {#if diary.length > 0}
+          <div class="ml-modal-log">
+            {#each diary.slice(-5).reverse() as event (event.id)}
+              <div class="ml-modal-log-row">
+                <span class="ml-modal-log-date">{formatLogDate(event.at)}</span>
+                <span>
+                  {LOG_KIND_LABEL[event.kind]}{event.kind === 'checkpoint' ? ` · ${formatCheckpoint(event)}` : ''}
+                  {#if (event.round ?? 1) > 1} · Round {event.round}{/if}
+                  {#if event.note}<span class="ml-modal-log-note"> — {event.note}</span>{/if}
+                </span>
+              </div>
+            {/each}
           </div>
         {/if}
         {#if item.description}
@@ -248,6 +275,39 @@
   .ml-date-value {
     color: oklch(0.8622 0.0068 286.26);
     letter-spacing: 0.04em;
+  }
+
+  .ml-modal-log {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0 0 20px;
+    padding-top: 14px;
+    border-top: 1px solid oklch(1 0 0 / 0.08);
+    font-size: 13px;
+    line-height: 1.45;
+    color: oklch(0.8622 0.0068 286.26);
+  }
+
+  .ml-modal-log-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+
+  .ml-modal-log-date {
+    min-width: 82px;
+    flex-shrink: 0;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: oklch(0.5416 0.0154 285.87);
+  }
+
+  .ml-modal-log-note {
+    color: oklch(0.6363 0.0133 286.02);
+    font-style: italic;
   }
 
 

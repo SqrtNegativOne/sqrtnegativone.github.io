@@ -2,7 +2,8 @@
   import mediaProperties from '../../../../../site/static/media/media-properties.json';
   import { assetState } from '$lib/assetState.svelte';
   import { getPosterUrl } from '../../../../../shared/utils/getPosterUrl';
-  import type { MediaItem } from '../../../../../shared/types';
+  import { formatCheckpoint, formatLogDate, LOG_KIND_LABEL } from '../../../../../shared/lib/mediaLog';
+  import type { MediaItem, MediaLogEvent } from '../../../../../shared/types';
   import Modal from '$lib/Modal.svelte';
   import TagInput from '$lib/TagInput.svelte';
 
@@ -11,6 +12,7 @@
     isEditing,
     currentItem = $bindable(),
     existingItems = [],
+    history = [],
     isSearching,
     isSaving,
     dirty = false,
@@ -21,8 +23,11 @@
     handleSave,
     handleDelete,
     onOpenExisting,
-    onOpenPoster
+    onOpenPoster,
+    onOpenLog
   } = $props();
+
+  let logHistory = $derived((history ?? []) as MediaLogEvent[]);
 
   let titleInput: HTMLInputElement | undefined = $state();
   let titleFocused = $state(false);
@@ -197,7 +202,7 @@
                 </div>
               </section>
 
-              <!-- Progress & Rating -->
+              <!-- Rating & visibility -->
               <section class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div class="space-y-2">
@@ -211,32 +216,51 @@
                     <input id="media-rating" type="number" min="0" max="6" step="any" inputmode="decimal" name="rating" bind:value={currentItem.rating} class="input-field" placeholder="Unrated / 0-6" />
                   </div>
 
-                  <div class="space-y-2">
-                    <label for="media-current" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Progress / Total</label>
-                    <div class="flex space-x-2">
-                      <input id="media-current" type="number" name="current" bind:value={currentItem.current} class="input-field w-1/2" placeholder="Current" />
-                      <input id="media-total" type="number" name="total" bind:value={currentItem.total} class="input-field w-1/2" placeholder="Total" />
-                    </div>
-                  </div>
-
-                  <div class="space-y-2">
-                    <label for="media-completion-date" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Completion date <span class="text-[oklch(0.60_0.02_256.79)] font-normal">(optional)</span></label>
-                    <input id="media-completion-date" type="date" name="completion_date" bind:value={currentItem.completion_date} class="input-field [color-scheme:dark]" />
-                    {#if currentItem.creation_date}
-                      <p class="text-[11px] font-mono uppercase tracking-[0.12em] text-[oklch(0.60_0.02_256.79)]">Added {currentItem.creation_date}</p>
-                    {/if}
-                  </div>
-
-                  <label for="media-completed" class="flex items-center gap-3 cursor-pointer select-none">
-                    <input type="checkbox" id="media-completed" bind:checked={currentItem.completed} class="rounded border-zinc-700 text-blue-600 focus:ring-blue-500 bg-zinc-800" />
-                    <span class="text-sm text-[oklch(0.7107_0.0351_256.79)]">Completed</span>
-                  </label>
-
-                  <label for="media-hidden" class="flex items-center gap-3 cursor-pointer select-none">
+                  <label for="media-hidden" class="flex items-center gap-3 cursor-pointer select-none self-end pb-3">
                     <input type="checkbox" id="media-hidden" bind:checked={currentItem.hidden} class="rounded border-zinc-700 text-blue-600 focus:ring-blue-500 bg-zinc-800" />
                     <span class="text-sm text-[oklch(0.7107_0.0351_256.79)]">Hidden from public library</span>
                   </label>
                 </div>
+              </section>
+
+              <!-- History (derived from the media log) -->
+              <section class="space-y-3 rounded border border-[oklch(0.2739_0.0055_286.03)] bg-white/[0.02] p-4">
+                <div class="flex items-center justify-between gap-3">
+                  <h3 class="text-[11px] font-mono uppercase tracking-[0.16em] text-[oklch(0.7107_0.0351_256.79)]">History</h3>
+                  <button
+                    type="button"
+                    onclick={() => onOpenLog?.(currentItem.id)}
+                    class="text-xs text-blue-400 hover:text-blue-300 cursor-pointer"
+                  >
+                    Open log →
+                  </button>
+                </div>
+
+                {#if logHistory.length === 0}
+                  <p class="text-sm text-[oklch(0.60_0.02_256.79)]">No log entries yet. Dates and progress live in the Log tab.</p>
+                {:else}
+                  <ul class="space-y-2">
+                    {#each logHistory.slice(0, 6) as event (event.id)}
+                      <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm">
+                        <span class="w-24 shrink-0 font-mono text-[10px] uppercase tracking-[0.12em] text-[oklch(0.60_0.02_256.79)]">
+                          {formatLogDate(event.at)}
+                        </span>
+                        <span class="text-[oklch(0.8622_0.0068_286.26)]">
+                          {LOG_KIND_LABEL[event.kind]}{event.kind === 'checkpoint' ? ` · ${formatCheckpoint(event)}` : ''}
+                        </span>
+                        {#if (event.round ?? 1) > 1}
+                          <span class="rounded bg-white/5 px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)]">Round {event.round}</span>
+                        {/if}
+                        <span class="text-[10px] font-mono uppercase tracking-wider {event.visibility === 'public' ? 'text-emerald-400' : 'text-[oklch(0.5416_0.0154_285.87)]'}">
+                          {event.visibility === 'public' ? 'Public' : 'Private'}
+                        </span>
+                      </li>
+                    {/each}
+                  </ul>
+                  {#if logHistory.length > 6}
+                    <p class="text-[11px] font-mono uppercase tracking-[0.12em] text-[oklch(0.5416_0.0154_285.87)]">+{logHistory.length - 6} more in the log</p>
+                  {/if}
+                {/if}
               </section>
 
               <!-- Synopsis & Notes -->
@@ -254,9 +278,9 @@
               <!-- Private -->
               <section class="space-y-2 rounded border border-amber-500/20 bg-amber-500/[0.03] p-4">
                 <label for="media-private" class="flex justify-between items-end gap-3 text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">
-                  🔒 Encrypted
+                  Private (local only)
                 </label>
-                <textarea id="media-private" name="private_notes" bind:value={currentItem.private_notes} class="input-field min-h-[90px] resize-y border-amber-500/30 focus:border-amber-500 focus:ring-amber-500/20" placeholder="These notes are encrypted securely and never exposed publicly..."></textarea>
+                <textarea id="media-private" name="private_notes" bind:value={currentItem.private_notes} class="input-field min-h-[90px] resize-y border-amber-500/30 focus:border-amber-500 focus:ring-amber-500/20" placeholder="Stored in admin/data/media-private.json — never committed or served."></textarea>
               </section>
             </div>
 

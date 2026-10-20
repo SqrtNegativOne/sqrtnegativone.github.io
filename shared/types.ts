@@ -19,16 +19,60 @@ export interface MediaItem {
   description: string;
   notes?: string;
   poster_image: string;
+  /**
+   * Admin-only. Merged in from `admin/data/media-private.json` when the admin
+   * loads the library; never written to the public `media.json`.
+   */
   private_notes?: string;
   author?: string;
   publisher?: string;
   tags?: string[];
   hidden?: boolean;
   uncertain?: boolean;
-  /** ISO date (`YYYY-MM-DD`) the item was finished / consumed. */
-  completion_date?: string | null;
-  /** ISO date (`YYYY-MM-DD`) the item was added to the library. */
-  creation_date?: string | null;
+}
+
+/** What happened to a library item. `add` is written automatically. */
+export type MediaLogKind =
+  | 'add'
+  | 'start'
+  | 'checkpoint'
+  | 'finish'
+  | 'drop'
+  | 'shelve'
+  | 'resume'
+  | 'note';
+
+/** How a checkpoint is measured. Omitted for a bare "still going" mark. */
+export type MediaProgressUnit =
+  | 'episode'
+  | 'season'
+  | 'page'
+  | 'chapter'
+  | 'hour'
+  | 'percent';
+
+/**
+ * `private` events live only in `admin/data/media-log.json`. `public` events
+ * are projected into `site/src/data/media-log.json` for the website.
+ */
+export type MediaVisibility = 'private' | 'public';
+
+export interface MediaLogEvent {
+  id: string;
+  media_id: string;
+  kind: MediaLogKind;
+  /**
+   * Local wall-clock stamp, either `YYYY-MM-DD` or `YYYY-MM-DDTHH:mm`.
+   * Deliberately offset-free: grouping must not shift under a UTC build.
+   */
+  at: string;
+  /** Consumption pass; a rewatch/re-read is another pass. Defaults to 1. */
+  round?: number;
+  unit?: MediaProgressUnit | null;
+  value?: number;
+  total?: number;
+  note?: string;
+  visibility: MediaVisibility;
 }
 
 export interface PrivateNoteItem {

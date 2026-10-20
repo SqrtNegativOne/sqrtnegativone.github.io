@@ -645,6 +645,18 @@ pub fn run() {
                          blocked from msedgewebview2.exe (e.g. Windhawk)."
                     );
                 }
+
+                // `maximized: true` in tauri.conf.json makes WebView2 155 create
+                // the window with WS_MINIMIZE on Windows 11 25H2, so it never
+                // appears. Start normal and maximize once the event loop runs.
+                let handle = window.clone();
+                std::thread::spawn(move || {
+                    std::thread::sleep(std::time::Duration::from_millis(400));
+                    let _ = handle.show();
+                    let _ = handle.unminimize();
+                    let _ = handle.maximize();
+                    let _ = handle.set_focus();
+                });
             } else {
                 eprintln!("[admin] main webview window was not created");
             }

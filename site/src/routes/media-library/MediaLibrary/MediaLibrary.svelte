@@ -3,6 +3,7 @@
   import mediaProperties from "../../../../static/media/media-properties.json";
 
   import MediaModal from "./MediaModal.svelte";
+  import MediaLog from "./MediaLog.svelte";
   import FilterSort from "$shared/components/FilterSort.svelte";
   import MediaInfo from "$shared/components/MediaInfo.svelte";
   import MediaGallery from "$shared/components/MediaGallery.svelte";
@@ -14,10 +15,21 @@
   import { cubicOut } from "svelte/easing";
   
   import MediaCarousel from "./MediaCarousel.svelte";
-  import type { MediaItem } from "$shared/types";
+  import type { MediaItem, MediaLogEvent } from "$shared/types";
+  import logData from "../../../data/media-log.json";
   
   const typedMediaData = mediaData as unknown as MediaItem[];
   const visibleMediaData = typedMediaData.filter((item) => !item.hidden);
+
+  // Only public events ever reach this file; the filter is a second guard so a
+  // private entry can never render even if the projection is wrong. `add`
+  // events are passed through for the item modal's "Added" date; the timeline
+  // component filters them out.
+  const publicLog = (logData as unknown as MediaLogEvent[]).filter(
+    (event) => event.visibility === 'public'
+  );
+
+  let tab = $state<'library' | 'log'>('library');
 
   // Tags that actually exist across the visible library, used for the tag filter.
   const allTags = $derived(
@@ -100,34 +112,59 @@
     </div>
   </header>
 
-  <MediaCarousel title="Currently" items={carouselsData.consuming} {openDetails} />
-  
-  <MediaCarousel title="Greatest of All Time" items={carouselsData.goat} {openDetails} />
-
-  <div class="ml-filters-container">
-    <div class="ml-filters">
-      <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
-      <FilterSort bind:filters bind:sorts properties={filterProperties} />
-      <MediaInfo />
-      <MediaViewToggle bind:viewMode storageKey="ml-view-mode" />
-    </div>
+  <div class="ml-tabs">
+    <button
+      type="button"
+      class="ml-tab"
+      class:is-active={tab === 'library'}
+      aria-pressed={tab === 'library'}
+      onclick={() => tab = 'library'}
+    >
+      Library
+    </button>
+    <button
+      type="button"
+      class="ml-tab"
+      class:is-active={tab === 'log'}
+      aria-pressed={tab === 'log'}
+      onclick={() => tab = 'log'}
+    >
+      Log
+    </button>
   </div>
 
-  {#if viewMode === 'gallery'}
-    <MediaGallery groups={libraryGroups} {openDetails} title="Library" />
-  {:else}
-    <MediaTable
-      groups={libraryGroups}
-      {sorts}
-      toggleSort={handleToggleSort}
-      {openDetails}
-      {openFullPoster}
-      title="Library"
-    />
-  {/if}
+  {#if tab === 'library'}
+    <MediaCarousel title="Currently" items={carouselsData.consuming} {openDetails} />
+    
+    <MediaCarousel title="Greatest of All Time" items={carouselsData.goat} {openDetails} />
 
-  {#if visibleMediaData.length === 0}
-    <p class="ml-empty">Nothing here yet.</p>
+    <div class="ml-filters-container">
+      <div class="ml-filters">
+        <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
+        <FilterSort bind:filters bind:sorts properties={filterProperties} />
+        <MediaInfo />
+        <MediaViewToggle bind:viewMode storageKey="ml-view-mode" />
+      </div>
+    </div>
+
+    {#if viewMode === 'gallery'}
+      <MediaGallery groups={libraryGroups} {openDetails} title="Library" />
+    {:else}
+      <MediaTable
+        groups={libraryGroups}
+        {sorts}
+        toggleSort={handleToggleSort}
+        {openDetails}
+        {openFullPoster}
+        title="Library"
+      />
+    {/if}
+
+    {#if visibleMediaData.length === 0}
+      <p class="ml-empty">Nothing here yet.</p>
+    {/if}
+  {:else}
+    <MediaLog events={publicLog} media={visibleMediaData} {openDetails} />
   {/if}
 
   {#if activeItem}
@@ -182,6 +219,38 @@
 
 .ml-header-text {
   padding-right: 60px;
+}
+
+.ml-tabs {
+  display: flex;
+  gap: 28px;
+  margin: 4px 0 36px;
+  border-bottom: 1px solid oklch(1 0 0 / 0.08);
+}
+
+.ml-tab {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  margin-bottom: -1px;
+  padding: 0 0 12px;
+  color: oklch(0.5416 0.0154 285.87);
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.ml-tab:hover {
+  color: oklch(0.8622 0.0068 286.26);
+}
+
+.ml-tab.is-active {
+  color: oklch(0.9707 0.0027 286.35);
+  border-bottom-color: oklch(0.9707 0.0027 286.35);
 }
 
 .ml-title {
