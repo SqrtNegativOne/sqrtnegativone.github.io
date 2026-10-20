@@ -2756,5 +2756,23 @@
     "hidden": false,
     "uncertain": false,
     "creation_date": "2026-10-17"
+  },
+  {
+    "id": "the_chronicles_of_narnia_complete_7_book_collection",
+    "type": "book",
+    "rating": null,
+    "status": "finished",
+    "title": "The Chronicles of Narnia Complete 7-Book Collection",
+    "tagline": "",
+    "description": "",
+    "notes": "",
+    "private_notes": "",
+    "poster_image": "book_the_chronicles_of_narnia_complete_7_book_collection",
+    "tags": [],
+    "author": "C. S. Lewis",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": true,
+    "creation_date": "2026-10-20"
   }
 ]
