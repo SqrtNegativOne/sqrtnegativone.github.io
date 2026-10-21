@@ -123,10 +123,7 @@
       media={data.media || []}
       initialMediaId={logTargetId}
       onInitialConsumed={() => logTargetId = null}
-      onOpenItem={(item: MediaItem) => {
-        tab = 'library';
-        media.openEdit(item);
-      }}
+      onOpenItem={(item: MediaItem) => media.openEdit(item)}
     />
   {/if}
 </div>

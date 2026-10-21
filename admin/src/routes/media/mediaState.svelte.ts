@@ -6,6 +6,7 @@ import { toggleSort as toggleMediaSort } from '../../../../shared/lib/mediaLibra
 import { invalidateAll } from '$app/navigation';
 import { notificationState } from '$lib/notificationState.svelte';
 import { mediaLogState } from './mediaLogState.svelte';
+import { todayStamp } from '../../../../shared/lib/mediaLog';
 import type { MediaItem } from '../../../../shared/types';
 export type { MediaItem };
 
@@ -471,7 +472,7 @@ export class MediaState {
         this.currentItem.id = this.generateUniqueId(this.currentItem, items);
       }
 
-      const { id, type, rating, status, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain } = this.currentItem;
+      const { id, type, rating, status, added_at, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain } = this.currentItem;
       let poster_image = this.currentItem.poster_image;
 
       const rootRes = await ResultAsync.fromPromise(getRepoRoot(), (err) => typeof err === 'string' ? err : String(err));
@@ -541,7 +542,24 @@ export class MediaState {
       const parsedRating = typeof rating === 'number' && !isNaN(rating) ? rating : null;
       // `private_notes` deliberately never enters media.json: that file is
       // public. It is stored separately in admin/data/media-private.json.
-      const newItem: MediaItem = { id, type, rating: parsedRating, status, title, tagline, description, notes, poster_image, tags, author, publisher, hidden, uncertain: Boolean(uncertain) };
+      const newItem: MediaItem = {
+        id,
+        type,
+        rating: parsedRating,
+        status,
+        // When it entered the shelf is item metadata, not a log event.
+        added_at: isNew ? todayStamp() : added_at,
+        title,
+        tagline,
+        description,
+        notes,
+        poster_image,
+        tags,
+        author,
+        publisher,
+        hidden,
+        uncertain: Boolean(uncertain)
+      };
 
       if (isNew) {
         if (items.some(i => i.id === id)) {
@@ -579,10 +597,6 @@ export class MediaState {
         notificationState.error(this.errorMsg, { title: 'Save Private Notes Failed' });
         return;
       }
-
-      // A new item gets a private `add` event so the log knows it exists,
-      // without leaking the date onto the public site.
-      if (isNew) await mediaLogState.recordAdd(id);
 
       notificationState.success(`Saved "${newItem.title}" successfully!`, { title: 'Media Saved' });
       this.isModalOpen = false;

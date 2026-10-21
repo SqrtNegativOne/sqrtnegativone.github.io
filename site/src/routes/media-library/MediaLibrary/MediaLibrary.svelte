@@ -22,9 +22,7 @@
   const visibleMediaData = typedMediaData.filter((item) => !item.hidden);
 
   // Only public events ever reach this file; the filter is a second guard so a
-  // private entry can never render even if the projection is wrong. `add`
-  // events are passed through for the item modal's "Added" date; the timeline
-  // component filters them out.
+  // private entry can never render even if the projection is wrong.
   const publicLog = (logData as unknown as MediaLogEvent[]).filter(
     (event) => event.visibility === 'public'
   );

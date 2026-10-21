@@ -20,7 +20,7 @@
       shortcuts: [
         { keys: ['?'], label: 'Show / hide this cheat sheet' },
         { keys: ['/'], label: 'Focus the search bar' },
-        { keys: ['Ctrl', 'N'], label: 'Create a new item on this page' },
+        { keys: ['Ctrl', 'N'], label: 'Create a new item, or a log entry on the media log' },
         { keys: ['N'], label: 'Create a new item (when not typing)' },
         { keys: ['Esc'], label: 'Close the active dialog' }
       ]

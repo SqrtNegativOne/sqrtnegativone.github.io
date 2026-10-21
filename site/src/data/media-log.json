@@ -1,26 +1,5 @@
 [
   {
-    "id": "evt_add_anything_you_want",
-    "media_id": "anything_you_want",
-    "kind": "add",
-    "at": "2026-10-17",
-    "visibility": "public"
-  },
-  {
-    "id": "evt_add_how_to_live",
-    "media_id": "how_to_live",
-    "kind": "add",
-    "at": "2026-10-17",
-    "visibility": "public"
-  },
-  {
-    "id": "evt_add_how_to_win_friends_and_influence_people",
-    "media_id": "how_to_win_friends_and_influence_people",
-    "kind": "add",
-    "at": "2026-10-17",
-    "visibility": "public"
-  },
-  {
     "id": "evt_finish_z_a_t_o_i_love_the_world_and_everything_in_it",
     "media_id": "z_a_t_o_i_love_the_world_and_everything_in_it",
     "kind": "finish",
@@ -29,10 +8,11 @@
     "visibility": "public"
   },
   {
-    "id": "evt_add_the_chronicles_of_narnia_complete_7_book_collection",
-    "media_id": "the_chronicles_of_narnia_complete_7_book_collection",
-    "kind": "add",
-    "at": "2026-10-20",
-    "visibility": "public"
+    "id": "evt_08faaefefd20",
+    "media_id": "z_a_t_o_i_love_the_world_and_everything_in_it",
+    "kind": "start",
+    "at": "2026-10-16T15:54",
+    "visibility": "public",
+    "unit": "hour"
   }
 ]

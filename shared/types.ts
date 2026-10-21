@@ -14,6 +14,12 @@ export interface MediaItem {
   type: string;
   rating?: number | null;
   status: string;
+  /**
+   * When the item entered the library (`YYYY-MM-DD`). Item metadata, not a log
+   * event: "added" is not something you did *to* the work, and the log is a
+   * record of consumption.
+   */
+  added_at?: string;
   title: string;
   tagline: string;
   description: string;
@@ -31,16 +37,19 @@ export interface MediaItem {
   uncertain?: boolean;
 }
 
-/** What happened to a library item. `add` is written automatically. */
+/**
+ * What happened to a library item. Shelving it in the library is *not* an
+ * event: that date lives on the item as `added_at`. There is deliberately no
+ * bare `note` kind — every event can carry a `note` string, and "just a
+ * comment" belongs in the item's own `notes`.
+ */
 export type MediaLogKind =
-  | 'add'
   | 'start'
   | 'checkpoint'
   | 'finish'
   | 'drop'
   | 'shelve'
-  | 'resume'
-  | 'note';
+  | 'resume';
 
 /** How a checkpoint is measured. Omitted for a bare "still going" mark. */
 export type MediaProgressUnit =

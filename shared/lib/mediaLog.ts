@@ -1,19 +1,12 @@
-import type {
-  MediaItem,
-  MediaLogEvent,
-  MediaLogKind,
-  MediaProgressUnit
-} from '../types';
+import type { MediaLogEvent, MediaLogKind, MediaProgressUnit } from '../types';
 
 export const LOG_KIND_LABEL: Record<MediaLogKind, string> = {
-  add: 'Added',
   start: 'Started',
   checkpoint: 'Checkpoint',
   finish: 'Finished',
   drop: 'Dropped',
   shelve: 'Shelved',
-  resume: 'Resumed',
-  note: 'Note'
+  resume: 'Resumed'
 };
 
 export const PROGRESS_UNIT_LABEL: Record<MediaProgressUnit, string> = {
@@ -135,20 +128,6 @@ export function formatCheckpoint(event: MediaLogEvent): string {
   }
 }
 
-/** The verb phrase for an event kind; `checkpoint` supplies its own detail. */
-export function eventVerb(kind: MediaLogKind): string {
-  return LOG_KIND_LABEL[kind];
-}
-
-export function eventHeadline(event: MediaLogEvent, title: string): string {
-  if (event.kind === 'checkpoint') return formatCheckpoint(event);
-  return `${LOG_KIND_LABEL[event.kind]} ${title}`;
-}
-
-export function isRepeatRound(event: MediaLogEvent): boolean {
-  return (event.round ?? 1) > 1;
-}
-
 /** The status an event should nudge the library item toward, if any. */
 export function statusForEvent(kind: MediaLogKind): string | null {
   switch (kind) {
@@ -165,6 +144,25 @@ export function statusForEvent(kind: MediaLogKind): string | null {
     default:
       return null;
   }
+}
+
+/**
+ * Everything after the verb: `Episode 4 of 8`, `12h / 20h`, `Round 2`.
+ *
+ * A `finish` may carry the same optional snapshot as a checkpoint, so a session
+ * that also ended the work can be one entry instead of two.
+ */
+export function eventDetail(event: MediaLogEvent): string {
+  const parts: string[] = [];
+  if (event.value !== undefined && event.value !== null) parts.push(formatCheckpoint(event));
+  if ((event.round ?? 1) > 1) parts.push(`Round ${event.round}`);
+  return parts.join(' · ');
+}
+
+/** `Finished · Episode 12 of 12`, `Checkpoint · Page 40`, `Started`. */
+export function eventLabel(event: MediaLogEvent): string {
+  const detail = eventDetail(event);
+  return detail ? `${LOG_KIND_LABEL[event.kind]} · ${detail}` : LOG_KIND_LABEL[event.kind];
 }
 
 export interface MediaHistory {
@@ -205,12 +203,9 @@ export function deriveMediaHistory(events: MediaLogEvent[]): MediaHistory {
   };
 }
 
-export interface LogMonthGroup {
-  /** `YYYY-MM`; also the stable key. */
-  key: string;
-  label: string;
-  events: MediaLogEvent[];
-}
+// ---------------------------------------------------------------------------
+// Calendar
+// ---------------------------------------------------------------------------
 
 const MONTH_NAMES = [
   'January',
@@ -227,36 +222,135 @@ const MONTH_NAMES = [
   'December'
 ];
 
-/** Groups newest-first events into calendar months, newest month first. */
-export function groupEventsByMonth(events: MediaLogEvent[]): LogMonthGroup[] {
-  const groups = new Map<string, LogMonthGroup>();
+/** Sunday-first, matching the calendar grid. */
+export const WEEKDAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as const;
 
-  for (const event of sortEventsNewestFirst(events)) {
-    const key = event.at.slice(0, 7);
-    let group = groups.get(key);
-    if (!group) {
-      const [year, month] = key.split('-').map(Number);
-      group = {
-        key,
-        label: `${MONTH_NAMES[(month || 1) - 1]} ${year}`,
-        events: []
-      };
-      groups.set(key, group);
-    }
-    group.events.push(event);
-  }
-
-  return [...groups.values()];
+export function monthLabel(year: number, month: number): string {
+  const normalised = ((month % 12) + 12) % 12;
+  return `${MONTH_NAMES[normalised]} ${year}`;
 }
 
-/** Joins events to their library items and drops orphaned ones. */
-export function attachMedia<T extends MediaLogEvent>(
-  events: T[],
-  media: MediaItem[]
-): { event: T; item: MediaItem }[] {
-  const byId = new Map(media.map((item) => [item.id, item]));
-  return events.flatMap((event) => {
-    const item = byId.get(event.media_id);
-    return item ? [{ event, item }] : [];
+/** `YYYY-MM-DD` of a stamp, without going through `Date`. */
+export function dayKeyOf(at: string | null | undefined): string {
+  return (at ?? '').slice(0, 10);
+}
+
+/** `Tuesday, 20 October 2026`. */
+export function formatDayLong(key: string): string {
+  const date = parseLogDate(key);
+  if (!date) return key;
+  return date.toLocaleDateString('en-GB', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
   });
+}
+
+/** Everything logged against one item on one day. */
+export interface CalendarMediaEntry {
+  mediaId: string;
+  /** Oldest first. */
+  events: MediaLogEvent[];
+  /** The last thing that happened to it that day. */
+  latest: MediaLogEvent;
+}
+
+export interface CalendarDay {
+  /** `YYYY-MM-DD`; also the stable key. */
+  key: string;
+  /** Day of the month, 1–31. */
+  day: number;
+  /** False for the leading/trailing days borrowed from the neighbouring months. */
+  inMonth: boolean;
+  isToday: boolean;
+  media: CalendarMediaEntry[];
+}
+
+export interface CalendarMonth {
+  year: number;
+  /** Zero-based, like `Date#getMonth`. */
+  month: number;
+  label: string;
+  weeks: CalendarDay[][];
+}
+
+/**
+ * Groups events by calendar day, then by media, so a cell renders one poster per
+ * title no matter how many checkpoints were logged that day.
+ */
+export function groupEventsByDay(events: MediaLogEvent[]): Map<string, CalendarMediaEntry[]> {
+  const perDay = new Map<string, Map<string, MediaLogEvent[]>>();
+
+  for (const event of sortEventsOldestFirst(events)) {
+    const key = dayKeyOf(event.at);
+    let perMedia = perDay.get(key);
+    if (!perMedia) {
+      perMedia = new Map();
+      perDay.set(key, perMedia);
+    }
+    const list = perMedia.get(event.media_id);
+    if (list) list.push(event);
+    else perMedia.set(event.media_id, [event]);
+  }
+
+  const grouped = new Map<string, CalendarMediaEntry[]>();
+  for (const [key, perMedia] of perDay) {
+    const entries = [...perMedia].map(([mediaId, list]) => ({
+      mediaId,
+      events: list,
+      latest: list[list.length - 1]
+    }));
+    // Chronological within the day: the cell reads left to right in the order
+    // things were logged.
+    entries.sort(
+      (a, b) => logTimestamp(a.events[0].at) - logTimestamp(b.events[0].at) ||
+        a.mediaId.localeCompare(b.mediaId)
+    );
+    grouped.set(key, entries);
+  }
+
+  return grouped;
+}
+
+/**
+ * Builds a Sunday-first month grid. `todayKey` is passed in rather than read
+ * from the clock so a prerendered page and its hydrated copy agree.
+ */
+export function buildCalendarMonth(
+  year: number,
+  month: number,
+  events: MediaLogEvent[],
+  todayKey = ''
+): CalendarMonth {
+  const byDay = groupEventsByDay(events);
+  const firstOfMonth = new Date(year, month, 1);
+  const offset = firstOfMonth.getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const weekCount = Math.ceil((offset + daysInMonth) / 7);
+
+  const weeks: CalendarDay[][] = [];
+  for (let w = 0; w < weekCount; w++) {
+    const week: CalendarDay[] = [];
+    for (let d = 0; d < 7; d++) {
+      const date = new Date(year, month, 1 - offset + w * 7 + d);
+      const key = todayStamp(date);
+      week.push({
+        key,
+        day: date.getDate(),
+        inMonth: date.getMonth() === month && date.getFullYear() === year,
+        isToday: key === todayKey,
+        media: byDay.get(key) ?? []
+      });
+    }
+    weeks.push(week);
+  }
+
+  return { year, month, label: monthLabel(year, month), weeks };
+}
+
+/** Steps `delta` months from a `(year, month)` pair, normalising the year. */
+export function shiftMonth(year: number, month: number, delta: number): { year: number; month: number } {
+  const date = new Date(year, month + delta, 1);
+  return { year: date.getFullYear(), month: date.getMonth() };
 }

@@ -7,7 +7,7 @@
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   import { getPosterUrl } from "$lib/utils";
-  import { deriveMediaHistory, formatCheckpoint, formatLogDate, LOG_KIND_LABEL } from "$shared/lib/mediaLog";
+  import { deriveMediaHistory, eventLabel, formatCheckpoint, formatLogDate } from "$shared/lib/mediaLog";
   import type { MediaItem, MediaLogEvent } from "$shared/types";
   import logData from "../../../data/media-log.json";
 
@@ -22,10 +22,10 @@
   );
 
   const history = $derived(deriveMediaHistory(itemLog));
-  // `add` is shelf bookkeeping, not a diary entry worth repeating in the list,
-  // but its date is the item's "Added" date.
-  const addedAt = $derived(itemLog.find((event) => event.kind === 'add')?.at ?? null);
-  const diary = $derived(itemLog.filter((event) => event.kind !== 'add'));
+  // When the item entered the library lives on the item itself; the log only
+  // records what was done with it.
+  const addedAt = $derived(item.added_at ?? null);
+  const diary = $derived(itemLog);
 </script>
 
 
@@ -94,8 +94,7 @@
               <div class="ml-modal-log-row">
                 <span class="ml-modal-log-date">{formatLogDate(event.at)}</span>
                 <span>
-                  {LOG_KIND_LABEL[event.kind]}{event.kind === 'checkpoint' ? ` · ${formatCheckpoint(event)}` : ''}
-                  {#if (event.round ?? 1) > 1} · Round {event.round}{/if}
+                  {eventLabel(event)}
                   {#if event.note}<span class="ml-modal-log-note"> — {event.note}</span>{/if}
                 </span>
               </div>

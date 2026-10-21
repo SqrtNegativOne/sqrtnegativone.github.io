@@ -10,13 +10,11 @@ import type {
 } from '../../../../shared/types';
 import {
   eventsForMedia,
-  groupEventsByMonth,
   localLogStamp,
   newLogEventId,
   publicEvents,
   sortEventsNewestFirst,
-  statusForEvent,
-  todayStamp
+  statusForEvent
 } from '../../../../shared/lib/mediaLog';
 
 export interface NewLogEvent {
@@ -31,6 +29,31 @@ export interface NewLogEvent {
   visibility?: MediaVisibility;
   /** Move the library item's status to match the event. Defaults to true. */
   updateStatus?: boolean;
+}
+
+/** The consumption kinds can all carry a round and an optional snapshot. */
+const PROGRESS_KINDS = new Set<MediaLogKind>(['start', 'checkpoint', 'finish']);
+
+function buildEvent(id: string, input: NewLogEvent): MediaLogEvent {
+  const event: MediaLogEvent = {
+    id,
+    media_id: input.media_id,
+    kind: input.kind,
+    at: input.at?.trim() || localLogStamp(),
+    visibility: input.visibility ?? 'private'
+  };
+
+  if (input.round && input.round > 1) event.round = input.round;
+  // `finish` and `start` accept the same snapshot as a checkpoint, so a session
+  // that also began or ended the work does not need a second entry.
+  if (PROGRESS_KINDS.has(input.kind)) {
+    if (input.unit) event.unit = input.unit;
+    if (typeof input.value === 'number' && Number.isFinite(input.value)) event.value = input.value;
+    if (typeof input.total === 'number' && Number.isFinite(input.total)) event.total = input.total;
+  }
+  if (input.note?.trim()) event.note = input.note.trim();
+
+  return event;
 }
 
 /**
@@ -49,10 +72,6 @@ class MediaLogState {
 
   get publicEvents(): MediaLogEvent[] {
     return publicEvents(this.events);
-  }
-
-  get grouped(): ReturnType<typeof groupEventsByMonth> {
-    return groupEventsByMonth(this.events);
   }
 
   groupFor(mediaId: string) {
@@ -108,22 +127,7 @@ class MediaLogState {
   async addEvent(input: NewLogEvent): Promise<boolean> {
     await this.load();
 
-    const event: MediaLogEvent = {
-      id: newLogEventId(),
-      media_id: input.media_id,
-      kind: input.kind,
-      at: input.at?.trim() || localLogStamp(),
-      visibility: input.visibility ?? 'private'
-    };
-
-    if (input.round && input.round > 1) event.round = input.round;
-    if (input.kind === 'checkpoint') {
-      if (input.unit) event.unit = input.unit;
-      if (typeof input.value === 'number' && Number.isFinite(input.value)) event.value = input.value;
-      if (typeof input.total === 'number' && Number.isFinite(input.total)) event.total = input.total;
-    }
-    if (input.note?.trim()) event.note = input.note.trim();
-
+    const event = buildEvent(newLogEventId(), input);
     if (!(await this.persist([...this.events, event]))) return false;
 
     if (input.updateStatus !== false) await this.nudgeStatus(event);
@@ -131,19 +135,21 @@ class MediaLogState {
     return true;
   }
 
-  /** Writes a private `add` event for a brand-new library item. */
-  async recordAdd(mediaId: string): Promise<void> {
+  /** Rewrites one entry in place; the id and position in the file are kept. */
+  async updateEvent(id: string, input: NewLogEvent): Promise<boolean> {
     await this.load();
-    if (this.events.some((event) => event.media_id === mediaId && event.kind === 'add')) return;
 
-    const event: MediaLogEvent = {
-      id: newLogEventId(),
-      media_id: mediaId,
-      kind: 'add',
-      at: todayStamp(),
-      visibility: 'private'
-    };
-    await this.persist([...this.events, event]);
+    const index = this.events.findIndex((event) => event.id === id);
+    if (index === -1) return false;
+
+    const event = buildEvent(id, input);
+    const next = [...this.events];
+    next[index] = event;
+    if (!(await this.persist(next))) return false;
+
+    if (input.updateStatus !== false) await this.nudgeStatus(event);
+    notificationState.success('Entry updated.', { title: 'Media Log' });
+    return true;
   }
 
   async setVisibility(id: string, visibility: MediaVisibility): Promise<boolean> {

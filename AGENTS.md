@@ -19,14 +19,14 @@ Each app owns its own `package.json`, `bun.lock`, `svelte.config.js`, `vite.conf
 - **Package Manager**: **Bun**. Don't use npm.
 
 ## Repository Structure
-- `shared/components/` — `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, `NowBook`, and the media-library components (`MediaGallery`, `MediaGalleryCard`, `MediaGroupHeading`, `MediaTable`, `MediaViewToggle`, `FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
+- `shared/components/` — `Seo`, `AsciiBackground`, `NotFound`, `MenuOverlay`, `NowBook`, and the media-library components (`MediaGallery`, `MediaGalleryCard`, `MediaGroupHeading`, `MediaTable`, `MediaViewToggle`, `MediaCalendar`, `FilterSort`, `LibraryRow`, `RatingChart`, `StatusBadge`, `TypeBadge`).
   - The grouped gallery/table views live in `shared/` so the site and admin render the same media UI; each page owns only its filters, modals, and data loading.
   - `Seo.svelte` takes a `base` prop (defaults to `https://sqrt.fyi`; cv passes `https://cv.sqrt.fyi`).
   - `MenuOverlay.svelte` takes an `items` prop; each app defines its own `NAV_ITEMS` and passes them in.
   - `NowBook.svelte` is the bookmark-tab selector used by both `/now` pages; it takes pre-rendered HTML so each app keeps its own Markdown renderer.
 - `shared/lib/arcs.ts` — the `Arc` model, date parsing, ongoing filtering, and date formatting for `/now`.
 - `shared/lib/mediaLibrary.ts` — `MediaViewMode`, `groupMediaByType()` (groups library items by `type` in `media-properties.json` order; both apps use it for their default grouped views, with groups collapsed until expanded), and `toggleSort()` for sortable table headers.
-- `shared/lib/mediaLog.ts` — event model helpers for the media log: date parsing/formatting in local wall time, `checkpoint` formatting, history derivation, month grouping, and the per-type default progress unit.
+- `shared/lib/mediaLog.ts` — event model helpers for the media log: date parsing/formatting in local wall time, `checkpoint` formatting, history derivation, the calendar grid builder, and the per-type default progress unit.
 - `shared/data/now.json` — the cross-app arc data consumed by both the site and cv `/now` pages (and the admin app).
 - `site/src/routes/` — `/` (client-side redirect stub to `cv.sqrt.fyi`), `/main` (unlisted, noindex, no global menu — uses a self-hosted pixel font), `/blog`, `/blog-afterdark`, `/feed.xml`, `/sitemap.xml`, `/microblog`, `/now`, `/questions`, `/questions.md`, `/media-library`, `/contact`, `/colophon`.
 - `site/src/routes/api/contact/+server.ts` — non-prerendered `POST` endpoint behind the `/contact` form; writes to the D1 `DB` binding.
@@ -72,13 +72,16 @@ All commands use `bun` and run **inside `site/` or `cv/`**.
 - The admin `/now` page edits the same file through `readData('now')` / `writeData('now', …)`; keep its validation aligned with the model (valid dates, end ≥ start, at least one audience, non-empty Markdown description).
 
 ## Media Library & Log
-- `site/static/media/media.json` is the public shelf: metadata, rating, status, notes, hidden. It is served at `/media/media.json` and imported into the client bundle, so **never store private data there**. Dates are no longer stored on items; start/finish/checkpoint come from the log.
-- `site/src/data/media-log.json` is the **public projection**: only `visibility: "public"` events. `add` events are included so the modal can show the Added date, but the Log timeline filters them out.
+- `site/static/media/media.json` is the public shelf: metadata, rating, status, notes, hidden, and `added_at`. It is served at `/media/media.json` and imported into the client bundle, so **never store private data there**. Consumption dates (start/finish/checkpoint) are not stored on items; they come from the log.
+- `added_at` (`YYYY-MM-DD`) is **item metadata, not a log event**: it records when the item entered the library. The log deliberately has no `add` kind — “added” is not something you did to the work.
+- `site/src/data/media-log.json` is the **public projection**: only `visibility: "public"` events.
 - `admin/data/media-log.json` is the **master log**, including private events. It is gitignored and read only by the admin through `readTextFile`/`writeTextFile` (`MEDIA_LOG_MASTER` in `admin/src/lib/db.ts`). Never move it into `site/` or `shared/`.
-- Events: `add | start | checkpoint | finish | drop | shelve | resume | note`. `at` is local wall time (`YYYY-MM-DD` or `YYYY-MM-DDTHH:mm`) so grouping does not shift under a UTC build. `round` supports rewatches; a checkpoint carries optional `unit` (`episode|season|page|chapter|hour|percent`), `value`, and `total`. The per-type default unit lives in `shared/lib/mediaLog.ts`.
+- Events: `start | checkpoint | finish | drop | shelve | resume | note`. `at` is local wall time (`YYYY-MM-DD` or `YYYY-MM-DDTHH:mm`) so grouping does not shift under a UTC build. `round` supports rewatches; a `checkpoint` **or a `finish`** carries optional `unit` (`episode|season|page|chapter|hour|percent`), `value`, and `total`, so “played and finished today” is one entry (`Finished · Episode 12 of 12`). The per-type default unit and the calendar grid builder live in `shared/lib/mediaLog.ts`.
+- Personal writing belongs on the item: `description` is the generated synopsis, `notes` is the real writeup. A log event's optional `note` is only a **session** remark (the admin labels it “Session note”).
 - Visibility is **private by default**. The admin writes the master and the projection on every save; a public event reaches the site only after commit + rebuild.
-- Admin `/media` has `Library | Log` tabs. Quick capture logs an event, can set the date/time, and optionally nudges the item's status (`start/checkpoint/resume` → consuming, `finish` → finished, `drop`/`shelve` → dropped/shelved). The EditModal shows read-only history.
-- Site `/media-library` has `Library | Log` tabs; the Log tab and the item modal only ever see public events. The media library is `noindex`.
+- The log is a **calendar**, not a timeline. `shared/components/MediaCalendar.svelte` renders a Sunday-first month grid where each day shows one poster per title (up to three, then `+N`); the two apps only supply the surrounding controls. Clicking a cell selects that date, clicking a poster selects the date and that title. Days after today are inert and the next-month arrow stops at the current month; navigating backwards has no bound. Today is marked with four gold corner ticks; the selected day uses the blue outline.
+- Admin `/media` has `Library | Log` tabs. The Log tab is only the calendar: a cell opens the capture modal for that date, a poster opens the media editor, and **Ctrl+N** opens the capture modal dated today. Per-entry visibility and deletion live in the editor's History list, so the calendar itself stays read-only.
+- Site `/media-library` has `Library | Log` tabs; the Log tab is the same calendar restricted to public events (cells inert, posters open the item modal). The item modal only ever sees public events. The media library is `noindex`.
 - Private notes live in `admin/data/media-private.json` (gitignored), not under `site/static/media/`. The old `site/static/media/media-private.json` was removed because `static/` is served verbatim; it remains in git history and at the old URL until the next deploy/history rewrite.
 
 ## Coding Guidelines & Rules

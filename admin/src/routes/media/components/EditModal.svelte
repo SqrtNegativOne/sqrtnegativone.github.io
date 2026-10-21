@@ -2,10 +2,11 @@
   import mediaProperties from '../../../../../site/static/media/media-properties.json';
   import { assetState } from '$lib/assetState.svelte';
   import { getPosterUrl } from '../../../../../shared/utils/getPosterUrl';
-  import { formatCheckpoint, formatLogDate, LOG_KIND_LABEL } from '../../../../../shared/lib/mediaLog';
+  import { eventLabel, formatLogDate } from '../../../../../shared/lib/mediaLog';
   import type { MediaItem, MediaLogEvent } from '../../../../../shared/types';
   import Modal from '$lib/Modal.svelte';
   import TagInput from '$lib/TagInput.svelte';
+  import { mediaLogState } from '../mediaLogState.svelte';
 
   let {
     isModalOpen = $bindable(),
@@ -88,6 +89,17 @@
     if (p.startsWith('data:') || p.startsWith('http') || p.startsWith('/')) return assetState.resolve(p);
     return assetState.resolve(getPosterUrl(p));
   });
+
+  /** The calendar is read-only, so entry management lives in this history list. */
+  async function toggleEntryVisibility(event: MediaLogEvent) {
+    const next = event.visibility === 'public' ? 'private' : 'public';
+    await mediaLogState.setVisibility(event.id, next);
+  }
+
+  async function removeEntry(event: MediaLogEvent) {
+    if (!confirm('Delete this log entry?')) return;
+    await mediaLogState.removeEvent(event.id);
+  }
 </script>
 
 <Modal
@@ -232,34 +244,49 @@
                     onclick={() => onOpenLog?.(currentItem.id)}
                     class="text-xs text-blue-400 hover:text-blue-300 cursor-pointer"
                   >
-                    Open log →
+                    Log an entry →
                   </button>
                 </div>
 
+                {#if currentItem.added_at}
+                  <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-[oklch(0.5416_0.0154_285.87)]">
+                    Added <span class="text-[oklch(0.7107_0.0351_256.79)]">{formatLogDate(currentItem.added_at)}</span>
+                  </p>
+                {/if}
+
                 {#if logHistory.length === 0}
-                  <p class="text-sm text-[oklch(0.60_0.02_256.79)]">No log entries yet. Dates and progress live in the Log tab.</p>
+                  <p class="text-sm text-[oklch(0.60_0.02_256.79)]">Nothing logged yet.</p>
                 {:else}
                   <ul class="space-y-2">
-                    {#each logHistory.slice(0, 6) as event (event.id)}
-                      <li class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm">
+                    {#each logHistory as event (event.id)}
+                      <li class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
                         <span class="w-24 shrink-0 font-mono text-[10px] uppercase tracking-[0.12em] text-[oklch(0.60_0.02_256.79)]">
                           {formatLogDate(event.at)}
                         </span>
-                        <span class="text-[oklch(0.8622_0.0068_286.26)]">
-                          {LOG_KIND_LABEL[event.kind]}{event.kind === 'checkpoint' ? ` · ${formatCheckpoint(event)}` : ''}
+                        <span class="min-w-0 flex-1 text-[oklch(0.8622_0.0068_286.26)]">
+                          {eventLabel(event)}
                         </span>
-                        {#if (event.round ?? 1) > 1}
-                          <span class="rounded bg-white/5 px-1.5 py-0.5 text-[10px] font-mono uppercase tracking-wider text-[oklch(0.7107_0.0351_256.79)]">Round {event.round}</span>
-                        {/if}
-                        <span class="text-[10px] font-mono uppercase tracking-wider {event.visibility === 'public' ? 'text-emerald-400' : 'text-[oklch(0.5416_0.0154_285.87)]'}">
+                        <button
+                          type="button"
+                          onclick={() => toggleEntryVisibility(event)}
+                          class="rounded border px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider transition-colors {event.visibility === 'public'
+                            ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
+                            : 'border-[oklch(0.2739_0.0055_286.03)] text-[oklch(0.7107_0.0351_256.79)] hover:bg-white/5'}"
+                          title={event.visibility === 'public' ? 'Visible on the site; click to make private' : 'Private; click to publish to the site'}
+                        >
                           {event.visibility === 'public' ? 'Public' : 'Private'}
-                        </span>
+                        </button>
+                        <button
+                          type="button"
+                          onclick={() => removeEntry(event)}
+                          class="text-[10px] font-mono uppercase tracking-wider text-red-400/70 transition-colors hover:text-red-400"
+                          aria-label="Delete log entry"
+                        >
+                          Delete
+                        </button>
                       </li>
                     {/each}
                   </ul>
-                  {#if logHistory.length > 6}
-                    <p class="text-[11px] font-mono uppercase tracking-[0.12em] text-[oklch(0.5416_0.0154_285.87)]">+{logHistory.length - 6} more in the log</p>
-                  {/if}
                 {/if}
               </section>
 
