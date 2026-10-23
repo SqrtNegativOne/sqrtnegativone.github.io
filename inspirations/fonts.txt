@@ -5,7 +5,6 @@ how it's used: https://strange.website/about/
 https://github.com/szabadkai/c64-keyboard-font/
 
 https://aresluna.org/the-hardest-working-font-in-manhattan/
-
 https://aresluna.org/the-hardest-working-font-in-manhattan/recreations/
 
 # Pixel art fonts

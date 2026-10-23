@@ -147,6 +147,73 @@ export function statusForEvent(kind: MediaLogKind): string | null {
 }
 
 /**
+ * For a given log kind, the valid shelf statuses a media item can have in the
+ * media file.
+ *
+ * - `finish`: Finished or Rewishlist (already consumed; either done or queued to consume again)
+ * - `drop`: Dropped
+ * - `shelve`: Shelved
+ * - `start` | `checkpoint` | `resume`: Consuming
+ */
+export function validStatusesForKind(kind: MediaLogKind): string[] {
+  switch (kind) {
+    case 'finish':
+      return ['finished', 'rewishlist'];
+    case 'drop':
+      return ['dropped'];
+    case 'shelve':
+      return ['shelved'];
+    case 'start':
+    case 'checkpoint':
+    case 'resume':
+      return ['consuming'];
+    default:
+      return [];
+  }
+}
+
+/**
+ * Given an item's log events, returns the valid shelf statuses for that item in the media file.
+ *
+ * If the item has log history, the valid statuses are governed by the most recent
+ * consumption boundary:
+ * - finished in log: `finished`, `rewishlist`
+ * - dropped in log: `dropped`
+ * - shelved in log: `shelved`
+ * - active (started/checkpoint/resumed): `consuming`
+ *
+ * If there is no log history:
+ * - If the item already has a consumption status (e.g. legacy items before the log existed),
+ *   preserve that lifecycle tier (e.g. finished -> `finished`, `rewishlist`).
+ * - Otherwise (backlog), valid statuses are `wishlist`, `next up`, `waiting for`.
+ */
+export function validStatusesForMedia(events: MediaLogEvent[], currentStatus?: string): string[] {
+  const sorted = sortEventsOldestFirst(events);
+  const lastBoundary = [...sorted]
+    .reverse()
+    .find((event) => ['start', 'checkpoint', 'finish', 'drop', 'shelve', 'resume'].includes(event.kind));
+
+  if (lastBoundary) {
+    return validStatusesForKind(lastBoundary.kind);
+  }
+
+  if (currentStatus === 'finished' || currentStatus === 'rewishlist') {
+    return ['finished', 'rewishlist'];
+  }
+  if (currentStatus === 'dropped') {
+    return ['dropped'];
+  }
+  if (currentStatus === 'shelved') {
+    return ['shelved'];
+  }
+  if (currentStatus === 'consuming') {
+    return ['consuming'];
+  }
+
+  return ['wishlist', 'next up', 'waiting for'];
+}
+
+/**
  * Everything after the verb: `Episode 4 of 8`, `12h / 20h`, `Round 2`.
  *
  * A `finish` may carry the same optional snapshot as a checkpoint, so a session

@@ -25,7 +25,8 @@
   // When the item entered the library lives on the item itself; the log only
   // records what was done with it.
   const addedAt = $derived(item.added_at ?? null);
-  const diary = $derived(itemLog);
+  const diary = $derived(itemLog.filter((e) => e.kind !== 'start' && e.kind !== 'finish'));
+  const visibleTags = $derived((item.tags || []).filter((t) => !t.startsWith('meta')));
 </script>
 
 
@@ -72,16 +73,17 @@
             uncertain={Boolean(item.uncertain)}
           />
         </div>
-        {#if addedAt || history.startedAt || history.finishedAt || history.lastCheckpoint}
+        {#if visibleTags.length > 0}
+          <div class="ml-modal-tags">
+            {#each visibleTags as tag (tag)}
+              <span class="ml-modal-tag">#{tag}</span>
+            {/each}
+          </div>
+        {/if}
+        {#if addedAt || (history.lastCheckpoint && !history.finishedAt)}
           <div class="ml-modal-dates">
             {#if addedAt}
               <span>Added <span class="ml-date-value">{formatLogDate(addedAt)}</span></span>
-            {/if}
-            {#if history.startedAt}
-              <span>Started <span class="ml-date-value">{formatLogDate(history.startedAt)}</span></span>
-            {/if}
-            {#if history.finishedAt}
-              <span>Finished <span class="ml-date-value">{formatLogDate(history.finishedAt)}</span></span>
             {/if}
             {#if history.lastCheckpoint && !history.finishedAt}
               <span>{formatCheckpoint(history.lastCheckpoint)} <span class="ml-date-value">as of {formatLogDate(history.lastCheckpoint.at)}</span></span>
@@ -167,12 +169,11 @@
     gap: 32px;
   }
 
-  /* Keep the poster pinned to the vertical centre of the visible modal while
+  /* Keep the poster pinned to the top of the visible modal while
      the description/notes column scrolls beside it. */
   .ml-modal-poster-sticky {
     position: sticky;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
     align-self: start;
   }
 
@@ -240,6 +241,24 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .ml-modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 16px;
+  }
+
+  .ml-modal-tag {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    background: oklch(1 0 0 / 0.06);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    color: oklch(0.785 0.0112 286.14);
+    letter-spacing: 0.02em;
   }
 
   .ml-modal-description {

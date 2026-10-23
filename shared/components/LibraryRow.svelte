@@ -8,6 +8,10 @@
   import type { MediaItem } from "../types";
   
   let { item, openDetails, openFullPoster, resolveAsset = (url: string) => url } = $props<{ item: MediaItem | Record<string, unknown>; openDetails: (item: any) => void; openFullPoster?: (url: string) => void; resolveAsset?: (url: string) => string }>();
+
+  const visibleTags = $derived(
+    ((item as MediaItem).tags || []).filter((t) => !t.startsWith('meta'))
+  );
 </script>
 
 
@@ -35,6 +39,13 @@
       <StatusBadge status={item.status} />
       {#if item.hidden}
         <span class="ml-hidden-badge">Hidden</span>
+      {/if}
+      {#if visibleTags.length > 0}
+        <span class="ml-row-tags">
+          {#each visibleTags as tag (tag)}
+            <span class="ml-row-tag">#{tag}</span>
+          {/each}
+        </span>
       {/if}
     </span>
     {#if item.author || item.publisher || item.tagline || item.notes}
@@ -121,6 +132,24 @@
     color: oklch(0.82 0.14 85);
     background: oklch(0.82 0.14 85 / 0.12);
     border: 1px solid oklch(0.82 0.14 85 / 0.25);
+  }
+
+  .ml-row-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .ml-row-tag {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: oklch(1 0 0 / 0.07);
+    border: 1px solid oklch(1 0 0 / 0.1);
+    color: oklch(0.785 0.0112 286.14);
+    letter-spacing: 0.02em;
   }
 
 

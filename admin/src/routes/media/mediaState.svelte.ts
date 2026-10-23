@@ -1,12 +1,13 @@
 import { Result, ResultAsync, err, ok } from 'neverthrow';
 import { invoke } from '@tauri-apps/api/core';
 import { getRepoRoot, readData, writeData } from '$lib/db';
+import { assetState } from '$lib/assetState.svelte';
 import { filterAndSortItems } from '$lib/searchUtils';
 import { toggleSort as toggleMediaSort } from '../../../../shared/lib/mediaLibrary';
 import { invalidateAll } from '$app/navigation';
 import { notificationState } from '$lib/notificationState.svelte';
 import { mediaLogState } from './mediaLogState.svelte';
-import { todayStamp } from '../../../../shared/lib/mediaLog';
+import { todayStamp, validStatusesForMedia } from '../../../../shared/lib/mediaLog';
 import type { MediaItem } from '../../../../shared/types';
 export type { MediaItem };
 
@@ -473,7 +474,15 @@ export class MediaState {
       }
 
       const { id, type, rating, status, added_at, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain } = this.currentItem;
-      let poster_image = this.currentItem.poster_image;
+      const events = mediaLogState.groupFor(id);
+      const valid = validStatusesForMedia(events, this.initialItem.status);
+      if (status && !valid.includes(status) && status !== this.initialItem.status) {
+        this.errorMsg = `Status "${status}" is not valid for this item's log state.`;
+        notificationState.error(this.errorMsg, { title: 'Validation Error' });
+        return;
+      }
+      let poster_image = (this.currentItem.poster_image || "").trim();
+      let posterChanged = false;
 
       const rootRes = await ResultAsync.fromPromise(getRepoRoot(), (err) => typeof err === 'string' ? err : String(err));
       if (rootRes.isErr()) {
@@ -513,6 +522,7 @@ export class MediaState {
             return;
           }
           poster_image = `${type}_${safeId}`;
+          posterChanged = true;
         }
       } else if (poster_image.startsWith('http://') || poster_image.startsWith('https://')) {
         const filename = `${type}_${safeId}.jpg`;
@@ -537,6 +547,11 @@ export class MediaState {
           return;
         }
         poster_image = `${type}_${safeId}`;
+        posterChanged = true;
+      }
+
+      if (posterChanged) {
+        assetState.bust(poster_image);
       }
 
       const parsedRating = typeof rating === 'number' && !isNaN(rating) ? rating : null;
@@ -574,6 +589,16 @@ export class MediaState {
         else items.push(newItem);
       }
       
+      if (this.data && Array.isArray(this.data.media)) {
+        const dIdx = this.data.media.findIndex((i: MediaItem) => i.id === id);
+        if (dIdx !== -1) {
+          this.data.media[dIdx] = newItem;
+          this.data.media = [...this.data.media];
+        } else {
+          this.data.media = [...this.data.media, newItem];
+        }
+      }
+
       const saveRes = await writeData('media', items);
       if (saveRes.isErr()) {
         this.errorMsg = saveRes.error.message;
@@ -614,6 +639,7 @@ export class MediaState {
     const itemToDelete = items.find(i => i.id === id);
     
     if (itemToDelete && itemToDelete.poster_image && !itemToDelete.poster_image.startsWith('http') && !itemToDelete.poster_image.startsWith('data:')) {
+      assetState.bust(itemToDelete.poster_image);
       const rootRes = await ResultAsync.fromPromise(getRepoRoot(), () => '');
       if (rootRes.isOk() && rootRes.value) {
         const root = rootRes.value;
@@ -624,6 +650,9 @@ export class MediaState {
     }
 
     items = items.filter(i => i.id !== id);
+    if (this.data && Array.isArray(this.data.media)) {
+      this.data.media = this.data.media.filter((i: MediaItem) => i.id !== id);
+    }
     const writeRes = await writeData('media', items);
     if (writeRes.isErr()) {
       this.errorMsg = writeRes.error.message;

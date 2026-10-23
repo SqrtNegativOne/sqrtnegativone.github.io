@@ -2,7 +2,7 @@
   import mediaProperties from '../../../../../site/static/media/media-properties.json';
   import { assetState } from '$lib/assetState.svelte';
   import { getPosterUrl } from '../../../../../shared/utils/getPosterUrl';
-  import { eventLabel, formatLogDate } from '../../../../../shared/lib/mediaLog';
+  import { eventLabel, formatLogDate, validStatusesForMedia } from '../../../../../shared/lib/mediaLog';
   import type { MediaItem, MediaLogEvent } from '../../../../../shared/types';
   import Modal from '$lib/Modal.svelte';
   import TagInput from '$lib/TagInput.svelte';
@@ -29,6 +29,15 @@
   } = $props();
 
   let logHistory = $derived((history ?? []) as MediaLogEvent[]);
+
+  let availableStatuses = $derived.by(() => {
+    const valid = validStatusesForMedia(logHistory, currentItem.status);
+    const validSet = new Set(valid);
+    if (currentItem.status) validSet.add(currentItem.status);
+    return (mediaProperties.statuses as { value: string; label: string }[]).filter((s) =>
+      validSet.has(s.value)
+    );
+  });
 
   let titleInput: HTMLInputElement | undefined = $state();
   let titleFocused = $state(false);
@@ -128,7 +137,7 @@
 
                   <div class="space-y-2">
                     <select id="media-status" name="status" bind:value={currentItem.status} class="input-field" aria-label="Status">
-                      {#each mediaProperties.statuses as status (status)}
+                      {#each availableStatuses as status (status.value)}
                         <option value={status.value}>{status.label}</option>
                       {/each}
                     </select>
@@ -209,7 +218,7 @@
 
                   <div class="space-y-2 sm:col-span-2">
                     <label for="media-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags</label>
-                    <TagInput bind:tags={currentItem.tags} suggestions={allTags} placeholder="e.g. goat, favorites" />
+                    <TagInput bind:tags={currentItem.tags} suggestions={allTags} placeholder="e.g. meta/goat, favorites" />
                   </div>
                 </div>
               </section>

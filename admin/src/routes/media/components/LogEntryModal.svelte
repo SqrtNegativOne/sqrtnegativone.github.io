@@ -10,9 +10,10 @@
     localLogStamp,
     LOG_KIND_LABEL,
     PROGRESS_UNIT_LABEL,
+    statusForEvent,
     todayStamp
   } from '../../../../../shared/lib/mediaLog';
-  import type { MediaItem, MediaLogEvent, MediaLogKind, MediaProgressUnit } from '../../../../../shared/types';
+  import type { MediaItem, MediaLogEvent, MediaLogKind, MediaProgressUnit, MediaVisibility } from '../../../../../shared/types';
   import { mediaLogState } from '../mediaLogState.svelte';
 
   interface Props {
@@ -26,6 +27,7 @@
     /** Everything logged for the same title on the same day, oldest first. */
     siblings?: MediaLogEvent[];
     onchange?: (day: string) => void;
+    onsaved?: (day: string) => void;
   }
 
   let {
@@ -35,7 +37,8 @@
     initialMediaId = null,
     eventId = null,
     siblings = [],
-    onchange
+    onchange,
+    onsaved
   }: Props = $props();
 
   // Every remaining kind is a consumption event, so all of them take a round
@@ -57,6 +60,7 @@
   let note = $state('');
   let isPublic = $state(false);
   let updateStatus = $state(true);
+  let targetStatus = $state('consuming');
   let showProgress = $state(false);
   let saving = $state(false);
   let baseline = $state('');
@@ -88,7 +92,8 @@
       total: showProgress ? total : '',
       note,
       isPublic,
-      updateStatus
+      updateStatus,
+      targetStatus
     });
   }
 
@@ -98,6 +103,7 @@
     selected = null;
     query = '';
     kind = 'checkpoint';
+    targetStatus = 'consuming';
     formDate = date || today;
     time = localLogStamp().slice(11, 16);
     unit = null;
@@ -115,6 +121,9 @@
     if (entry) {
       selected = media.find((item) => item.id === entry.media_id) ?? null;
       kind = entry.kind;
+      targetStatus = kind === 'finish'
+        ? (selected?.status === 'rewishlist' ? 'rewishlist' : 'finished')
+        : (statusForEvent(kind) ?? '');
       formDate = entry.at.slice(0, 10);
       time = /T\d{2}:\d{2}/.test(entry.at) ? entry.at.slice(11, 16) : '';
       round = entry.round ?? 1;
@@ -128,6 +137,7 @@
     } else {
       selected = media.find((item) => item.id === initialMediaId) ?? null;
       kind = 'checkpoint';
+      targetStatus = 'consuming';
       if (selected) {
         unit = defaultUnitForType(selected.type);
         unitValue = unit ?? '';
@@ -156,10 +166,22 @@
     selected = item;
     query = '';
     kind = 'checkpoint';
+    targetStatus = 'consuming';
     unit = defaultUnitForType(item.type);
     unitValue = unit ?? '';
     value = '';
     total = '';
+  }
+
+  function setKind(option: MediaLogKind) {
+    kind = option;
+    if (option === 'finish') {
+      if (targetStatus !== 'finished' && targetStatus !== 'rewishlist') {
+        targetStatus = selected?.status === 'rewishlist' ? 'rewishlist' : 'finished';
+      }
+    } else {
+      targetStatus = statusForEvent(option) ?? '';
+    }
   }
 
   function changeSelection() {
@@ -190,8 +212,9 @@
         value: showProgress && value !== '' ? Number(value) : undefined,
         total: showProgress && total !== '' ? Number(total) : undefined,
         note,
-        visibility: isPublic ? 'public' : ('private' as const),
-        updateStatus
+        visibility: (isPublic ? 'public' : 'private') as MediaVisibility,
+        updateStatus,
+        targetStatus: updateStatus ? targetStatus : undefined
       };
       const ok = activeId
         ? await mediaLogState.updateEvent(activeId, payload)
@@ -199,6 +222,7 @@
       if (!ok) return;
       open = false;
       onchange?.(formDate);
+      onsaved?.(formDate);
     } finally {
       saving = false;
     }
@@ -307,7 +331,7 @@
         <button
           type="button"
           disabled={!selected}
-          onclick={() => (kind = option)}
+          onclick={() => setKind(option)}
           aria-pressed={kind === option}
           class="rounded border px-3 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors disabled:cursor-not-allowed {kind === option
             ? 'border-blue-500/50 bg-blue-500/15 text-blue-300'
@@ -379,10 +403,40 @@
         <input type="checkbox" bind:checked={isPublic} class="h-4 w-4 rounded border-zinc-700 bg-zinc-800 text-emerald-500 focus:ring-emerald-500" />
         Make public
       </label>
-      <label class="flex cursor-pointer select-none items-center gap-2 text-sm text-[oklch(0.7107_0.0351_256.79)]">
-        <input type="checkbox" bind:checked={updateStatus} class="h-4 w-4 rounded border-zinc-700 bg-zinc-800 text-blue-600 focus:ring-blue-500" />
-        Update status
-      </label>
+      <div class="flex flex-wrap items-center gap-2">
+        <label class="flex cursor-pointer select-none items-center gap-2 text-sm text-[oklch(0.7107_0.0351_256.79)]">
+          <input type="checkbox" bind:checked={updateStatus} class="h-4 w-4 rounded border-zinc-700 bg-zinc-800 text-blue-600 focus:ring-blue-500" />
+          Update status
+        </label>
+        {#if updateStatus}
+          {#if kind === 'finish'}
+            <div class="inline-flex items-center gap-1 rounded border border-[oklch(0.2739_0.0055_286.03)] bg-black/20 p-0.5 text-xs">
+              <button
+                type="button"
+                onclick={() => (targetStatus = 'finished')}
+                class="rounded px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider transition-colors {targetStatus === 'finished'
+                  ? 'border border-blue-500/50 bg-blue-500/15 text-blue-300 font-semibold'
+                  : 'text-[oklch(0.7107_0.0351_256.79)] hover:bg-white/5'}"
+              >
+                Finished
+              </button>
+              <button
+                type="button"
+                onclick={() => (targetStatus = 'rewishlist')}
+                class="rounded px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider transition-colors {targetStatus === 'rewishlist'
+                  ? 'border border-blue-500/50 bg-blue-500/15 text-blue-300 font-semibold'
+                  : 'text-[oklch(0.7107_0.0351_256.79)] hover:bg-white/5'}"
+              >
+                Rewishlist
+              </button>
+            </div>
+          {:else if targetStatus}
+            <span class="rounded border border-[oklch(0.2739_0.0055_286.03)] bg-white/[0.02] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-[oklch(0.60_0.02_256.79)]">
+              {targetStatus}
+            </span>
+          {/if}
+        {/if}
+      </div>
     </div>
   </div>
 

@@ -50,6 +50,10 @@
     item.poster_image ? resolveAsset(getPosterUrl(item.poster_image as string)) : ''
   );
 
+  const visibleTags = $derived(
+    (item.tags || []).filter((t) => !t.startsWith('meta'))
+  );
+
   function handleKeydown(event: KeyboardEvent) {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
@@ -100,6 +104,13 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-card-notes-icon" aria-hidden="true"><title>Has notes</title><line x1="21" x2="3" y1="6" y2="6"/><line x1="15" x2="3" y1="12" y2="12"/><line x1="17" x2="3" y1="18" y2="18"/></svg>
           {/if}
         </p>
+      {/if}
+      {#if visibleTags.length > 0}
+        <div class="ml-card-tags">
+          {#each visibleTags as tag (tag)}
+            <span class="ml-card-tag">#{tag}</span>
+          {/each}
+        </div>
       {/if}
     </div>
     <div class="ml-card-rating">
@@ -245,6 +256,24 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-style: italic;
+  }
+
+  .ml-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 5px;
+  }
+
+  .ml-card-tag {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 9.5px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: oklch(1 0 0 / 0.12);
+    color: oklch(0.85 0.02 256);
+    line-height: 1.3;
+    letter-spacing: 0.02em;
   }
 
   .ml-card-notes-icon {

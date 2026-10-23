@@ -14,7 +14,8 @@ import {
   newLogEventId,
   publicEvents,
   sortEventsNewestFirst,
-  statusForEvent
+  statusForEvent,
+  validStatusesForKind
 } from '../../../../shared/lib/mediaLog';
 
 export interface NewLogEvent {
@@ -29,6 +30,8 @@ export interface NewLogEvent {
   visibility?: MediaVisibility;
   /** Move the library item's status to match the event. Defaults to true. */
   updateStatus?: boolean;
+  /** Explicit status to set on the media item (e.g. 'finished' vs 'rewishlist'). */
+  targetStatus?: string;
 }
 
 /** The consumption kinds can all carry a round and an optional snapshot. */
@@ -130,7 +133,7 @@ class MediaLogState {
     const event = buildEvent(newLogEventId(), input);
     if (!(await this.persist([...this.events, event]))) return false;
 
-    if (input.updateStatus !== false) await this.nudgeStatus(event);
+    if (input.updateStatus !== false) await this.nudgeStatus(event, input.targetStatus);
     notificationState.success('Logged.', { title: 'Media Log' });
     return true;
   }
@@ -147,7 +150,7 @@ class MediaLogState {
     next[index] = event;
     if (!(await this.persist(next))) return false;
 
-    if (input.updateStatus !== false) await this.nudgeStatus(event);
+    if (input.updateStatus !== false) await this.nudgeStatus(event, input.targetStatus);
     notificationState.success('Entry updated.', { title: 'Media Log' });
     return true;
   }
@@ -170,8 +173,12 @@ class MediaLogState {
   }
 
   /** Keeps the shelf status roughly in sync with what was just logged. */
-  private async nudgeStatus(event: MediaLogEvent): Promise<void> {
-    const status = statusForEvent(event.kind);
+  private async nudgeStatus(event: MediaLogEvent, targetStatus?: string): Promise<void> {
+    const valid = validStatusesForKind(event.kind);
+    let status = targetStatus;
+    if (!status || !valid.includes(status)) {
+      status = statusForEvent(event.kind) ?? undefined;
+    }
     if (!status) return;
 
     const items = (await readData<MediaItem>('media')).unwrapOr([]);

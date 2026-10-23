@@ -3,10 +3,10 @@
   import mediaProperties from "../../../../static/media/media-properties.json";
 
   import MediaModal from "./MediaModal.svelte";
-  import MediaLog from "./MediaLog.svelte";
   import FilterSort from "$shared/components/FilterSort.svelte";
   import MediaInfo from "$shared/components/MediaInfo.svelte";
   import MediaGallery from "$shared/components/MediaGallery.svelte";
+  import MediaGalleryCard from "$shared/components/MediaGalleryCard.svelte";
   import MediaTable from "$shared/components/MediaTable.svelte";
   import MediaViewToggle from "$shared/components/MediaViewToggle.svelte";
   import { applyFilters, applySorts } from "./mediaFilters";
@@ -14,24 +14,14 @@
   import { fade, scale } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
   
-  import MediaCarousel from "./MediaCarousel.svelte";
-  import type { MediaItem, MediaLogEvent } from "$shared/types";
-  import logData from "../../../data/media-log.json";
+  import type { MediaItem } from "$shared/types";
   
   const typedMediaData = mediaData as unknown as MediaItem[];
   const visibleMediaData = typedMediaData.filter((item) => !item.hidden);
 
-  // Only public events ever reach this file; the filter is a second guard so a
-  // private entry can never render even if the projection is wrong.
-  const publicLog = (logData as unknown as MediaLogEvent[]).filter(
-    (event) => event.visibility === 'public'
-  );
-
-  let tab = $state<'library' | 'log'>('library');
-
-  // Tags that actually exist across the visible library, used for the tag filter.
+  // Only non-meta tags shown in the filter dropdown.
   const allTags = $derived(
-    Array.from(new Set(visibleMediaData.flatMap((item) => item.tags || []))).sort()
+    Array.from(new Set(visibleMediaData.flatMap((item) => item.tags || []))).filter((t) => !t.startsWith('meta')).sort()
   );
 
   const filterProperties = $derived([
@@ -53,9 +43,17 @@
 
   let carouselsData = $derived((() => {
     const byRatingDesc = [...visibleMediaData].sort((a, b) => ((b.rating ?? -1) as number) - ((a.rating ?? -1) as number));
-    const goat = byRatingDesc.filter(i => Array.isArray(i.tags) && i.tags.includes('goat'));
+    const goat = byRatingDesc.filter(i => Array.isArray(i.tags) && i.tags.includes('meta/goat'));
     const consuming = byRatingDesc.filter(i => i.status === "consuming");
-    return { goat, consuming };
+    // Recent reviews: items with non-empty notes, ordered by added_at desc then array order desc
+    const withNotes = visibleMediaData.filter(i => i.notes && (i.notes as string).trim());
+    const recentReviews = [...withNotes].sort((a, b) => {
+      if (a.added_at && b.added_at) return (b.added_at as string).localeCompare(a.added_at as string);
+      if (a.added_at) return -1;
+      if (b.added_at) return 1;
+      return withNotes.indexOf(b) - withNotes.indexOf(a);
+    }).slice(0, 8);
+    return { goat, consuming, recentReviews };
   })());
 
   let libraryData = $derived((() => {
@@ -110,59 +108,79 @@
     </div>
   </header>
 
-  <div class="ml-tabs">
-    <button
-      type="button"
-      class="ml-tab"
-      class:is-active={tab === 'library'}
-      aria-pressed={tab === 'library'}
-      onclick={() => tab = 'library'}
-    >
-      Library
-    </button>
-    <button
-      type="button"
-      class="ml-tab"
-      class:is-active={tab === 'log'}
-      aria-pressed={tab === 'log'}
-      onclick={() => tab = 'log'}
-    >
-      Log
-    </button>
+  {#if carouselsData.consuming.length > 0}
+    <section class="ml-section">
+      <h2 class="ml-section-title">Currently</h2>
+      <div class="ml-carousel-grid">
+        {#each carouselsData.consuming as item (item.type + '-' + item.id)}
+          <MediaGalleryCard {item} {openDetails} />
+        {/each}
+      </div>
+    </section>
+  {/if}
+
+  <div class="ml-dual-row">
+    {#if carouselsData.goat.length > 0}
+      <section class="ml-section ml-section--grow">
+        <h2 class="ml-section-title">Greatest of All Time</h2>
+        <div class="ml-carousel-grid">
+          {#each carouselsData.goat as item (item.type + '-' + item.id)}
+            <MediaGalleryCard {item} {openDetails} />
+          {/each}
+        </div>
+      </section>
+    {/if}
+
+    {#if carouselsData.recentReviews.length > 0}
+      <section class="ml-section ml-section--reviews">
+        <h2 class="ml-section-title">Recent Reviews</h2>
+        <div class="ml-reviews-list">
+          {#each carouselsData.recentReviews as item (item.type + '-' + item.id)}
+            <!-- svelte-ignore a11y_click_events_have_key_events -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
+            <div class="ml-review-row" onclick={() => openDetails(item)}>
+              <div class="ml-review-poster">
+                {#if item.poster_image}
+                  <img src={`/media/media-posters/${item.poster_image}.avif`} alt="" loading="lazy" />
+                {:else}
+                  <div class="ml-review-poster-fallback"></div>
+                {/if}
+              </div>
+              <div class="ml-review-body">
+                <span class="ml-review-title">{item.title}</span>
+                <p class="ml-review-note">{item.notes}</p>
+              </div>
+            </div>
+          {/each}
+        </div>
+      </section>
+    {/if}
   </div>
 
-  {#if tab === 'library'}
-    <MediaCarousel title="Currently" items={carouselsData.consuming} {openDetails} />
-    
-    <MediaCarousel title="Greatest of All Time" items={carouselsData.goat} {openDetails} />
-
-    <div class="ml-filters-container">
-      <div class="ml-filters">
-        <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
-        <FilterSort bind:filters bind:sorts properties={filterProperties} />
-        <MediaInfo />
-        <MediaViewToggle bind:viewMode storageKey="ml-view-mode" />
-      </div>
+  <div class="ml-filters-container">
+    <div class="ml-filters">
+      <input type="text" bind:value={searchQuery} placeholder="Search..." class="ml-search-input" />
+      <FilterSort bind:filters bind:sorts properties={filterProperties} />
+      <MediaInfo />
+      <MediaViewToggle bind:viewMode storageKey="ml-view-mode" />
     </div>
+  </div>
 
-    {#if viewMode === 'gallery'}
-      <MediaGallery groups={libraryGroups} {openDetails} title="Library" />
-    {:else}
-      <MediaTable
-        groups={libraryGroups}
-        {sorts}
-        toggleSort={handleToggleSort}
-        {openDetails}
-        {openFullPoster}
-        title="Library"
-      />
-    {/if}
-
-    {#if visibleMediaData.length === 0}
-      <p class="ml-empty">Nothing here yet.</p>
-    {/if}
+  {#if viewMode === 'gallery'}
+    <MediaGallery groups={libraryGroups} {openDetails} title="Library" />
   {:else}
-    <MediaLog events={publicLog} media={visibleMediaData} {openDetails} />
+    <MediaTable
+      groups={libraryGroups}
+      {sorts}
+      toggleSort={handleToggleSort}
+      {openDetails}
+      {openFullPoster}
+      title="Library"
+    />
+  {/if}
+
+  {#if visibleMediaData.length === 0}
+    <p class="ml-empty">Nothing here yet.</p>
   {/if}
 
   {#if activeItem}
@@ -219,36 +237,116 @@
   padding-right: 60px;
 }
 
-.ml-tabs {
-  display: flex;
-  gap: 28px;
-  margin: 4px 0 36px;
-  border-bottom: 1px solid oklch(1 0 0 / 0.08);
+/* Carousel / feature sections */
+.ml-section {
+  margin-top: 48px;
 }
 
-.ml-tab {
-  appearance: none;
-  background: none;
-  border: 0;
-  border-bottom: 1px solid transparent;
-  margin-bottom: -1px;
-  padding: 0 0 12px;
-  color: oklch(0.5416 0.0154 285.87);
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 10px;
-  letter-spacing: 0.16em;
+.ml-section-title {
+  font-size: 13px;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: oklch(0.785 0.0112 286.14);
+  margin: 0 0 16px;
+}
+
+.ml-section--grow {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.ml-section--reviews {
+  width: 360px;
+  flex-shrink: 0;
+}
+
+/* Side-by-side: GOAT carousel + Recent Reviews */
+.ml-dual-row {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  margin-top: 48px;
+}
+
+/* Grid of gallery-style cards (same component as the main library) */
+.ml-carousel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* Recent Reviews list */
+.ml-reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border-top: 1px solid oklch(1 0 0 / 0.08);
+}
+
+.ml-review-row {
+  display: flex;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid oklch(1 0 0 / 0.06);
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 120ms ease;
+  border-radius: 4px;
 }
 
-.ml-tab:hover {
-  color: oklch(0.8622 0.0068 286.26);
+.ml-review-row:hover {
+  background: oklch(1 0 0 / 0.03);
 }
 
-.ml-tab.is-active {
+.ml-review-poster {
+  flex-shrink: 0;
+  width: 36px;
+  height: 54px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: oklch(0.2329 0.0095 285.64);
+}
+
+.ml-review-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ml-review-poster-fallback {
+  width: 100%;
+  height: 100%;
+  background: oklch(0.2329 0.0095 285.64);
+}
+
+.ml-review-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ml-review-title {
+  font-size: 13px;
+  font-weight: 600;
   color: oklch(0.9707 0.0027 286.35);
-  border-bottom-color: oklch(0.9707 0.0027 286.35);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ml-review-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: oklch(0.6363 0.0133 286.02);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .ml-title {
@@ -303,9 +401,26 @@
   font-style: italic;
 }
 
+@media (max-width: 900px) {
+  .ml-dual-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ml-section--reviews {
+    width: 100%;
+    margin-top: 48px;
+  }
+}
+
 @media (max-width: 640px) {
   .ml-root {
     padding: 28px 18px 80px;
+  }
+
+  .ml-carousel-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
   }
 }
 </style>

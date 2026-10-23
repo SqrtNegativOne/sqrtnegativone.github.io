@@ -9,7 +9,7 @@
     "description": "",
     "poster_image": "game_deltarune",
     "tags": [
-      "goat"
+      "meta/goat"
     ],
     "author": "Toby Fox",
     "hidden": false
@@ -25,7 +25,7 @@
     "notes": "“Have you ever played a game so great that you were sad and felt empty after beating it since there was nothing out there like it?”",
     "tagline": "The friendly RPG where no one has to die.",
     "tags": [
-      "goat"
+      "meta/goat"
     ]
   },
   {
@@ -104,7 +104,7 @@
     "notes": "I knew the main spoiler but even with that the movie was incredibly invigorating. Upon suggesting this film to a friend who had not been aware of the twist, they replied \"This movie was scarier than Obsession.\"",
     "poster_image": "movie_fight_club",
     "tags": [
-      "goat"
+      "meta/goat"
     ],
     "hidden": false
   },
@@ -118,7 +118,7 @@
     "description": "",
     "poster_image": "book_house_of_leaves",
     "tags": [
-      "goat"
+      "meta/goat"
     ]
   },
   {
@@ -170,10 +170,14 @@
     "rating": 3,
     "status": "finished",
     "title": "The Handmaid's Tale",
-    "description": "",
-    "poster_image": "book_the_handmaid_s_tale",
+    "tagline": "Nolite te bastardes carborundorum.",
+    "description": " The Handmaid's Tale is an instant classic and eerily prescient cultural phenomenon, from \"the patron saint of feminist dystopian fiction\" (New York Times)",
     "notes": "Good writing but Atwood isn't nearly the clever poet she thinks she is. My expectations from the book were also a bit distorted; I had heard from someone who had seen the show about the titular character, in the finale, making her clever escape through some train... I was reading the novel in expectance of some strategem, but the protagonist is nothing but a mere ragdoll thrown around mostly by the schemes of those that surround her. Guess it makes more sense for the point of the novel for her to have no agency.",
-    "tagline": "Nolite te bastardes carborundorum."
+    "poster_image": "book_the_handmaid_s_tale",
+    "tags": [],
+    "author": "Margaret Atwood",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "outer_wilds",
@@ -254,7 +258,7 @@
     "notes": "Live with the ever-present burden of being trapped in a time loop only you can know about in this turn-based RPG. Create a better future for you and your friends. Find hope where there is none left. Pray to the stars and free yourself from time.\n\nPretty sure the author just.... broke the encryption on my Veracrypt vault storing my old journal pages to write the main character.",
     "tagline": "Pray to the stars and free yourself from time.",
     "tags": [
-      "goat"
+      "meta/goat"
     ]
   },
   {
@@ -358,8 +362,11 @@
     "title": "MINDHACKER",
     "tagline": "Useless retro-tech advice, but makes you think.",
     "description": "",
-    "notes": "I get nostalgic for times that were stolen from me a lot. ...Remind me to add this feature soon, I want to add here an excerpt from my diary.",
-    "poster_image": "book_mindhacker"
+    "notes": "I get nostalgic for times that were stolen from me a lot. ...Remind me to add this feature soon, I want to add here an excerpt from my diary.\n...I don't think other people will like this book through.",
+    "poster_image": "book_mindhacker",
+    "tags": [],
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "harry_potter_and_the_methods_of_rationality",
@@ -615,12 +622,15 @@
     "id": "titanfall_2",
     "type": "game",
     "rating": 5.5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "Titanfall 2",
     "tagline": "What the game lacks in length, it makes up for with... everything else.",
-    "description": "Respawn Entertainment\n\nRespawn Entertainment gives you the most advanced titan technology in its new, single player campaign &amp; multiplayer experience. Combine &amp; conquer with new titans &amp; pilots, deadlier weapons, &amp; customization and progression systems that help you and your titan flow as one unstoppable killing force.",
+    "description": "Respawn Entertainment gives you the most advanced titan technology in its new, single player campaign &amp; multiplayer experience. Combine &amp; conquer with new titans &amp; pilots, deadlier weapons, &amp; customization and progression systems that help you and your titan flow as one unstoppable killing force.",
     "notes": "WHY IS THERE NO TITANFALL 3. WE ARE GETTING GTAVI BEFORE TITANFALL3 WHAT",
-    "poster_image": "game_titanfall_2"
+    "poster_image": "game_titanfall_2",
+    "tags": [],
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "dune_movie",
@@ -710,7 +720,7 @@
     "notes": "Inception",
     "poster_image": "movie_Inception",
     "tags": [
-      "goat"
+      "meta/goat"
     ]
   },
   {
@@ -1252,9 +1262,13 @@
     "status": "finished",
     "title": "There Is No Antimemetics Division",
     "tagline": "",
-    "description": "Explore the new SCP miniseries, where you'll journey alongside Marion Wheeler, the director of the SCP Foundation's Antimemetics Division, as she confronts an eternal and un-killable idea.",
+    "description": "",
     "notes": "",
-    "poster_image": "book_there_is_no_antimemetics_division"
+    "poster_image": "book_there_is_no_antimemetics_division",
+    "tags": [],
+    "author": "QNTM",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "twin_peaks",
@@ -2170,7 +2184,7 @@
     "id": "z_a_t_o_i_love_the_world_and_everything_in_it",
     "type": "game",
     "rating": 5.5,
-    "status": "consuming",
+    "status": "finished",
     "title": "Z.A.T.O. // I Love the World and Everything In It",
     "tagline": "",
     "description": "USSR, 1986. A girl goes missing in the closed city of Vorkuta-5, yet not a soul seems to be concerned. Uncover the mystery behind her disappearance and transmit your signal to the universe.",
@@ -2644,5 +2658,39 @@
     "publisher": "",
     "hidden": false,
     "uncertain": true
+  },
+  {
+    "id": "great_expectations",
+    "type": "book",
+    "rating": null,
+    "status": "finished",
+    "added_at": "2026-10-23",
+    "title": "Great Expectations",
+    "tagline": "",
+    "description": "Charles Dickens was a British author, journalist, and editor whose work brought attention to the struggles of Victorian England’s lower classes. His writings provided a candid portrait of the era’s poor and served as inspiration for social change.Great Expectations, Dickens’ thirteenth novel, was first published in serial form between 1860 and 1861 and is widely praised as the author’s greatest literary accomplishment.The novel follows the life, relationships, and moral development of an orphan boy named Pip. The novel begins when Pip encounters an escaped convict whom he helps and fears in equal measure. Pip’s actions that day set off a sequence of events and interactions that shape Pip’s character as he matures into adulthood.The vivid characters, engaging narrative style, and universal themes of Great Expectations establish this novel as a timeless literary classic, and an engaging portrait of Victorian life.",
+    "notes": "",
+    "poster_image": "book_great_expectations",
+    "tags": [],
+    "author": "Charles Dickens",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": true
+  },
+  {
+    "id": "the_english_teacher",
+    "type": "book",
+    "rating": 3,
+    "status": "finished",
+    "added_at": "2026-10-23",
+    "title": "The English Teacher",
+    "tagline": "",
+    "description": "R. K. Narayan (1906—2001) witnessed nearly a century of change in his native India and captured it in fiction of uncommon warmth and vibrancy. The title character in The English Teacher, Narayan’s most autobiographical novel, searches for meaning when the death of his young wife deprives him of his greatest source of happiness. This pioneering novel, luminous in its detail and refreshingly free of artifice, is a gift to twentieth-century literature.",
+    "notes": "",
+    "poster_image": "book_the_english_teacher",
+    "tags": [],
+    "author": "R. K. Narayan",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
   }
 ]
