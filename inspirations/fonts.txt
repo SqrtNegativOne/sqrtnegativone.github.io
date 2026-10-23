@@ -17,4 +17,18 @@ https://joefatula.com/twoslice.html 2 pixel tall font for secrets
 
 https://datagoblin.itch.io/monogram great font, very cute.
 
+really aesthetic, but equally awful:
 https://fonts.google.com/specimen/DotGothic16
+
+use the below for the /main prose:
+https://www.dafont.com/cairopixel.font
+
+not pixel art but really sexy IBM mono font:
+(sucks for thin letters though)
+https://github.com/rbanffy/3270font?tab=License-1-ov-file
+
+really nice font for using alongside a normal serif font. But I should find one first though.
+https://www.dafont.com/dico.font
+
+normal font. It's hard to find readable pixel fonts that don't look, like, overly cute.
+https://www.dafont.com/pixel-operator.font
