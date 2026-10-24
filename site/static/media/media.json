@@ -1748,7 +1748,7 @@
   {
     "id": "serial_experiments_lain",
     "type": "show",
-    "rating": 5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "Serial Experiments Lain",
     "tagline": "",
@@ -1757,7 +1757,9 @@
     "poster_image": "show_serial_experiments_lain",
     "tags": [],
     "author": "",
-    "publisher": "Pioneer LDC, Triangle Staff"
+    "publisher": "Pioneer LDC, Triangle Staff",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "starting_strength",
@@ -2689,6 +2691,40 @@
     "poster_image": "book_the_english_teacher",
     "tags": [],
     "author": "R. K. Narayan",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "over_the_garden_wall",
+    "type": "show",
+    "rating": 5,
+    "status": "wishlist",
+    "added_at": "2026-10-24",
+    "title": "Over the Garden Wall",
+    "tagline": "",
+    "description": "Two brothers, Wirt and Greg, find themselves lost in the Unknown; a strange forest adrift in time. With the help of a wise old Woodsman and a foul-tempered bluebird named Beatrice, Wirt and Greg must travel across this strange land, in hope of finding their way home. Join them as they encounter surprises and obstacles on their journey through the wood.",
+    "notes": "",
+    "poster_image": "show_over_the_garden_wall",
+    "tags": [],
+    "author": "Patrick McHale",
+    "publisher": "Cartoon Network Studios",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "a_pattern_language",
+    "type": "book",
+    "rating": 4.5,
+    "status": "wishlist",
+    "added_at": "2026-10-24",
+    "title": "A Pattern Language",
+    "tagline": "",
+    "description": "You can use this book to design a house for yourself with your family; you can use it to work with your neighbors to improve your town and neighborhood; you can use it to design an office, or a workshop, or a public building. And you can use it to guide you in the actual process of construction.",
+    "notes": "",
+    "poster_image": "book_a_pattern_language",
+    "tags": [],
+    "author": "Christopher Alexander",
     "publisher": "",
     "hidden": false,
     "uncertain": false
