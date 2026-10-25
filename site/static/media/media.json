@@ -1732,20 +1732,6 @@
     "publisher": "qntm"
   },
   {
-    "id": "coyote_vs_acme",
-    "type": "movie",
-    "rating": 5,
-    "status": "wishlist",
-    "title": "Coyote vs. Acme",
-    "tagline": "",
-    "description": "After Acme products fail him one too many times in his dogged pursuit of the Roadrunner, Wile E. Coyote decides to hire a billboard lawyer to sue the Acme Corporation.",
-    "notes": "",
-    "poster_image": "movie_coyote_vs_acme",
-    "tags": [],
-    "author": "Dave Green",
-    "publisher": "Troll Court Entertainment, Keylight Pictures, Warner Animation Group, Warner Bros. Pictures"
-  },
-  {
     "id": "serial_experiments_lain",
     "type": "show",
     "rating": 5.5,
@@ -2170,7 +2156,7 @@
     "id": "the_office",
     "type": "show",
     "rating": 4.5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "The Office",
     "tagline": "",
     "description": "The everyday lives of office employees in the Scranton, Pennsylvania branch of the fictional Dunder Mifflin Paper Company.",
@@ -2725,6 +2711,23 @@
     "poster_image": "book_a_pattern_language",
     "tags": [],
     "author": "Christopher Alexander",
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "animal_farm",
+    "type": "book",
+    "rating": 3,
+    "status": "finished",
+    "added_at": "2026-10-26",
+    "title": "Animal Farm",
+    "tagline": "",
+    "description": "The animals of Manor Farm have revolted and taken over. Upon the death of Old Major, pigs Snowball and Napoleon lead a revolt against Mr. Jones, driving him from the farm. The animals embrace the Seven Commandments of Animalism and life carries on, but in this classic dystopian novel, they learn that a farm ruled by animals looks more human than ever.",
+    "notes": "Kind of heavy handed donchya think? I wasn't traumatised when I read it in school, just saddened really.",
+    "poster_image": "book_animal_farm",
+    "tags": [],
+    "author": "George Orwell",
     "publisher": "",
     "hidden": false,
     "uncertain": false
