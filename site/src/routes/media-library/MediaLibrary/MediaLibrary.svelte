@@ -52,7 +52,7 @@
       if (a.added_at) return -1;
       if (b.added_at) return 1;
       return withNotes.indexOf(b) - withNotes.indexOf(a);
-    }).slice(0, 8);
+    }).slice(0, 5);
     return { goat, consuming, recentReviews };
   })());
 
@@ -167,7 +167,7 @@
   </div>
 
   {#if viewMode === 'gallery'}
-    <MediaGallery groups={libraryGroups} {openDetails} title="Library" />
+    <MediaGallery groups={libraryGroups} {openDetails} />
   {:else}
     <MediaTable
       groups={libraryGroups}
@@ -175,7 +175,6 @@
       toggleSort={handleToggleSort}
       {openDetails}
       {openFullPoster}
-      title="Library"
     />
   {/if}
 
