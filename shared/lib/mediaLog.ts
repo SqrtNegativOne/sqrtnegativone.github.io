@@ -147,8 +147,10 @@ export function statusForEvent(kind: MediaLogKind): string | null {
 }
 
 /**
- * For a given log kind, the valid shelf statuses a media item can have in the
- * media file.
+ * For a given log kind, the statuses a `nudgeStatus()` may set on the item.
+ *
+ * This scopes the *automatic* status change that logging an event performs; it
+ * never restricts what the library editor may assign by hand.
  *
  * - `finish`: Finished or Rewishlist (already consumed; either done or queued to consume again)
  * - `drop`: Dropped
@@ -170,47 +172,6 @@ export function validStatusesForKind(kind: MediaLogKind): string[] {
     default:
       return [];
   }
-}
-
-/**
- * Given an item's log events, returns the valid shelf statuses for that item in the media file.
- *
- * If the item has log history, the valid statuses are governed by the most recent
- * consumption boundary:
- * - finished in log: `finished`, `rewishlist`
- * - dropped in log: `dropped`
- * - shelved in log: `shelved`
- * - active (started/checkpoint/resumed): `consuming`
- *
- * If there is no log history:
- * - If the item already has a consumption status (e.g. legacy items before the log existed),
- *   preserve that lifecycle tier (e.g. finished -> `finished`, `rewishlist`).
- * - Otherwise (backlog), valid statuses are `wishlist`, `next up`, `waiting for`.
- */
-export function validStatusesForMedia(events: MediaLogEvent[], currentStatus?: string): string[] {
-  const sorted = sortEventsOldestFirst(events);
-  const lastBoundary = [...sorted]
-    .reverse()
-    .find((event) => ['start', 'checkpoint', 'finish', 'drop', 'shelve', 'resume'].includes(event.kind));
-
-  if (lastBoundary) {
-    return validStatusesForKind(lastBoundary.kind);
-  }
-
-  if (currentStatus === 'finished' || currentStatus === 'rewishlist') {
-    return ['finished', 'rewishlist'];
-  }
-  if (currentStatus === 'dropped') {
-    return ['dropped'];
-  }
-  if (currentStatus === 'shelved') {
-    return ['shelved'];
-  }
-  if (currentStatus === 'consuming') {
-    return ['consuming'];
-  }
-
-  return ['wishlist', 'next up', 'waiting for'];
 }
 
 /**

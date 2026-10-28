@@ -2,7 +2,7 @@
   import mediaProperties from '../../../../../site/static/media/media-properties.json';
   import { assetState } from '$lib/assetState.svelte';
   import { getPosterUrl } from '../../../../../shared/utils/getPosterUrl';
-  import { eventLabel, formatLogDate, validStatusesForMedia } from '../../../../../shared/lib/mediaLog';
+  import { eventLabel, formatLogDate } from '../../../../../shared/lib/mediaLog';
   import type { MediaItem, MediaLogEvent } from '../../../../../shared/types';
   import Modal from '$lib/Modal.svelte';
   import TagInput from '$lib/TagInput.svelte';
@@ -30,14 +30,11 @@
 
   let logHistory = $derived((history ?? []) as MediaLogEvent[]);
 
-  let availableStatuses = $derived.by(() => {
-    const valid = validStatusesForMedia(logHistory, currentItem.status);
-    const validSet = new Set(valid);
-    if (currentItem.status) validSet.add(currentItem.status);
-    return (mediaProperties.statuses as { value: string; label: string }[]).filter((s) =>
-      validSet.has(s.value)
-    );
-  });
+  // Status is free to set by hand: the log is incomplete by nature (something
+  // may have been finished years before logging existed), so it never gates
+  // what this editor allows. The log only *nudges* a status when you log an
+  // event; see `nudgeStatus()` in mediaLogState.
+  const availableStatuses = mediaProperties.statuses as { value: string; label: string }[];
 
   let titleInput: HTMLInputElement | undefined = $state();
   let titleFocused = $state(false);

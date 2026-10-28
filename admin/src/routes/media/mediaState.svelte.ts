@@ -7,7 +7,7 @@ import { toggleSort as toggleMediaSort } from '../../../../shared/lib/mediaLibra
 import { invalidateAll } from '$app/navigation';
 import { notificationState } from '$lib/notificationState.svelte';
 import { mediaLogState } from './mediaLogState.svelte';
-import { todayStamp, validStatusesForMedia } from '../../../../shared/lib/mediaLog';
+import { todayStamp } from '../../../../shared/lib/mediaLog';
 import type { MediaItem } from '../../../../shared/types';
 export type { MediaItem };
 
@@ -474,13 +474,6 @@ export class MediaState {
       }
 
       const { id, type, rating, status, added_at, title, tagline, description, notes, private_notes, tags, author, publisher, hidden, uncertain } = this.currentItem;
-      const events = mediaLogState.groupFor(id);
-      const valid = validStatusesForMedia(events, this.initialItem.status);
-      if (status && !valid.includes(status) && status !== this.initialItem.status) {
-        this.errorMsg = `Status "${status}" is not valid for this item's log state.`;
-        notificationState.error(this.errorMsg, { title: 'Validation Error' });
-        return;
-      }
       let poster_image = (this.currentItem.poster_image || "").trim();
       let posterChanged = false;
 

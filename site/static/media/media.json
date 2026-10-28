@@ -658,12 +658,15 @@
     "id": "knives_out",
     "type": "movie",
     "rating": 4.5,
-    "status": "wishlist",
+    "status": "finished",
     "title": "Knives Out",
     "tagline": "The mystery movie that tricks you into thinking it isn't.",
     "description": "When renowned crime novelist Harlan Thrombey is found dead at his estate just after his 85th birthday, the inquisitive and debonair Detective Benoit Blanc is mysteriously enlisted to investigate. From Harlan's dysfunctional family to his devoted staff, Blanc sifts through a web of red herrings and self-serving lies to uncover the truth behind Harlan's untimely death.",
     "notes": "",
-    "poster_image": "movie_knives_out"
+    "poster_image": "movie_knives_out",
+    "tags": [],
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "glass_onion_a_knives_out_mystery",
@@ -2020,7 +2023,7 @@
     "id": "balatro",
     "type": "game",
     "rating": 0,
-    "status": "wishlist",
+    "status": "dropped",
     "title": "Balatro",
     "tagline": "No.",
     "description": "Please no.",
@@ -2029,7 +2032,8 @@
     "tags": [],
     "author": "No.",
     "publisher": "No.",
-    "hidden": false
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "memento",
@@ -2729,6 +2733,23 @@
     "tags": [],
     "author": "George Orwell",
     "publisher": "",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "everything_everywhere_all_at_once",
+    "type": "movie",
+    "rating": 5,
+    "status": "wishlist",
+    "added_at": "2026-10-26",
+    "title": "Everything Everywhere All at Once",
+    "tagline": "",
+    "description": "An aging Chinese immigrant is swept up in an insane adventure, where she alone can save what's important to her by connecting with the lives she could have led in other universes.",
+    "notes": "",
+    "poster_image": "movie_everything_everywhere_all_at_once",
+    "tags": [],
+    "author": "Daniel Scheinert, Daniel Kwan",
+    "publisher": "IAC Films, AGBO, Ley Line Entertainment, Year of the Rat, A24",
     "hidden": false,
     "uncertain": false
   }
