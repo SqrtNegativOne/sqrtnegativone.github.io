@@ -5,6 +5,11 @@ rem WebView2 155 requires its user-data folder to be Low integrity. Tauri
 rem creates %LOCALAPPDATA%\com.sqrtnegativone.admin as Medium, which makes
 rem WebView2 fail with "The requested resource is in use" and no child
 rem processes. Ensure the folder exists and is Low on every launch.
+rem Keep cargo's build output plain: its animated progress bars reprint the
+rem whole line thousands of times, which floods (and can kill) the terminal.
+set "CARGO_TERM_PROGRESS_WHEN=never"
+set "CARGO_TERM_COLOR=auto"
+
 set "ADMIN_APP_DATA=%LOCALAPPDATA%\com.sqrtnegativone.admin"
 if not exist "%ADMIN_APP_DATA%" mkdir "%ADMIN_APP_DATA%"
 icacls "%ADMIN_APP_DATA%" /setintegritylevel "(OI)(CI)Low" >nul 2>&1
