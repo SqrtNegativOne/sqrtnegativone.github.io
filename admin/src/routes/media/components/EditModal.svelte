@@ -1,6 +1,7 @@
 <script lang="ts">
   import mediaProperties from '../../../../../site/static/media/media-properties.json';
   import { assetState } from '$lib/assetState.svelte';
+  import CollapsibleSection from '$lib/CollapsibleSection.svelte';
   import { getPosterUrl } from '../../../../../shared/utils/getPosterUrl';
   import { eventLabel, formatLogDate } from '../../../../../shared/lib/mediaLog';
   import type { MediaItem, MediaLogEvent } from '../../../../../shared/types';
@@ -29,6 +30,10 @@
   } = $props();
 
   let logHistory = $derived((history ?? []) as MediaLogEvent[]);
+
+  // Collapsible blocks re-derive their open state whenever the modal reopens
+  // or a different item is loaded into it.
+  let sectionKey = $derived(`${isModalOpen ? 'open' : 'closed'}:${currentItem.id ?? ''}`);
 
   // Status is free to set by hand: the log is incomplete by nature (something
   // may have been finished years before logging existed), so it never gates
@@ -111,19 +116,19 @@
 <Modal
   open={isModalOpen}
   title={isEditing ? 'Edit Media' : 'New Media'}
-  maxWidth="4xl"
+  maxWidth="6xl"
   saving={isSaving}
   dirty={dirty}
   onclose={() => isModalOpen = false}
   bodyClass="overflow-y-auto p-6"
 >
   <form id="save-media-form" onsubmit={handleSave}>
-          <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_220px] gap-6">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_260px]">
             <!-- Main column -->
-            <div class="space-y-6 min-w-0">
-              <!-- Identity -->
-              <section class="space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="min-w-0 space-y-7">
+              <!-- Details: the fields you always need at hand -->
+              <CollapsibleSection title="Details" collapsible={false}>
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div class="space-y-2">
                     <select id="media-type" name="type" bind:value={currentItem.type} class="input-field" aria-label="Type">
                       {#each mediaProperties.types as type (type)}
@@ -217,34 +222,61 @@
                     <label for="media-tags" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Tags</label>
                     <TagInput bind:tags={currentItem.tags} suggestions={allTags} placeholder="e.g. meta/goat, favorites" />
                   </div>
-                </div>
-              </section>
 
-              <!-- Rating & visibility -->
-              <section class="space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <!-- An empty rating is the whole expression of uncertainty: leave it blank. -->
                   <div class="space-y-2">
-                    <div class="flex justify-between items-center">
-                      <label for="media-rating" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Rating (0-6)</label>
-                      <label for="media-uncertain" class="flex items-center gap-1.5 cursor-pointer select-none">
-                        <input type="checkbox" id="media-uncertain" bind:checked={currentItem.uncertain} class="rounded border-zinc-700 text-blue-600 focus:ring-blue-500 bg-zinc-800 w-3.5 h-3.5" />
-                        <span class="text-xs text-[oklch(0.7107_0.0351_256.79)]">Uncertain</span>
-                      </label>
-                    </div>
-                    <input id="media-rating" type="number" min="0" max="6" step="any" inputmode="decimal" name="rating" bind:value={currentItem.rating} class="input-field" placeholder="Unrated / 0-6" />
+                    <label for="media-rating" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Rating (0-6)</label>
+                    <input id="media-rating" type="number" min="0" max="6" step="any" inputmode="decimal" name="rating" bind:value={currentItem.rating} class="input-field" placeholder="Leave empty if unsure" />
                   </div>
 
-                  <label for="media-hidden" class="flex items-center gap-3 cursor-pointer select-none self-end pb-3">
-                    <input type="checkbox" id="media-hidden" bind:checked={currentItem.hidden} class="rounded border-zinc-700 text-blue-600 focus:ring-blue-500 bg-zinc-800" />
-                    <span class="text-sm text-[oklch(0.7107_0.0351_256.79)]">Hidden from public library</span>
-                  </label>
+                  <div class="space-y-2">
+                    <span class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Visibility</span>
+                    <label for="media-hidden" class="flex items-center gap-3 cursor-pointer select-none">
+                      <input type="checkbox" id="media-hidden" bind:checked={currentItem.hidden} class="rounded border-zinc-700 text-blue-600 focus:ring-blue-500 bg-zinc-800" />
+                      <span class="text-sm text-[oklch(0.7107_0.0351_256.79)]">Hidden from public library</span>
+                    </label>
+                  </div>
                 </div>
-              </section>
+              </CollapsibleSection>
+
+              <!-- Synopsis & Notes -->
+              <CollapsibleSection title="Description" content={currentItem.description} resetKey={sectionKey}>
+                <textarea
+                  id="media-desc"
+                  name="description"
+                  aria-label="Description"
+                  bind:value={currentItem.description}
+                  class="input-field min-h-[110px] resize-y"
+                  placeholder="Synopsis or overview..."
+                ></textarea>
+              </CollapsibleSection>
+
+              <CollapsibleSection title="Personal Notes" content={currentItem.notes} resetKey={sectionKey}>
+                <textarea
+                  id="media-notes"
+                  name="notes"
+                  aria-label="Personal Notes"
+                  bind:value={currentItem.notes}
+                  class="input-field min-h-[90px] resize-y"
+                  placeholder="Your personal notes..."
+                ></textarea>
+              </CollapsibleSection>
+
+              <!-- Private -->
+              <CollapsibleSection title="Private (local only)" tone="private" content={currentItem.private_notes} resetKey={sectionKey}>
+                <textarea
+                  id="media-private"
+                  name="private_notes"
+                  aria-label="Private notes"
+                  bind:value={currentItem.private_notes}
+                  class="input-field min-h-[90px] resize-y"
+                  placeholder="Stored in admin/data/media-private.json — never committed or served."
+                ></textarea>
+              </CollapsibleSection>
 
               <!-- History (derived from the media log) -->
-              <section class="space-y-3 rounded border border-[oklch(0.2739_0.0055_286.03)] bg-white/[0.02] p-4">
-                <div class="flex items-center justify-between gap-3">
-                  <h3 class="text-[11px] font-mono uppercase tracking-[0.16em] text-[oklch(0.7107_0.0351_256.79)]">History</h3>
+              <CollapsibleSection title="History" collapsible={false}>
+                {#snippet actions()}
                   <button
                     type="button"
                     onclick={() => onOpenLog?.(currentItem.id)}
@@ -252,7 +284,7 @@
                   >
                     Log an entry →
                   </button>
-                </div>
+                {/snippet}
 
                 {#if currentItem.added_at}
                   <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-[oklch(0.5416_0.0154_285.87)]">
@@ -294,31 +326,11 @@
                     {/each}
                   </ul>
                 {/if}
-              </section>
-
-              <!-- Synopsis & Notes -->
-              <section class="space-y-4">
-                <div class="space-y-2">
-                  <label for="media-desc" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Description</label>
-                  <textarea id="media-desc" name="description" bind:value={currentItem.description} class="input-field min-h-[110px] resize-y" placeholder="Synopsis or overview..."></textarea>
-                </div>
-                <div class="space-y-2">
-                  <label for="media-notes" class="block text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">Personal Notes</label>
-                  <textarea id="media-notes" name="notes" bind:value={currentItem.notes} class="input-field min-h-[90px] resize-y" placeholder="Your personal notes..."></textarea>
-                </div>
-              </section>
-
-              <!-- Private -->
-              <section class="space-y-2 rounded border border-amber-500/20 bg-amber-500/[0.03] p-4">
-                <label for="media-private" class="flex justify-between items-end gap-3 text-sm font-medium text-[oklch(0.7107_0.0351_256.79)]">
-                  Private (local only)
-                </label>
-                <textarea id="media-private" name="private_notes" bind:value={currentItem.private_notes} class="input-field min-h-[90px] resize-y border-amber-500/30 focus:border-amber-500 focus:ring-amber-500/20" placeholder="Stored in admin/data/media-private.json — never committed or served."></textarea>
-              </section>
+              </CollapsibleSection>
             </div>
 
             <!-- Poster column -->
-            <aside class="space-y-3">
+            <aside class="min-w-0 space-y-3 self-start lg:sticky lg:top-6">
               {#if posterPreviewSrc}
                 <button
                   type="button"

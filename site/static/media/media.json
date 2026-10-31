@@ -2769,5 +2769,22 @@
     "publisher": "Ferry // Nopanamaman",
     "hidden": false,
     "uncertain": false
+  },
+  {
+    "id": "wildwood",
+    "type": "movie",
+    "rating": 5,
+    "status": "wishlist",
+    "added_at": "2026-10-31",
+    "title": "Wildwood",
+    "tagline": "",
+    "description": "Prue and her classmate Curtis are drawn into a magical forest filled with enchanted creatures, loyal allies, and formidable adversaries as they embark on a desperate quest to rescue Prue's abducted baby brother from a murder of crows led by a mysterious woman named Alexandra.",
+    "notes": "",
+    "poster_image": "movie_wildwood",
+    "tags": [],
+    "author": "Travis Knight",
+    "publisher": "LAIKA",
+    "hidden": false,
+    "uncertain": false
   }
 ]
