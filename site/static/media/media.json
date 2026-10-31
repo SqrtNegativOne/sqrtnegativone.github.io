@@ -2752,5 +2752,22 @@
     "publisher": "IAC Films, AGBO, Ley Line Entertainment, Year of the Rat, A24",
     "hidden": false,
     "uncertain": false
+  },
+  {
+    "id": "parties_are_for_losers",
+    "type": "book",
+    "rating": 5,
+    "status": "wishlist",
+    "added_at": "2026-10-31",
+    "title": "Parties Are For Losers",
+    "tagline": "Aw fuck, here we go again.",
+    "description": "",
+    "notes": "Reading this google doc before Amazon makes a movie on this, I'm telling you guys\nhttps://docs.google.com/document/d/1NlX_KhtJ34qkkm4yJWgjBc_OHe8ByORpHQ-chCAi6NY/edit?tab=t.0",
+    "poster_image": "book_parties_are_for_losers",
+    "tags": [],
+    "author": "Ferry // Nopanamaman",
+    "publisher": "Ferry // Nopanamaman",
+    "hidden": false,
+    "uncertain": false
   }
 ]
