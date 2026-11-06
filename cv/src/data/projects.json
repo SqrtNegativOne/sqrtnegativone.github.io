@@ -1,18 +1,5 @@
 [
   {
-    "id": "presence",
-    "name": "Presence",
-    "description": "AI-powered attendance system that uses face recognition to automatically mark students present from a single group photo taken after enrollment. DIY-Palantir.",
-    "tags": [
-      "Python",
-      "Face Recognition",
-      "CV"
-    ],
-    "github": "https://github.com/SqrtNegativOne/presence",
-    "url": null,
-    "image": "https://picsum.photos/seed/presence-faces/400/220"
-  },
-  {
     "id": "floatchat",
     "name": "FloatChat",
     "description": "Conversational interface for oceanographic data visualisation. FastAPI backend with an MCP interface for AI agents querying the ARGO Oceanographic API. Selected top 90 of 200+ college teams at SIH 2025.",
@@ -53,20 +40,6 @@
     "image": "/projects/axiom-home-hero.png"
   },
   {
-    "id": "ai-factcheck",
-    "name": "AI Factcheck",
-    "description": "Modular Python pipeline that automatically fact-checks claims using AI. Pluggable architecture for web-scraping, NLP semantic search, and LLM/NLI verification. Pydantic typing, cached embeddings, local LLMs via Ollama.",
-    "tags": [
-      "Python",
-      "LangChain",
-      "Ollama",
-      "NLP"
-    ],
-    "github": "https://github.com/SqrtNegativOne/AI-factcheck",
-    "url": null,
-    "image": "/projects/ai-factcheck-1786104963302.png"
-  },
-  {
     "id": "hand-cricket-mab",
     "name": "Hand Cricket MAB",
     "description": "Multi-armed bandit using Experts-as-Arms to beat you at Hand Cricket. Combines PyTorch neural nets, n-Gram expert models, and heuristics via the Hedge algorithm.",
@@ -82,9 +55,36 @@
     "image": "https://picsum.photos/seed/cricket-mab-game/400/220"
   },
   {
+    "id": "ai-factcheck",
+    "name": "AI Factcheck",
+    "description": "Modular Python pipeline that automatically fact-checks claims using AI. Pluggable architecture for web-scraping, NLP semantic search, and LLM/NLI verification. Pydantic typing, cached embeddings, local LLMs via Ollama.",
+    "tags": [
+      "Python",
+      "LangChain",
+      "Ollama",
+      "NLP"
+    ],
+    "github": "https://github.com/SqrtNegativOne/AI-factcheck",
+    "url": null,
+    "image": "/projects/ai-factcheck-1786104963302.png"
+  },
+  {
+    "id": "presence",
+    "name": "Presence",
+    "description": "AI-powered attendance system that uses face recognition to automatically mark students present from a single group photo taken after enrollment. DIY-Palantir.",
+    "tags": [
+      "Python",
+      "Face Recognition",
+      "CV"
+    ],
+    "github": "https://github.com/SqrtNegativOne/presence",
+    "url": null,
+    "image": "https://picsum.photos/seed/presence-faces/400/220"
+  },
+  {
     "id": "anki-toolbar",
     "name": "Anki Toolbar Addon",
-    "description": "Anki addon that rips apart the editor toolbar for finer layout control. ~150 lines; the challenge was navigating Anki's large internal codebase to make a meaningful dent.",
+    "description": "Small Anki addon that rips apart the editor toolbar for finer layout control. The challenge was navigating Anki's large internal codebase to make a meaningful dent.",
     "tags": [
       "Python",
       "Anki"
