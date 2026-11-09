@@ -979,13 +979,16 @@
   {
     "id": "akira",
     "type": "movie",
-    "rating": 5,
+    "rating": 4,
     "status": "wishlist",
     "title": "Akira",
     "tagline": "",
     "description": "1988\nA secret military project endangers Neo-Tokyo when it turns a biker gang member into a rampaging psychic psychopath that only two teenagers and a group of psychics can stop.",
     "notes": "",
-    "poster_image": "movie_akira"
+    "poster_image": "movie_akira",
+    "tags": [],
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "arrival",
@@ -1595,7 +1598,7 @@
   {
     "id": "person_of_interest",
     "type": "show",
-    "rating": 5,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "Person of Interest",
     "tagline": "",
@@ -1604,7 +1607,9 @@
     "poster_image": "show_person_of_interest",
     "tags": [],
     "author": "Jonathan Nolan",
-    "publisher": "Kilter Films, Bad Robot, Warner Bros. Television, Bonanza Productions"
+    "publisher": "Kilter Films, Bad Robot, Warner Bros. Television, Bonanza Productions",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "spirited_away",
@@ -1787,7 +1792,7 @@
   {
     "id": "the_age_of_em",
     "type": "book",
-    "rating": 6,
+    "rating": 5.5,
     "status": "wishlist",
     "title": "The Age of Em",
     "tagline": "",
@@ -1796,7 +1801,9 @@
     "poster_image": "book_the_age_of_em",
     "tags": [],
     "author": "Robin Hanson",
-    "publisher": ""
+    "publisher": "",
+    "hidden": false,
+    "uncertain": false
   },
   {
     "id": "a_good_girl_s_guide_to_murder",
