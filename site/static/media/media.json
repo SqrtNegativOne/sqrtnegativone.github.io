@@ -2886,5 +2886,22 @@
     "publisher": "THIRTEEN, Brandenberg",
     "hidden": false,
     "uncertain": false
+  },
+  {
+    "id": "john_wick_chapter_4",
+    "type": "movie",
+    "rating": 4.5,
+    "status": "wishlist",
+    "added_at": "2026-11-10",
+    "title": "John Wick: Chapter 4",
+    "tagline": "",
+    "description": "With the price on his head ever increasing, John Wick uncovers a path to defeating The High Table. But before he can earn his freedom, Wick must face off against a new enemy with powerful alliances across the globe and forces that turn old friends into foes.",
+    "notes": "",
+    "poster_image": "movie_john_wick_chapter_4",
+    "tags": [],
+    "author": "Chad Stahelski",
+    "publisher": "Lionsgate",
+    "hidden": false,
+    "uncertain": false
   }
 ]
