@@ -3,6 +3,7 @@
   import EditModal from './components/EditModal.svelte';
   import SearchModal from './components/SearchModal.svelte';
   import MediaLogTab from './MediaLogTab.svelte';
+  import NormalizeTab from './NormalizeTab.svelte';
   import SearchBar from '$lib/SearchBar.svelte';
   import FullPoster from '$lib/FullPoster.svelte';
   import { assetState } from '$lib/assetState.svelte';
@@ -21,7 +22,7 @@
     media.data = data;
   });
 
-  let tab = $state<'library' | 'log'>('library');
+  let tab = $state<'library' | 'log' | 'normalize'>('library');
   let logTargetId = $state<string | null>(null);
   let fullPosterUrl: string | null = $state(null);
   let viewMode = $state<MediaViewMode>('gallery');
@@ -72,6 +73,15 @@
       >
         Log
       </button>
+      <button
+        type="button"
+        onclick={() => tab = 'normalize'}
+        class="rounded px-3 py-1.5 text-xs font-mono uppercase tracking-wider transition-colors {tab === 'normalize'
+          ? 'bg-blue-500/15 text-blue-300'
+          : 'text-[oklch(0.7107_0.0351_256.79)] hover:bg-white/5'}"
+      >
+        Normalize
+      </button>
     </div>
     <MediaInfo />
   </div>
@@ -118,6 +128,8 @@
         {resolveAsset}
       />
     {/if}
+  {:else if tab === 'normalize'}
+    <NormalizeTab media={data.media || []} />
   {:else}
     <MediaLogTab
       media={data.media || []}
