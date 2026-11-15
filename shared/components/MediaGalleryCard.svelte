@@ -51,7 +51,7 @@
   );
 
   const visibleTags = $derived(
-    (item.tags || []).filter((t) => !t.startsWith('meta'))
+    (item.tags || []).filter((t: string) => !t.startsWith('meta'))
   );
 
   function handleKeydown(event: KeyboardEvent) {

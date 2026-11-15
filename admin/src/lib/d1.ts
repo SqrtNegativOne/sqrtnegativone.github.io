@@ -16,8 +16,8 @@ export interface D1Message {
 
 /**
  * Execute a single SQL statement against the remote D1 `sqrt-fyi-messages`
- * database. Backed by the `d1_query` Tauri command, which reuses the
- * developer's existing Wrangler login.
+ * database. Backed by the `d1_query` Tauri command, which calls Cloudflare's
+ * D1 HTTP API with a long-lived API token (no Wrangler login to refresh).
  */
 export function d1Query<T = Record<string, unknown>>(
   sql: string,

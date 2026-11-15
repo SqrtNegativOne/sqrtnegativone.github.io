@@ -29,22 +29,9 @@
     // Re-check after mount in case the Tauri bridge was injected slightly later.
     tauriAvailable = isTauri();
     notificationState.initGlobalHandlers();
-    if (tauriAvailable && !page.url.pathname.startsWith('/messages')) {
-      void messageReadState.refresh(true);
-    }
-
-    // Re-check when the window regains focus (throttled inside the store) so a
-    // message that arrived while the app sat in the background still surfaces.
-    const onVisible = () => {
-      if (document.visibilityState === 'visible') void messageReadState.refresh();
-    };
-    document.addEventListener('visibilitychange', onVisible);
-    window.addEventListener('focus', onVisible);
-
-    return () => {
-      document.removeEventListener('visibilitychange', onVisible);
-      window.removeEventListener('focus', onVisible);
-    };
+    // Do not query D1 here. `d1_query` shells out to Bun + Wrangler, which is
+    // expensive enough to stall startup and window restore. The badge is
+    // refreshed on demand from the dashboard instead.
   });
 </script>
 

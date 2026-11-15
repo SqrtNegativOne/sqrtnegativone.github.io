@@ -1,6 +1,23 @@
 use std::fs;
 use std::path::Path;
+use std::time::Duration;
 use tauri::Manager;
+
+/// Run a blocking task (process spawns, network calls) off the UI thread.
+///
+/// Tauri executes synchronous commands on the main thread, so a slow
+/// `git`/`bun` spawn would freeze the window. Async commands are dispatched to
+/// the runtime instead; `spawn_blocking` keeps the blocking work off the async
+/// workers too.
+async fn run_blocking<T, F>(task: F) -> Result<T, String>
+where
+    F: FnOnce() -> Result<T, String> + Send + 'static,
+    T: Send + 'static,
+{
+    tauri::async_runtime::spawn_blocking(task)
+        .await
+        .map_err(|e| format!("Background task failed: {e}"))?
+}
 
 #[tauri::command]
 fn read_file(path: String) -> Result<String, String> {
@@ -194,57 +211,130 @@ fn save_base64_image(path: String, base64_content: String) -> Result<(), String>
     Ok(())
 }
 
-/// Run a read or write SQL statement against the remote D1 `sqrt-fyi-messages`
-/// database.
+/// Database id from `site/wrangler.jsonc`. Public metadata, not a secret.
+const D1_DATABASE_ID: &str = "849df495-bf8d-4884-90cb-8d1eed2686b7";
+
+/// Credentials for the Cloudflare D1 HTTP API.
 ///
-/// This shells out to the Wrangler CLI from the repository's `site/` folder, so
-/// it reuses the developer's existing `wrangler login` instead of storing a
-/// separate Cloudflare API token. Returns the `results` array of the first
-/// statement in the Wrangler response.
+/// Read from `CLOUDFLARE_API_TOKEN` / `CLOUDFLARE_ACCOUNT_ID` when present,
+/// otherwise from the gitignored `admin/data/cloudflare.json`:
+/// `{ "api_token": "...", "account_id": "..." }`.
+///
+/// API tokens can be created without an expiry and with a narrow
+/// `Account > D1 > Edit` permission, so this never needs the monthly
+/// `wrangler login` refresh that OAuth requires.
+struct CloudflareConfig {
+    api_token: String,
+    account_id: String,
+}
+
+impl CloudflareConfig {
+    fn load() -> Result<Self, String> {
+        let mut api_token = std::env::var("CLOUDFLARE_API_TOKEN").ok();
+        let mut account_id = std::env::var("CLOUDFLARE_ACCOUNT_ID").ok();
+
+        if api_token.is_none() || account_id.is_none() {
+            let config_path = Path::new(&get_repo_root()?)
+                .join("admin")
+                .join("data")
+                .join("cloudflare.json");
+            match fs::read_to_string(&config_path) {
+                Ok(contents) => {
+                    let file: serde_json::Value = serde_json::from_str(&contents).map_err(|e| {
+                        format!("Could not parse {}: {e}", config_path.display())
+                    })?;
+                    if api_token.is_none() {
+                        api_token = file
+                            .get("api_token")
+                            .and_then(|value| value.as_str())
+                            .map(str::to_string);
+                    }
+                    if account_id.is_none() {
+                        account_id = file
+                            .get("account_id")
+                            .and_then(|value| value.as_str())
+                            .map(str::to_string);
+                    }
+                }
+                Err(err) if err.kind() == std::io::ErrorKind::NotFound => {}
+                Err(err) => {
+                    return Err(format!("Could not read {}: {err}", config_path.display()));
+                }
+            }
+        }
+
+        match (api_token, account_id) {
+            (Some(api_token), Some(account_id)) => Ok(Self {
+                api_token,
+                account_id,
+            }),
+            _ => Err(
+                "Cloudflare API token is not configured. Create a token with the \
+                 `Account > D1 > Edit` permission (set expiry to never), then save \
+                 {\"api_token\":\"...\",\"account_id\":\"...\"} to \
+                 admin/data/cloudflare.json (gitignored)."
+                    .to_string(),
+            ),
+        }
+    }
+}
+
+/// Run a read or write SQL statement against the remote D1 `sqrt-fyi-messages`
+/// database through Cloudflare's HTTP API. Returns the `results` array of the
+/// first statement.
 #[tauri::command]
-fn d1_query(sql: String) -> Result<serde_json::Value, String> {
-    let root = get_repo_root()?;
-    let site_dir = Path::new(&root).join("site");
+async fn d1_query(sql: String) -> Result<serde_json::Value, String> {
+    run_blocking(move || d1_query_blocking(sql)).await
+}
 
-    let mut cmd = std::process::Command::new("bun");
-    cmd.current_dir(&site_dir);
-    cmd.args([
-        "x",
-        "wrangler",
-        "d1",
-        "execute",
-        "sqrt-fyi-messages",
-        "--remote",
-        "--json",
-        "--command",
-        &sql,
-    ]);
-    // Keep Wrangler from trying to be interactive.
-    cmd.env("CI", "1");
-    cmd.env("NO_COLOR", "1");
-    #[cfg(target_os = "windows")]
-    {
-        use std::os::windows::process::CommandExt;
-        cmd.creation_flags(0x0800_0000); // CREATE_NO_WINDOW
+fn d1_query_blocking(sql: String) -> Result<serde_json::Value, String> {
+    let config = CloudflareConfig::load()?;
+    let url = format!(
+        "https://api.cloudflare.com/client/v4/accounts/{}/d1/database/{}/query",
+        config.account_id, D1_DATABASE_ID
+    );
+
+    let client = reqwest::blocking::Client::builder()
+        .timeout(Duration::from_secs(30))
+        .build()
+        .map_err(|e| e.to_string())?;
+
+    let response = client
+        .post(&url)
+        .bearer_auth(&config.api_token)
+        .json(&serde_json::json!({ "sql": sql }))
+        .send()
+        .map_err(|e| format!("Cloudflare D1 request failed: {e}"))?;
+
+    let status = response.status();
+    let body: serde_json::Value = response
+        .json()
+        .map_err(|e| format!("Cloudflare D1 returned an unreadable response ({status}): {e}"))?;
+
+    if !status.is_success() || body.get("success").and_then(|v| v.as_bool()) != Some(true) {
+        let errors = body
+            .get("errors")
+            .cloned()
+            .unwrap_or(serde_json::Value::Null);
+        return Err(format!("Cloudflare D1 query failed ({status}): {errors}"));
     }
 
-    let output = cmd
-        .output()
-        .map_err(|e| format!("Failed to run Wrangler (is Bun installed and on PATH?): {e}"))?;
-
-    if !output.status.success() {
-        let stderr = String::from_utf8_lossy(&output.stderr);
-        return Err(format!("Wrangler D1 query failed: {}", stderr.trim()));
-    }
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    let parsed: serde_json::Value = serde_json::from_str(stdout.trim())
-        .map_err(|e| format!("Could not parse Wrangler output: {e}"))?;
-
-    Ok(parsed
-        .as_array()
+    let result = body
+        .get("result")
+        .and_then(|value| value.as_array())
         .and_then(|entries| entries.first())
-        .and_then(|entry| entry.get("results"))
+        .ok_or_else(|| "Cloudflare D1 returned no query result.".to_string())?;
+
+    if result.get("success").and_then(|v| v.as_bool()) == Some(false) {
+        let error = result
+            .get("error")
+            .cloned()
+            .unwrap_or(serde_json::Value::Null);
+        return Err(format!("Cloudflare D1 query failed: {error}"));
+    }
+
+    Ok(result
+        .get("results")
         .cloned()
         .unwrap_or_else(|| serde_json::Value::Array(Vec::new())))
 }
@@ -355,7 +445,11 @@ fn generate_default_commit_message(files: &[String]) -> String {
 }
 
 #[tauri::command]
-fn git_get_status() -> Result<GitStatusInfo, String> {
+async fn git_get_status() -> Result<GitStatusInfo, String> {
+    run_blocking(git_get_status_blocking).await
+}
+
+fn git_get_status_blocking() -> Result<GitStatusInfo, String> {
     let root = get_repo_root()?;
 
     // 1. Check current branch
@@ -422,7 +516,11 @@ fn git_get_status() -> Result<GitStatusInfo, String> {
 }
 
 #[tauri::command]
-fn git_commit_content(message: Option<String>) -> Result<String, String> {
+async fn git_commit_content(message: Option<String>) -> Result<String, String> {
+    run_blocking(move || git_commit_content_blocking(message)).await
+}
+
+fn git_commit_content_blocking(message: Option<String>) -> Result<String, String> {
     let root = get_repo_root()?;
     let root_path = Path::new(&root);
 
@@ -563,7 +661,11 @@ fn sync_with_remote(repo_root: &str, branch: &str) -> Result<Option<String>, Str
 }
 
 #[tauri::command]
-fn git_push() -> Result<String, String> {
+async fn git_push() -> Result<String, String> {
+    run_blocking(git_push_blocking).await
+}
+
+fn git_push_blocking() -> Result<String, String> {
     let root = get_repo_root()?;
 
     let (branch_ok, branch_out, _) = run_git_cmd(&root, &["branch", "--show-current"])?;
@@ -593,9 +695,13 @@ fn git_push() -> Result<String, String> {
 }
 
 #[tauri::command]
-fn git_publish(message: Option<String>) -> Result<String, String> {
+async fn git_publish(message: Option<String>) -> Result<String, String> {
+    run_blocking(move || git_publish_blocking(message)).await
+}
+
+fn git_publish_blocking(message: Option<String>) -> Result<String, String> {
     // 1. Commit content changes if any
-    let commit_res = git_commit_content(message);
+    let commit_res = git_commit_content_blocking(message);
     if let Err(e) = commit_res {
         if e != "No content changes to commit" {
             return Err(e);
@@ -603,7 +709,7 @@ fn git_publish(message: Option<String>) -> Result<String, String> {
     }
 
     // 2. Push to remote
-    git_push()
+    git_push_blocking()
 }
 
 /// # Panics

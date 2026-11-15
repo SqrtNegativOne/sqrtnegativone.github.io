@@ -72,7 +72,7 @@
     };
   }
 
-  const BSKY_HANDLE = 'sqrt-1.bsky.social';
+  const BSKY_HANDLE = 'sqrt.fyi';
   const BSKY_API_URL = 'https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed';
 
   let feedItems = $state<BskyFeedItem[]>([]);
@@ -237,7 +237,7 @@
 
 <Seo
   title="Microblog — Sqrt-1"
-  description="Short thoughts, links, and status updates fetched live from @sqrt-1.bsky.social on Bluesky."
+  description="Short thoughts, links, and status updates fetched live from @sqrt.fyi on Bluesky."
   path="/microblog"
 />
 

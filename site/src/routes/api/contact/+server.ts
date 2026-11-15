@@ -43,6 +43,67 @@ async function readPayload(request: Request): Promise<Payload> {
 	return {};
 }
 
+/** `RESEND_API_KEY` is a Wrangler secret, so it is not in the generated Env type. */
+type ContactEnv = App.Platform['env'] & { RESEND_API_KEY?: string };
+
+type NotificationDetails = {
+	body: string;
+	country: string | null;
+	method: ContactMethodId | null;
+	handle: string | null;
+	userAgent: string | null;
+};
+
+/**
+ * Send a best-effort email notification through Resend.
+ *
+ * The message is already stored in D1 before this runs, so a Resend outage
+ * must never fail the submission. Missing configuration is ignored.
+ */
+async function notifyNewMessage(env: ContactEnv, details: NotificationDetails): Promise<void> {
+	const apiKey = env.RESEND_API_KEY;
+	const to = env.CONTACT_NOTIFY_EMAIL;
+
+	if (!apiKey || !to) {
+		console.warn('Contact notification skipped: RESEND_API_KEY or CONTACT_NOTIFY_EMAIL is not set.');
+		return;
+	}
+
+	const lines = [
+		details.body,
+		'',
+		'---',
+		`Country: ${details.country ?? 'unknown'}`,
+		details.method
+			? `Reply via: ${details.method}${details.handle ? ` (${details.handle})` : ''}`
+			: 'Reply details: none',
+		details.userAgent ? `User agent: ${details.userAgent}` : null
+	].filter((line): line is string => line !== null);
+
+	const response = await fetch('https://api.resend.com/emails', {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${apiKey}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			from: `sqrt.fyi <${env.CONTACT_NOTIFY_FROM || 'onboarding@resend.dev'}>`,
+			to: [to],
+			subject: `New sqrt.fyi message${details.country ? ` (${details.country})` : ''}`,
+			text: lines.join('\n')
+		}),
+		signal: AbortSignal.timeout(10_000)
+	});
+
+	if (!response.ok) {
+		console.error(
+			'Resend rejected the contact notification:',
+			response.status,
+			await response.text()
+		);
+	}
+}
+
 async function hashIp(ip: string): Promise<string> {
 	// Rotate the salt daily so we never keep a stable identifier for a visitor.
 	const salt = new Date().toISOString().slice(0, 10);
@@ -120,6 +181,9 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		}
 	}
 
+	const country = request.headers.get('cf-ipcountry');
+	const userAgent = request.headers.get('user-agent')?.slice(0, 512) ?? null;
+
 	await db
 		.prepare(
 			'INSERT INTO messages (body, ip_hash, country, user_agent, contact_method, contact_handle) VALUES (?, ?, ?, ?, ?, ?)'
@@ -127,12 +191,25 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 		.bind(
 			text,
 			ipHash,
-			request.headers.get('cf-ipcountry'),
-			request.headers.get('user-agent')?.slice(0, 512) ?? null,
+			country,
+			userAgent,
 			contactHandle ? contactMethod : null,
 			contactHandle
 		)
 		.run();
+
+	// Fire-and-forget so a slow or failing email never delays the form response.
+	if (platform?.ctx) {
+		platform.ctx.waitUntil(
+			notifyNewMessage(platform.env, {
+				body: text,
+				country,
+				method: contactMethod,
+				handle: contactHandle,
+				userAgent
+			}).catch((error) => console.error('Contact notification failed:', error))
+		);
+	}
 
 	if (isFormPost) {
 		return new Response(null, { status: 303, headers: { location: '/contact?sent=1' } });

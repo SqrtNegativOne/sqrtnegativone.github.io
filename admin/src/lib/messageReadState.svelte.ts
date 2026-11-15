@@ -49,10 +49,11 @@ export class MessageReadState {
   }
 
   /**
-   * Re-count unread messages. Silently ignores backend failures so a missing
-   * Wrangler install never spams toasts on startup; `force` skips the throttle.
+   * Re-count unread messages. `force` skips the throttle; `silent` hides
+   * backend failures (the default, used for background checks). Pass
+   * `silent: false` for a user-initiated check so Wrangler/auth errors surface.
    */
-  refresh(force = false): Promise<void> {
+  refresh(force = false, silent = true): Promise<void> {
     this.hydrate();
     if (typeof window === 'undefined') return Promise.resolve();
     if (this.inflight) return this.inflight;
@@ -66,7 +67,7 @@ export class MessageReadState {
       try {
         const result = await d1Query<{ unread: number }>(
           `SELECT COUNT(*) AS unread FROM messages WHERE id > ${this.lastReadId}`,
-          { silent: true }
+          { silent }
         );
         if (result.isOk() && version === this.version) {
           const row = result.value[0];

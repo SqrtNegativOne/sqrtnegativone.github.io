@@ -80,11 +80,12 @@ export class GitState {
     window.addEventListener('focus', () => this.refresh());
 
     this.pollInterval = setInterval(() => {
-      // Background poll only if window is focused and not actively publishing
+      // Background poll only if window is focused and not actively publishing.
+      // Every tick spawns several git processes, so keep it infrequent.
       if (document.hasFocus() && !this.isPublishing) {
         this.refresh(true);
       }
-    }, 8000);
+    }, 30_000);
   }
 
   destroy() {
