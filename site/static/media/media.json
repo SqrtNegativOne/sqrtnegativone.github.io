@@ -2903,5 +2903,39 @@
     "publisher": "Lionsgate",
     "hidden": false,
     "uncertain": false
+  },
+  {
+    "id": "desktop_explorer",
+    "type": "game",
+    "rating": 5,
+    "status": "wishlist",
+    "added_at": "2026-11-16",
+    "title": "Desktop Explorer",
+    "tagline": "",
+    "description": "Rummage through the abandoned profiles of an old PC to unravel an inherited mystery. What secrets hide in this eerie adventure of cryptic games and outdated software? Who was using this computer? And what happened to them?",
+    "notes": "",
+    "poster_image": "game_desktop_explorer",
+    "tags": [],
+    "author": "Recurring Dream",
+    "publisher": "Recurring Dream, Outersloth, indienova",
+    "hidden": false,
+    "uncertain": false
+  },
+  {
+    "id": "endacopia",
+    "type": "game",
+    "rating": 5,
+    "status": "wishlist",
+    "added_at": "2026-11-16",
+    "title": "Endacopia",
+    "tagline": "",
+    "description": "Endacopia is a Point-and-Click Puzzle Adventure that is visually reminiscent of early computer edutainment games... with underlying horrors.",
+    "notes": "Someone compared this to Petscop??? Now I *have* to play this game.",
+    "poster_image": "game_endacopia",
+    "tags": [],
+    "author": "Andyland",
+    "publisher": "Andyland",
+    "hidden": false,
+    "uncertain": false
   }
 ]
