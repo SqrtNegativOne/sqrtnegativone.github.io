@@ -2920,22 +2920,5 @@
     "publisher": "Recurring Dream, Outersloth, indienova",
     "hidden": false,
     "uncertain": false
-  },
-  {
-    "id": "endacopia",
-    "type": "game",
-    "rating": 5,
-    "status": "wishlist",
-    "added_at": "2026-11-16",
-    "title": "Endacopia",
-    "tagline": "",
-    "description": "Endacopia is a Point-and-Click Puzzle Adventure that is visually reminiscent of early computer edutainment games... with underlying horrors.",
-    "notes": "Someone compared this to Petscop??? Now I *have* to play this game.",
-    "poster_image": "game_endacopia",
-    "tags": [],
-    "author": "Andyland",
-    "publisher": "Andyland",
-    "hidden": false,
-    "uncertain": false
   }
 ]

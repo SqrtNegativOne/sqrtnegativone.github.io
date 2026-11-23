@@ -1,5 +1,5 @@
 @echo off
-cd admin
+cd /d "%~dp0admin"
 
 rem WebView2 155 requires its user-data folder to be Low integrity. Tauri
 rem creates %LOCALAPPDATA%\com.sqrtnegativone.admin as Medium, which makes
@@ -15,13 +15,19 @@ if not exist "%ADMIN_APP_DATA%" mkdir "%ADMIN_APP_DATA%"
 icacls "%ADMIN_APP_DATA%" /setintegritylevel "(OI)(CI)Low" >nul 2>&1
 if errorlevel 1 echo WARNING: Could not set the WebView2 data folder to Low integrity.
 
-echo Checking if app is compiled and up-to-date...
-bun run check_build.ts
+set "EXE=src-tauri\target\release\app.exe"
+set "STAMP=src-tauri\target\release\.build-stamp"
+set "CURRENT=src-tauri\target\.build-state.txt"
 
+if not exist "%EXE%" goto dev
+if not exist "%STAMP%" goto dev
+call "%~dp0admin\build-state.cmd" > "%CURRENT%" 2>nul
+if errorlevel 1 goto dev
+fc /b "%CURRENT%" "%STAMP%" >nul 2>&1
 if errorlevel 1 goto dev
 
 echo Starting compiled Admin Dashboard... Instant!
-start "" "src-tauri\target\release\app.exe"
+start "" "%EXE%"
 exit /b 0
 
 :dev
